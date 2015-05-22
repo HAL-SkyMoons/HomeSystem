@@ -5,7 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class TestData extends OracleData implements Serializable{
+public class TestData extends MysqlData implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private String aId;
 	private String bId;
 	private int cId;

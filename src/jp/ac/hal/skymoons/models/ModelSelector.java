@@ -2,12 +2,7 @@ package jp.ac.hal.skymoons.models;
 
 import java.sql.SQLException;
 import java.util.HashMap;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import jp.ac.hal.skymoons.core.Core;
-import jp.ac.hal.skymoons.models.*;
 
 public class ModelSelector extends Core {
 	@Override

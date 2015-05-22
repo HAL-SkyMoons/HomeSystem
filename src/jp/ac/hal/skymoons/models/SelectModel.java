@@ -16,7 +16,7 @@ public class SelectModel extends Core {
 	}
 	@Override
 	public void executeSQL() throws SQLException{
-		setList(getOracleDao().select(getSql(),getUri()));
+		setList(getMysqlDao().select(getSql(),getUri()));
 		return;
 	}
 }

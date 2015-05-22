@@ -16,7 +16,7 @@ public class UpdateModel extends Core {
 	}
 	@Override
 	public void executeSQL() throws SQLException{
-		getOracleDao().update(getOracleData(),getSql());
+		getMysqlDao().update(getMysqlData(),getSql());
 		return;
 	}
 }
