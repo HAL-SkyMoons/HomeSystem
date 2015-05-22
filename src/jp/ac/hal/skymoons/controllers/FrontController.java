@@ -15,11 +15,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import jp.ac.hal.skymoons.core.Core;
-import jp.ac.hal.skymoons.dao.OracleDao;
-import jp.ac.hal.skymoons.data.OracleData;
+import jp.ac.hal.skymoons.dao.MysqlDao;
+import jp.ac.hal.skymoons.data.MysqlData;
 import jp.ac.hal.skymoons.selectors.RequestColumsSelector;
 
 /**
@@ -54,32 +53,32 @@ public class FrontController extends HttpServlet {
 		
 		//使用するデータの選択
 		DataSelector ds = new DataSelector();
-		OracleData oData = ds.choice(uri);
+		MysqlData mData = ds.choice(uri);
 
 		//リクエスト値をdataにセット
 		RequestColumsSelector rgs = new RequestColumsSelector();
-		rgs.setValues(request, oData);
+		rgs.setValues(request, mData);
 		
-		//coreにOracleDataのセット
-		core.setOracleData(oData);
+		//coreにMysqlDataのセット
+		core.setMysqlData(mData);
 		
 		//データベース処理
 		try{
 			//DAOの生成とセット
-			OracleDao oracleDao = new OracleDao();
-			core.setOracleDao(oracleDao);
+			MysqlDao mysqlDao = new MysqlDao();
+			core.setMysqlDao(mysqlDao);
 			try{
 				//SQLの実行
-				//SELECTであればoDataへ値がセットされる
+				//SELECTであればmDataへ値がセットされる
 				core.executeSQL();
 				//処理確定
-				core.getOracleDao().commit();
+				core.getMysqlDao().commit();
 			}catch(Exception e){
 				//処理取り消し
-				core.getOracleDao().rollback();
+				core.getMysqlDao().rollback();
 				e.printStackTrace();
 			}finally{
-				core.getOracleDao().close();
+				core.getMysqlDao().close();
 			}
 		}catch(SQLException e){
 			//エラー処理 SQL実行エラー?

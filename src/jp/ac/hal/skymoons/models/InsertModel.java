@@ -16,7 +16,7 @@ public class InsertModel extends Core {
 	}
 	@Override
 	public void executeSQL() throws SQLException{
-		getOracleDao().insert(getOracleData(),getSql());
+		getMysqlDao().insert(getMysqlData(),getSql());
 		return;
 	}
 }

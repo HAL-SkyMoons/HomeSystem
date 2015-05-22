@@ -16,7 +16,7 @@ public class DeleteModel extends Core {
 	}
 	@Override
 	public void executeSQL() throws SQLException{
-		getOracleDao().delete(getOracleData(),getSql());
+		getMysqlDao().delete(getMysqlData(),getSql());
 		return;
 	}
 }

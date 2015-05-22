@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
-import jp.ac.hal.skymoons.data.OracleData;
+import jp.ac.hal.skymoons.data.MysqlData;
 
 //リクエストを受け取るための名前を受け取るメソッド
 public class RequestColumsSelector {
@@ -20,21 +20,21 @@ public class RequestColumsSelector {
 		URI_COLUM_MAPPING.put("/nn/test",testColums);
 	}
 	public ArrayList<String> getColums(String uri){
-		ArrayList<String> array = new ArrayList<>();
+		ArrayList<String> columList = new ArrayList<>();
 		for(String columName : URI_COLUM_MAPPING.get(uri)){
-			array.add(columName);
+			columList.add(columName);
 		}
-		return array;
+		return columList;
 	}
-	public OracleData setValues(HttpServletRequest request, OracleData oData){
+	public MysqlData setValues(HttpServletRequest request, MysqlData mData){
 		String uri = request.getRequestURI();
 		if(URI_COLUM_MAPPING.get(uri) != null){
 			ArrayList<String> array = new ArrayList<>();
 			for(String paramName : URI_COLUM_MAPPING.get(uri)){
 				array.add(request.getParameter(paramName));
 			}
-			oData.setRequestValues(array);
+			mData.setRequestValues(array);
 		}
-		return oData;
+		return mData;
 	}
 }

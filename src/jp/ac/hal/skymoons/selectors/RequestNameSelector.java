@@ -1,7 +1,6 @@
 
 package jp.ac.hal.skymoons.selectors;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class RequestNameSelector{
