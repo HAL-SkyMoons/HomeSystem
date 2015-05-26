@@ -1,11 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%
 /**
+ * 社員用ログインページ。
  * @author YAMAZAKI GEN
  * @since 2015/05/22
  * @version 1.0
- * 
- * 社員用ログインページ。
 **/
 %>
 <!DOCTYPE html>
