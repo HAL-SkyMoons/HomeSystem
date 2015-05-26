@@ -18,7 +18,7 @@ public class ConnectionGet {
 		try{
 			context = new InitialContext();
 			DataSource ds =
-				(DataSource) context.lookup("java:comp/env/jdbc/orcl3");
+				(DataSource) context.lookup("java:comp/env/jdbc/skymoons");
 			con = ds.getConnection();
 		}catch (NamingException e) {
 			// TODO: handle exception
