@@ -12,12 +12,6 @@ public class TestModel extends AbstractModel{
 			HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 
-<<<<<<< HEAD
-		//
-=======
-		//test
->>>>>>> refs/remotes/origin/YAMAZAKI-GEN
-
 		return "/error.html"	;
 	}
 
