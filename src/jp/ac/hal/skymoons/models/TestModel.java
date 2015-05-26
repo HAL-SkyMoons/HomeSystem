@@ -11,6 +11,8 @@ public class TestModel extends AbstractModel{
 	public String doService(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
+
+
 		return "/error.html"	;
 	}
 
