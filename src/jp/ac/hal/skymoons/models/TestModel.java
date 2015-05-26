@@ -12,6 +12,8 @@ public class TestModel extends AbstractModel{
 			HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 
+		//test
+
 		return "/error.html"	;
 	}
 
