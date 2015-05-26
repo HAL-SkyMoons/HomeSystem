@@ -131,4 +131,5 @@ public class SessionController {
 	public void discardSession(String id) {
 		this.session.removeAttribute(id);
 	}
+	
 }
