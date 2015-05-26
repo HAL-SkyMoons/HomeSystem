@@ -92,9 +92,7 @@ public class FrontController extends HttpServlet {
 		}
 		//リクエストに値を設定
 		if(core.getList() != null && RequestNameSelector.getRequestName(uri) != null){
-			for(String requestName : RequestNameSelector.getRequestName(uri)){
-				request.setAttribute(requestName, core.getList());
-			}
+			request.setAttribute(RequestNameSelector.getRequestName(uri), core.getList());
 		}
 		
 		//次ページ移動処理
