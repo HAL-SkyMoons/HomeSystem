@@ -1,7 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%
+<<<<<<< HEAD
 /**
  * 管理者用ログインページ。
+=======
+/**
+ * 管理者用ログインページ。
+<<<<<<< HEAD
+=======
+>>>>>>> refs/remotes/origin/master
+>>>>>>> refs/remotes/origin/YAMAZAKI-GEN
  * @author YAMAZAKI GEN
  * @since 2015/05/22
  * @version 1.0
