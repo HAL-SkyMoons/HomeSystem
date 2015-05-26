@@ -128,7 +128,7 @@ public class SessionController {
 	 * @param id
 	 * セッションの名前
 	 */
-	public void discardSession(String id) {
+	private void discardSession(String id) {
 		this.session.removeAttribute(id);
 	}
 	
