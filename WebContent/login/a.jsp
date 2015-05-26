@@ -1,9 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%
-<<<<<<< HEAD
-/**
- * 管理者用ログインページ。
-=======
 /**
  * 管理者用ログインページ。
 <<<<<<< HEAD
