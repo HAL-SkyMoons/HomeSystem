@@ -10,8 +10,10 @@ import java.util.List;
 
 import javax.naming.NamingException;
 
+import jp.ac.hal.skymoons.beans.PlanListBean;
 import jp.ac.hal.skymoons.beans.SampleBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
+import jp.ac.hal.skymoons.models.PlanList;
 
 
 public class SampleDao {
@@ -158,5 +160,34 @@ public class SampleDao {
 	public void rollback() throws SQLException {
 		con.rollback();
 	}
-}
 
+
+
+	/**
+	 * @author Taiga
+	 * PlanList
+	 */
+	public List<PlanListBean> planList() throws SQLException {
+
+		PreparedStatement select = con.prepareStatement("select * from plan;");
+
+		ResultSet result = select.executeQuery();
+
+		ArrayList<PlanListBean> table = new ArrayList<PlanListBean>();
+		while (result.next()) {
+
+			PlanListBean record = new PlanListBean();
+			record.setPlanId(result.getInt("plan_id"));
+			record.setPlaner(result.getString("planer"));
+			record.setPlanTitle(result.getString("plan_title"));
+			record.setPlanDatetime(result.getDate("plan_datetime"));
+			record.setPlanComment(result.getString("plan_comment"));
+
+
+			table.add(record);
+		}
+		return table;
+	}
+
+
+}

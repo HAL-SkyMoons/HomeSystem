@@ -9,7 +9,8 @@ public class ModelSelectorGet {
 
 	static{
 		mapping = new HashMap<String, AbstractModel>();
-		mapping.put("/homesystem/fcon/test", new TestModel());
+		mapping.put("/HomeSystem/fcon/test", new TestModel());
+		mapping.put("/HomeSystem/fcon/planlist", new PlanList());
 	}
 
 /**
