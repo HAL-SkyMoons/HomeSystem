@@ -16,6 +16,7 @@
 	<body>
 		<h1>社員用ログインページ</h1>
 		<form action="">
+			<p>ログイン認証に失敗しました。</p>
 			<p>LoginID:<input type="text"></p>
 			<p>Password:<input type="password"></p>
 			<p><input type="submit" value="Login"></p>

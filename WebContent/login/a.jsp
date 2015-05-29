@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%
 /**
- * 顧客用ログインページ
+ * 管理者用ログインページ
  * @author YAMAZAKI GEN
  * @since 2015/05/22
  * @version 1.0
@@ -11,10 +11,10 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>顧客用ログイン</title>
+		<title>管理者用ログイン</title>
 	</head>
 	<body>
-		<h1>顧客用ログインページ</h1>
+		<h1>管理者用ログインページ</h1>
 		<form action="">
 			<p>ログイン認証に失敗しました。</p>
 			<p>LoginID:<input type="text"></p>
