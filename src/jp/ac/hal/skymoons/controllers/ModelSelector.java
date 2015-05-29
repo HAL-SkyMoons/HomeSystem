@@ -1,6 +1,7 @@
 package jp.ac.hal.skymoons.controllers;
 
 import java.util.HashMap;
+
 import jp.ac.hal.skymoons.models.*;
 
 /**
@@ -13,7 +14,11 @@ public class ModelSelector {
 
 	static{
 		mapping = new HashMap<String, AbstractModel>();
-		mapping.put("/homesystem/fcon/test", new TestModel());
+		mapping.put("/homesystem/fc/test", new TestModel());
+		mapping.put("/HomeSystem/fc/PlanList", new PlanList());
+		mapping.put("/HomeSystem/fc/PlanRegister", new PlanRegister());
+		mapping.put("/HomeSystem/fc/PlanConfirmation", new PlanConfirmation());
+		mapping.put("/HomeSystem/fc/PlanDetail", new PlanDetail());
 
 	}
 

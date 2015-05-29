@@ -9,19 +9,24 @@ import jp.ac.hal.skymoons.beans.PlanBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.SampleDao;
 
-public class PlanList extends AbstractModel{
+public class PlanDetail extends AbstractModel{
 
 	@Override
 	public String doService(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 
-		SampleDao dao = new SampleDao();
-		List<PlanBean> planList = dao.planList();
+		if(request.getParameter("detail")!=null){
+			SampleDao dao = new SampleDao();
+			PlanBean planDetail = dao.planDetail(request.getParameter("planId"));
+			request.setAttribute("planDetail", planDetail);
+			dao.close();
 
-		request.setAttribute("planList", planList);
+			return "/pages/PlanDetail.jsp";
+		}
 
-		return "/pages/PlanList.jsp"	;
+
+		return "/pages/PlanList.jsp";
 	}
 
 }

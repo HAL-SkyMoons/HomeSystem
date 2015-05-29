@@ -1,7 +1,6 @@
 ﻿package jp.ac.hal.skymoons.daoes;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,11 +9,9 @@ import java.util.List;
 
 import javax.naming.NamingException;
 
-import jp.ac.hal.skymoons.beans.PlanListBean;
+import jp.ac.hal.skymoons.beans.PlanBean;
 import jp.ac.hal.skymoons.beans.SampleBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
-import jp.ac.hal.skymoons.models.PlanList;
-
 
 public class SampleDao {
 
@@ -30,13 +27,14 @@ public class SampleDao {
 	public SampleDao() throws NamingException, SQLException {
 		ConnectionGet get = new ConnectionGet();
 		con = get.getCon();
-		}
+	}
 
 	/**
-	 *コンストラクタ
+	 * コンストラクタ
+	 *
 	 * @param con
 	 */
-	public SampleDao(Connection con){
+	public SampleDao(Connection con) {
 		this.con = con;
 	}
 
@@ -48,7 +46,8 @@ public class SampleDao {
 	 */
 	public List<SampleBean> findAll() throws SQLException {
 
-		PreparedStatement select = con.prepareStatement("select * from sample;");
+		PreparedStatement select = con
+				.prepareStatement("select * from sample;");
 
 		ResultSet result = select.executeQuery();
 
@@ -70,11 +69,12 @@ public class SampleDao {
 	 * @param languageId
 	 * @return
 	 * @throws SQLException
-	 * 追記分　Aを追加
+	 *             追記分　Aを追加
 	 */
 	public SampleBean findOne(String sample) throws SQLException {
 
-		PreparedStatement select = con.prepareStatement("select * from sample where sample = ? ;");
+		PreparedStatement select = con
+				.prepareStatement("select * from sample where sample = ? ;");
 
 		select.setString(1, sample);
 		ResultSet result = select.executeQuery();
@@ -91,31 +91,33 @@ public class SampleDao {
 	/**
 	 * 更新処理
 	 *
-	 * @param updateRecord 更新データ
+	 * @param updateRecord
+	 *            更新データ
 	 * @return 影響のあった行数
 	 * @throws SQLException
 	 */
 	public int update(SampleBean updateRecord) throws SQLException {
 
-		PreparedStatement update =
-			con.prepareStatement("update sample set sample = ? where sample = ? ;");
+		PreparedStatement update = con
+				.prepareStatement("update sample set sample = ? where sample = ? ;");
 
 		update.setString(1, updateRecord.getSumple());
 
 		return update.executeUpdate();
 	}
 
-
 	/**
 	 * 新規保存
 	 *
-	 * @param newRecord 保存データ
+	 * @param newRecord
+	 *            保存データ
 	 * @return 影響のあった行数
 	 * @throws SQLException
 	 */
 	public int insert(SampleBean newRecord) throws SQLException {
 
-		PreparedStatement insert = con.prepareStatement("insert into sample (sample) values (?);");
+		PreparedStatement insert = con
+				.prepareStatement("insert into sample (sample) values (?);");
 		insert.setString(1, newRecord.getSumple());
 
 		return insert.executeUpdate();
@@ -124,16 +126,19 @@ public class SampleDao {
 	/**
 	 * 削除処理
 	 *
-	 * @param languageId 削除対象
+	 * @param languageId
+	 *            削除対象
 	 * @return 影響のあった行数
 	 * @throws SQLException
 	 */
 	public int delete(String sample) throws SQLException {
 
-		PreparedStatement delete = con.prepareStatement("delete from sample where sample = ?; ");
+		PreparedStatement delete = con
+				.prepareStatement("delete from sample where sample = ?; ");
 		delete.setString(1, sample);
 		return delete.executeUpdate();
 	}
+
 	/**
 	 * 接続を閉じる
 	 *
@@ -161,33 +166,67 @@ public class SampleDao {
 		con.rollback();
 	}
 
-
-
 	/**
-	 * @author Taiga
-	 * PlanList
+	 * @author Taiga 企画一覧
 	 */
-	public List<PlanListBean> planList() throws SQLException {
+	public List<PlanBean> planList() throws SQLException {
 
 		PreparedStatement select = con.prepareStatement("select * from plan;");
 
 		ResultSet result = select.executeQuery();
 
-		ArrayList<PlanListBean> table = new ArrayList<PlanListBean>();
+		ArrayList<PlanBean> table = new ArrayList<PlanBean>();
 		while (result.next()) {
 
-			PlanListBean record = new PlanListBean();
+			PlanBean record = new PlanBean();
 			record.setPlanId(result.getInt("plan_id"));
-			record.setPlaner(result.getString("planer"));
+			record.setPlanner(result.getString("planner"));
 			record.setPlanTitle(result.getString("plan_title"));
 			record.setPlanDatetime(result.getDate("plan_datetime"));
 			record.setPlanComment(result.getString("plan_comment"));
-
 
 			table.add(record);
 		}
 		return table;
 	}
 
+	/**
+	 * 企画新規登録
+	 *
+	 * @param newRecord
+	 *            保存データ
+	 * @return 影響のあった行数
+	 * @throws SQLException
+	 */
+	public int planRegister(PlanBean newRecord) throws SQLException {
+
+		PreparedStatement insert = con.prepareStatement("insert into plan(planner,plan_title,plan_datetime,plan_comment) values (?,?,now(),?);");
+		insert.setString(1, newRecord.getPlanner());
+		insert.setString(2, newRecord.getPlanTitle());
+		insert.setString(3, newRecord.getPlanComment());
+
+		return insert.executeUpdate();
+	}
+
+	public PlanBean planDetail(String planId) throws SQLException {
+
+		PreparedStatement select = con
+				.prepareStatement("select * from plan where plan_id = ? ;");
+
+		select.setString(1, planId);
+		ResultSet result = select.executeQuery();
+
+		PlanBean record = new PlanBean();
+
+		if (result.next()) {
+			record.setPlanId(result.getInt("plan_id"));
+			record.setPlanner(result.getString("planner"));
+			record.setPlanTitle(result.getString("plan_title"));
+			record.setPlanDatetime(result.getDate("plan_datetime"));
+			record.setPlanComment(result.getString("plan_comment"));
+		}
+
+		return record;
+	}
 
 }
