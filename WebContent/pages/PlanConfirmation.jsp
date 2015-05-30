@@ -11,8 +11,7 @@
 <title>企画登録</title>
 </head>
 <%
-	PlanBean plan = (PlanBean) request
-			.getAttribute("plan");
+	PlanBean plan = (PlanBean) request.getAttribute("plan");
 
 	String planner = plan.getPlanner();
 	String planTitle = plan.getPlanTitle();
@@ -47,9 +46,25 @@
 			</tr>
 		</table>
 		<%
-			out.println("<input type=\"hidden\" name=\"planner\" value=\""+ planner +"\">");
-			out.println("<input type=\"hidden\" name=\"planTitle\" value=\""+ planTitle +"\">");
-			out.println("<input type=\"hidden\" name=\"planComment\" value=\""+ planComment +"\">");
+			out.println("<input type=\"hidden\" name=\"planner\" value=\""
+					+ planner + "\">");
+			out.println("<input type=\"hidden\" name=\"planTitle\" value=\""
+					+ planTitle + "\">");
+			out.println("<input type=\"hidden\" name=\"planComment\" value=\""
+					+ planComment + "\">");
+		%>
+
+		<h3>登録ジャンル</h3>
+		<%
+			ArrayList<Integer> genreIds = (ArrayList<Integer>) request
+					.getAttribute("genreIds");
+			ArrayList<String> genreNames = (ArrayList<String>) request
+					.getAttribute("genreNames");
+
+			for (int i = 0; i < genreIds.size(); i++) {
+				out.println(genreNames.get(i));
+				out.println("<input type=\"hidden\" name=\"id\" value=\"" + genreIds.get(i) + "\">");
+			}
 		%>
 
 		<input type="submit" name="submit" value="登録">

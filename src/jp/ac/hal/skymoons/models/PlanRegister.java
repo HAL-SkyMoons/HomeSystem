@@ -1,10 +1,12 @@
 package jp.ac.hal.skymoons.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jp.ac.hal.skymoons.beans.GenreBean;
 import jp.ac.hal.skymoons.beans.PlanBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.SampleDao;
@@ -25,10 +27,29 @@ public class PlanRegister extends AbstractModel{
 			plan.setPlanTitle(request.getParameter("planTitle"));
 			plan.setPlanComment(nlToBR(request.getParameter("planComment")));
 
+			//[id]:[genreName]
+			String[] genres = request.getParameterValues("genre");
+
+			ArrayList<Integer> genreIds = new ArrayList<Integer>();
+			ArrayList<String> genreNames = new ArrayList<String>();
+			for (String genre : genres) {
+				String[] split = genre.split(":");
+				genreIds.add(Integer.valueOf(split[0]));
+				genreNames.add(split[1]);
+			}
+
 			request.setAttribute("plan", plan);
+			request.setAttribute("genreIds", genreIds);
+			request.setAttribute("genreNames", genreNames);
+
 			//企画登録確認画面へ
 			return "/pages/PlanConfirmation.jsp";
 		}
+
+		SampleDao dao = new SampleDao();
+		List<GenreBean> genreList = dao.genreAll();
+		dao.close();
+		request.setAttribute("genreList", genreList);
 
 		//企画登録画面へ
 		return "/pages/PlanRegister.jsp";

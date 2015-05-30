@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.naming.NamingException;
 
+import jp.ac.hal.skymoons.beans.CommentBean;
+import jp.ac.hal.skymoons.beans.GenreBean;
 import jp.ac.hal.skymoons.beans.PlanBean;
 import jp.ac.hal.skymoons.beans.SampleBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
@@ -171,7 +173,8 @@ public class SampleDao {
 	 */
 	public List<PlanBean> planList() throws SQLException {
 
-		PreparedStatement select = con.prepareStatement("select * from plan;");
+		PreparedStatement select = con
+				.prepareStatement("select * from plan p,users u where p.planner = u.user_id;");
 
 		ResultSet result = select.executeQuery();
 
@@ -181,6 +184,8 @@ public class SampleDao {
 			PlanBean record = new PlanBean();
 			record.setPlanId(result.getInt("plan_id"));
 			record.setPlanner(result.getString("planner"));
+			record.setPlannerName(result.getString("u.last_name")
+					+ result.getString("u.fast_name"));
 			record.setPlanTitle(result.getString("plan_title"));
 			record.setPlanDatetime(result.getDate("plan_datetime"));
 			record.setPlanComment(result.getString("plan_comment"));
@@ -195,23 +200,42 @@ public class SampleDao {
 	 *
 	 * @param newRecord
 	 *            保存データ
-	 * @return 影響のあった行数
+	 * @return 生成されたplanid
 	 * @throws SQLException
 	 */
 	public int planRegister(PlanBean newRecord) throws SQLException {
 
-		PreparedStatement insert = con.prepareStatement("insert into plan(planner,plan_title,plan_datetime,plan_comment) values (?,?,now(),?);");
+		PreparedStatement insert = con
+				.prepareStatement("insert into plan(planner,plan_title,plan_datetime,plan_comment) values (?,?,now(),?);");
 		insert.setString(1, newRecord.getPlanner());
 		insert.setString(2, newRecord.getPlanTitle());
 		insert.setString(3, newRecord.getPlanComment());
 
-		return insert.executeUpdate();
+		int planId = 0;
+
+		if (insert.executeUpdate() == 1) {
+			PreparedStatement select = con
+					.prepareStatement("select LAST_INSERT_ID()");
+
+			ResultSet result = select.executeQuery();
+			result.next();
+			planId = result.getInt(1);
+		}
+
+		return planId;
 	}
 
+	/**
+	 * 企画詳細取得
+	 *
+	 * @param planId
+	 * @return
+	 * @throws SQLException
+	 */
 	public PlanBean planDetail(String planId) throws SQLException {
 
 		PreparedStatement select = con
-				.prepareStatement("select * from plan where plan_id = ? ;");
+				.prepareStatement("select * from plan p, users u where plan_id = ? and p.planner = u.user_id ;");
 
 		select.setString(1, planId);
 		ResultSet result = select.executeQuery();
@@ -221,6 +245,8 @@ public class SampleDao {
 		if (result.next()) {
 			record.setPlanId(result.getInt("plan_id"));
 			record.setPlanner(result.getString("planner"));
+			record.setPlannerName(result.getString("u.last_name")
+					+ result.getString("u.fast_name"));
 			record.setPlanTitle(result.getString("plan_title"));
 			record.setPlanDatetime(result.getDate("plan_datetime"));
 			record.setPlanComment(result.getString("plan_comment"));
@@ -229,4 +255,219 @@ public class SampleDao {
 		return record;
 	}
 
+	/**
+	 * ジャンル全件取得
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<GenreBean> genreAll() throws SQLException {
+
+		PreparedStatement select = con
+				.prepareStatement("select * from genre g, big_genre b where g.big_genre_id = b.big_genre_id ;");
+
+		ResultSet result = select.executeQuery();
+
+		ArrayList<GenreBean> table = new ArrayList<GenreBean>();
+		while (result.next()) {
+
+			GenreBean record = new GenreBean();
+
+			record.setGenreId(result.getInt("genre_id"));
+			record.setGenreName(result.getString("genre_name"));
+			record.setBigGenreId(result.getInt("big_genre_id"));
+			record.setBigGenreName(result.getString("big_genre_name"));
+
+			table.add(record);
+		}
+		return table;
+	}
+
+	/**
+	 * 企画に紐づくジャンルの登録
+	 *
+	 * @param planId
+	 * @param genreId
+	 * @return
+	 * @throws SQLException
+	 */
+	public int planGenreInsert(int planId, int genreId) throws SQLException {
+
+		PreparedStatement insert = con
+				.prepareStatement("insert into plan_genre (plan_id,genre_id) values (?,?);");
+		insert.setInt(1, planId);
+		insert.setInt(2, genreId);
+
+		return insert.executeUpdate();
+	}
+
+	/**
+	 * 企画に紐付いたジャンル取得
+	 *
+	 * @param planId
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<GenreBean> planGenreList(int planId) throws SQLException {
+
+		PreparedStatement select = con
+				.prepareStatement("select p.genre_id ,g.genre_name from plan_genre p, genre g where p.plan_id = ? and p.genre_id = g.genre_id;");
+
+		select.setInt(1, planId);
+		ResultSet result = select.executeQuery();
+
+		ArrayList<GenreBean> table = new ArrayList<GenreBean>();
+		while (result.next()) {
+
+			GenreBean record = new GenreBean();
+
+			record.setGenreId(result.getInt("p.genre_id"));
+			record.setGenreName(result.getString("g.genre_name"));
+
+			table.add(record);
+		}
+		return table;
+	}
+
+	/**
+	 * コメント登録
+	 *
+	 * @param newRecord
+	 * @return
+	 * @throws SQLException
+	 */
+	public int commentInsert(CommentBean newRecord) throws SQLException {
+
+		// コメント件数取得
+		int commentCount = commentCount(newRecord.getPlanID());
+
+		if (commentCount != -1) {
+			// コメント登録処理
+			PreparedStatement insert = con
+					.prepareStatement("insert into plan_comment (plan_id,comment_no,comment_user,comment_datetime,delete_flag,comment) values (?,?,?,now(),0,?);");
+
+			insert.setInt(1, newRecord.getPlanID());
+			insert.setInt(2, commentCount + 1);
+			insert.setString(3, newRecord.getCommentUser());
+			insert.setString(4, newRecord.getComment());
+
+			return insert.executeUpdate();
+		} else {
+			return 0;
+		}
+
+	}
+
+	/**
+	 * 企画内のコメント数取得
+	 *
+	 * @param planId
+	 * @return
+	 * @throws SQLException
+	 */
+	public int commentCount(int planId) throws SQLException {
+
+		PreparedStatement select = con
+				.prepareStatement("select count(*) from plan_comment where plan_id = ? ;");
+
+		select.setInt(1, planId);
+		ResultSet result = select.executeQuery();
+
+		if (result.next()) {
+			return result.getInt("count(*)");
+		} else {
+			return -1;
+		}
+	}
+
+	/**
+	 * 企画に紐づくコメント一覧取得
+	 *
+	 * @param planId
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<CommentBean> planCommentList(int planId) throws SQLException {
+
+		PreparedStatement select = con
+				.prepareStatement("select * from plan_comment p, users u where plan_id = ? and p.comment_user = u.user_id;");
+
+		select.setInt(1, planId);
+
+		ResultSet result = select.executeQuery();
+
+		ArrayList<CommentBean> table = new ArrayList<CommentBean>();
+		while (result.next()) {
+
+			CommentBean record = new CommentBean();
+
+			record.setPlanID(result.getInt("plan_id"));
+			record.setCommentNo(result.getInt("comment_no"));
+			record.setCommentUser(result.getString("comment_user"));
+			record.setCommentName(result.getString("u.last_name")
+					+ result.getString("u.fast_name"));
+			record.setDeleteFrag(result.getInt("delete_flag"));
+			record.setCommentDatetime(result.getDate("comment_datetime"));
+			record.setComment(result.getString("comment"));
+
+			table.add(record);
+		}
+		return table;
+	}
+
+	/**
+	 * コメント削除
+	 *
+	 * @param deleteRecord
+	 * @return
+	 * @throws SQLException
+	 */
+	public int commentDelete(CommentBean deleteRecord) throws SQLException {
+
+		PreparedStatement update = con
+				.prepareStatement("update plan_comment set delete_flag = ? where plan_id = ? and comment_no = ? ;");
+
+		update.setInt(1, 1);
+		update.setInt(2, deleteRecord.getPlanID());
+		update.setInt(3, deleteRecord.getCommentNo());
+
+		return update.executeUpdate();
+	}
+
+	public List<PlanBean> planGenreSearch(String[] genreIds) throws SQLException {
+
+		int idCount = genreIds.length;
+		String where = "?";
+		for (int i = 1; i < idCount; i++)
+			where += ",?";
+
+		PreparedStatement select = con
+				.prepareStatement("select p.plan_id,p.planner,u.last_name,u.fast_name,p.plan_title,p.plan_datetime,p.plan_comment,count(*) from plan p, users u, plan_genre g where p.planner = u.user_id and p.plan_id = g.plan_id and genre_id in ("
+						+ where + ") group by p.plan_id;");
+
+		for (int i = 1; i <= idCount; i++)
+			select.setInt(i, Integer.valueOf(genreIds[i - 1]));
+
+		ResultSet result = select.executeQuery();
+
+		ArrayList<PlanBean> table = new ArrayList<PlanBean>();
+		while (result.next()) {
+
+			if (result.getInt("count(*)") == idCount) {
+				PlanBean record = new PlanBean();
+
+				record.setPlanId(result.getInt("p.plan_id"));
+				record.setPlanner(result.getString("p.planner"));
+				record.setPlannerName(result.getString("u.last_name")
+						+ result.getString("u.fast_name"));
+				record.setPlanTitle(result.getString("p.plan_title"));
+				record.setPlanDatetime(result.getDate("p.plan_datetime"));
+				record.setPlanComment(result.getString("p.plan_comment"));
+
+				table.add(record);
+			}
+
+		}
+		return table;
+	}
 }
