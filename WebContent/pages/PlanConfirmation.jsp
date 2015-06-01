@@ -1,3 +1,4 @@
+<%@page import="jp.ac.hal.skymoons.util.Utility"%>
 <%@page import="jp.ac.hal.skymoons.beans.PlanBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
@@ -11,6 +12,7 @@
 <title>企画登録</title>
 </head>
 <%
+	Utility util = new Utility();
 	PlanBean plan = (PlanBean) request.getAttribute("plan");
 
 	String planner = plan.getPlanner();
@@ -40,7 +42,7 @@
 				<th>企画内容：</th>
 				<td>
 					<%
-						out.print(planComment);
+						out.print(util.nlToBR(planComment));
 					%>
 				</td>
 			</tr>

@@ -25,7 +25,7 @@ public class PlanRegister extends AbstractModel{
 			PlanBean plan = new PlanBean();
 			plan.setPlanner(request.getParameter("planner"));
 			plan.setPlanTitle(request.getParameter("planTitle"));
-			plan.setPlanComment(nlToBR(request.getParameter("planComment")));
+			plan.setPlanComment(request.getParameter("planComment"));
 
 			//[id]:[genreName]
 			String[] genres = request.getParameterValues("genre");
@@ -54,14 +54,5 @@ public class PlanRegister extends AbstractModel{
 		//企画登録画面へ
 		return "/pages/PlanRegister.jsp";
 	}
-
-	public static String nlToBR(String str) {
-	    if (str == null || "".equals(str)) {
-	      return "";
-	    }
-	    str = str.replaceAll("\r\n", "<br>");
-	    str = str.replaceAll("\n", "<br>");
-	    return str;
-	  }
 
 }

@@ -1,3 +1,4 @@
+<%@page import="jp.ac.hal.skymoons.util.Utility"%>
 <%@page import="jp.ac.hal.skymoons.beans.CommentBean"%>
 <%@page import="jp.ac.hal.skymoons.beans.GenreBean"%>
 <%@page import="jp.ac.hal.skymoons.beans.PlanBean"%>
@@ -15,6 +16,7 @@
 <body>
 	<table>
 		<%
+			Utility util = new Utility();
 			PlanBean plan = (PlanBean) request.getAttribute("planDetail");
 			ArrayList<GenreBean> genres = (ArrayList<GenreBean>) request
 					.getAttribute("genre");
@@ -57,7 +59,7 @@
 			<th>企画内容</th>
 			<td>
 				<%
-					out.println(plan.getPlanComment());
+					out.println(util.nlToBR(plan.getPlanComment()));
 				%>
 			</td>
 		</tr>
@@ -95,7 +97,7 @@
 				if(comment.getDeleteFrag()==0){
 					out.println("<td>" + comment.getCommentNo() + "</td>");
 					out.println("<td>" + comment.getCommentName() + "</td>");
-					out.println("<td>" + comment.getComment() + "</td>");
+					out.println("<td>" + util.nlToBR(comment.getComment()) + "</td>");
 					out.println("<td>" + comment.getCommentDatetime() + "</td>");
 					out.println("<td><form action=\"/HomeSystem/fc/PlanDetail\" method=\"post\"><input type=\"hidden\" name=\"planId\" value=\""+ comment.getPlanID() +"\"><input type=\"hidden\" name=\"commentNo\" value=\""+ comment.getCommentNo() +"\"><input type=\"submit\" name=\"delete\" value=\"削除\"></form></td>");
 				}else{

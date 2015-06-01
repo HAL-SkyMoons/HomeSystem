@@ -67,14 +67,7 @@ public class PlanDetail extends AbstractModel{
 		return "/pages/PlanList.jsp";
 	}
 
-	public static String nlToBR(String str) {
-	    if (str == null || "".equals(str)) {
-	      return "";
-	    }
-	    str = str.replaceAll("\r\n", "<br>");
-	    str = str.replaceAll("\n", "<br>");
-	    return str;
-	  }
+
 
 
 }
