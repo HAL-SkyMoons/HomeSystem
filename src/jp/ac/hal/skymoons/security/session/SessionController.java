@@ -43,24 +43,6 @@ public class SessionController {
 	}
 	
 	/**
-	 * 顧客ユーザのユーザIDをセッションに登録する。
-	 * @param cId
-	 * 顧客ユーザID
-	 */
-	public void setCustomerId(String cId) {
-		setId("cId", cId);
-	}
-	
-	/**
-	 * 社員ユーザのユーザIDをセッションに登録する。
-	 * @param sId
-	 * 社員ユーザID
-	 */
-	public void setStaffId(String sId) {
-		setId("sId", sId);
-	}
-	
-	/**
 	 * セッション登録用共通機能。
 	 * @param id
 	 * セッションの名前
@@ -87,24 +69,6 @@ public class SessionController {
 	 */
 	public String checkUserSession() {
 		return checkSession("uId");
-	}
-	
-	/**
-	 * 顧客ユーザのセッションが有効か確認を行う。
-	 * @return
-	 * 有効:nullを返す/無効:セッションエラーページのURLを返す
-	 */
-	public String checkCustomerSession() {
-		return checkSession("cId");
-	}
-	
-	/**
-	 * 社員ユーザのセッションが有効か確認を行う。
-	 * @return
-	 * 有効:nullを返す/無効:セッションエラーページのURLを返す
-	 */
-	public String checkStaffSession() {
-		return checkSession("sId");
 	}
 	
 	/**
@@ -139,20 +103,6 @@ public class SessionController {
 	public void discardUserSession() {
 		discardSession("uId");
 		discardSession("group");
-	}
-	
-	/**
-	 * 顧客ユーザのセッションを破棄する。
-	 */
-	public void discardCustomerSession() {
-		discardSession("cId");
-	}
-	
-	/**
-	 * 社員ユーザのセッションを破棄する。
-	 */
-	public void discardStaffSession() {
-		discardSession("dId");
 	}
 	
 	/**
