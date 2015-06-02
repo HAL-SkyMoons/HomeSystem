@@ -232,12 +232,12 @@ public class SampleDao {
 	 * @return
 	 * @throws SQLException
 	 */
-	public PlanBean planDetail(String planId) throws SQLException {
+	public PlanBean planDetail(int planId) throws SQLException {
 
 		PreparedStatement select = con
 				.prepareStatement("select * from plan p, users u where plan_id = ? and p.planner = u.user_id ;");
 
-		select.setString(1, planId);
+		select.setInt(1, planId);
 		ResultSet result = select.executeQuery();
 
 		PlanBean record = new PlanBean();
@@ -434,8 +434,15 @@ public class SampleDao {
 		return update.executeUpdate();
 	}
 
+	/**
+	 * ジャンル検索
+	 * @param genreIds
+	 * @return
+	 * @throws SQLException
+	 */
 	public List<PlanBean> planGenreSearch(String[] genreIds) throws SQLException {
 
+		System.out.println("search");
 		int idCount = genreIds.length;
 		String where = "?";
 		for (int i = 1; i < idCount; i++)
@@ -469,5 +476,31 @@ public class SampleDao {
 
 		}
 		return table;
+	}
+
+	/**
+	 * 企画内容編集
+	 * @param updateRecord
+	 * @return
+	 * @throws SQLException
+	 */
+	public int planEdit(PlanBean updateRecord) throws SQLException {
+
+		PreparedStatement update = con
+				.prepareStatement("update plan set plan_title = ?, plan_comment = ? where plan_id = ? ;");
+
+		update.setString(1, updateRecord.getPlanTitle());
+		update.setString(2, updateRecord.getPlanComment());
+		update.setInt(3, updateRecord.getPlanId());
+
+		return update.executeUpdate();
+	}
+
+	public int planGenreDelete(int planId) throws SQLException {
+
+		PreparedStatement delete = con
+				.prepareStatement("delete from plan_genre where plan_id = ?; ");
+		delete.setInt(1, planId);
+		return delete.executeUpdate();
 	}
 }

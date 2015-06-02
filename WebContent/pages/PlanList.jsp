@@ -15,9 +15,40 @@
 		<%
 			ArrayList<GenreBean> genreList = (ArrayList<GenreBean>) request
 					.getAttribute("genreList");
+			String[] searchGenre = (String[]) request
+					.getAttribute("searchGenre");
+			int genreIndex = 0;
+			int genreMaxIndex = 0;
+
+			if(searchGenre != null)
+				genreMaxIndex = searchGenre.length;
+
 			for (GenreBean genre : genreList) {
-				out.println("<label><input type=\"checkbox\" name=\"genre\" value=\""
-						+ genre.getGenreId() + "\">" + genre.getGenreName() + "</label>");
+				//検索ジャンル指定なし　または　既存検索ジャンル出力済み
+				if (genreMaxIndex == genreIndex) {
+					out.println("<label><input type=\"checkbox\" name=\"genre\" value=\""
+							+ genre.getGenreId()
+							+ "\">"
+							+ genre.getGenreName()
+							+ "</label>");
+				} else {
+					if(Integer.valueOf(searchGenre[genreIndex]) == genre.getGenreId()){
+						out.println("<label><input type=\"checkbox\" name=\"genre\" value=\""
+								+ genre.getGenreId()
+								+ "\" checked=\"checked\">"
+								+ genre.getGenreName()
+								+ "</label>");
+						genreIndex ++;
+					}else{
+						out.println("<label><input type=\"checkbox\" name=\"genre\" value=\""
+								+ genre.getGenreId()
+								+ "\">"
+								+ genre.getGenreName()
+								+ "</label>");
+					}
+
+				}
+
 			}
 		%>
 		<input type="submit" name="search" value="検索">

@@ -32,6 +32,7 @@ public class PlanList extends AbstractModel{
 		dao.close();
 		request.setAttribute("planList", planList);
 		request.setAttribute("genreList", genreList);
+		request.setAttribute("searchGenre", request.getParameterValues("genre"));
 
 		return "/pages/PlanList.jsp"	;
 	}

@@ -19,6 +19,7 @@ public class ModelSelector {
 		mapping.put("/HomeSystem/fc/PlanRegister", new PlanRegister());
 		mapping.put("/HomeSystem/fc/PlanConfirmation", new PlanConfirmation());
 		mapping.put("/HomeSystem/fc/PlanDetail", new PlanDetail());
+		mapping.put("/HomeSystem/fc/PlanEdit", new PlanEdit());
 
 	}
 
