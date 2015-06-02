@@ -1,7 +1,8 @@
 package jp.ac.hal.skymoons.controllers;
 
 import java.util.HashMap;
-import jp.ac.hal.skymoons.models.*;
+
+import jp.ac.hal.skymoons.models.TestModel;
 
 /**
  * リクエストとモデル句タスのマッピングを管理するクラス
@@ -13,7 +14,8 @@ public class ModelSelector {
 
 	static{
 		mapping = new HashMap<String, AbstractModel>();
-		mapping.put("/homesystem/fcon/test", new TestModel());
+		mapping.put("/homesystem/fc/test", new TestModel());
+		mapping.put("/homesystem/EmployeeList", new TestModel());
 
 	}
 
