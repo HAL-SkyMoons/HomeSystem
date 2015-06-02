@@ -9,6 +9,7 @@ import jp.ac.hal.skymoons.controllers.AbstractModel;
  * 顧客ユーザログイン認証機能。
  * @author YAMAZAKI GEN
  * @since 2015/05/29
+ * @version 1.0
  */
 public class LoginCustomer extends AbstractModel {
 

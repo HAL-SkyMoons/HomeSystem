@@ -31,6 +31,18 @@ public class SessionController {
 	}
 	
 	/**
+	 * 顧客ユーザ又は社員ユーザのユーザIDとユーザグループをセッションに登録する。
+	 * @param uId
+	 * 顧客ユーザ又は社員ユーザのユーザID
+	 * @param group
+	 * 顧客ユーザ又は社員ユーザのユーザグループ
+	 */
+	public void setUserIdAndGroup(String uId, String group) {
+		setId("uId", uId);
+		setId("group", group);
+	}
+	
+	/**
 	 * 顧客ユーザのユーザIDをセッションに登録する。
 	 * @param cId
 	 * 顧客ユーザID
@@ -69,6 +81,15 @@ public class SessionController {
 	}
 	
 	/**
+	 * 顧客ユーザ・社員ユーザのセッションが有効か確認を行う。
+	 * @return
+	 * 有効:nullを返す/無効:セッションエラーページのURLを返す
+	 */
+	public String checkUserSession() {
+		return checkSession("uId");
+	}
+	
+	/**
 	 * 顧客ユーザのセッションが有効か確認を行う。
 	 * @return
 	 * 有効:nullを返す/無効:セッションエラーページのURLを返す
@@ -96,8 +117,11 @@ public class SessionController {
 	private String checkSession(String id) {
 		if(this.session.getAttribute(id) != null) {
 			setId(id, this.session.getAttribute(id).toString());
+			if(id.equals("uId")) {
+				setId("group", this.session.getAttribute("group").toString());
+			}
 		} else {
-			return "セッションエラーページのURL";
+			return "ERROR_PAGE_URL";
 		}
 		return null;
 	}
@@ -107,6 +131,14 @@ public class SessionController {
 	 */
 	public void discardAdministratorSession() {
 		discardSession("aId");
+	}
+	
+	/**
+	 * 顧客ユーザ・社員ユーザのセッションを破棄する。
+	 */
+	public void discardUserSession() {
+		discardSession("uId");
+		discardSession("group");
 	}
 	
 	/**

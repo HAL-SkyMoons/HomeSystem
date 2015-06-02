@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%
 /**
- * 管理者用ログインページ
+ * 顧客・社員用ログインページ
  * @author YAMAZAKI GEN
  * @since 2015/05/22
  * @version 1.0
@@ -12,11 +12,11 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>管理者用ログイン</title>
+		<title>顧客・社員用ログイン</title>
 	</head>
 	<body>
-		<h1>管理者用ログインページ</h1>
-		<form action="/HomeSystem/fc/login/administrator" method="POST">
+		<h1>顧客・社員用ログインページ</h1>
+		<form action="/HomeSystem/fc/login/user" method="POST">
 <%
 	if(request.getAttribute("message") != null) {
 		out.println("<p>" + request.getAttribute("message") + "</p>");

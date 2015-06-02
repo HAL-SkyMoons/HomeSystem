@@ -8,12 +8,12 @@ import jp.ac.hal.skymoons.daoes.LoginDAO;
 import jp.ac.hal.skymoons.security.session.SessionController;
 
 /**
- * 管理者ユーザログイン認証機能。
+ * 顧客・社員ユーザログイン認証機能。
  * @author YAMAZAKI GEN
- * @since 2015/05/26
+ * @since 2015/06/02
  * @version 1.0
  */
-public class LoginAdministrator extends AbstractModel {
+public class LoginUser extends AbstractModel {
 
 	@Override
 	public String doService(HttpServletRequest request,
@@ -21,14 +21,14 @@ public class LoginAdministrator extends AbstractModel {
 		
 		if(request.getParameter("submit") == null) {
 			// ログインボタンが押されていない
-			return "/login/a.jsp";
+			return "/login/cs.jsp";
 		}
 		// ログインボタンが押された
 		if(	request.getParameter("id").equals("") ||
 			request.getParameter("pass").equals("")) {
 			// 未入力項目あり
 			request.setAttribute("message", "未入力項目があります。");
-			return "/login/a.jsp";
+			return "/login/cs.jsp";
 		}
 		// 未入力項目なし
 		
@@ -36,20 +36,22 @@ public class LoginAdministrator extends AbstractModel {
 		LoginDAO loginDAO = null;
 		try{
 			loginDAO = new LoginDAO();
-			if(loginDAO.checkAdministratorUser(
+			if(loginDAO.checkCsUser(
 					request.getParameter("id"),
 					request.getParameter("pass"))) {
 				// 認証成功
 				loginDAO.close();
 				// セッション開始
 				SessionController sessionController = new SessionController(request);
-				sessionController.setAdministratorId(request.getParameter("id").toString());
-				return "/login/topa.jsp";
+				sessionController.setUserIdAndGroup(
+						request.getParameter("id").toString(),
+						"group");
+				return "/login/topcs.jsp";
 			} else {
 				// 認証失敗
 				loginDAO.close();
 				request.setAttribute("message", "認証に失敗しました。");
-				return "/login/a.jsp";
+				return "/login/cs.jsp";
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -58,4 +60,5 @@ public class LoginAdministrator extends AbstractModel {
 			return "システムエラーページのURL";
 		}
 	}
+
 }

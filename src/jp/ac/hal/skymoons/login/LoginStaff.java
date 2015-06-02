@@ -9,6 +9,7 @@ import jp.ac.hal.skymoons.controllers.AbstractModel;
  * 社員ユーザログイン認証機能。
  * @author YAMAZAKI GEN
  * @since 2015/05/29
+ * @version 1.0
  */
 public class LoginStaff extends AbstractModel {
 

@@ -1,3 +1,4 @@
+<%@page import="jp.ac.hal.skymoons.security.session.SessionController"%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%
 /**
@@ -15,11 +16,11 @@
 	</head>
 	<body>
 		<h1>顧客用ログインページ</h1>
-		<form action="">
+		<form action="/HomeSystem/fc/login/administrator" method="POST">
 			<p>ログイン認証に失敗しました。</p>
-			<p>LoginID:<input type="text"></p>
-			<p>Password:<input type="password"></p>
-			<p><input type="submit" value="Login"></p>
+			<p>LoginID:<input type="text" name="id"></p>
+			<p>Password:<input type="password" name="pass"></p>
+			<p><input type="submit" name="submit" value="Login"></p>
 		</form>
 	</body>
 </html>

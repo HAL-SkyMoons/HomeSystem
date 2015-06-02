@@ -3,8 +3,7 @@ package jp.ac.hal.skymoons.controllers;
 import java.util.HashMap;
 
 import jp.ac.hal.skymoons.login.LoginAdministrator;
-import jp.ac.hal.skymoons.login.LoginCustomer;
-import jp.ac.hal.skymoons.login.LoginStaff;
+import jp.ac.hal.skymoons.login.LoginUser;
 import jp.ac.hal.skymoons.models.*;
 
 /**
@@ -21,8 +20,7 @@ public class ModelSelector {
 		
 		// ログイン認証機能
 		mapping.put("/HomeSystem/fc/login/administrator", new LoginAdministrator());
-		mapping.put("/HomeSystem/fc/login/customer", new LoginCustomer());
-		mapping.put("/HomeSystem/fc/login/staff", new LoginStaff());
+		mapping.put("/HomeSystem/fc/login/user", new LoginUser());
 	}
 
 /**
