@@ -36,16 +36,17 @@ public class LoginUser extends AbstractModel {
 		LoginDAO loginDAO = null;
 		try{
 			loginDAO = new LoginDAO();
-			if(loginDAO.checkCsUser(
+			String class_flag = loginDAO.checkCsUser(
 					request.getParameter("id"),
-					request.getParameter("pass"))) {
+					request.getParameter("pass"));
+			if(class_flag != null) {
 				// 認証成功
 				loginDAO.close();
 				// セッション開始
 				SessionController sessionController = new SessionController(request);
 				sessionController.setUserIdAndGroup(
 						request.getParameter("id").toString(),
-						"group");
+						class_flag);
 				return "/login/topcs.jsp";
 			} else {
 				// 認証失敗

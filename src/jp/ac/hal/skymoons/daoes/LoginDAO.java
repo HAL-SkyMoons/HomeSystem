@@ -84,7 +84,7 @@ public class LoginDAO {
 		return checkUser(
 					id,
 					pass,
-					"SELECT COUNT(*) FROM administrators WHERE administrator_ID = ? AND passwrd = ?");
+					"SELECT COUNT(*) FROM administrators WHERE administrator_ID = ? AND password = ?");
 	}
 	
 	/**
@@ -110,12 +110,22 @@ public class LoginDAO {
 	 * @param pass
 	 * 顧客ユーザ・社員ユーザのパスワード
 	 * @return
-	 * 認証成功:true/認証失敗/false
+	 * 認証成功:Class_flag/認証失敗:null
 	 */
-	public boolean checkCsUser(String id,String pass) throws Exception {
-		return checkUser(
-					id,
-					pass,
-					"SELECT COUNT(*) FROM users WHERE user_id = ? AND password = ?");
+	public String checkCsUser(String id,String pass) throws Exception {
+		PreparedStatement statement = con.prepareStatement(
+				"SELECT Class_flag FROM users WHERE user_id = ? AND password = ?");
+		statement.setString(1, id);
+		statement.setString(2, pass);
+		ResultSet result = statement.executeQuery();
+		if(result != null) {
+			if(result.next()) {
+			return result.getString(1);
+			} else {
+				return null;
+			}
+		} else {
+			return null;
+		}
 	}
 }
