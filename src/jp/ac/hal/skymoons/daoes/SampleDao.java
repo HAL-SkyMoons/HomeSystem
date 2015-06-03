@@ -12,6 +12,7 @@ import javax.naming.NamingException;
 import jp.ac.hal.skymoons.beans.CommentBean;
 import jp.ac.hal.skymoons.beans.GenreBean;
 import jp.ac.hal.skymoons.beans.PlanBean;
+import jp.ac.hal.skymoons.beans.PlanPointBean;
 import jp.ac.hal.skymoons.beans.SampleBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
 
@@ -496,6 +497,12 @@ public class SampleDao {
 		return update.executeUpdate();
 	}
 
+	/**
+	 * 企画に紐づくジャンルを削除
+	 * @param planId
+	 * @return
+	 * @throws SQLException
+	 */
 	public int planGenreDelete(int planId) throws SQLException {
 
 		PreparedStatement delete = con
@@ -503,4 +510,124 @@ public class SampleDao {
 		delete.setInt(1, planId);
 		return delete.executeUpdate();
 	}
+
+	/**
+	 * 企画評価登録・更新
+	 * @param planPoint
+	 * @return
+	 * @throws SQLException
+	 */
+	public int planPointRegister(PlanPointBean planPoint) throws SQLException {
+
+		PreparedStatement select = con
+				.prepareStatement("select count(*) from plan_point where plan_id = ? and employee_id = ? ;");
+
+		select.setInt(1, planPoint.getPlanId());
+		select.setString(2, planPoint.getEmployeeId());
+		ResultSet result = select.executeQuery();
+
+		PlanBean record = new PlanBean();
+
+		result.next();
+		if(result.getInt("count(*)") == 0){
+			//新規追加
+			PreparedStatement insert = con
+					.prepareStatement("insert into plan_point (plan_id,employee_id,point) values (?,?,?);");
+			insert.setInt(1, planPoint.getPlanId());
+			insert.setString(2, planPoint.getEmployeeId());
+			insert.setInt(3, planPoint.getPoint());
+
+			return insert.executeUpdate();
+
+		}else{
+			//更新
+			PreparedStatement update = con
+					.prepareStatement("update plan_point set point = ? where plan_id = ? and employee_id = ?;");
+
+			update.setInt(1, planPoint.getPoint());
+			update.setInt(2, planPoint.getPlanId());
+			update.setString(3, planPoint.getEmployeeId());
+
+
+			return update.executeUpdate();
+		}
+	}
+
+	/**
+	 * 社員ごと企画評価確認
+	 * @param planPoint
+	 * @return
+	 * @throws SQLException
+	 */
+	public PlanPointBean planPointGet(PlanPointBean planPoint) throws SQLException {
+
+		PreparedStatement select = con
+				.prepareStatement("select * from plan_point where plan_id = ? and employee_id = ? ;");
+
+		select.setInt(1, planPoint.getPlanId());
+		select.setString(2, planPoint.getEmployeeId());
+
+		ResultSet result = select.executeQuery();
+
+		PlanPointBean record = new PlanPointBean();
+
+		if (result.next()) {
+			record.setPlanId(result.getInt("plan_id"));
+			record.setEmployeeId(result.getString("employee_id"));
+			record.setPoint(result.getInt("point"));
+		}
+
+		return record;
+	}
+
+	/**
+	 * 企画評価数取得
+	 * @param planId
+	 * @return
+	 * @throws SQLException
+	 */
+	public int[] planPointAll(int planId) throws SQLException {
+
+		int[] points = new int[3];
+
+		PreparedStatement good = con
+				.prepareStatement("select count(*) from plan_point where plan_id = ? and point = 1;");
+
+		good.setInt(1, planId);
+
+		ResultSet result = good.executeQuery();
+
+		if (result.next()) {
+			points[0] = result.getInt("count(*)");
+		}
+
+		//
+
+		PreparedStatement hold = con
+				.prepareStatement("select count(*) from plan_point where plan_id = ? and point = 2;");
+
+		hold.setInt(1, planId);
+
+		result = hold.executeQuery();
+
+		if (result.next()) {
+			points[1] = result.getInt("count(*)");
+		}
+
+		//
+
+		PreparedStatement bad = con
+				.prepareStatement("select count(*) from plan_point where plan_id = ? and point = 3;");
+
+		bad.setInt(1, planId);
+
+		result = bad.executeQuery();
+
+		if (result.next()) {
+			points[2] = result.getInt("count(*)");
+		}
+
+		return points;
+	}
+
 }

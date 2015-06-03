@@ -13,6 +13,7 @@ public class ModelSelectorGet {
 		mapping.put("/HomeSystem/fc/PlanList", new PlanList());
 		mapping.put("/HomeSystem/fc/PlanRegister", new PlanRegister());
 		mapping.put("/HomeSystem/fc/PlanDetail", new PlanDetail());
+		mapping.put("/HomeSystem/fc/Home", new Home());
 	}
 
 /**
