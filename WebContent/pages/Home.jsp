@@ -24,20 +24,21 @@
 			</tr>
 			<tr>
 				<th>To：</th>
-				<td></td>
+				<%
+					out.println("<td>野波麻帆</td>");
+					out.println("<input type=\"hidden\" name=\"fromId\" value=\"E0002\">");
+				%>
+
 			</tr>
 			<tr>
 				<th>バッチ：</th>
 				<td>
 				<input type="radio" name="batch" value="1">リーダーバッチ
-				<input type="radio" name="batch" value="2">プレゼンバッチ
-				<input type="radio" name="batch" value="3">スピードバッチ
-				<input type="radio" name="batch" value="4">熱血バッチ
-				<input type="radio" name="batch" value="5">発想バッチ
-				<input type="radio" name="batch" value="6">グッジョブバッチ
-
-
-				</td>
+					<input type="radio" name="batch" value="2">プレゼンバッチ <input
+					type="radio" name="batch" value="3">スピードバッチ <input
+					type="radio" name="batch" value="4">熱血バッチ <input
+					type="radio" name="batch" value="5">発想バッチ <input
+					type="radio" name="batch" value="6">グッジョブバッチ</td>
 			</tr>
 			<tr>
 				<th>ポイント：</th>

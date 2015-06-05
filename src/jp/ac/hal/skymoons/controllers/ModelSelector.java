@@ -2,11 +2,8 @@ package jp.ac.hal.skymoons.controllers;
 
 import java.util.HashMap;
 
-<<<<<<< HEAD
-=======
 import jp.ac.hal.skymoons.login.LoginAdministrator;
 import jp.ac.hal.skymoons.login.LoginUser;
->>>>>>> refs/remotes/origin/master
 import jp.ac.hal.skymoons.models.*;
 
 /**
