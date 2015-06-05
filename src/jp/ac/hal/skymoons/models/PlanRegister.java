@@ -8,8 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import jp.ac.hal.skymoons.beans.GenreBean;
 import jp.ac.hal.skymoons.beans.PlanBean;
+import jp.ac.hal.skymoons.beans.UserBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.SampleDao;
+import jp.ac.hal.skymoons.security.session.SessionController;
 
 public class PlanRegister extends AbstractModel{
 
@@ -32,13 +34,23 @@ public class PlanRegister extends AbstractModel{
 
 			ArrayList<Integer> genreIds = new ArrayList<Integer>();
 			ArrayList<String> genreNames = new ArrayList<String>();
-			for (String genre : genres) {
-				String[] split = genre.split(":");
-				genreIds.add(Integer.valueOf(split[0]));
-				genreNames.add(split[1]);
+
+			if(genres != null){
+				for (String genre : genres) {
+					String[] split = genre.split(":");
+					genreIds.add(Integer.valueOf(split[0]));
+					genreNames.add(split[1]);
+				}
 			}
 
+
+			SampleDao dao = new SampleDao();
+			UserBean user = dao.getUser(request.getParameter("planner"));
+			System.out.println(user.getFirstName());
+			dao.close();
+
 			request.setAttribute("plan", plan);
+			request.setAttribute("user", user);
 			request.setAttribute("genreIds", genreIds);
 			request.setAttribute("genreNames", genreNames);
 
@@ -46,13 +58,23 @@ public class PlanRegister extends AbstractModel{
 			return "/pages/PlanConfirmation.jsp";
 		}
 
-		SampleDao dao = new SampleDao();
-		List<GenreBean> genreList = dao.genreAll();
-		dao.close();
-		request.setAttribute("genreList", genreList);
+		SessionController sessionController = new SessionController(request);
+		if(sessionController.checkUserSession() == null){
 
-		//企画登録画面へ
-		return "/pages/PlanRegister.jsp";
+			SampleDao dao = new SampleDao();
+			List<GenreBean> genreList = dao.genreAll();
+			UserBean user = dao.getUser(sessionController.getUserId());
+			dao.close();
+			request.setAttribute("genreList", genreList);
+			request.setAttribute("user", user);
+
+			//企画登録画面へ
+			return "/pages/PlanRegister.jsp";
+		}else{
+			return sessionController.checkUserSession();
+		}
+
+
 	}
 
 }

@@ -1,3 +1,4 @@
+<%@page import="jp.ac.hal.skymoons.beans.UserBean"%>
 <%@page import="jp.ac.hal.skymoons.beans.GenreBean"%>
 <%@page import="jp.ac.hal.skymoons.beans.PlanBean"%>
 <%@page import="java.util.ArrayList"%>
@@ -10,12 +11,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>企画登録</title>
 </head>
+<%
+	UserBean user = (UserBean)request.getAttribute("user");
+%>
 <body>
 	<form action="/HomeSystem/fc/PlanRegister" method="post">
 		<table>
 			<tr>
 				<th>企画者：</th>
-				<td>大河 要祐<input type="hidden" name="planner" value="E0001"></td>
+				<td><% out.println(user.getLastName() +  user.getFirstName()); %><input type="hidden" name="planner" value="<% out.print(user.getUserId()); %>"></td>
 			</tr>
 			<tr>
 				<th>企画名：</th>

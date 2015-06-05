@@ -31,8 +31,10 @@ public class PlanConfirmation extends AbstractModel {
 			int planId = dao.planRegister(plan);
 			if (planId != 0) {
 
-				for (String genreId : genreIds) {
-					dao.planGenreInsert(planId, Integer.valueOf(genreId));
+				if(genreIds != null){
+					for (String genreId : genreIds) {
+						dao.planGenreInsert(planId, Integer.valueOf(genreId));
+					}
 				}
 
 				// 企画登録確認画面へ

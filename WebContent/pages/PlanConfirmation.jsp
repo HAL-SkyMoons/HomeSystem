@@ -1,3 +1,4 @@
+<%@page import="jp.ac.hal.skymoons.beans.UserBean"%>
 <%@page import="jp.ac.hal.skymoons.util.Utility"%>
 <%@page import="jp.ac.hal.skymoons.beans.PlanBean"%>
 <%@page import="java.util.ArrayList"%>
@@ -14,10 +15,12 @@
 <%
 	Utility util = new Utility();
 	PlanBean plan = (PlanBean) request.getAttribute("plan");
+	UserBean user = (UserBean) request.getAttribute("user");
 
 	String planner = plan.getPlanner();
 	String planTitle = plan.getPlanTitle();
 	String planComment = plan.getPlanComment();
+
 %>
 <body>
 	<form action="/HomeSystem/fc/PlanConfirmation" method="post">
@@ -26,7 +29,7 @@
 				<th>企画者：</th>
 				<td>
 					<%
-						out.print(planner);
+						out.println(user.getLastName()+user.getFirstName());
 					%>
 				</td>
 			</tr>

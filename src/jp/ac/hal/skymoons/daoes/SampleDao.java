@@ -14,6 +14,7 @@ import jp.ac.hal.skymoons.beans.GenreBean;
 import jp.ac.hal.skymoons.beans.PlanBean;
 import jp.ac.hal.skymoons.beans.PlanPointBean;
 import jp.ac.hal.skymoons.beans.SampleBean;
+import jp.ac.hal.skymoons.beans.UserBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
 
 public class SampleDao {
@@ -186,7 +187,7 @@ public class SampleDao {
 			record.setPlanId(result.getInt("plan_id"));
 			record.setPlanner(result.getString("planner"));
 			record.setPlannerName(result.getString("u.last_name")
-					+ result.getString("u.fast_name"));
+					+ result.getString("u.first_name"));
 			record.setPlanTitle(result.getString("plan_title"));
 			record.setPlanDatetime(result.getDate("plan_datetime"));
 			record.setPlanComment(result.getString("plan_comment"));
@@ -247,7 +248,7 @@ public class SampleDao {
 			record.setPlanId(result.getInt("plan_id"));
 			record.setPlanner(result.getString("planner"));
 			record.setPlannerName(result.getString("u.last_name")
-					+ result.getString("u.fast_name"));
+					+ result.getString("u.first_name"));
 			record.setPlanTitle(result.getString("plan_title"));
 			record.setPlanDatetime(result.getDate("plan_datetime"));
 			record.setPlanComment(result.getString("plan_comment"));
@@ -406,7 +407,7 @@ public class SampleDao {
 			record.setCommentNo(result.getInt("comment_no"));
 			record.setCommentUser(result.getString("comment_user"));
 			record.setCommentName(result.getString("u.last_name")
-					+ result.getString("u.fast_name"));
+					+ result.getString("u.first_name"));
 			record.setDeleteFrag(result.getInt("delete_flag"));
 			record.setCommentDatetime(result.getDate("comment_datetime"));
 			record.setComment(result.getString("comment"));
@@ -450,7 +451,7 @@ public class SampleDao {
 			where += ",?";
 
 		PreparedStatement select = con
-				.prepareStatement("select p.plan_id,p.planner,u.last_name,u.fast_name,p.plan_title,p.plan_datetime,p.plan_comment,count(*) from plan p, users u, plan_genre g where p.planner = u.user_id and p.plan_id = g.plan_id and genre_id in ("
+				.prepareStatement("select p.plan_id,p.planner,u.last_name,u.first_name,p.plan_title,p.plan_datetime,p.plan_comment,count(*) from plan p, users u, plan_genre g where p.planner = u.user_id and p.plan_id = g.plan_id and genre_id in ("
 						+ where + ") group by p.plan_id;");
 
 		for (int i = 1; i <= idCount; i++)
@@ -467,7 +468,7 @@ public class SampleDao {
 				record.setPlanId(result.getInt("p.plan_id"));
 				record.setPlanner(result.getString("p.planner"));
 				record.setPlannerName(result.getString("u.last_name")
-						+ result.getString("u.fast_name"));
+						+ result.getString("u.first_name"));
 				record.setPlanTitle(result.getString("p.plan_title"));
 				record.setPlanDatetime(result.getDate("p.plan_datetime"));
 				record.setPlanComment(result.getString("p.plan_comment"));
@@ -628,6 +629,25 @@ public class SampleDao {
 		}
 
 		return points;
+	}
+
+	public UserBean getUser(String userId) throws SQLException {
+
+		PreparedStatement select = con
+				.prepareStatement("select user_id,last_name,first_name from users where user_id = ? ;");
+
+		select.setString(1, userId);
+		ResultSet result = select.executeQuery();
+
+		UserBean record = new UserBean();
+
+		if (result.next()) {
+			record.setUserId(result.getString("user_id"));
+			record.setLastName(result.getString("last_name"));
+			record.setFirstName(result.getString("first_name"));
+		}
+
+		return record;
 	}
 
 }

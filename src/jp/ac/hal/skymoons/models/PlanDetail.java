@@ -10,8 +10,10 @@ import jp.ac.hal.skymoons.beans.CommentBean;
 import jp.ac.hal.skymoons.beans.GenreBean;
 import jp.ac.hal.skymoons.beans.PlanBean;
 import jp.ac.hal.skymoons.beans.PlanPointBean;
+import jp.ac.hal.skymoons.beans.UserBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.SampleDao;
+import jp.ac.hal.skymoons.security.session.SessionController;
 
 public class PlanDetail extends AbstractModel {
 
@@ -20,15 +22,20 @@ public class PlanDetail extends AbstractModel {
 			HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 
-		String employeeId = "E0001";
+		SessionController sessionController = new SessionController(request);
 
-		if (request.getParameter("detail") != null
+		if ((request.getParameter("detail") != null
 				|| request.getParameter("commentSubmit") != null
 				|| request.getParameter("delete") != null
 				|| request.getParameter("edit") != null
-				|| request.getParameter("evaluationSubmit") != null) {
+				|| request.getParameter("evaluationSubmit") != null)
+				&& sessionController.checkUserSession() == null) {
 			SampleDao dao = new SampleDao();
 			int planId = Integer.valueOf(request.getParameter("planId"));
+
+			String employeeId = sessionController.getUserId();
+			UserBean user = dao.getUser(employeeId);
+			request.setAttribute("user", user);
 
 			// コメントが送信された時
 			if (request.getParameter("commentSubmit") != null) {
@@ -73,9 +80,8 @@ public class PlanDetail extends AbstractModel {
 				}
 
 				dao.commit();
-			}else if(request.getParameter("evaluationSubmit") != null) {
+			} else if (request.getParameter("evaluationSubmit") != null) {
 				int point = Integer.valueOf(request.getParameter("evaluation"));
-
 
 				PlanPointBean pointBean = new PlanPointBean();
 				pointBean.setPlanId(planId);
@@ -100,11 +106,11 @@ public class PlanDetail extends AbstractModel {
 			List<CommentBean> commentList = dao.planCommentList(planId);
 			request.setAttribute("commentList", commentList);
 
-			//すべての評価の数
+			// すべての評価の数
 			int[] points = dao.planPointAll(planId);
 			request.setAttribute("points", points);
 
-			//自分の評価を取得
+			// 自分の評価を取得
 			PlanPointBean planPointBean = new PlanPointBean();
 			planPointBean.setPlanId(planId);
 			planPointBean.setEmployeeId(employeeId);
@@ -114,10 +120,11 @@ public class PlanDetail extends AbstractModel {
 			dao.close();
 
 			return "/pages/PlanDetail.jsp";
+		} else if (sessionController.checkUserSession() != null) {
+			return sessionController.checkUserSession();
 		}
 
 		return "/pages/error.html";
-
 
 	}
 }

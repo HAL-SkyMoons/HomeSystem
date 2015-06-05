@@ -1,3 +1,4 @@
+<%@page import="jp.ac.hal.skymoons.beans.UserBean"%>
 <%@page import="jp.ac.hal.skymoons.beans.PlanPointBean"%>
 <%@page import="jp.ac.hal.skymoons.util.Utility"%>
 <%@page import="jp.ac.hal.skymoons.beans.CommentBean"%>
@@ -25,6 +26,7 @@
 				ArrayList<CommentBean> commentList = (ArrayList<CommentBean>) request
 						.getAttribute("commentList");
 				PlanPointBean planPoint = (PlanPointBean) request.getAttribute("planPoint");
+				UserBean user = (UserBean)request.getAttribute("user");
 
 				int[] points = (int[]) request.getAttribute("points");
 
@@ -137,11 +139,11 @@
 	</table>
 	<hr>
 	<form action="/HomeSystem/fc/PlanDetail" method="post">
-		<label>名前：XXXX</label><br> <label>コメント：<textarea
+		<label>名前：<% out.print(user.getLastName() + user.getFirstName()); %></label><br> <label>コメント：<textarea
 				name="comment"></textarea></label><br> <input type="submit"
 			name="commentSubmit" value="送信"> <input type="hidden"
 			name="planId" value="<%out.print(plan.getPlanId());%>"> <input
-			type="hidden" name="commentUserId" value="E0001">
+			type="hidden" name="commentUserId" value="<% out.print(user.getUserId()); %>">
 	</form>
 	</tr>
 
@@ -157,17 +159,25 @@
 		<%
 			for (CommentBean comment : commentList) {
 				out.println("<tr>");
-				if (comment.getDeleteFrag() == 0) {
+				if (comment.getDeleteFrag() == 0 ) {
 					out.println("<td>" + comment.getCommentNo() + "</td>");
 					out.println("<td>" + comment.getCommentName() + "</td>");
 					out.println("<td>" + util.nlToBR(comment.getComment())
 							+ "</td>");
 					out.println("<td>" + comment.getCommentDatetime() + "</td>");
-					out.println("<td><form action=\"/HomeSystem/fc/PlanDetail\" method=\"post\"><input type=\"hidden\" name=\"planId\" value=\""
-							+ comment.getPlanID()
-							+ "\"><input type=\"hidden\" name=\"commentNo\" value=\""
-							+ comment.getCommentNo()
-							+ "\"><input type=\"submit\" name=\"delete\" value=\"削除\"></form></td>");
+
+					System.out.print(comment.getCommentUser()+":"+user.getUserId());
+
+					if(comment.getCommentUser().equals(user.getUserId())){
+						out.println("<td><form action=\"/HomeSystem/fc/PlanDetail\" method=\"post\"><input type=\"hidden\" name=\"planId\" value=\""
+								+ comment.getPlanID()
+								+ "\"><input type=\"hidden\" name=\"commentNo\" value=\""
+								+ comment.getCommentNo()
+								+ "\"><input type=\"submit\" name=\"delete\" value=\"削除\"></form></td>");
+					}else{
+						out.println("<td></td>");
+					}
+
 				} else {
 					out.println("<td>" + comment.getCommentNo() + "</td>");
 					out.println("<td>" + comment.getCommentName() + "</td>");
