@@ -114,4 +114,31 @@ public class SessionController {
 		this.session.removeAttribute(id);
 	}
 	
+	/**
+	 * セッションから管理者ユーザIDを取得。
+	 * @return
+	 * 管理者ユーザID
+	 */
+	public String getAdministratorId() {
+		return this.session.getAttribute("aId").toString();
+	}
+	
+	/**
+	 * セッションから顧客ユーザ又は社員ユーザIDを取得。
+	 * @return
+	 * 顧客ユーザ又は社員ユーザID
+	 */
+	public String getUserId() {
+		return this.session.getAttribute("uId").toString();
+	}
+	
+	/**
+	 * セッションから顧客ユーザ又は社員ユーザクラスフラグを取得。
+	 * @return
+	 * 顧客ユーザ又は社員ユーザクラスフラグ
+	 */
+	public String getUserClass_flag() {
+		return this.session.getAttribute("group").toString();
+	}
+	
 }
