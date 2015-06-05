@@ -10,6 +10,8 @@ import java.util.List;
 
 import javax.naming.NamingException;
 
+import jp.ac.hal.skymoons.beans.ContentsDetailBean;
+import jp.ac.hal.skymoons.beans.ContentsSearchBean;
 import jp.ac.hal.skymoons.beans.SampleBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
 
@@ -39,99 +41,83 @@ public class ContentsDetailDao {
 	}
 
 	/**
-	 * 全件取得する
-	 *
-	 * @return 全件
-	 * @throws SQLException
-	 */
-	public List<SampleBean> findAll() throws SQLException {
-
-		PreparedStatement select = con.prepareStatement("select * from sample;");
-
-		ResultSet result = select.executeQuery();
-
-		ArrayList<SampleBean> table = new ArrayList<SampleBean>();
-		while (result.next()) {
-
-			SampleBean record = new SampleBean();
-
-			record.setSumple(result.getString("sample"));
-
-			table.add(record);
-		}
-		return table;
-	}
-
-	/**
 	 * 主キーで検索
 	 *
-	 * @param languageId
+	 * @param homeContentId
 	 * @return
 	 * @throws SQLException
 	 * 追記分　Aを追加
 	 */
-	public SampleBean findOne(String sample) throws SQLException {
+	public ContentsDetailBean findDetail(String homeContentId) throws SQLException {
+		//戻り値のbeanを生成
+		ContentsDetailBean detailBean = new ContentsDetailBean();
+		System.out.println(homeContentId);
+		//コンテンツの取得
+		PreparedStatement contentsPst = con.prepareStatement("select * from home_contents hc where hc.home_content_id = ? ;");
+		contentsPst.setString(1, homeContentId);
+		ResultSet contentsResult = contentsPst.executeQuery();
+		if (contentsResult.next()) {
+			detailBean.setHomeContentId(contentsResult.getInt("home_content_id"));
+			detailBean.setHomeContentTitle(contentsResult.getString("home_content_title"));
+			//detailBean.setHomeContentDatetime(contentsResult.getString("home_content_datetime"));
+			detailBean.setEmployeeId(contentsResult.getString("employee_id"));
+			
+			//名前の取得
+			PreparedStatement namePst = con.prepareStatement("select * from users where user_id = ? ;");
+			namePst.setString(1, contentsResult.getString("employee_id"));
+			ResultSet nameResult = namePst.executeQuery();
+			if(nameResult.next()){
+				detailBean.setFirstName(nameResult.getString("first_name"));
+				detailBean.setLastName(nameResult.getString("last_name"));
+			}else{
+				//取得失敗時の処理
+			}
 
-		PreparedStatement select = con.prepareStatement("select * from sample where sample = ? ;");
+			//ジャンルの取得			
+			PreparedStatement genrePst = con.prepareStatement(
+					"select * from home_genre hg, genre g, big_genre bg "
+					+ "where hg.home_content_id = ? "
+					+ "and hg.genre_id = g.genre_id "
+					+ "and g.big_genre_id = bg.big_genre_id;");
+			
+			genrePst.setString(1, homeContentId);
+			ResultSet genreResult = genrePst.executeQuery();
 
-		select.setString(1, sample);
-		ResultSet result = select.executeQuery();
-
-		SampleBean record = new SampleBean();
-
-		if (result.next()) {
-			record.setSumple(result.getString("sample"));
+			ArrayList<Integer> bigGenreId = new ArrayList<>();
+			ArrayList<String> bigGenreName = new ArrayList<>();
+			ArrayList<Integer> genreId = new ArrayList<>();
+			ArrayList<String> genreName = new ArrayList<>();
+			
+			while(genreResult.next()){
+				bigGenreId.add(genreResult.getInt("big_genre_id"));
+				bigGenreName.add(genreResult.getString("big_genre_name"));
+				genreId.add(genreResult.getInt("genre_id"));
+				genreName.add(genreResult.getString("genre_name"));
+			}
+			detailBean.setBigGenreId(bigGenreId);
+			detailBean.setBigGenreName(bigGenreName);
+			detailBean.setGenreId(genreId);
+			detailBean.setGenreName(genreName);
+			
+			//添付資料の取得
+			ArrayList<Integer> homeSourceNo = new ArrayList<>();
+			ArrayList<String> homeSourceName = new ArrayList<>();
+			PreparedStatement sourcePst = con.prepareStatement("select * from home_source where home_content_id = ? ;");
+			sourcePst.setString(1, homeContentId);
+			ResultSet sourceResult = sourcePst.executeQuery();		
+			while(sourceResult.next()){
+				homeSourceNo.add(sourceResult.getInt("home_source_no"));
+				homeSourceName.add(sourceResult.getString("home_source_name"));
+			}
+			detailBean.setHomeSourceNo(homeSourceNo);
+			detailBean.setHomeSourceName(homeSourceName);
+			
+		}else{
+			//取得失敗処理をここに記述
 		}
-
-		return record;
+		return detailBean;
 	}
-
-	/**
-	 * 更新処理
-	 *
-	 * @param updateRecord 更新データ
-	 * @return 影響のあった行数
-	 * @throws SQLException
-	 */
-	public int update(SampleBean updateRecord) throws SQLException {
-
-		PreparedStatement update =
-			con.prepareStatement("update sample set sample = ? where sample = ? ;");
-
-		update.setString(1, updateRecord.getSumple());
-
-		return update.executeUpdate();
-	}
-
-
-	/**
-	 * 新規保存
-	 *
-	 * @param newRecord 保存データ
-	 * @return 影響のあった行数
-	 * @throws SQLException
-	 */
-	public int insert(SampleBean newRecord) throws SQLException {
-
-		PreparedStatement insert = con.prepareStatement("insert into sample (sample) values (?);");
-		insert.setString(1, newRecord.getSumple());
-
-		return insert.executeUpdate();
-	}
-
-	/**
-	 * 削除処理
-	 *
-	 * @param languageId 削除対象
-	 * @return 影響のあった行数
-	 * @throws SQLException
-	 */
-	public int delete(String sample) throws SQLException {
-
-		PreparedStatement delete = con.prepareStatement("delete from sample where sample = ?; ");
-		delete.setString(1, sample);
-		return delete.executeUpdate();
-	}
+	
 	/**
 	 * 接続を閉じる
 	 *

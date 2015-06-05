@@ -1,19 +1,23 @@
 package jp.ac.hal.skymoons.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
+import lombok.Getter;
+import lombok.Setter;
+@Getter
+@Setter
 public class ContentsRegistBean implements Serializable {
 
-	private String Sumple;
-
-	public String getSumple() {
-		return Sumple;
-	}
-
-	public void setSumple(String sumple) {
-		Sumple = sumple;
-	}
-
-
-
+	private int homeContentId;
+	private String homeContentTitle;
+	private String homeContentComment;
+	private String homeContentDatetime;
+	private ArrayList<Integer> bigGenreId;
+	private ArrayList<String> bigGenreName;
+	private ArrayList<Integer> genreId;
+	private ArrayList<String> genreName;
+	private int employeeId;
+	private String firstName;
+	private String lastName;
 }

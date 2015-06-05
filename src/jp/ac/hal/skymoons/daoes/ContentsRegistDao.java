@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.naming.NamingException;
 
+import jp.ac.hal.skymoons.beans.ContentsRegistBean;
 import jp.ac.hal.skymoons.beans.SampleBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
 
@@ -38,71 +39,6 @@ public class ContentsRegistDao {
 		this.con = con;
 	}
 
-	/**
-	 * 全件取得する
-	 *
-	 * @return 全件
-	 * @throws SQLException
-	 */
-	public List<SampleBean> findAll() throws SQLException {
-
-		PreparedStatement select = con.prepareStatement("select * from sample;");
-
-		ResultSet result = select.executeQuery();
-
-		ArrayList<SampleBean> table = new ArrayList<SampleBean>();
-		while (result.next()) {
-
-			SampleBean record = new SampleBean();
-
-			record.setSumple(result.getString("sample"));
-
-			table.add(record);
-		}
-		return table;
-	}
-
-	/**
-	 * 主キーで検索
-	 *
-	 * @param languageId
-	 * @return
-	 * @throws SQLException
-	 * 追記分　Aを追加
-	 */
-	public SampleBean findOne(String sample) throws SQLException {
-
-		PreparedStatement select = con.prepareStatement("select * from sample where sample = ? ;");
-
-		select.setString(1, sample);
-		ResultSet result = select.executeQuery();
-
-		SampleBean record = new SampleBean();
-
-		if (result.next()) {
-			record.setSumple(result.getString("sample"));
-		}
-
-		return record;
-	}
-
-	/**
-	 * 更新処理
-	 *
-	 * @param updateRecord 更新データ
-	 * @return 影響のあった行数
-	 * @throws SQLException
-	 */
-	public int update(SampleBean updateRecord) throws SQLException {
-
-		PreparedStatement update =
-			con.prepareStatement("update sample set sample = ? where sample = ? ;");
-
-		update.setString(1, updateRecord.getSumple());
-
-		return update.executeUpdate();
-	}
-
 
 	/**
 	 * 新規保存
@@ -111,27 +47,35 @@ public class ContentsRegistDao {
 	 * @return 影響のあった行数
 	 * @throws SQLException
 	 */
-	public int insert(SampleBean newRecord) throws SQLException {
+	public int insertContents(ContentsRegistBean bean) throws SQLException {
 
-		PreparedStatement insert = con.prepareStatement("insert into sample (sample) values (?);");
-		insert.setString(1, newRecord.getSumple());
+		PreparedStatement pst = con.prepareStatement("insert into home_contents(employee_id,home_content_title,home_content_date,home_content_comment) values (?,?,?,?);");
+		pst.setString(1, "10000");
+		pst.setString(2, "ｇｇｇｇｇｇｇｇｇｇｇ");
+		pst.setString(3, "2000/01/01");
+		pst.setString(4, "ｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒ");
 
-		return insert.executeUpdate();
+		return pst.executeUpdate();
 	}
 
-	/**
-	 * 削除処理
-	 *
-	 * @param languageId 削除対象
-	 * @return 影響のあった行数
-	 * @throws SQLException
-	 */
-	public int delete(String sample) throws SQLException {
+	public int insertGenre(ContentsRegistBean bean) throws SQLException {
+		
+		PreparedStatement pst = con.prepareStatement("insert into genre() values (?,?);");
+		pst.setString(1, "2000/01/01");
+		pst.setString(2, "ｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒ");
 
-		PreparedStatement delete = con.prepareStatement("delete from sample where sample = ?; ");
-		delete.setString(1, sample);
-		return delete.executeUpdate();
+		return pst.executeUpdate();
 	}
+	public int insertBigGenre(ContentsRegistBean bean) throws SQLException {
+		
+		PreparedStatement pst = con.prepareStatement("insert into big_genre() values (?,?);");
+		pst.setString(1, "2000/01/01");
+		pst.setString(2, "ｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒ");
+
+		return pst.executeUpdate();
+	}
+	
+	
 	/**
 	 * 接続を閉じる
 	 *
