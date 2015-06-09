@@ -10,7 +10,9 @@ import java.util.List;
 
 import javax.naming.NamingException;
 
+import jp.ac.hal.skymoons.beans.ContentsDetailBean;
 import jp.ac.hal.skymoons.beans.ContentsSearchBean;
+import jp.ac.hal.skymoons.beans.SampleBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
 
 
@@ -38,116 +40,100 @@ public class ContentsSearchDao {
 		this.con = con;
 	}
 
-	
 	/**
 	 * 全件取得する
 	 *
 	 * @return 全件
 	 * @throws SQLException
 	 */
-	public ArrayList<ContentsSearchBean> findAll() throws SQLException {
+	public List<SampleBean> findAll() throws SQLException {
 
-		PreparedStatement state = con.prepareStatement("select * from home_contents hc, genre g where hc.home_content_id = g.home_content_id ;");
-		ResultSet result = state.executeQuery();	
-		
-		return convertList(result);
-	}
+		PreparedStatement select = con.prepareStatement("select * from sample;");
 
-	
+		ResultSet result = select.executeQuery();
 
-	/**
-	 * ジャンルIDで検索
-	 *
-	 * @param genreId
-	 * @return
-	 * @throws SQLException
-	 * 追記分　Aを追加
-	 */
-	
-	public ArrayList<ContentsSearchBean> selectGenre(String genreId) throws SQLException {
-
-		PreparedStatement state = con.prepareStatement("select * from home_contents hc, genre g where hc.home_content_id = g.home_content_id and g.genre_id = ? ;");
-		state.setString(1, genreId);
-		ResultSet result = state.executeQuery();		
-		
-		return convertList(result);
-	}
-	
-	
-
-	/**
-	 * 投稿者で検索
-	 *
-	 * @param employeeId
-	 * @return
-	 * @throws SQLException
-	 * 追記分　Aを追加
-	 */
-	
-	public ArrayList<ContentsSearchBean> selectEmployee(String employeeId) throws SQLException {
-
-		PreparedStatement state = con.prepareStatement("select * from home_contents hc, genre g where hc.home_content_id = g.home_content_id and hc.employee_id = ? ;");
-		state.setString(1, employeeId);
-		ResultSet result = state.executeQuery();		
-		
-		return convertList(result);
-	}
-	
-	
-
-	public ArrayList<ContentsSearchBean> selectHomeContentTitle(String homeContentTitle) throws SQLException {
-
-		PreparedStatement contentsPst = con.prepareStatement("select * from home_contents where employee_id = ? ;");
-		contentsPst.setString(1, homeContentTitle);
-		ResultSet result = contentsPst.executeQuery();		
-		
-		return convertList(result);
-	}
-	
-	public ArrayList<ContentsSearchBean> convertList(ResultSet result) throws SQLException{
-		ArrayList<ContentsSearchBean> contentsList = new ArrayList<>(); 
+		ArrayList<SampleBean> table = new ArrayList<SampleBean>();
 		while (result.next()) {
-			ContentsSearchBean bean = new ContentsSearchBean();
-			
-			//コンテンツの取得
-			bean.setHomeContentId(result.getInt("home_content_id"));
-			bean.setHomeContentTitle(result.getString("home_content_title"));
-			bean.setHomeContentDatetime(result.getString("home_content_datetime"));
-			bean.setEmployeeId(result.getInt("employee_id"));
-			bean.setFirstName(result.getString("first_name"));
-			bean.setLastName(result.getString("last_name"));
-		
-			PreparedStatement genrePst = con.prepareStatement(
-					"select * from home_genre hg, genre g, big_genre bg "
-					+ "where hg.home_content_id = ? "
-					+ "and hg.genre_id = g.genre_id "
-					+ "and g.big_genre_id = bg.big_genre_id;");
-			
-			genrePst.setInt(1, result.getInt("home_content_id"));
-			ResultSet genreResult = genrePst.executeQuery();
 
-			//ジャンルの取得
-			ArrayList<Integer> bigGenreId = new ArrayList<>();
-			ArrayList<String> bigGenreName = new ArrayList<>();
-			ArrayList<Integer> genreId = new ArrayList<>();
-			ArrayList<String> genreName = new ArrayList<>();
-			
-			while(genreResult.next()){
-				bigGenreId.add(result.getInt("big_genre_id"));
-				bigGenreName.add(result.getString("big_genre_name"));
-				genreId.add(result.getInt("genre_id"));
-				genreName.add(result.getString("genre_name"));
-			}
-			bean.setBigGenreId(bigGenreId);
-			bean.setBigGenreName(bigGenreName);
-			bean.setGenreId(genreId);
-			bean.setGenreName(genreName);
-		
-			contentsList.add(bean);
+			SampleBean record = new SampleBean();
+
+			record.setSumple(result.getString("sample"));
+
+			table.add(record);
 		}
-		return contentsList;
+		return table;
 	}
-	
+
+	/**
+	 * 主キーで検索
+	 *
+	 * @param languageId
+	 * @return
+	 * @throws SQLException
+	 * 追記分　Aを追加
+	 */
+	public SampleBean findOne(String sample) throws SQLException {
+
+		PreparedStatement select = con.prepareStatement("select * from sample where sample = ? ;");
+
+		select.setString(1, sample);
+		ResultSet result = select.executeQuery();
+
+		SampleBean record = new SampleBean();
+
+		if (result.next()) {
+			record.setSumple(result.getString("sample"));
+		}
+
+		return record;
+	}
+
+	/**
+	 * 更新処理
+	 *
+	 * @param updateRecord 更新データ
+	 * @return 影響のあった行数
+	 * @throws SQLException
+	 */
+	public int update(SampleBean updateRecord) throws SQLException {
+
+		PreparedStatement update =
+			con.prepareStatement("update sample set sample = ? where sample = ? ;");
+
+		update.setString(1, updateRecord.getSumple());
+
+		return update.executeUpdate();
+	}
+
+
+	/**
+	 * 新規保存
+	 *
+	 * @param newRecord 保存データ
+	 * @return 影響のあった行数
+	 * @throws SQLException
+	 */
+	public int insert(SampleBean newRecord) throws SQLException {
+
+		PreparedStatement insert = con.prepareStatement("insert into sample (sample) values (?);");
+		insert.setString(1, newRecord.getSumple());
+
+		return insert.executeUpdate();
+	}
+
+	/**
+	 * 削除処理
+	 *
+	 * @param languageId 削除対象
+	 * @return 影響のあった行数
+	 * @throws SQLException
+	 */
+	public int delete(String sample) throws SQLException {
+
+		PreparedStatement delete = con.prepareStatement("delete from sample where sample = ?; ");
+		delete.setString(1, sample);
+		return delete.executeUpdate();
+	}
 	/**
 	 * 接続を閉じる
 	 *

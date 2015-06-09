@@ -12,11 +12,13 @@ public class ContentsSearchBean implements Serializable {
 	private String homeContentTitle;
 	private String homeContentComment;
 	private String homeContentDatetime;
+	private String employeeId;
+	private String firstName;
+	private String lastName;
 	private ArrayList<Integer> bigGenreId;
 	private ArrayList<String> bigGenreName;
 	private ArrayList<Integer> genreId;
 	private ArrayList<String> genreName;
-	private int employeeId;
-	private String firstName;
-	private String lastName;
+	private ArrayList<Integer> homeSourceNo;
+	private ArrayList<String> homeSourceName;
 }
