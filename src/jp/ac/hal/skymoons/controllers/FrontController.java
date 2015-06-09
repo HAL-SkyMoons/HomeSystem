@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class FrontController
  */
-@WebServlet("/fcon/*")
+@WebServlet("/fc/*")
 public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -30,6 +30,9 @@ public class FrontController extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		request.setCharacterEncoding("UTF-8");
+		
 		System.out.println("fconGET!");
 
 		// リクエストのあったURIを取得
@@ -60,6 +63,8 @@ public class FrontController extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("fconPOST!");
+		
+		request.setCharacterEncoding("UTF-8");
 
 		// リクエストのあったURIを取得
 		String requestURI = request.getRequestURI();
@@ -85,4 +90,5 @@ public class FrontController extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher(jspName);
 		dispatcher.forward(request, response);
 	}
+	
 }

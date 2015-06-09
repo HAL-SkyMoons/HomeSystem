@@ -2,6 +2,8 @@ package jp.ac.hal.skymoons.controllers;
 
 import java.util.HashMap;
 
+import jp.ac.hal.skymoons.login.LoginAdministrator;
+import jp.ac.hal.skymoons.login.LoginUser;
 import jp.ac.hal.skymoons.models.*;
 
 /**
@@ -16,7 +18,11 @@ public class ModelSelector {
 		mapping = new HashMap<String, AbstractModel>();
 		mapping.put("/homesystem/fcon/test", new TestModel());
 		mapping.put("/HomeSystem/fcon/contents/detail", new ContentsDetailModel());
-
+		mapping.put("/HomeSystem/fc/test", new TestModel());
+		
+		// ログイン認証機能
+		mapping.put("/HomeSystem/fc/login/administrator", new LoginAdministrator());
+		mapping.put("/HomeSystem/fc/login/user", new LoginUser());
 	}
 
 /**

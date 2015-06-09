@@ -31,21 +31,15 @@ public class SessionController {
 	}
 	
 	/**
-	 * 顧客ユーザのユーザIDをセッションに登録する。
-	 * @param cId
-	 * 顧客ユーザID
+	 * 顧客ユーザ又は社員ユーザのユーザIDとユーザグループをセッションに登録する。
+	 * @param uId
+	 * 顧客ユーザ又は社員ユーザのユーザID
+	 * @param group
+	 * 顧客ユーザ又は社員ユーザのユーザグループ
 	 */
-	public void setCustomerId(String cId) {
-		setId("cId", cId);
-	}
-	
-	/**
-	 * 社員ユーザのユーザIDをセッションに登録する。
-	 * @param sId
-	 * 社員ユーザID
-	 */
-	public void setStaffId(String sId) {
-		setId("sId", sId);
+	public void setUserIdAndGroup(String uId, String group) {
+		setId("uId", uId);
+		setId("group", group);
 	}
 	
 	/**
@@ -69,21 +63,12 @@ public class SessionController {
 	}
 	
 	/**
-	 * 顧客ユーザのセッションが有効か確認を行う。
+	 * 顧客ユーザ・社員ユーザのセッションが有効か確認を行う。
 	 * @return
 	 * 有効:nullを返す/無効:セッションエラーページのURLを返す
 	 */
-	public String checkCustomerSession() {
-		return checkSession("cId");
-	}
-	
-	/**
-	 * 社員ユーザのセッションが有効か確認を行う。
-	 * @return
-	 * 有効:nullを返す/無効:セッションエラーページのURLを返す
-	 */
-	public String checkStaffSession() {
-		return checkSession("sId");
+	public String checkUserSession() {
+		return checkSession("uId");
 	}
 	
 	/**
@@ -96,8 +81,11 @@ public class SessionController {
 	private String checkSession(String id) {
 		if(this.session.getAttribute(id) != null) {
 			setId(id, this.session.getAttribute(id).toString());
+			if(id.equals("uId")) {
+				setId("group", this.session.getAttribute("group").toString());
+			}
 		} else {
-			return "セッションエラーページのURL";
+			return "ERROR_PAGE_URL";
 		}
 		return null;
 	}
@@ -110,17 +98,11 @@ public class SessionController {
 	}
 	
 	/**
-	 * 顧客ユーザのセッションを破棄する。
+	 * 顧客ユーザ・社員ユーザのセッションを破棄する。
 	 */
-	public void discardCustomerSession() {
-		discardSession("cId");
-	}
-	
-	/**
-	 * 社員ユーザのセッションを破棄する。
-	 */
-	public void discardStaffSession() {
-		discardSession("dId");
+	public void discardUserSession() {
+		discardSession("uId");
+		discardSession("group");
 	}
 	
 	/**
@@ -130,6 +112,33 @@ public class SessionController {
 	 */
 	private void discardSession(String id) {
 		this.session.removeAttribute(id);
+	}
+	
+	/**
+	 * セッションから管理者ユーザIDを取得。
+	 * @return
+	 * 管理者ユーザID
+	 */
+	public String getAdministratorId() {
+		return this.session.getAttribute("aId").toString();
+	}
+	
+	/**
+	 * セッションから顧客ユーザ又は社員ユーザIDを取得。
+	 * @return
+	 * 顧客ユーザ又は社員ユーザID
+	 */
+	public String getUserId() {
+		return this.session.getAttribute("uId").toString();
+	}
+	
+	/**
+	 * セッションから顧客ユーザ又は社員ユーザクラスフラグを取得。
+	 * @return
+	 * 顧客ユーザ又は社員ユーザクラスフラグ
+	 */
+	public String getUserClass_flag() {
+		return this.session.getAttribute("group").toString();
 	}
 	
 }
