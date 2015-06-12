@@ -31,6 +31,9 @@ public class FrontController extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		request.setCharacterEncoding("UTF-8");
+		
 		System.out.println("fconGET!");
 
 		request.setCharacterEncoding("UTF-8");
@@ -63,6 +66,8 @@ public class FrontController extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("fconPOST!");
+		
+		request.setCharacterEncoding("UTF-8");
 
 		request.setCharacterEncoding("UTF-8");
 
@@ -90,4 +95,5 @@ public class FrontController extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher(jspName);
 		dispatcher.forward(request, response);
 	}
+	
 }
