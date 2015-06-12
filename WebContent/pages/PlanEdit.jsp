@@ -11,7 +11,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>企画一覧</title>
+<title>企画編集</title>
 </head>
 <body>
 	<form action="/HomeSystem/fc/PlanDetail" method="post">

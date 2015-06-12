@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>企画登録</title>
+<title>企画登録確認</title>
 </head>
 <%
 	Utility util = new Utility();
