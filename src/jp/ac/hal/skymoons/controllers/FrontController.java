@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class FrontController
  */
-@WebServlet("/fc/")
+@WebServlet("/fc/*")
 public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -32,6 +32,8 @@ public class FrontController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("fconGET!");
+
+		request.setCharacterEncoding("UTF-8");
 
 		// リクエストのあったURIを取得
 		String requestURI = request.getRequestURI();
@@ -61,6 +63,8 @@ public class FrontController extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("fconPOST!");
+
+		request.setCharacterEncoding("UTF-8");
 
 		// リクエストのあったURIを取得
 		String requestURI = request.getRequestURI();

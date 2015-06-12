@@ -9,7 +9,10 @@ import java.util.List;
 
 import javax.naming.NamingException;
 
+import jp.ac.hal.skymoons.beans.ContentGenreBean;
+import jp.ac.hal.skymoons.beans.DepartmentBean;
 import jp.ac.hal.skymoons.beans.EmployeeListBean;
+import jp.ac.hal.skymoons.beans.GenreBean;
 import jp.ac.hal.skymoons.beans.SampleBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
 
@@ -27,6 +30,11 @@ public class SampleDao {
 	 */
 	public SampleDao() throws NamingException, SQLException {
 		ConnectionGet get = new ConnectionGet();
+		if(con!=null){
+			System.out.println("con get");
+		}else{
+			System.out.println("con can't get");
+		}
 		con = get.getCon();
 		}
 
@@ -185,7 +193,7 @@ public class SampleDao {
 
 			ResultSet result = select.executeQuery();
 			while(result.next()){
-				resultTable.set(count,result.getString("g.genre_name"));
+				resultTable.add(result.getString("g.genre_name"));
 				if(count>=2){
 					break;
 				}
@@ -204,18 +212,100 @@ public class SampleDao {
 	 */
 	public List<EmployeeListBean> getEmployeeByGenre(String genres[]){
 		ArrayList<EmployeeListBean> resultTable = new ArrayList<EmployeeListBean>();
+		ArrayList<ContentGenreBean> contentGenreTable = new ArrayList<ContentGenreBean>();
+		//取得ジャンル数に応じた絞込み項目数
+		int idCount = genres.length;
+		String where = "?";
+		int genreCount = 1;
+		for (genreCount = 1; genreCount < idCount; genreCount++){
+			where += ",?";
+		}
 
 		try {
-			PreparedStatement select = con.prepareStatement("SELECT e.employee_ID,u.last_name,u.first_name d.department_name "
-					+ "FROM Employees AS e JOIN Users AS u ON e.employee_ID = u.user_ID "
-					+ "JOIN Departments AS d ON e.department_ID = d.department_ID WHERE genre_ID");
+			PreparedStatement select = con.prepareStatement("SELECT hc.home_content_id,hc.employee_id,count(*) FROM home_content AS hc "
+					+"JOIN home_genre AS hg ON hc.home_content_id = hg.home_content_id "
+					+"WHERE genre_id in ("+ where +") GROUP BY home_content_id");
 
+			ResultSet result = select.executeQuery();
+			while(result.next()){
+				if(result.getInt("COUNT(*)")==genreCount){
+					ContentGenreBean record = new ContentGenreBean();
+					record.setEmployeeId(result.getString("hc.employee_id"));
+					record.setContentId(result.getInt("hc.home_content_id"));
+					record.setGenreCount(result.getInt("COUNT(*)"));
+					contentGenreTable.add(record);
+				}
+			}
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		return resultTable;
+	}
+
+	/*
+	 * 2015/06/09
+	 * 中野裕史郎
+	 * ジャンル情報を全権取得
+	 */
+	public List<GenreBean> getGenreList(){
+		ArrayList<GenreBean> resultTable = new ArrayList<GenreBean>();
+		try {
+			PreparedStatement select = con.prepareStatement("SELECT genre_id, genre_name , big_genre_id FROM genre");
+			ResultSet result = select.executeQuery();
+			while (result.next()){
+				GenreBean record = new GenreBean();
+				record.setGenreId(result.getInt("genre_id"));
+				record.setGenreName(result.getString("genre_name"));
+				record.setBigGenreId(result.getInt("big_genre_id"));
+				resultTable.add(record);
+			}
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		return resultTable;
+	}
+
+	/*
+	 * 2015/06/09
+	 * 中野裕史郎
+	 * 部署情報を全権取得
+	 */
+	public List<DepartmentBean> getDepartmentList(){
+		ArrayList<DepartmentBean> resultTable = new ArrayList<DepartmentBean>();
+		try {
+			PreparedStatement select = con.prepareStatement("SELECT department_id , department_name FROM departments");
+			ResultSet result = select.executeQuery();
+			while(result.next()){
+			DepartmentBean record = new DepartmentBean();
+			record.setDepartmentId(result.getInt("department_id"));
+			record.setDepartmentName(result.getString("department_name"));
+			}
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		return resultTable;
+	}
+	/*
+	 * 2015/06/09
+	 * 中野裕史郎
+	 * 社員一覧取得
+	 */
+	public List<EmployeeListBean> getEmployee(){
+		ArrayList<EmployeeListBean> resultTable = new ArrayList<EmployeeListBean>();
+
+		try {
+			PreparedStatement select = con.prepareStatement("SELECT e.employee_ID,u.last_name,u.first_name , d.department_name "
+					+ "FROM Employees AS e JOIN Users AS u ON e.employee_ID = u.user_ID "
+					+ "JOIN Departments AS d ON e.department_ID = d.department_ID");
 			ResultSet result = select.executeQuery();
 			while(result.next()){
 				EmployeeListBean record = new EmployeeListBean();
 				record.setEmployeeId(result.getString("e.employee_ID"));
 				record.setEmployeeName(result.getString("u.first_name")+result.getString("u.last_name"));
-				record.setPhotoSrc(result.getString(""));
+				record.setPhotoSrc("/users/"+result.getString("e.employee_ID")+".png");
 				record.setDepartmentName(result.getString("d.department_name"));
 				record.setEmployeeGenre(getEmployeeGenre(result.getString("e.employee_ID")));
 				resultTable.add(record);
@@ -225,9 +315,7 @@ public class SampleDao {
 			e.printStackTrace();
 		}
 		return resultTable;
-		return null;
 	}
-	
 	/**
 	 * 接続を閉じる
 	 *

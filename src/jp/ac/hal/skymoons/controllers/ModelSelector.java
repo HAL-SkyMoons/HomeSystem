@@ -2,6 +2,7 @@ package jp.ac.hal.skymoons.controllers;
 
 import java.util.HashMap;
 
+import jp.ac.hal.skymoons.models.EmployeeSearchModel;
 import jp.ac.hal.skymoons.models.TestModel;
 
 /**
@@ -14,8 +15,8 @@ public class ModelSelector {
 
 	static{
 		mapping = new HashMap<String, AbstractModel>();
-		mapping.put("/homesystem/fc/test", new TestModel());
-		mapping.put("/homesystem/EmployeeList", new TestModel());
+		mapping.put("/HomeSystem/fc/Employee", new TestModel());
+		mapping.put("/HomeSystem/fc/EmployeeList", new EmployeeSearchModel());
 
 	}
 
