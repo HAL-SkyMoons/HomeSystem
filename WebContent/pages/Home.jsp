@@ -1,3 +1,6 @@
+<%@page import="jp.ac.hal.skymoons.security.session.SessionController"%>
+<%@page import="jp.ac.hal.skymoons.beans.UserBean"%>
+<%@page import="jp.ac.hal.skymoons.beans.BatchBean"%>
 <%@page import="jp.ac.hal.skymoons.beans.GenreBean"%>
 <%@page import="jp.ac.hal.skymoons.beans.PlanBean"%>
 <%@page import="java.util.ArrayList"%>
@@ -9,51 +12,103 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>企画登録</title>
+<link rel="stylesheet" type="text/css"
+	href="../js/image-picker/image-picker.css">
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+<link rel="stylesheet" type="text/css"
+	href="../css/bootstrap-responsive.css">
+<script src="../js/jquery-2.1.4.min.js" type="text/javascript"></script>
+<script src="../js/image-picker/image-picker.js" type="text/javascript"></script>
+<script src="../js/image-picker/image-picker.min.js"
+	type="text/javascript"></script>
+<script src="../js/masonry.min.js" type="text/javascript"></script>
 </head>
 <body>
 	<form action="/HomeSystem/fc/Home" method="post">
 		<table>
 			<tr>
 				<th>From：</th>
-				<%
-					out.println("<td>木村拓也</td>");
-					out.println("<input type=\"hidden\" name=\"fromId\" value=\"E0001\">");
-				%>
-
+				<td>
+					<%
+						UserBean fromUser = (UserBean)request.getAttribute("fromUser");
+													out.println(fromUser.getLastName() + fromUser.getFirstName());
+													out.println("<input type=\"hidden\" name=\"fromId\" value=\""+ fromUser.getUserId() +"\">");
+					%>
+				</td>
 
 			</tr>
 			<tr>
 				<th>To：</th>
-				<%
-					out.println("<td>野波麻帆</td>");
-					out.println("<input type=\"hidden\" name=\"fromId\" value=\"E0002\">");
-				%>
-
+				<td>
+					<%
+						UserBean toUser = (UserBean)request.getAttribute("toUser");
+																	out.print(toUser.getLastName() + toUser.getFirstName());
+																	out.print("<input type=\"hidden\" name=\"toId\" value=\""+ toUser.getUserId() +"\">");
+					%>
+				</td>
 			</tr>
 			<tr>
 				<th>バッチ：</th>
-				<td>
-				<input type="radio" name="batch" value="1">リーダーバッチ
-					<input type="radio" name="batch" value="2">プレゼンバッチ <input
-					type="radio" name="batch" value="3">スピードバッチ <input
-					type="radio" name="batch" value="4">熱血バッチ <input
-					type="radio" name="batch" value="5">発想バッチ <input
-					type="radio" name="batch" value="6">グッジョブバッチ</td>
+				<td><div class="picker">
+						<select class='image-picker show-html' name="batchId">
+							<%
+								ArrayList<BatchBean> batchList = (ArrayList<BatchBean>) request.getAttribute("batchList");
+																																	for (BatchBean batch : batchList) {
+																																		out.print("<option data-img-src='../images/batch/" + batch.getBatchId() + ".png' value='" + batch.getBatchId() + "'>" + batch.getBatchName() + "</option>");
+																																	}
+							%>
+						</select>
+					</div></td>
 			</tr>
 			<tr>
 				<th>ポイント：</th>
-				<td></td>
+				<td><input type="number" name="point" min="1" max="5" value="1"></td>
 			</tr>
 			<tr>
 				<th>コメント：</th>
-				<td></td>
+				<td><textarea rows="" cols="" name="comment"></textarea></td>
 			</tr>
 			<tr>
-				<th>コンテンツID：</th>
-				<td></td>
+				<th>コンテンツタイトル：</th>
+				<td>
+					<%
+						if(request.getParameter("contentsId") == null){
+																			out.println("なし");
+																			out.println("<input type=\"hidden\" name=\"contentsId\" value=\"0\">" );
+																		}else{
+																			out.println(request.getAttribute("contentTitle"));
+																			out.println("<input type=\"hidden\" name=\"contentsId\" value=\""+request.getParameter("contentsId")+"\">" );
+																		}
+					%>
+				</td>
 			</tr>
 
 		</table>
+
+		<script type="text/javascript">
+			jQuery("select.image-picker").imagepicker({
+				hide_select : false,
+			});
+
+			jQuery("select.image-picker.show-labels").imagepicker({
+				hide_select : false,
+				show_label : true,
+			});
+
+			var container = jQuery("select.image-picker.masonry").next(
+					"ul.thumbnails");
+			container.imagesLoaded(function() {
+				container.masonry({
+					itemSelector : "li",
+				});
+			});
+		</script>
+
+		<input type="submit" name="submit" value="送信">
 	</form>
+
+
+
+
 </body>
 </html>

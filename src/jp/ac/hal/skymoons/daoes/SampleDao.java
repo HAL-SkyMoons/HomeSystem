@@ -5,12 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.naming.NamingException;
 
+import jp.ac.hal.skymoons.beans.BatchBean;
 import jp.ac.hal.skymoons.beans.CommentBean;
 import jp.ac.hal.skymoons.beans.GenreBean;
+import jp.ac.hal.skymoons.beans.HomeBean;
 import jp.ac.hal.skymoons.beans.PlanBean;
 import jp.ac.hal.skymoons.beans.PlanPointBean;
 import jp.ac.hal.skymoons.beans.SampleBean;
@@ -438,11 +441,13 @@ public class SampleDao {
 
 	/**
 	 * ジャンル検索
+	 *
 	 * @param genreIds
 	 * @return
 	 * @throws SQLException
 	 */
-	public List<PlanBean> planGenreSearch(String[] genreIds) throws SQLException {
+	public List<PlanBean> planGenreSearch(String[] genreIds)
+			throws SQLException {
 
 		System.out.println("search");
 		int idCount = genreIds.length;
@@ -482,6 +487,7 @@ public class SampleDao {
 
 	/**
 	 * 企画内容編集
+	 *
 	 * @param updateRecord
 	 * @return
 	 * @throws SQLException
@@ -500,6 +506,7 @@ public class SampleDao {
 
 	/**
 	 * 企画に紐づくジャンルを削除
+	 *
 	 * @param planId
 	 * @return
 	 * @throws SQLException
@@ -514,6 +521,7 @@ public class SampleDao {
 
 	/**
 	 * 企画評価登録・更新
+	 *
 	 * @param planPoint
 	 * @return
 	 * @throws SQLException
@@ -521,7 +529,7 @@ public class SampleDao {
 	public int planPointRegister(PlanPointBean planPoint) throws SQLException {
 
 		PreparedStatement select = con
-				.prepareStatement("select count(*) from plan_point where plan_id = ? and employee_id = ? ;");
+				.prepareStatement("select count(*) from plan_point where plan_id = ? and user_id = ? ;");
 
 		select.setInt(1, planPoint.getPlanId());
 		select.setString(2, planPoint.getEmployeeId());
@@ -530,25 +538,24 @@ public class SampleDao {
 		PlanBean record = new PlanBean();
 
 		result.next();
-		if(result.getInt("count(*)") == 0){
-			//新規追加
+		if (result.getInt("count(*)") == 0) {
+			// 新規追加
 			PreparedStatement insert = con
-					.prepareStatement("insert into plan_point (plan_id,employee_id,point) values (?,?,?);");
+					.prepareStatement("insert into plan_point (plan_id,user_id,point) values (?,?,?);");
 			insert.setInt(1, planPoint.getPlanId());
 			insert.setString(2, planPoint.getEmployeeId());
 			insert.setInt(3, planPoint.getPoint());
 
 			return insert.executeUpdate();
 
-		}else{
-			//更新
+		} else {
+			// 更新
 			PreparedStatement update = con
-					.prepareStatement("update plan_point set point = ? where plan_id = ? and employee_id = ?;");
+					.prepareStatement("update plan_point set point = ? where plan_id = ? and user_id = ?;");
 
 			update.setInt(1, planPoint.getPoint());
 			update.setInt(2, planPoint.getPlanId());
 			update.setString(3, planPoint.getEmployeeId());
-
 
 			return update.executeUpdate();
 		}
@@ -556,14 +563,16 @@ public class SampleDao {
 
 	/**
 	 * 社員ごと企画評価確認
+	 *
 	 * @param planPoint
 	 * @return
 	 * @throws SQLException
 	 */
-	public PlanPointBean planPointGet(PlanPointBean planPoint) throws SQLException {
+	public PlanPointBean planPointGet(PlanPointBean planPoint)
+			throws SQLException {
 
 		PreparedStatement select = con
-				.prepareStatement("select * from plan_point where plan_id = ? and employee_id = ? ;");
+				.prepareStatement("select * from plan_point where plan_id = ? and user_id = ? ;");
 
 		select.setInt(1, planPoint.getPlanId());
 		select.setString(2, planPoint.getEmployeeId());
@@ -574,7 +583,7 @@ public class SampleDao {
 
 		if (result.next()) {
 			record.setPlanId(result.getInt("plan_id"));
-			record.setEmployeeId(result.getString("employee_id"));
+			record.setEmployeeId(result.getString("user_id"));
 			record.setPoint(result.getInt("point"));
 		}
 
@@ -583,6 +592,7 @@ public class SampleDao {
 
 	/**
 	 * 企画評価数取得
+	 *
 	 * @param planId
 	 * @return
 	 * @throws SQLException
@@ -631,6 +641,13 @@ public class SampleDao {
 		return points;
 	}
 
+	/**
+	 * ユーザー情報取得
+	 *
+	 * @param userId
+	 * @return
+	 * @throws SQLException
+	 */
 	public UserBean getUser(String userId) throws SQLException {
 
 		PreparedStatement select = con
@@ -645,6 +662,377 @@ public class SampleDao {
 			record.setUserId(result.getString("user_id"));
 			record.setLastName(result.getString("last_name"));
 			record.setFirstName(result.getString("first_name"));
+		}
+
+		return record;
+	}
+
+	/**
+	 * バッチ全取得
+	 *
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<BatchBean> batchAll() throws SQLException {
+
+		PreparedStatement select = con.prepareStatement("select * from batch;");
+
+		ResultSet result = select.executeQuery();
+
+		ArrayList<BatchBean> table = new ArrayList<BatchBean>();
+		while (result.next()) {
+
+			BatchBean record = new BatchBean();
+
+			record.setBatchId(result.getInt("batch_id"));
+			record.setBatchName(result.getString("batch_name"));
+			record.setBatchComment(result.getString("batch_comment"));
+
+			table.add(record);
+		}
+		return table;
+	}
+
+	/**
+	 * ホメ機能(ホメ登録用)
+	 *
+	 * @param newRecord
+	 * @return
+	 * @throws SQLException
+	 */
+	public int home(HomeBean newRecord) throws SQLException {
+
+		PreparedStatement insert = con
+				.prepareStatement("insert into home_log (home_target,home_user,home_datetime,batch_id,home_point,home_comment,home_content_id) values (?,?,now(),?,?,?,?);");
+		insert.setString(1, newRecord.getToUserId());
+		insert.setString(2, newRecord.getFromUserId());
+		insert.setInt(3, newRecord.getBatchId());
+		insert.setInt(4, newRecord.getHomePoint());
+		insert.setString(5, newRecord.getComment());
+		if (newRecord.getContentsId() != 0) {
+			insert.setInt(6, newRecord.getContentsId());
+		} else {
+			insert.setString(6, null);
+
+		}
+		return insert.executeUpdate();
+	}
+
+	/**
+	 * トロフィーの新規登録
+	 *
+	 * @param employeeId
+	 * @throws SQLException
+	 */
+	public void newTrophy(String employeeId) throws SQLException {
+
+		System.out.println("新規トロフィー検査開始");
+
+		// 社員のバッチ総数取得
+		HashMap<Integer, Integer> batchCountMap = batchCount(employeeId);
+
+		// 社員の所持中のトロフィー総数取得
+		HashMap<Integer, Integer> trophyCountMap = trophyCount(employeeId);
+
+		// トロフィー全件取得
+		PreparedStatement trophySelect = con
+				.prepareStatement("select * from trophy;");
+
+		ResultSet trophyResult = trophySelect.executeQuery();
+		// 1トロフィー毎の処理
+		while (trophyResult.next()) {
+
+			int trophyId = trophyResult.getInt("trophy_id");
+			System.out.println(trophyId);
+
+			PreparedStatement detailSelect = con
+					.prepareStatement("select * from trophy_detail where trophy_id = ?;");
+			detailSelect.setInt(1, trophyId);
+			ResultSet detailResult = detailSelect.executeQuery();
+			// トロフィー取得条件精査
+			int trophyCount = Integer.MAX_VALUE;
+			while (detailResult.next()) {
+
+				int batchId = detailResult.getInt("batch_id");
+
+				if (batchCountMap.get(batchId) != null) {
+					int count = batchCountMap.get(batchId)
+							/ detailResult.getInt("type_count");
+					if (trophyCount > count) {
+						trophyCount = count;
+						System.out.println("トロフィー取得可能性あり");
+					}
+				} else {
+					System.out.println("バッチ未取得");
+					trophyCount = Integer.MAX_VALUE;
+					break;
+				}
+			}
+
+			// 新規取得トロフィー数の出力
+			if (trophyCountMap.get(trophyId) != null
+					&& trophyCountMap.get(trophyId) < trophyCount) {
+				trophyCount = trophyCount - trophyCountMap.get(trophyId);
+				System.out.println("トロフィーかぶり排除");
+			} else if (trophyCountMap.get(trophyId) != null
+					&& trophyCountMap.get(trophyId) == trophyCount) {
+				trophyCount = Integer.MAX_VALUE;
+				System.out.println("トロフィー同数");
+			} else {
+				System.out.println("既存トロフィーなし");
+			}
+
+			// 新規トロフィー登録処理
+			if (trophyCount != Integer.MAX_VALUE && trophyCount != 0) {
+
+				System.out.println("新規トロフィー登録");
+				// 現在の該当社員の該当トロフィー数取得
+				int nowTrophyNo = getTrophyNo(employeeId, trophyId);
+
+				for (int i = 0; i < trophyCount; i++) {
+					nowTrophyNo++;
+					PreparedStatement insert = con
+							.prepareStatement("insert into employee_trophy (employee_id,trophy_id,trophy_No,get_datetime) values (?,?,?,now());");
+					insert.setString(1, employeeId);
+					insert.setInt(2, trophyId);
+					insert.setInt(3, nowTrophyNo);
+					insert.executeUpdate();
+				}
+			} else {
+				System.out.println("登録失敗");
+			}
+		}
+	}
+
+	/**
+	 * 社員のバッチ毎の個数取得
+	 *
+	 * @param employeeId
+	 * @return
+	 * @throws SQLException
+	 */
+	public HashMap<Integer, Integer> batchCount(String employeeId)
+			throws SQLException {
+
+		PreparedStatement select = con
+				.prepareStatement("select batch_id,count(*) from home_log where home_target = ? group by batch_id;");
+
+		select.setString(1, employeeId);
+		ResultSet result = select.executeQuery();
+
+		HashMap<Integer, Integer> record = new HashMap<Integer, Integer>();
+
+		while (result.next()) {
+			record.put(result.getInt("batch_id"), result.getInt("count(*)"));
+			System.out.println(result.getInt("batch_id") + ":"
+					+ result.getInt("count(*)"));
+		}
+
+		return record;
+	}
+
+	/**
+	 * 社員のトロフィー毎の個数取得
+	 *
+	 * @param employeeId
+	 * @return
+	 * @throws SQLException
+	 */
+	public HashMap<Integer, Integer> trophyCount(String employeeId)
+			throws SQLException {
+
+		PreparedStatement select = con
+				.prepareStatement("select trophy_id,count(*) from employee_trophy where employee_id = ? group by trophy_id;");
+
+		select.setString(1, employeeId);
+		ResultSet result = select.executeQuery();
+
+		HashMap<Integer, Integer> record = new HashMap<Integer, Integer>();
+
+		while (result.next()) {
+			record.put(result.getInt("trophy_id"), result.getInt("count(*)"));
+		}
+
+		return record;
+	}
+
+	/**
+	 * 現在の指定トロフィーの数
+	 *
+	 * @param employeeId
+	 * @param trophyId
+	 * @return
+	 * @throws SQLException
+	 */
+	public int getTrophyNo(String employeeId, int trophyId) throws SQLException {
+
+		PreparedStatement select = con
+				.prepareStatement("select count(*) from employee_trophy where employee_id = ? and trophy_id = ? group by trophy_id ;");
+
+		select.setString(1, employeeId);
+		select.setInt(2, trophyId);
+		ResultSet result = select.executeQuery();
+
+		int trophyNo = 0;
+		if (result.next()) {
+			trophyNo = result.getInt("count(*)");
+		}
+
+		return trophyNo;
+	}
+
+	/**
+	 * 社内資格取得登録
+	 *
+	 * @param employeeId
+	 * @throws SQLException
+	 */
+	public void newCompanyCapacity(String employeeId) throws SQLException {
+
+		System.out.println("新規社内資格検査開始");
+
+		// 社員のバッチ総数取得
+		HashMap<Integer, Integer> batchCountMap = batchCount(employeeId);
+
+		// 社員の所持中の社内資格総数取得
+		HashMap<Integer, Integer> capacityCountMap = capacityCount(employeeId);
+
+		// 社内資格全件取得
+		PreparedStatement capacitySelect = con
+				.prepareStatement("select * from company_capacity;");
+
+		ResultSet capacityResult = capacitySelect.executeQuery();
+		// 社内資格毎の処理
+		while (capacityResult.next()) {
+
+			int capacityId = capacityResult.getInt("capacity_id");
+			System.out.println(capacityId);
+
+			PreparedStatement detailSelect = con
+					.prepareStatement("select * from capacity_detail where capacity_id = ?;");
+			detailSelect.setInt(1, capacityId);
+			ResultSet detailResult = detailSelect.executeQuery();
+			// トロフィー取得条件精査
+			int capacityCount = Integer.MAX_VALUE;
+			while (detailResult.next()) {
+
+				int batchId = detailResult.getInt("batch_id");
+
+				if (batchCountMap.get(batchId) != null) {
+					int count = batchCountMap.get(batchId)
+							/ detailResult.getInt("type_count");
+					if (capacityCount > count) {
+						capacityCount = count;
+						System.out.println("社内資格取得可能性あり");
+					}
+				} else {
+					System.out.println("バッチ未取得");
+					capacityCount = Integer.MAX_VALUE;
+					break;
+				}
+			}
+
+			// 新規取得社内資格数の出力
+			if (capacityCountMap.get(capacityId) != null) {
+				capacityCount = Integer.MAX_VALUE;
+				System.out.println("社内資格存在");
+			} else {
+				System.out.println("既存社内資格なし");
+			}
+
+			// 新規社内資格登録処理
+			if (capacityCount != Integer.MAX_VALUE && capacityCount != 0) {
+
+				System.out.println("新規社内資格登録");
+
+				for (int i = 0; i < capacityCount; i++) {
+					PreparedStatement insert = con
+							.prepareStatement("insert into employee_company_capacity (employee_id,capacity_id,get_datetime) values (?,?,now());");
+					insert.setString(1, employeeId);
+					insert.setInt(2, capacityId);
+					insert.executeUpdate();
+				}
+			} else {
+				System.out.println("登録失敗");
+			}
+		}
+	}
+
+	/**
+	 * 社内資格取得確認
+	 *
+	 * @param employeeId
+	 * @return
+	 * @throws SQLException
+	 */
+	public HashMap<Integer, Integer> capacityCount(String employeeId)
+			throws SQLException {
+
+		PreparedStatement select = con
+				.prepareStatement("select capacity_id,count(*) from employee_company_capacity where employee_id = ? group by capacity_id;");
+
+		select.setString(1, employeeId);
+		ResultSet result = select.executeQuery();
+
+		HashMap<Integer, Integer> record = new HashMap<Integer, Integer>();
+
+		while (result.next()) {
+			record.put(result.getInt("capacity_id"), result.getInt("count(*)"));
+		}
+
+		return record;
+	}
+
+	public void level(String employee_id, int point) throws SQLException {
+
+		// 経験値追加
+		PreparedStatement experienceUpdate = con
+				.prepareStatement("update employees set experience = experience + ? where employee_id = ? ;");
+
+		experienceUpdate.setInt(1, point);
+		experienceUpdate.setString(2, employee_id);
+
+		experienceUpdate.executeUpdate();
+
+		// レベルアップ処理
+
+		PreparedStatement employeeSelect = con
+				.prepareStatement("select * from employees where employee_id = ? ;");
+
+		employeeSelect.setString(1, employee_id);
+		ResultSet employeeResult = employeeSelect.executeQuery();
+
+		if (employeeResult.next()) {
+			PreparedStatement levelSelect = con
+					.prepareStatement("select * from level where level = ? ;");
+
+			levelSelect.setInt(1, employeeResult.getInt("level") + 1);
+			ResultSet levelResult = levelSelect.executeQuery();
+			if (levelResult.next()) {
+				if ( employeeResult.getInt("experience") >= levelResult.getInt("experience")) {
+					PreparedStatement levelUpdate = con
+							.prepareStatement("update employees set level = level + 1 where employee_id = ? ;");
+
+					levelUpdate.setString(1, employee_id);
+
+					levelUpdate.executeUpdate();
+				}
+			}
+		}
+	}
+
+	public String getContentTitle(int contentId) throws SQLException {
+
+		PreparedStatement select = con
+				.prepareStatement("select home_content_title from home_contents where home_content_id = ? ;");
+
+		select.setInt(1, contentId);
+		ResultSet result = select.executeQuery();
+
+		String record = null;
+
+		if (result.next()) {
+			record = result.getString("home_content_title");
 		}
 
 		return record;
