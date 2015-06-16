@@ -11,7 +11,7 @@
 			<c:set var="i" value="${detailList}"/>
 			<tr>
 				<td>
-					<form action="./edit?id=${i.homeContentId}" method="post">
+					<form action="./edit?homeContentId=${i.homeContentId}" method="post">
 						<input type="submit" value="編集">
 					</form>
 				</td>

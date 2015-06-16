@@ -19,6 +19,9 @@ public class ModelSelector {
 		mapping.put("/homesystem/fcon/test", new TestModel());
 		mapping.put("/HomeSystem/fcon/contents/detail", new ContentsDetailModel());
 		mapping.put("/HomeSystem/fc/test", new TestModel());
+
+		// コンテンツモデル
+		mapping.put("/HomeSystem/fc/contents/update", new ContentsUpdateModel());
 		
 		// ログイン認証機能
 		mapping.put("/HomeSystem/fc/login/administrator", new LoginAdministrator());

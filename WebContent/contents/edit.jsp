@@ -7,21 +7,65 @@
 		<title>コンテンツリスト</title>
 	</head>
 	<body>
-		<table border="1">
-			<c:set var="i" value="${contentList}"/>
-			<tr>
-				<td>コンテンツ名：<input type="text" value="${i.homeContentTitle}"></td>
-				<td>コンテンツ内容：<input type="text" value="${i.homeContent}"></td>
-				<td>日時：${i.homeContentDatetime}</td>
-				<td>コンテンツ内容：${i.homeContentComment}</td>
-				<td>添付資料：<a href="${i.homeSource}">${i.homeSource}</a></td>
-				<td>ジャンル
-					<c:forEach items="${genreList}" var="i">
-						<input type="checkbox" name="genre" value="${j.genreId}">${j.genreName}<br/>
-					</c:forEach>
-				</td>
-				<td><input type="submit" value="編集完了"></td>
-			</tr>
-		</table>
+		<form action="update" method="post">
+			<table border="1">
+				<c:set var="i" value="${editData}"/>
+				<tr>
+					<td>コンテンツ名：<input type="text" value="${i.homeContentTitle}"></td>
+					<td>日時：${i.homeContentDatetime}<br/>
+						<select name="contentsYear">
+							<c:forEach begin="1950" end="2020" step="1" varStatus="status">
+								<option value="${status.index}">${status.index}</option>
+							</c:forEach>
+						</select>
+						年
+						<select name="contentsMonth">
+							<c:forEach begin="1" end="12" step="1" varStatus="status">
+								<option value="${status.index}">${status.index}</option>
+							</c:forEach>
+						</select>
+						月
+						<select name="contentsDay">
+							<c:forEach begin="1" end="31" step="1" varStatus="status">
+								<option value="${status.index}">${status.index}</option>
+							</c:forEach>
+						</select>
+						日
+						<select name="contentsHour">
+							<c:forEach begin="0" end="23" step="1" varStatus="status">
+								<option value="${status.index}">${status.index}</option>
+							</c:forEach>
+						</select>
+						時
+						<select name="contentsMinute">
+							<c:forEach begin="0" end="59" step="1" varStatus="status">
+								<option value="${status.index}">${status.index}</option>
+							</c:forEach>
+						</select>
+						分
+					</td>
+					<td>コンテンツタイトル：<input type="text" name="homeContentTitle" value="${i.homeContentTitle}"></td>
+					<td>コンテンツ内容：<br/>
+						<textarea name="homeContentComment">${i.homeContentComment}</textarea>
+					</td>
+					<td>添付資料：</td>
+					<td>ジャンル<br/>
+						<c:forEach items="${genreList}" var="j">
+							<c:set var="check" value="" />
+							<c:forEach items="${i.genreId}" var="id">
+								<c:if test="${j.genreId == id}" >
+									<c:set var="check" value="checked" />
+								</c:if>
+							</c:forEach>
+							<input type="checkbox" name="genreId" value="${j.genreId}" ${check}>${j.bigGenreName}-${j.genreName}<br/>
+						</c:forEach>
+					</td>
+					<td>
+						<input type="hidden" name="homeContentId" value="${i.homeContentId}">
+						<input type="submit" value="編集完了">
+					</td>
+				</tr>
+			</table>
+		</form>
 	</body>
 </html>
