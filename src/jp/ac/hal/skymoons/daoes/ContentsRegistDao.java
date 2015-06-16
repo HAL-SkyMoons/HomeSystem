@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.naming.NamingException;
 
+import jp.ac.hal.skymoons.beans.ContentsDetailBean;
 import jp.ac.hal.skymoons.beans.ContentsRegistBean;
 import jp.ac.hal.skymoons.beans.SampleBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
@@ -58,22 +59,15 @@ public class ContentsRegistDao {
 		return pst.executeUpdate();
 	}
 
-	public int insertGenre(ContentsRegistBean bean) throws SQLException {
+	public int insertHomeGenre(ContentsRegistBean bean) throws SQLException {
 		
-		PreparedStatement pst = con.prepareStatement("insert into genre() values (?,?);");
+		PreparedStatement pst = con.prepareStatement("insert into home_genre() values (?,?);");
 		pst.setString(1, "2000/01/01");
 		pst.setString(2, "ｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒ");
 
 		return pst.executeUpdate();
 	}
-	public int insertBigGenre(ContentsRegistBean bean) throws SQLException {
-		
-		PreparedStatement pst = con.prepareStatement("insert into big_genre() values (?,?);");
-		pst.setString(1, "2000/01/01");
-		pst.setString(2, "ｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒ");
 
-		return pst.executeUpdate();
-	}
 	
 	
 	/**
@@ -101,6 +95,11 @@ public class ContentsRegistDao {
 	 */
 	public void rollback() throws SQLException {
 		con.rollback();
+	}
+
+	public ContentsDetailBean findContent(String homeContentId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 

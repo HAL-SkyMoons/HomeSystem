@@ -1,9 +1,17 @@
 package jp.ac.hal.skymoons.models;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jp.ac.hal.skymoons.beans.ContentsDetailBean;
+import jp.ac.hal.skymoons.beans.ContentsDetailHomeLogBean;
+import jp.ac.hal.skymoons.beans.ContentsGenreBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
+import jp.ac.hal.skymoons.daoes.ContentsDetailDao;
+import jp.ac.hal.skymoons.daoes.ContentsGenreDao;
+import jp.ac.hal.skymoons.daoes.ContentsRegistDao;
 
 public class ContentsRegistModel extends AbstractModel{
 
@@ -12,7 +20,16 @@ public class ContentsRegistModel extends AbstractModel{
 			HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 
-		return "/error.html"	;
+		//ジャンル検索
+		ContentsGenreDao genreDao = new ContentsGenreDao();
+		ArrayList<ContentsGenreBean> genreData = null;
+		genreData = genreDao.findAll();
+
+		//結果をリクエストに保存
+		request.setAttribute("genreList",genreData);
+		
+		//遷移先を指定
+		return "/contents/regist.jsp";
 	}
 
 }
