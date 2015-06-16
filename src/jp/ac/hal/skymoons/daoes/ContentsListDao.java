@@ -48,7 +48,7 @@ public class ContentsListDao {
 	 */
 	public ArrayList<ContentsListBean> findAll() throws SQLException {
 
-		PreparedStatement contentsPst = con.prepareStatement("select * from home_contents;");
+		PreparedStatement contentsPst = con.prepareStatement("select * from home_contents order by home_content_id desc;");
 		ResultSet contentsResult = contentsPst.executeQuery();	
 
 		ArrayList<ContentsListBean> contentsList = convertList(contentsResult);
@@ -69,7 +69,7 @@ public class ContentsListDao {
 	
 	public ArrayList<ContentsListBean> selectGenre(String genreId) throws SQLException {
 
-		PreparedStatement contentsPst = con.prepareStatement("select * from home_contents hc, home_genre hg where hc.home_content_id = hg.home_content_id and hg.genre_id = ? ;");
+		PreparedStatement contentsPst = con.prepareStatement("select * from home_contents hc, home_genre hg where hc.home_content_id = hg.home_content_id and hg.genre_id = ? order by home_content_id desc;");
 		contentsPst.setString(1, genreId);
 		ResultSet contentsResult = contentsPst.executeQuery();		
 
@@ -78,8 +78,6 @@ public class ContentsListDao {
 		return contentsList;
 	}
 	
-	
-
 	/**
 	 * 投稿者で検索
 	 *
@@ -91,7 +89,7 @@ public class ContentsListDao {
 	
 	public ArrayList<ContentsListBean> selectEmployee(String employeeId) throws SQLException {
 
-		PreparedStatement contentsPst = con.prepareStatement("select * from home_contents hc where hc.employee_id = ? ;");
+		PreparedStatement contentsPst = con.prepareStatement("select * from home_contents hc where hc.employee_id = ? order by home_content_id desc;");
 		contentsPst.setString(1, employeeId);
 		ResultSet contentsResult = contentsPst.executeQuery();		
 
@@ -99,12 +97,10 @@ public class ContentsListDao {
 		contentsPst.close();
 		return contentsList;
 	}
-	
-	
 
 	public ArrayList<ContentsListBean> selectHomeContentTitle(String homeContentTitle) throws SQLException {
 
-		PreparedStatement contentsPst = con.prepareStatement("select * from home_contents where home_content_title like '%?%' ;");
+		PreparedStatement contentsPst = con.prepareStatement("select * from home_contents where home_content_title like '%?%' order by home_content_id desc;");
 		contentsPst.setString(1, homeContentTitle);
 		ResultSet contentsResult = contentsPst.executeQuery();		
 		
@@ -163,9 +159,11 @@ public class ContentsListDao {
 
 			//大ジャンルの取得			
 			PreparedStatement bigGenrePst = con.prepareStatement(
-					"select * from genre, big_genre "
-					+ "where genre.genre_id = ? "
-					+ "and genre.big_genre_id = big_genre.big_genre_id;");
+					"select * from home_genre, genre, big_genre "
+					+ "where home_genre.home_content_id = ? "
+					+ "and home_genre.genre_id = genre.genre_id "
+					+ "and genre.big_genre_id = big_genre.big_genre_id "
+					+ "group by big_genre.big_genre_id;");
 
 			bigGenrePst.setInt(1, homeContentId);
 			ResultSet bigGenreResult = bigGenrePst.executeQuery();
@@ -199,9 +197,12 @@ public class ContentsListDao {
 			listBean.setHomeSourceName(homeSourceName);
 			sourcePst.close();
 			*/
+			
+			contentsList.add(listBean);
 		}
 		return contentsList;
 	}
+	
 	/**
 	 * 接続を閉じる
 	 *
