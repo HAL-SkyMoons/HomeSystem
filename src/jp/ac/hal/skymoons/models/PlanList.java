@@ -9,6 +9,7 @@ import jp.ac.hal.skymoons.beans.GenreBean;
 import jp.ac.hal.skymoons.beans.PlanBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.SampleDao;
+import jp.ac.hal.skymoons.security.session.SessionController;
 
 public class PlanList extends AbstractModel{
 
@@ -16,25 +17,32 @@ public class PlanList extends AbstractModel{
 	public String doService(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
+		SessionController sessionController = new SessionController(request);
 
-		SampleDao dao = new SampleDao();
-		List<PlanBean> planList = null;
+		if(sessionController.checkUserSession() == null && sessionController.getUserClass_flag().equals("1")){
+			SampleDao dao = new SampleDao();
+			List<PlanBean> planList = null;
 
-		if(request.getParameter("search")!=null && request.getParameterValues("genre") != null){
-			//検索あり
-			planList = dao.planGenreSearch(request.getParameterValues("genre"));
+			if(request.getParameter("search")!=null && request.getParameterValues("genre") != null){
+				//検索あり
+				planList = dao.planGenreSearch(request.getParameterValues("genre"));
+			}else{
+				//検索なし
+				planList = dao.planList();
+			}
+			List<GenreBean> genreList = dao.genreAll();
+
+			dao.close();
+			request.setAttribute("planList", planList);
+			request.setAttribute("genreList", genreList);
+			request.setAttribute("searchGenre", request.getParameterValues("genre"));
+
+			return "/pages/PlanList.jsp"	;
 		}else{
-			//検索なし
-			planList = dao.planList();
+			return "/pages/error.html";
 		}
-		List<GenreBean> genreList = dao.genreAll();
 
-		dao.close();
-		request.setAttribute("planList", planList);
-		request.setAttribute("genreList", genreList);
-		request.setAttribute("searchGenre", request.getParameterValues("genre"));
 
-		return "/pages/PlanList.jsp"	;
 	}
 
 }

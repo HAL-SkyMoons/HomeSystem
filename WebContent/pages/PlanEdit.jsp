@@ -18,10 +18,10 @@
 		<table>
 			<%
 				PlanBean plan = (PlanBean) request.getAttribute("plan");
-					ArrayList<GenreBean> genreList = (ArrayList<GenreBean>) request
-							.getAttribute("genreList");
-					ArrayList<GenreBean> planGenre = (ArrayList<GenreBean>) request
-							.getAttribute("planGenre");
+				ArrayList<GenreBean> genreList = (ArrayList<GenreBean>) request
+						.getAttribute("genreList");
+				ArrayList<GenreBean> planGenre = (ArrayList<GenreBean>) request
+						.getAttribute("planGenre");
 			%>
 			<tr>
 				<th>企画ID</th>
@@ -58,7 +58,7 @@
 				<td>
 					<%
 						out.println("<textarea name=\"planComment\">"
-											+ plan.getPlanComment() + "</textarea>");
+								+ plan.getPlanComment() + "</textarea>");
 					%>
 				</td>
 			</tr>
@@ -68,17 +68,28 @@
 		<%
 			int genreIndex = 0;
 			int genreMaxIndex = planGenre.size();
-			for(GenreBean genre : genreList){
+			for (GenreBean genre : genreList) {
 				//入力されたジャンルがない　または　既存ジャンルにチェック済み
-				if(genreMaxIndex == genreIndex){
-					out.println("<label><input type=\"checkbox\" name=\"genre\" value=\""+  genre.getGenreId()  +"\">" + genre.getGenreName() + "</label>");
-				}else{
+				if (genreMaxIndex == genreIndex) {
+					out.println("<label><input type=\"checkbox\" name=\"genre\" value=\""
+							+ genre.getGenreId()
+							+ "\">"
+							+ genre.getGenreName()
+							+ "</label>");
+				} else {
 					//既存ジャンルIDと出力ジャンルIDが一致
-					if(planGenre.get(genreIndex).getGenreId() == genre.getGenreId()){
-						out.println("<label><input type=\"checkbox\" name=\"genre\" value=\""+  genre.getGenreId()  +"\" checked=\"checked\">" + genre.getGenreName() + "</label>");
-						genreIndex ++;
-					}else{
-						out.println("<label><input type=\"checkbox\" name=\"genre\" value=\""+  genre.getGenreId()  +"\">" + genre.getGenreName() + "</label>");
+					if (planGenre.get(genreIndex).getGenreId() == genre
+							.getGenreId()) {
+						out.println("<label><input type=\"checkbox\" name=\"genre\" value=\""
+								+ genre.getGenreId()
+								+ "\" checked=\"checked\">"
+								+ genre.getGenreName() + "</label>");
+						genreIndex++;
+					} else {
+						out.println("<label><input type=\"checkbox\" name=\"genre\" value=\""
+								+ genre.getGenreId()
+								+ "\">"
+								+ genre.getGenreName() + "</label>");
 					}
 				}
 

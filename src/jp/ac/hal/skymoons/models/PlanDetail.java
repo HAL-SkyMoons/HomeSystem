@@ -6,7 +6,20 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import java.io.*;
+import java.util.*;
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+import org.apache.commons.fileupload.*;
+import org.apache.commons.fileupload.disk.*;
+import org.apache.commons.fileupload.servlet.*;
+
+import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
+
 import jp.ac.hal.skymoons.beans.CommentBean;
+import jp.ac.hal.skymoons.beans.FileBean;
 import jp.ac.hal.skymoons.beans.GenreBean;
 import jp.ac.hal.skymoons.beans.PlanBean;
 import jp.ac.hal.skymoons.beans.PlanPointBean;
@@ -14,6 +27,7 @@ import jp.ac.hal.skymoons.beans.UserBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.SampleDao;
 import jp.ac.hal.skymoons.security.session.SessionController;
+import jp.ac.hal.skymoons.util.Utility;
 
 public class PlanDetail extends AbstractModel {
 
@@ -21,18 +35,84 @@ public class PlanDetail extends AbstractModel {
 	public String doService(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
+		if(request.getParameter("download") != null){
+			System.out.println("download");
+			Utility utility = new Utility();
+			utility.download(request, response);
+			return null;
+		}
+
+		int planId = 0;
 
 		SessionController sessionController = new SessionController(request);
 
+		if (ServletFileUpload.isMultipartContent(request)) {
+
+			// (1)アップロードファイルを格納するPATHを取得
+			String path = request.getServletContext().getRealPath("/files");
+			System.out.println(path);
+
+			// (2)ServletFileUploadオブジェクトを生成
+			DiskFileItemFactory factory = new DiskFileItemFactory();
+			ServletFileUpload upload = new ServletFileUpload(factory);
+
+			// (3)アップロードする際の基準値を設定
+			factory.setSizeThreshold(1024);
+			upload.setSizeMax(-1);
+			upload.setHeaderEncoding("UTF-8");
+			try {
+				// (4)ファイルデータ(FileItemオブジェクト)を取得し、
+				// Listオブジェクトとして返す
+				List list = upload.parseRequest(request);
+
+				// (5)ファイルデータ(FileItemオブジェクト)を順に処理
+				Iterator iterator = list.iterator();
+				while (iterator.hasNext()) {
+					FileItem fItem = (FileItem) iterator.next();
+
+					// (6)ファイルデータの場合、if内を実行
+					if (!(fItem.isFormField())) {
+						// (7)ファイルデータのファイル名(PATH名含む)を取得
+						String fileName = fItem.getName();
+						if ((fileName != null) && (!fileName.equals(""))) {
+							// (8)PATH名を除くファイル名のみを取得
+							fileName = (new File(fileName)).getName();
+
+							SampleDao dao = new SampleDao();
+							int nextUploadNo = dao.planFileUpload(planId, fileName);
+							dao.commit();
+							dao.close();
+							String newFileName =path + "/plan/master/"+ planId +"/"+ nextUploadNo;
+							File dir = new File(newFileName);
+							dir.mkdirs();
+							// (9)ファイルデータを指定されたファイルに書き出し
+							fItem.write(new File(newFileName + "/" + fileName));
+						}
+					} else {
+						if(fItem.getFieldName().equals("planId")){
+							planId = Integer.valueOf(fItem.getString());
+						}
+					}
+				}
+			} catch (FileUploadException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
 		if ((request.getParameter("detail") != null
+				|| planId != 0
+				|| request.getParameter("upload") != null
 				|| request.getParameter("commentSubmit") != null
 				|| request.getParameter("delete") != null
-				|| request.getParameter("edit") != null
-				|| request.getParameter("evaluationSubmit") != null)
+				|| request.getParameter("edit") != null || request
+				.getParameter("evaluationSubmit") != null)
 				&& sessionController.checkUserSession() == null) {
 			SampleDao dao = new SampleDao();
-			int planId = Integer.valueOf(request.getParameter("planId"));
-
+			if (planId == 0) {
+				planId = Integer.valueOf(request.getParameter("planId"));
+			}
 			String employeeId = sessionController.getUserId();
 			UserBean user = dao.getUser(employeeId);
 			request.setAttribute("user", user);
@@ -101,6 +181,10 @@ public class PlanDetail extends AbstractModel {
 			List<GenreBean> genre = dao.planGenreList(planDetail.getPlanId());
 
 			request.setAttribute("genre", genre);
+
+			//アップロードファイル一覧取得
+			List<FileBean> fileList = dao.uploadFileList(planId);
+			request.setAttribute("fileList", fileList);
 
 			// コメント取得
 			List<CommentBean> commentList = dao.planCommentList(planId);

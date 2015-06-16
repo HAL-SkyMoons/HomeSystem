@@ -12,6 +12,7 @@ import javax.naming.NamingException;
 
 import jp.ac.hal.skymoons.beans.BatchBean;
 import jp.ac.hal.skymoons.beans.CommentBean;
+import jp.ac.hal.skymoons.beans.FileBean;
 import jp.ac.hal.skymoons.beans.GenreBean;
 import jp.ac.hal.skymoons.beans.HomeBean;
 import jp.ac.hal.skymoons.beans.PlanBean;
@@ -983,6 +984,13 @@ public class SampleDao {
 		return record;
 	}
 
+	/**
+	 * 経験値付与/レベルアップ処理
+	 *
+	 * @param employee_id
+	 * @param point
+	 * @throws SQLException
+	 */
 	public void level(String employee_id, int point) throws SQLException {
 
 		// 経験値追加
@@ -1009,7 +1017,8 @@ public class SampleDao {
 			levelSelect.setInt(1, employeeResult.getInt("level") + 1);
 			ResultSet levelResult = levelSelect.executeQuery();
 			if (levelResult.next()) {
-				if ( employeeResult.getInt("experience") >= levelResult.getInt("experience")) {
+				if (employeeResult.getInt("experience") >= levelResult
+						.getInt("experience")) {
 					PreparedStatement levelUpdate = con
 							.prepareStatement("update employees set level = level + 1 where employee_id = ? ;");
 
@@ -1021,6 +1030,13 @@ public class SampleDao {
 		}
 	}
 
+	/**
+	 * ホメコンテンツタイトル取得
+	 *
+	 * @param contentId
+	 * @return
+	 * @throws SQLException
+	 */
 	public String getContentTitle(int contentId) throws SQLException {
 
 		PreparedStatement select = con
@@ -1036,6 +1052,86 @@ public class SampleDao {
 		}
 
 		return record;
+	}
+
+	/**
+	 * 企画ファイルアップロード登録処理
+	 * @param planId
+	 * @param fileName
+	 * @return
+	 * @throws SQLException
+	 */
+	public int planFileUpload(int planId, String fileName) throws SQLException {
+		// 重複確認
+
+		int nextFileNo = getPlanFileUploadNo(planId);
+
+		PreparedStatement select = con
+				.prepareStatement("select count(*) from plan_data where plan_id = ? and data_name = ? group by plan_id;");
+		select.setInt(1, planId);
+		select.setString(2, fileName);
+
+		ResultSet result = select.executeQuery();
+
+		if (!result.next()) {
+			// 新規作成
+			PreparedStatement insert = con
+					.prepareStatement("insert into plan_data (plan_id,data_no,data_name) values (?,?,?);");
+			insert.setInt(1, planId);
+			insert.setInt(2, nextFileNo);
+			insert.setString(3, fileName);
+
+			insert.executeUpdate();
+		}
+
+		return nextFileNo;
+
+	}
+
+	/**
+	 * 企画ごとの次のアップロードファイルNo
+	 *
+	 * @param planId
+	 * @param fileName
+	 * @return
+	 * @throws SQLException
+	 */
+	public int getPlanFileUploadNo(int planId) throws SQLException {
+		PreparedStatement select = con
+				.prepareStatement("select count(*) from plan_data where plan_id = ? group by plan_id;");
+		select.setInt(1, planId);
+
+		ResultSet result = select.executeQuery();
+
+		if (result.next()) {
+			return result.getInt("count(*)") + 1;
+		}
+
+		return 1;
+
+	}
+
+	public List<FileBean> uploadFileList(int planId) throws SQLException {
+
+		PreparedStatement select = con
+				.prepareStatement("select * from plan_data where plan_id = ?;");
+
+		select.setInt(1, planId);
+
+		ResultSet result = select.executeQuery();
+
+		ArrayList<FileBean> table = new ArrayList<FileBean>();
+		while (result.next()) {
+
+			FileBean record = new FileBean();
+
+			record.setPlanId(result.getInt("plan_id"));
+			record.setDataNo(result.getInt("data_no"));
+			record.setDataName(result.getString("data_name"));
+
+			table.add(record);
+		}
+		return table;
 	}
 
 }

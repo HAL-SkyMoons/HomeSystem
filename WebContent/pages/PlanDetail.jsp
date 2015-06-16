@@ -1,3 +1,4 @@
+<%@page import="jp.ac.hal.skymoons.beans.FileBean"%>
 <%@page import="jp.ac.hal.skymoons.beans.UserBean"%>
 <%@page import="jp.ac.hal.skymoons.beans.PlanPointBean"%>
 <%@page import="jp.ac.hal.skymoons.util.Utility"%>
@@ -25,15 +26,17 @@
 						.getAttribute("genre");
 				ArrayList<CommentBean> commentList = (ArrayList<CommentBean>) request
 						.getAttribute("commentList");
-				PlanPointBean planPoint = (PlanPointBean) request.getAttribute("planPoint");
-				UserBean user = (UserBean)request.getAttribute("user");
+				PlanPointBean planPoint = (PlanPointBean) request
+						.getAttribute("planPoint");
+				UserBean user = (UserBean) request.getAttribute("user");
+
+				ArrayList<FileBean> fileList = (ArrayList<FileBean>)request.getAttribute("fileList");
 
 				int[] points = (int[]) request.getAttribute("points");
 
 				String good = "";
 				String hold = "";
 				String bad = "";
-
 
 				switch (planPoint.getPoint()) {
 				case 1:
@@ -46,7 +49,6 @@
 					bad = "disabled";
 					break;
 				}
-
 			%>
 			<tr>
 				<th>企画ID</th>
@@ -111,39 +113,86 @@
 	<hr>
 	<table>
 		<tr>
+			<th>No</th>
+			<th>ファイル名</th>
+			<th>ダウンロード</th>
+		</tr>
+		<%
+			for(FileBean file : fileList){
+				out.println("<tr>");
+				out.println("<td>"+ file.getDataNo() +"</td>");
+				out.println("<td>"+ file.getDataName() +"</td>");
+
+				String path = request.getServletContext().getRealPath("/files/plan/master/"+file.getPlanId()+"/"+file.getDataNo()+"/"+file.getDataName());
+				out.println("<td><form action=\"/HomeSystem/fc/PlanDetail\" method=\"post\"><input type=\"hidden\" name=\"planId\" value=\""
+						+ plan.getPlanId() + "\"><input type=\"hidden\" name=\"path\" value=\""+ path +"\"/><input type=\"hidden\" name=\"fileName\" value=\""+ file.getDataName()  +"\"/><input type=\"submit\" name=\"download\" value=\"ダウンロード\"></form></td>");
+				//out.println("<td><a href=\""+ path +"\">ダウンロード</a></td>");
+				System.out.println(path);
+				out.println("</tr>");
+			}
+		%>
+	</table>
+	<form method="POST" enctype="multipart/form-data"
+		action="/HomeSystem/fc/PlanDetail">
+		<input type="hidden" name="planId" value=<%out.println(plan.getPlanId());%>/>
+		<input type="file" name="file" />
+		<input type="submit" name="upload" value="送信" />
+
+	</form>
+	<hr>
+	<table>
+		<tr>
 			<td>
 				<form action="/HomeSystem/fc/PlanDetail" method="post">
-					<input type="submit" name="evaluationSubmit" value="いいね"  <% out.println(good); %>>
-					<input type="hidden" name="evaluation" value="1">
-					<input type="hidden" name="planId" value=<%out.println(plan.getPlanId());%>>
+					<input type="submit" name="evaluationSubmit" value="いいね"
+						<%out.println(good);%>> <input type="hidden"
+						name="evaluation" value="1"> <input type="hidden"
+						name="planId" value=<%out.println(plan.getPlanId());%>>
 				</form>
 			</td>
 			<td>
 
 				<form action="/HomeSystem/fc/PlanDetail" method="post">
-					<input type="submit" name="evaluationSubmit" value="保留" <% out.println(hold); %>>
-					<input type="hidden" name="evaluation" value="2">
-					<input type="hidden" name="planId" value=<%out.println(plan.getPlanId());%>>
+					<input type="submit" name="evaluationSubmit" value="保留"
+						<%out.println(hold);%>> <input type="hidden"
+						name="evaluation" value="2"> <input type="hidden"
+						name="planId" value=<%out.println(plan.getPlanId());%>>
 				</form>
 			</td>
 			<td><form action="/HomeSystem/fc/PlanDetail" method="post">
-					<input type="submit" name="evaluationSubmit" value="ダメだね" <% out.println(bad); %>>
-					<input type="hidden" name="evaluation" value="3">
-					<input type="hidden" name="planId" value=<%out.println(plan.getPlanId());%>>
+					<input type="submit" name="evaluationSubmit" value="ダメだね"
+						<%out.println(bad);%>> <input type="hidden"
+						name="evaluation" value="3"> <input type="hidden"
+						name="planId" value=<%out.println(plan.getPlanId());%>>
 				</form></td>
 		<tr>
-			<td><% out.println(points[0]); %></td>
-			<td><% out.println(points[1]); %></td>
-			<td><% out.println(points[2]); %></td>
+			<td>
+				<%
+					out.println(points[0]);
+				%>
+			</td>
+			<td>
+				<%
+					out.println(points[1]);
+				%>
+			</td>
+			<td>
+				<%
+					out.println(points[2]);
+				%>
+			</td>
 		</tr>
 	</table>
 	<hr>
 	<form action="/HomeSystem/fc/PlanDetail" method="post">
-		<label>名前：<% out.print(user.getLastName() + user.getFirstName()); %></label><br> <label>コメント：<textarea
-				name="comment"></textarea></label><br> <input type="submit"
-			name="commentSubmit" value="送信"> <input type="hidden"
-			name="planId" value="<%out.print(plan.getPlanId());%>"> <input
-			type="hidden" name="commentUserId" value="<% out.print(user.getUserId()); %>">
+		<label>名前：<%
+			out.print(user.getLastName() + user.getFirstName());
+		%></label><br>
+		<label>コメント：<textarea name="comment"></textarea></label><br> <input
+			type="submit" name="commentSubmit" value="送信"> <input
+			type="hidden" name="planId" value="<%out.print(plan.getPlanId());%>">
+		<input type="hidden" name="commentUserId"
+			value="<%out.print(user.getUserId());%>">
 	</form>
 	</tr>
 
@@ -159,22 +208,23 @@
 		<%
 			for (CommentBean comment : commentList) {
 				out.println("<tr>");
-				if (comment.getDeleteFrag() == 0 ) {
+				if (comment.getDeleteFrag() == 0) {
 					out.println("<td>" + comment.getCommentNo() + "</td>");
 					out.println("<td>" + comment.getCommentName() + "</td>");
 					out.println("<td>" + util.nlToBR(comment.getComment())
 							+ "</td>");
 					out.println("<td>" + comment.getCommentDatetime() + "</td>");
 
-					System.out.print(comment.getCommentUser()+":"+user.getUserId());
+					System.out.print(comment.getCommentUser() + ":"
+							+ user.getUserId());
 
-					if(comment.getCommentUser().equals(user.getUserId())){
+					if (comment.getCommentUser().equals(user.getUserId())) {
 						out.println("<td><form action=\"/HomeSystem/fc/PlanDetail\" method=\"post\"><input type=\"hidden\" name=\"planId\" value=\""
 								+ comment.getPlanID()
 								+ "\"><input type=\"hidden\" name=\"commentNo\" value=\""
 								+ comment.getCommentNo()
 								+ "\"><input type=\"submit\" name=\"delete\" value=\"削除\"></form></td>");
-					}else{
+					} else {
 						out.println("<td></td>");
 					}
 
