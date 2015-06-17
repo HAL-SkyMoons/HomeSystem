@@ -23,41 +23,92 @@ public class Utility {
 	}
 
 	public void download(HttpServletRequest request,
-		    HttpServletResponse response) throws ServletException, IOException {
-		    OutputStream out = null;
-		    InputStream in = null;
+			HttpServletResponse response) throws ServletException, IOException {
+		OutputStream out = null;
+		InputStream in = null;
 
-		    String path = request.getParameter("path");
-		    String fileName = request.getParameter("fileName");
+		String path = request.getParameter("path");
+		String fileName = request.getParameter("fileName");
 
-		    File file = new File(path);
-		    System.out.println(file.getName());
-		    try {
-		    	response.setCharacterEncoding("UTF-8");
-		        response.setContentType("application/octet-stream");
-		        response.setHeader("Content-disposition", "attachment; filename=\""+ URLEncoder.encode(fileName, "UTF-8") +"\"");
+		File file = new File(path);
+		System.out.println(file.getName());
+		try {
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("application/octet-stream");
+			response.setHeader("Content-disposition", "attachment; filename=\""
+					+ URLEncoder.encode(fileName, "UTF-8") + "\"");
 
-		        in = new FileInputStream(path);
-		        out = response.getOutputStream();
-		        byte[] buff = new byte[1024];
-		        int len = 0;
-		        while ((len = in.read(buff, 0, buff.length)) != -1) {
-		            out.write(buff, 0, len);
-		        }
-		    } finally {
-		        if (in != null) {
-		            try {
-		                in.close();
-		            } catch (IOException e) {
-		            }
-		        }
-		        if (out != null) {
-		            try {
-		                out.close();
-		            } catch (IOException e) {
-		            }
-		        }
-		    }
+			in = new FileInputStream(path);
+			out = response.getOutputStream();
+			byte[] buff = new byte[1024];
+			int len = 0;
+			while ((len = in.read(buff, 0, buff.length)) != -1) {
+				out.write(buff, 0, len);
+			}
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (IOException e) {
+				}
+			}
+			if (out != null) {
+				try {
+					out.close();
+				} catch (IOException e) {
+				}
+			}
 		}
+	}
+
+	public static String getFileImage(String fileName) {
+		String image = "../images/icon/";
+		String[] extension = fileName.split("\\.");
+
+		switch (extension[extension.length - 1]) {
+		case "txt":
+			image += "txt.png";
+			break;
+		case "xls":
+			image += "xls.png";
+			break;
+		case "xlsx":
+			image += "xls.png";
+			break;
+		case "jpg":
+			image += "jpg.png";
+			break;
+		case "jpeg":
+			image += "jpg.png";
+			break;
+		case "pdf":
+			image += "pdf.png";
+			break;
+		case "ppt":
+			image += "ppt.png";
+			break;
+		case "pptx":
+			image += "ppt.png";
+			break;
+		case "docx":
+			image += "doc.png";
+			break;
+		case "doc":
+			image += "doc.png";
+			break;
+		case "avi":
+			image += "avi.png";
+			break;
+		case "png":
+			image += "png.png";
+			break;
+
+		default:
+			image += "file.png";
+			break;
+		}
+
+		return image;
+	}
 
 }

@@ -25,5 +25,7 @@ if(url != null) {
 		<p>ログイン成功</p>
 		<p>セッション確認実行済み</p>
 		<a href="../../pages/windowTest.html">ホメ</a>
+		<a href="/HomeSystem/fc/PlanList">企画一覧</a>
+		<a href="/HomeSystem/fc/PlanRegister">企画登録</a>
 	</body>
 </html>

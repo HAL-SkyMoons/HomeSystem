@@ -35,7 +35,7 @@ public class PlanDetail extends AbstractModel {
 	public String doService(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
-		if(request.getParameter("download") != null){
+		if (request.getParameter("download") != null) {
 			System.out.println("download");
 			Utility utility = new Utility();
 			utility.download(request, response);
@@ -79,17 +79,19 @@ public class PlanDetail extends AbstractModel {
 							fileName = (new File(fileName)).getName();
 
 							SampleDao dao = new SampleDao();
-							int nextUploadNo = dao.planFileUpload(planId, fileName);
+							int nextUploadNo = dao.planFileUpload(planId,
+									fileName);
 							dao.commit();
 							dao.close();
-							String newFileName =path + "/plan/master/"+ planId +"/"+ nextUploadNo;
+							String newFileName = path + "/plan/master/"
+									+ planId + "/" + nextUploadNo;
 							File dir = new File(newFileName);
 							dir.mkdirs();
 							// (9)ファイルデータを指定されたファイルに書き出し
 							fItem.write(new File(newFileName + "/" + fileName));
 						}
 					} else {
-						if(fItem.getFieldName().equals("planId")){
+						if (fItem.getFieldName().equals("planId")) {
 							planId = Integer.valueOf(fItem.getString());
 						}
 					}
@@ -99,13 +101,15 @@ public class PlanDetail extends AbstractModel {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		}else{
+			System.out.println("no upload");
 		}
 
-		if ((request.getParameter("detail") != null
-				|| planId != 0
+		if ((request.getParameter("detail") != null || planId != 0
 				|| request.getParameter("upload") != null
 				|| request.getParameter("commentSubmit") != null
 				|| request.getParameter("delete") != null
+				|| request.getParameter("fileDelete") != null
 				|| request.getParameter("edit") != null || request
 				.getParameter("evaluationSubmit") != null)
 				&& sessionController.checkUserSession() == null) {
@@ -171,6 +175,38 @@ public class PlanDetail extends AbstractModel {
 				dao.planPointRegister(pointBean);
 
 				dao.commit();
+			} else if (request.getParameter("fileDelete") != null) {
+				int delPlanId = Integer.valueOf(request.getParameter("planId"));
+				int dataNo = Integer.valueOf(request.getParameter("dataNo"));
+				String fileName = request.getParameter("fileName");
+
+				FileBean fileBean = new FileBean();
+				fileBean.setPlanId(delPlanId);
+				fileBean.setDataNo(dataNo);
+
+				int result = dao.planFileDelete(fileBean);
+				if (result != 0) {
+					String path = request.getServletContext().getRealPath(
+							"/files/plan/master/")
+							+ delPlanId + "\\" + dataNo;
+					System.out.println("del:" + path);
+					File delFile = new File(path + "\\" + fileName);
+					if (delFile.exists()) {
+						if (delFile.delete()) {
+							System.out.println("ファイルを削除しました");
+							File delFolder = new File(path);
+							delFolder.delete();
+							dao.commit();
+						} else {
+							System.out.println("ファイルの削除に失敗しました");
+							dao.rollback();
+						}
+
+					} else {
+						System.out.println("ファイルが見つかりません");
+					}
+				}
+
 			}
 
 			// 企画詳細情報の取得
@@ -182,7 +218,7 @@ public class PlanDetail extends AbstractModel {
 
 			request.setAttribute("genre", genre);
 
-			//アップロードファイル一覧取得
+			// アップロードファイル一覧取得
 			List<FileBean> fileList = dao.uploadFileList(planId);
 			request.setAttribute("fileList", fileList);
 

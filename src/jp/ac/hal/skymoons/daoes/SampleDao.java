@@ -1056,6 +1056,7 @@ public class SampleDao {
 
 	/**
 	 * 企画ファイルアップロード登録処理
+	 *
 	 * @param planId
 	 * @param fileName
 	 * @return
@@ -1098,13 +1099,13 @@ public class SampleDao {
 	 */
 	public int getPlanFileUploadNo(int planId) throws SQLException {
 		PreparedStatement select = con
-				.prepareStatement("select count(*) from plan_data where plan_id = ? group by plan_id;");
+				.prepareStatement("select max(data_no) from plan_data where plan_id = ? group by plan_id;");
 		select.setInt(1, planId);
 
 		ResultSet result = select.executeQuery();
 
 		if (result.next()) {
-			return result.getInt("count(*)") + 1;
+			return result.getInt("max(data_no)") + 1;
 		}
 
 		return 1;
@@ -1132,6 +1133,16 @@ public class SampleDao {
 			table.add(record);
 		}
 		return table;
+	}
+
+	public int planFileDelete(FileBean file) throws SQLException {
+
+		PreparedStatement delete = con
+				.prepareStatement("delete from plan_data where plan_id = ? and data_no = ?; ");
+		delete.setInt(1, file.getPlanId());
+		delete.setInt(2, file.getDataNo());
+
+		return delete.executeUpdate();
 	}
 
 }

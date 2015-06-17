@@ -114,6 +114,7 @@
 	<table>
 		<tr>
 			<th>No</th>
+			<th>画像</th>
 			<th>ファイル名</th>
 			<th>ダウンロード</th>
 		</tr>
@@ -121,24 +122,30 @@
 			for(FileBean file : fileList){
 				out.println("<tr>");
 				out.println("<td>"+ file.getDataNo() +"</td>");
+				out.println("<td><img src=\""+ util.getFileImage(file.getDataName()) +"\" width=\"50\" height=\"50\"></td>");
 				out.println("<td>"+ file.getDataName() +"</td>");
-
 				String path = request.getServletContext().getRealPath("/files/plan/master/"+file.getPlanId()+"/"+file.getDataNo()+"/"+file.getDataName());
 				out.println("<td><form action=\"/HomeSystem/fc/PlanDetail\" method=\"post\"><input type=\"hidden\" name=\"planId\" value=\""
 						+ plan.getPlanId() + "\"><input type=\"hidden\" name=\"path\" value=\""+ path +"\"/><input type=\"hidden\" name=\"fileName\" value=\""+ file.getDataName()  +"\"/><input type=\"submit\" name=\"download\" value=\"ダウンロード\"></form></td>");
-				//out.println("<td><a href=\""+ path +"\">ダウンロード</a></td>");
 				System.out.println(path);
+				if(plan.getPlanner().equals(user.getUserId())){
+					out.println("<td><form action=\"/HomeSystem/fc/PlanDetail\" method=\"post\"><input type=\"image\" src=\"../images/icon/del.png\" width=\"15\" name=\"fileDelete\" value=\"削除\"><input type=\"hidden\" name=\"planId\" value=\""+plan.getPlanId()+"\"><input type=\"hidden\" name=\"dataNo\" value=\""+file.getDataNo()+"\"><input type=\"hidden\" name=\"fileName\" value=\""+file.getDataName()+"\"></form></td>");
+				}
+
 				out.println("</tr>");
 			}
 		%>
 	</table>
-	<form method="POST" enctype="multipart/form-data"
-		action="/HomeSystem/fc/PlanDetail">
-		<input type="hidden" name="planId" value=<%out.println(plan.getPlanId());%>/>
-		<input type="file" name="file" />
-		<input type="submit" name="upload" value="送信" />
+	<%
+		if(plan.getPlanner().equals(user.getUserId())){
+			out.println("<form method=\"POST\" enctype=\"multipart/form-data\" action=\"/HomeSystem/fc/PlanDetail\">");
+			out.println("<input type=\"hidden\" name=\"planId\" value=" + plan.getPlanId() +" />");
+			out.println("<input type=\"file\" name=\"file\" />");
+			out.println("<input type=\"submit\" name=\"upload\" value=\"送信\"/>");
+			out.println("</form>");
+		}
+	%>
 
-	</form>
 	<hr>
 	<table>
 		<tr>
