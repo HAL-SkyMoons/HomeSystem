@@ -1,10 +1,13 @@
 package jp.ac.hal.skymoons.daoes;
 
+import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
+
 import javax.naming.NamingException;
 
 import jp.ac.hal.skymoons.beans.ContentsListBean;
@@ -42,9 +45,9 @@ public class ContentsListDao {
 	 * @return 全件
 	 * @throws SQLException
 	 */
-	public ArrayList<ContentsListBean> findAll() throws SQLException {
+	public ArrayList<ContentsListBean> findAll(String orderColumn, String orderMode) throws SQLException {
 
-		PreparedStatement contentsPst = con.prepareStatement("select * from home_contents order by home_content_id desc;");
+		PreparedStatement contentsPst = con.prepareStatement("select * from home_contents order by " + orderColumn + " " + orderMode + ";");
 		ResultSet contentsResult = contentsPst.executeQuery();	
 
 		ArrayList<ContentsListBean> contentsList = convertList(contentsResult);
@@ -63,10 +66,17 @@ public class ContentsListDao {
 	 * 追記分　Aを追加
 	 */
 	
-	public ArrayList<ContentsListBean> selectGenre(String genreId) throws SQLException {
-
-		PreparedStatement contentsPst = con.prepareStatement("select * from home_contents hc, home_genre hg where hc.home_content_id = hg.home_content_id and hg.genre_id = ? order by home_content_id desc;");
-		contentsPst.setString(1, genreId);
+	public ArrayList<ContentsListBean> selectGenre(ArrayList<Integer> genreList, String orderColumn, String orderMode) throws SQLException {
+		String genre = "?";
+		for(int i = 1;i < genreList.size();i++){
+			genre += ",?";
+		}
+		PreparedStatement contentsPst = con.prepareStatement("select * from home_contents hc, home_genre hg where hc.home_content_id = hg.home_content_id and hg.genre_id in(" + genre + ") order by hc." + orderColumn + " " + orderMode + ";");
+		int cnt = 1;
+		for(int genreId : genreList){
+			contentsPst.setInt(cnt, genreId);
+			cnt++;
+		}
 		ResultSet contentsResult = contentsPst.executeQuery();		
 
 		ArrayList<ContentsListBean> contentsList = convertList(contentsResult);
@@ -83,9 +93,9 @@ public class ContentsListDao {
 	 * 追記分　Aを追加
 	 */
 	
-	public ArrayList<ContentsListBean> selectEmployee(String employeeId) throws SQLException {
+	public ArrayList<ContentsListBean> selectEmployee(String employeeId, String orderColumn, String orderMode) throws SQLException {
 
-		PreparedStatement contentsPst = con.prepareStatement("select * from home_contents hc where hc.employee_id = ? order by home_content_id desc;");
+		PreparedStatement contentsPst = con.prepareStatement("select * from home_contents where employee_id = ? order by " + orderColumn + " " + orderMode + ";");
 		contentsPst.setString(1, employeeId);
 		ResultSet contentsResult = contentsPst.executeQuery();		
 
@@ -94,10 +104,10 @@ public class ContentsListDao {
 		return contentsList;
 	}
 
-	public ArrayList<ContentsListBean> selectHomeContentTitle(String homeContentTitle) throws SQLException {
+	public ArrayList<ContentsListBean> selectHomeContentTitle(String homeContentTitle, String orderColumn, String orderMode) throws SQLException {
 
-		PreparedStatement contentsPst = con.prepareStatement("select * from home_contents where home_content_title like '%?%' order by home_content_id desc;");
-		contentsPst.setString(1, homeContentTitle);
+		PreparedStatement contentsPst = con.prepareStatement("select * from home_contents where home_content_title like ? order by " + orderColumn + " " + orderMode + ";");
+		contentsPst.setString(1, "%" + homeContentTitle + "%");
 		ResultSet contentsResult = contentsPst.executeQuery();		
 		
 		ArrayList<ContentsListBean> contentsList = convertList(contentsResult);

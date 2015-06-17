@@ -27,24 +27,34 @@ public class ContentsListModel extends AbstractModel{
 			switch (searchMode) {
 				//全検索
 				case "all":
-					resultData = dao.findAll();
+					resultData = dao.findAll(request.getParameter("orderColumn"), request.getParameter("orderMode"));
 					break;
 				//会員ID検索
 				case "employeeId":
-					resultData = dao.selectEmployee(request.getParameter("employeeId"));
+					resultData = dao.selectEmployee(request.getParameter("employeeId"),request.getParameter("orderColumn"), request.getParameter("orderMode"));
 					break;
 				//タイトル検索
 				case "homeContentTitle":
-					resultData = dao.selectHomeContentTitle(request.getParameter("homeContentTitle"));
+					resultData = dao.selectHomeContentTitle(request.getParameter("keyword"),request.getParameter("orderColumn"), request.getParameter("orderMode"));
 					break;
 				//ジャンル検索
 				case "genreId":
-					resultData = dao.selectEmployee(request.getParameter("genreId"));
+					//ジャンル
+					String[] genreArray = request.getParameterValues("genreId");
+					if(genreArray != null){
+						ArrayList<Integer> genreId = new ArrayList<>();
+						for(String genreString : genreArray){
+							genreId.add(Integer.parseInt(genreString));
+						}
+						resultData = dao.selectGenre(genreId,request.getParameter("orderColumn"), request.getParameter("orderMode"));
+					}else{
+						//未指定エラーメッセージ
+					}
 					break;
 			}
 		}else{
 			//検索条件を指定ページからのアクセスではない場合
-			resultData = dao.findAll();
+			resultData = dao.findAll("home_content_id", "asc");
 		}
 		
 		//結果をリクエストに保存

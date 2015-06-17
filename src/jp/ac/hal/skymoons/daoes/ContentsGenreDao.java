@@ -46,7 +46,7 @@ public class ContentsGenreDao {
 		//戻り値のListを生成
 		ArrayList<ContentsGenreBean> genreList = new ArrayList<>();
 		//コンテンツの取得
-		PreparedStatement genrePst = con.prepareStatement("select * from genre, big_genre where genre.big_genre_id = big_genre.big_genre_id ;");
+		PreparedStatement genrePst = con.prepareStatement("select * from genre, big_genre where genre.big_genre_id = big_genre.big_genre_id order by genre.big_genre_id, genre.genre_id;");
 		ResultSet genreResult = genrePst.executeQuery();
 		while (genreResult.next()) {
 			ContentsGenreBean genreBean = new ContentsGenreBean();
