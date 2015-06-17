@@ -20,13 +20,14 @@ public class ModelSelector {
 		mapping.put("/HomeSystem/fc/test", new TestModel());
 
 		// コンテンツモデル
-		mapping.put("/HomeSystem/fc/contents/update", new ContentsUpdateModel());
 		mapping.put("/HomeSystem/fc/contents/addition", new ContentsAdditionModel());
-		mapping.put("/HomeSystem/fc/contents/search", new ContentsSearchModel());
-		mapping.put("/HomeSystem/fc/contents/list", new ContentsListModel());
 		mapping.put("/HomeSystem/fc/contents/detail", new ContentsDetailModel());
-		mapping.put("/HomeSystem/fc/contents/regist", new ContentsRegistModel());
+		mapping.put("/HomeSystem/fc/contents/delete", new ContentsDeleteModel());
 		mapping.put("/HomeSystem/fc/contents/edit", new ContentsEditModel());
+		mapping.put("/HomeSystem/fc/contents/list", new ContentsListModel());
+		mapping.put("/HomeSystem/fc/contents/regist", new ContentsRegistModel());
+		mapping.put("/HomeSystem/fc/contents/search", new ContentsSearchModel());
+		mapping.put("/HomeSystem/fc/contents/update", new ContentsUpdateModel());
 		
 		// ログイン認証機能
 		mapping.put("/HomeSystem/fc/login/administrator", new LoginAdministrator());

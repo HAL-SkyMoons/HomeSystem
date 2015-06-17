@@ -7,9 +7,13 @@
 		<title>コンテンツリスト</title>
 	</head>
 	<body>
+		<c:set var="i" value="${editData}"/>
+		<form action="delete" method="post">
+			<input type="hidden" name="homeContentId" value="${i.homeContentId}">
+			<input type="submit" value="削除する"/>
+		</form>
 		<form action="update" method="post">
 			<table border="1">
-				<c:set var="i" value="${editData}"/>
 				<tr>
 					<td>コンテンツ名：<input type="text" value="${i.homeContentTitle}"></td>
 					<td>日時：${i.homeContentDatetime}<br/>
