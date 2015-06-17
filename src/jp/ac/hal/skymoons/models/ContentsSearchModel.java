@@ -5,9 +5,12 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jp.ac.hal.skymoons.beans.ContentsEmployeeBean;
+import jp.ac.hal.skymoons.beans.ContentsGenreBean;
 import jp.ac.hal.skymoons.beans.ContentsListBean;
 import jp.ac.hal.skymoons.beans.ContentsSearchBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
+import jp.ac.hal.skymoons.daoes.ContentsGenreDao;
 import jp.ac.hal.skymoons.daoes.ContentsSearchDao;
 
 public class ContentsSearchModel extends AbstractModel{
@@ -20,16 +23,23 @@ public class ContentsSearchModel extends AbstractModel{
 		//DAOのインスタンス化
 		ContentsSearchDao dao = new ContentsSearchDao();
 		
+		//ジャンルとユーザーの取得
+		ArrayList<ContentsEmployeeBean> employeeList = dao.findEmployee();
+		
+		ContentsGenreDao genreDao = new ContentsGenreDao();
+		ArrayList<ContentsGenreBean> genreList = genreDao.findAll();
 		
 		//結果をリクエストに保存
-		//request.setAttribute("contentList",resultData);
+		request.setAttribute("employeeList",employeeList);
+		request.setAttribute("genreList",genreList);
 		
 		//コミットと終了処理
+		genreDao.close();
 		dao.commit();
 		dao.close();
 		
 		//遷移先を指定
-		return "/list.jsp"	;
+		return "/contents/search.jsp";
 	}
 
 }

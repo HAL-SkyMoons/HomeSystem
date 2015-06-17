@@ -11,6 +11,8 @@ import java.util.List;
 import javax.naming.NamingException;
 
 import jp.ac.hal.skymoons.beans.ContentsDetailBean;
+import jp.ac.hal.skymoons.beans.ContentsEmployeeBean;
+import jp.ac.hal.skymoons.beans.ContentsGenreBean;
 import jp.ac.hal.skymoons.beans.ContentsSearchBean;
 import jp.ac.hal.skymoons.beans.SampleBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
@@ -40,100 +42,29 @@ public class ContentsSearchDao {
 		this.con = con;
 	}
 
-	/**
-	 * 全件取得する
-	 *
-	 * @return 全件
-	 * @throws SQLException
-	 */
-	public List<SampleBean> findAll() throws SQLException {
 
-		PreparedStatement select = con.prepareStatement("select * from sample;");
-
-		ResultSet result = select.executeQuery();
-
-		ArrayList<SampleBean> table = new ArrayList<SampleBean>();
-		while (result.next()) {
-
-			SampleBean record = new SampleBean();
-
-			record.setSumple(result.getString("sample"));
-
-			table.add(record);
+	public ArrayList<ContentsSearchBean> findAll() throws SQLException{
+		return null;
+	}
+	public ArrayList<ContentsEmployeeBean> findEmployee() throws SQLException{
+		//戻り値のListを生成
+		ArrayList<ContentsEmployeeBean> employeeList = new ArrayList<>();
+		//コンテンツの取得
+		PreparedStatement employeePst = con.prepareStatement("select * from employees, users where employees.employee_id = users.user_id;");
+		ResultSet employeeResult = employeePst.executeQuery();
+		while (employeeResult.next()) {
+			ContentsEmployeeBean employeeBean = new ContentsEmployeeBean();
+			employeeBean.setEmployeeId(employeeResult.getString("employee_id"));
+			employeeBean.setFirstName(employeeResult.getString("first_name"));
+			employeeBean.setLastName(employeeResult.getString("last_name"));
+			employeeList.add(employeeBean);
 		}
-		return table;
+		employeeResult.close();
+		employeePst.close();
+		return employeeList;
 	}
-
-	/**
-	 * 主キーで検索
-	 *
-	 * @param languageId
-	 * @return
-	 * @throws SQLException
-	 * 追記分　Aを追加
-	 */
-	public SampleBean findOne(String sample) throws SQLException {
-
-		PreparedStatement select = con.prepareStatement("select * from sample where sample = ? ;");
-
-		select.setString(1, sample);
-		ResultSet result = select.executeQuery();
-
-		SampleBean record = new SampleBean();
-
-		if (result.next()) {
-			record.setSumple(result.getString("sample"));
-		}
-
-		return record;
-	}
-
-	/**
-	 * 更新処理
-	 *
-	 * @param updateRecord 更新データ
-	 * @return 影響のあった行数
-	 * @throws SQLException
-	 */
-	public int update(SampleBean updateRecord) throws SQLException {
-
-		PreparedStatement update =
-			con.prepareStatement("update sample set sample = ? where sample = ? ;");
-
-		update.setString(1, updateRecord.getSumple());
-
-		return update.executeUpdate();
-	}
-
-
-	/**
-	 * 新規保存
-	 *
-	 * @param newRecord 保存データ
-	 * @return 影響のあった行数
-	 * @throws SQLException
-	 */
-	public int insert(SampleBean newRecord) throws SQLException {
-
-		PreparedStatement insert = con.prepareStatement("insert into sample (sample) values (?);");
-		insert.setString(1, newRecord.getSumple());
-
-		return insert.executeUpdate();
-	}
-
-	/**
-	 * 削除処理
-	 *
-	 * @param languageId 削除対象
-	 * @return 影響のあった行数
-	 * @throws SQLException
-	 */
-	public int delete(String sample) throws SQLException {
-
-		PreparedStatement delete = con.prepareStatement("delete from sample where sample = ?; ");
-		delete.setString(1, sample);
-		return delete.executeUpdate();
-	}
+	
+	
 	/**
 	 * 接続を閉じる
 	 *
