@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>コンテンツリスト</title>
+		<title>コンテンツ詳細</title>
 	</head>
 	<body>
 		<table border="1">
@@ -33,7 +33,7 @@
 					<c:set var="homeSourceIndex" value="0"/>
 					<c:forEach items="${i.homeSourceNo}" var="homeSourceNo">
 						<c:forEach items="${i.homeSourceName}" begin="${homeSourceIndex}" end="${homeSourceIndex}" var="homeSourceName">
-							<a href='${homeSourceNo}'>${homeSourceName}</a>
+							<a href='../../files/master/${homeSourceNo}'>${homeSourceName}</a>
 						</c:forEach>
 						<c:set var="homeSourceIndex" value="${homeSourceIndex + 1}"/>
 					</c:forEach>

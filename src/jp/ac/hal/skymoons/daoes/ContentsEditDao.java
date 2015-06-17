@@ -121,7 +121,6 @@ public class ContentsEditDao {
 		}
 		return editBean;
 	}
-
 	/**
 	 * 接続を閉じる
 	 *

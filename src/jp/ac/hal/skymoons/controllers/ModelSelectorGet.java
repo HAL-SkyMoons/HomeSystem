@@ -23,6 +23,11 @@ public class ModelSelectorGet {
 		mapping.put("/HomeSystem/fc/contents/regist", new ContentsRegistModel());
 		mapping.put("/HomeSystem/fc/contents/edit", new ContentsEditModel());
 		
+		mapping.put("/HomeSystem/fc/PlanList", new PlanList());
+		mapping.put("/HomeSystem/fc/PlanRegister", new PlanRegister());
+		mapping.put("/HomeSystem/fc/PlanDetail", new PlanDetail());
+		mapping.put("/HomeSystem/fc/Home", new Home());
+
 		// ログイン認証機能
 		mapping.put("/HomeSystem/fc/login/administrator", new LoginAdministrator());
 		mapping.put("/HomeSystem/fc/login/user", new LoginUser());

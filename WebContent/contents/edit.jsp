@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>コンテンツリスト</title>
+		<title>コンテンツ編集</title>
 	</head>
 	<body>
 		<c:set var="i" value="${editData}"/>
@@ -48,11 +48,14 @@
 						</select>
 						分
 					</td>
-					<td>コンテンツタイトル：<input type="text" name="homeContentTitle" value="${i.homeContentTitle}"></td>
 					<td>コンテンツ内容：<br/>
 						<textarea name="homeContentComment">${i.homeContentComment}</textarea>
 					</td>
-					<td>添付資料：</td>
+					<td>添付資料：
+						<input type="text" name="homeSource"/>
+						<input type="text" name="homeSource"/>
+						<input type="text" name="homeSource"/>
+					</td>
 					<td>ジャンル<br/>
 						<c:forEach items="${genreList}" var="j">
 							<c:set var="check" value="" />

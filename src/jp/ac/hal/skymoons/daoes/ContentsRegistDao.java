@@ -39,36 +39,6 @@ public class ContentsRegistDao {
 	public ContentsRegistDao(Connection con){
 		this.con = con;
 	}
-
-
-	/**
-	 * 新規保存
-	 *
-	 * @param newRecord 保存データ
-	 * @return 影響のあった行数
-	 * @throws SQLException
-	 */
-	public int insertContents(ContentsRegistBean bean) throws SQLException {
-
-		PreparedStatement pst = con.prepareStatement("insert into home_contents(employee_id,home_content_title,home_content_date,home_content_comment) values (?,?,?,?);");
-		pst.setString(1, "10000");
-		pst.setString(2, "ｇｇｇｇｇｇｇｇｇｇｇ");
-		pst.setString(3, "2000/01/01");
-		pst.setString(4, "ｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒ");
-
-		return pst.executeUpdate();
-	}
-
-	public int insertHomeGenre(ContentsRegistBean bean) throws SQLException {
-		
-		PreparedStatement pst = con.prepareStatement("insert into home_genre() values (?,?);");
-		pst.setString(1, "2000/01/01");
-		pst.setString(2, "ｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒｒ");
-
-		return pst.executeUpdate();
-	}
-
-	
 	
 	/**
 	 * 接続を閉じる
@@ -95,11 +65,6 @@ public class ContentsRegistDao {
 	 */
 	public void rollback() throws SQLException {
 		con.rollback();
-	}
-
-	public ContentsDetailBean findContent(String homeContentId) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
 

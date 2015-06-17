@@ -4,14 +4,14 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>コンテンツリスト</title>
+		<title>コンテンツ登録</title>
 	</head>
 	<body>
 		<form action="addition" method="post">
 			<table border="1">
 				<tr>
 					<td>コンテンツ名：<input type="text"></td>
-					<td>日時：<br/>
+					<td>実施日時：<br/>
 						<select name="contentsYear">
 							<c:forEach begin="1950" end="2020" step="1" varStatus="status">
 								<option value="${status.index}">${status.index}</option>
