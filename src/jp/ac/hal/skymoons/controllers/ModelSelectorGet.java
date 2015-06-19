@@ -17,8 +17,12 @@ public class ModelSelectorGet {
 
 	static{
 		mapping = new HashMap<String, AbstractModel>();
-		mapping.put("/homesystem/fc/test", new TestModel());
-		
+		mapping.put("/HomeSystem/fc/test", new TestModel());
+		mapping.put("/HomeSystem/fc/PlanList", new PlanList());
+		mapping.put("/HomeSystem/fc/PlanRegister", new PlanRegister());
+		mapping.put("/HomeSystem/fc/PlanDetail", new PlanDetail());
+		mapping.put("/HomeSystem/fc/Home", new Home());
+
 		// ログイン認証機能
 		mapping.put("/HomeSystem/fc/login/administrator", new LoginAdministrator());
 		mapping.put("/HomeSystem/fc/login/user", new LoginUser());
