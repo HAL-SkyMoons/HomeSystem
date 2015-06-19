@@ -1,5 +1,6 @@
 package jp.ac.hal.skymoons.models;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -147,6 +148,9 @@ public class PlanDetail extends AbstractModel {
 				planEdit.setPlanId(planId);
 				planEdit.setPlanTitle(request.getParameter("planTitle"));
 				planEdit.setPlanComment(request.getParameter("planComment"));
+
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				planEdit.setImplementationDate(sdf.parse(request.getParameter("year")+"-"+request.getParameter("month")+"-"+request.getParameter("day")));
 
 				dao.planEdit(planEdit);
 

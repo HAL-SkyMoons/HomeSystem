@@ -597,6 +597,7 @@ public class SampleDao {
 			record.setPlanTitle(result.getString("plan_title"));
 			record.setPlanDatetime(result.getDate("plan_datetime"));
 			record.setPlanComment(result.getString("plan_comment"));
+			record.setImplementationDate(result.getDate("implementation_date"));
 
 			table.add(record);
 		}
@@ -614,10 +615,11 @@ public class SampleDao {
 	public int planRegister(PlanBean newRecord) throws SQLException {
 
 		PreparedStatement insert = con
-				.prepareStatement("insert into plan(planner,plan_title,plan_datetime,plan_comment) values (?,?,now(),?);");
+				.prepareStatement("insert into plan(planner,plan_title,plan_datetime,plan_comment,implementation_date) values (?,?,now(),?,?);");
 		insert.setString(1, newRecord.getPlanner());
 		insert.setString(2, newRecord.getPlanTitle());
 		insert.setString(3, newRecord.getPlanComment());
+		insert.setDate(4, new java.sql.Date( newRecord.getImplementationDate().getTime()));
 
 		int planId = 0;
 
@@ -658,6 +660,7 @@ public class SampleDao {
 			record.setPlanTitle(result.getString("plan_title"));
 			record.setPlanDatetime(result.getDate("plan_datetime"));
 			record.setPlanComment(result.getString("plan_comment"));
+			record.setImplementationDate(result.getDate("implementation_date"));
 		}
 
 		return record;
@@ -880,6 +883,7 @@ public class SampleDao {
 				record.setPlanTitle(result.getString("p.plan_title"));
 				record.setPlanDatetime(result.getDate("p.plan_datetime"));
 				record.setPlanComment(result.getString("p.plan_comment"));
+				record.setImplementationDate(result.getDate("implementation_date"));
 
 				table.add(record);
 			}
@@ -898,11 +902,13 @@ public class SampleDao {
 	public int planEdit(PlanBean updateRecord) throws SQLException {
 
 		PreparedStatement update = con
-				.prepareStatement("update plan set plan_title = ?, plan_comment = ? where plan_id = ? ;");
+				.prepareStatement("update plan set plan_title = ?, plan_comment = ? ,implementation_date = ? where plan_id = ? ;");
 
 		update.setString(1, updateRecord.getPlanTitle());
 		update.setString(2, updateRecord.getPlanComment());
-		update.setInt(3, updateRecord.getPlanId());
+		update.setDate(3, new java.sql.Date( updateRecord.getImplementationDate().getTime()));
+		update.setInt(4, updateRecord.getPlanId());
+
 
 		return update.executeUpdate();
 	}
@@ -1567,13 +1573,59 @@ public class SampleDao {
 			record.setPlanTitle(result.getString("plan_title"));
 			record.setPlanDatetime(result.getDate("plan_datetime"));
 			record.setPlanComment(result.getString("plan_comment"));
+			record.setImplementationDate(result.getDate("implementation_date"));
 
 			table.add(record);
 		}
 		return table;
 	}
 
+	public List<UserBean> getAllEmployeeId() throws SQLException {
 
+		PreparedStatement select = con
+				.prepareStatement("select * from employees e,users u where e.employee_id = u.user_id;");
+
+		ResultSet result = select.executeQuery();
+
+		ArrayList<UserBean> table = new ArrayList<UserBean>();
+		while (result.next()) {
+
+			UserBean record = new UserBean();
+			record.setUserId(result.getString("employee_id"));
+			record.setFirstName(result.getString("first_name"));
+			record.setLastName(result.getString("last_name"));
+
+			table.add(record);
+		}
+		return table;
+	}
+
+	public List<PlanBean> planPlannerSearch(String employeeId) throws SQLException {
+
+		PreparedStatement select = con
+				.prepareStatement("select * from plan p,users u where p.planner = u.user_id and planner = ?;");
+
+
+		select.setString(1, employeeId);
+		ResultSet result = select.executeQuery();
+
+		ArrayList<PlanBean> table = new ArrayList<PlanBean>();
+		while (result.next()) {
+
+			PlanBean record = new PlanBean();
+			record.setPlanId(result.getInt("plan_id"));
+			record.setPlanner(result.getString("planner"));
+			record.setPlannerName(result.getString("u.last_name")
+					+ result.getString("u.first_name"));
+			record.setPlanTitle(result.getString("plan_title"));
+			record.setPlanDatetime(result.getDate("plan_datetime"));
+			record.setPlanComment(result.getString("plan_comment"));
+			record.setImplementationDate(result.getDate("implementation_date"));
+
+			table.add(record);
+		}
+		return table;
+	}
 
 
 }

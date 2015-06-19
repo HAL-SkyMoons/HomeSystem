@@ -1,6 +1,8 @@
 package jp.ac.hal.skymoons.models;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +30,11 @@ public class PlanRegister extends AbstractModel{
 			plan.setPlanner(request.getParameter("planner"));
 			plan.setPlanTitle(request.getParameter("planTitle"));
 			plan.setPlanComment(request.getParameter("planComment"));
+
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String implementationDateStr = request.getParameter("year")+"-"+request.getParameter("month")+"-"+request.getParameter("day");
+
+			plan.setImplementationDate(sdf.parse(implementationDateStr));
 
 			//[id]:[genreName]
 			String[] genres = request.getParameterValues("genre");

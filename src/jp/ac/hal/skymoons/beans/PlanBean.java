@@ -10,6 +10,7 @@ public class PlanBean implements Serializable {
 	private String planner;
 	private String plannerName;
 	private Date planDatetime;
+	private Date implementationDate;
 	private String planComment;
 	public int getPlanId() {
 		return planId;
@@ -46,6 +47,12 @@ public class PlanBean implements Serializable {
 	}
 	public void setPlanComment(String planComment) {
 		this.planComment = planComment;
+	}
+	public Date getImplementationDate() {
+		return implementationDate;
+	}
+	public void setImplementationDate(Date implementationDate) {
+		this.implementationDate = implementationDate;
 	}
 
 

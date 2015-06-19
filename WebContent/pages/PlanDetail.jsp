@@ -83,6 +83,14 @@
 				</td>
 			</tr>
 			<tr>
+				<th>実施予定日</th>
+				<td>
+					<%
+						out.println(plan.getImplementationDate());
+					%>
+				</td>
+			</tr>
+			<tr>
 				<th>企画内容</th>
 				<td>
 					<%
