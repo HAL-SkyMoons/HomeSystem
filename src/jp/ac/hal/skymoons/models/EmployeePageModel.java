@@ -13,6 +13,7 @@ import jp.ac.hal.skymoons.beans.EmployeePlanBean;
 import jp.ac.hal.skymoons.beans.EmployeePlanCommentBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.SampleDao;
+import jp.ac.hal.skymoons.security.session.SessionController;
 
 public class EmployeePageModel extends AbstractModel{
 
@@ -27,6 +28,7 @@ public class EmployeePageModel extends AbstractModel{
 	public String doService(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		// TODO 自動生成されたメソッド・スタブ
+		SessionController sessionController = new SessionController(request);
 		//返り値設定
 		ArrayList<EmployeePageBean> employeePageReturn = new ArrayList<EmployeePageBean>();
 		ArrayList<EmployeeBadgeBean> employeeBadgeReturn = new ArrayList<EmployeeBadgeBean>();
@@ -55,6 +57,7 @@ public class EmployeePageModel extends AbstractModel{
 		request.setAttribute("employeePlanDetail", employeePlanReturn);
 		request.setAttribute("employeePlanCommentDetail", employeePlanCommentReturn);
 		request.setAttribute("employeeHomeLogDetail",employeeHomeLogReturn);
+		request.setAttribute("sessionId", (String)sessionController.getUserId());
 		//参照ファイルパスの指定
 		return "/Employee/EmployeePage.jsp";
 	}

@@ -1,13 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset=UTF-8">
 <title>Employee Page</title>
+<script type="text/javascript">
+	function ImageUp(employeeId) {
+		window.open("/HomeSystem/fc/Home?toUser="+employeeId,"window2","width=1000,height=500");
+	}
+</script>
+
 </head>
 <body>
+
 	<h1>社員ページ</h1>
 	<c:forEach var="employeeDetail" items="${employeeDetail}">
 		<h2>${employeeDetail.employeeName}</h2>
@@ -18,6 +25,32 @@
 			<li>レベル：${employeeDetail.level}</li>
 			<li>経験値：${employeeDetail.experience}</li>
 		</ul>
+	<c:if test="${sessionId != employeeDetail.employeeId}">
+		<a href="javascript:ImageUp('${employeeDetail.employeeId}');" ><input type="button" value="この人を褒める"></a>
+	</c:if>
+	<canvas id="radar" height="450" width="500"></canvas>
+<script>
+var radarChartData = {
+		  labels : ["Eating","Drinking","Sleeping","Designing","Coding","Partying","Running"],
+		  datasets : [
+		    {
+		      fillColor : "rgba(220,220,220,0.5)",
+		      strokeColor : "rgba(220,220,220,1)",
+		      pointColor : "rgba(220,220,220,1)",
+		      pointStrokeColor : "#fff",
+		      data : [65,59,90,81,56,55,40]
+		    },
+		    {
+		      fillColor : "rgba(151,187,205,0.5)",
+		      strokeColor : "rgba(151,187,205,1)",
+		      pointColor : "rgba(151,187,205,1)",
+		      pointStrokeColor : "#fff",
+		      data : [28,48,40,19,96,27,100]
+		    }
+		  ]
+		}
+		var myRadar = new Chart(document.getElementById("radar").getContext("2d")).Radar(radarChartData,{scaleShowLabels : false, pointLabelFontSize : 10});
+</script>
 	</c:forEach>
 	<ul>
 		<c:forEach var="batchData" items="${employeeBadgeDetail}">

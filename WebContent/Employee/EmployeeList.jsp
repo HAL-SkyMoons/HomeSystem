@@ -6,6 +6,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript">
+	function ImageUp(employeeId) {
+		window.open("/HomeSystem/fc/Home?toUser="+employeeId,"window2","width=1000,height=500");
+	}
+</script>
 </head>
 <body>
 	<form action="/HomeSystem/fc/EmployeeList" method="POST">
@@ -30,6 +35,11 @@
 		${employee.departmentName}
 		<a href="./EmployeePage?employeeId=${employee.employeeId}">${employee.employeeName}</a>
 		<br>
+		${sessionId} 、${employee.employeeId} <br/>
+		<c:if test="${sessionId != employee.employeeId}">
+			<a href="javascript:ImageUp('${employee.employeeId}');" ><input type="button" value="この人を褒める"></a>
+		<br/>
+		</c:if>
 		<c:forEach var="employeeGenre" items="${employee.employeeGenre}">
 			${employeeGenre}
 		</c:forEach>

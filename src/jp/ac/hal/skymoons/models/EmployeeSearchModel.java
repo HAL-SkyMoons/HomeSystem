@@ -10,6 +10,7 @@ import jp.ac.hal.skymoons.beans.EmployeeListBean;
 import jp.ac.hal.skymoons.beans.GenreBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.SampleDao;
+import jp.ac.hal.skymoons.security.session.SessionController;
 public class EmployeeSearchModel extends AbstractModel {
 
 	@Override
@@ -20,7 +21,9 @@ public class EmployeeSearchModel extends AbstractModel {
 		ArrayList<GenreBean> genreReturn = new ArrayList<GenreBean>();
 		ArrayList<DepartmentBean> departmentReturn = new ArrayList<DepartmentBean>();
 		ArrayList<EmployeeListBean> employeeReturn = new ArrayList<EmployeeListBean>();
-
+		//Session取得
+		SessionController sessionController = new SessionController(request);
+		System.out.println("SessionID is"+sessionController.getUserId());
 		//Daoインスタンス化
 		SampleDao dao = new SampleDao();
 
@@ -51,6 +54,7 @@ public class EmployeeSearchModel extends AbstractModel {
 		request.setAttribute("employees", employeeReturn);
 		request.setAttribute("genres", genreReturn);
 		request.setAttribute("departments", departmentReturn);
+		request.setAttribute("sessionId", (String)sessionController.getUserId());
 		//参照jspファイルパスの指定
 		return "/Employee/EmployeeList.jsp";
 	}
