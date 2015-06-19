@@ -12,6 +12,7 @@
 </head>
 <body>
 	<form action="/HomeSystem/fc/PlanList" method="post">
+		<label>キーワード：<input type="text" name="keyword"></label><br>
 		<%
 			ArrayList<GenreBean> genreList = (ArrayList<GenreBean>) request
 					.getAttribute("genreList");
@@ -51,6 +52,12 @@
 
 			}
 		%>
+		<select name="planner">
+		<%
+			out.println("<option value=\"\">");
+		%>
+		</select>
+		<br>
 		<input type="submit" name="search" value="検索">
 	</form>
 	<hr>

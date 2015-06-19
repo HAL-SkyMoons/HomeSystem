@@ -1,6 +1,9 @@
 package jp.ac.hal.skymoons.models;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,14 +24,48 @@ public class PlanList extends AbstractModel{
 
 		if(sessionController.checkUserSession() == null && sessionController.getUserClass_flag().equals("1")){
 			SampleDao dao = new SampleDao();
-			List<PlanBean> planList = null;
+			List<PlanBean> planList = dao.planList();
+			List<PlanBean> result = null;
 
-			if(request.getParameter("search")!=null && request.getParameterValues("genre") != null){
-				//検索あり
-				planList = dao.planGenreSearch(request.getParameterValues("genre"));
-			}else{
-				//検索なし
-				planList = dao.planList();
+			if(request.getParameter("search")!=null){
+
+				//キーワード検索
+				if(request.getParameter("keyword") != null && !request.getParameter("keyword").equals("")){
+					System.out.println("キーワード検索");
+					List<PlanBean> searchKeywordList = dao.planKeywordSearch(request.getParameter("keyword"));
+					Map<Integer, PlanBean> mapT = new HashMap<Integer, PlanBean>();
+			          for (PlanBean plan : searchKeywordList) {
+			               mapT.put(plan.getPlanId(), plan);
+			          }
+
+			         result = new ArrayList<PlanBean>();
+			          for (PlanBean plan : planList) {
+			               if(mapT.containsKey(plan.getPlanId())) {
+			                    result.add(plan);
+			               }
+			          }
+
+			          planList = result;
+				}
+
+				//ジャンル検索
+				if(request.getParameterValues("genre") != null){
+					System.out.println("ジャンル検索");
+					List<PlanBean> searchGenreList = dao.planGenreSearch(request.getParameterValues("genre"));
+					Map<Integer, PlanBean> mapT = new HashMap<Integer, PlanBean>();
+			          for (PlanBean plan : searchGenreList) {
+			               mapT.put(plan.getPlanId(), plan);
+			          }
+
+			         result = new ArrayList<PlanBean>();
+			          for (PlanBean plan : planList) {
+			               if(mapT.containsKey(plan.getPlanId())) {
+			                    result.add(plan);
+			               }
+			          }
+
+			          planList = result;
+				}
 			}
 			List<GenreBean> genreList = dao.genreAll();
 

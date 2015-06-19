@@ -1067,14 +1067,13 @@ public class SampleDao {
 
 		int nextFileNo = getPlanFileUploadNo(planId);
 
-		PreparedStatement select = con
-				.prepareStatement("select count(*) from plan_data where plan_id = ? and data_name = ? group by plan_id;");
-		select.setInt(1, planId);
-		select.setString(2, fileName);
+//		PreparedStatement select = con
+//				.prepareStatement("select count(*) from plan_data where plan_id = ? and data_name = ? group by plan_id;");
+//		select.setInt(1, planId);
+//		select.setString(2, fileName);
+//
+//		ResultSet result = select.executeQuery();
 
-		ResultSet result = select.executeQuery();
-
-		if (!result.next()) {
 			// 新規作成
 			PreparedStatement insert = con
 					.prepareStatement("insert into plan_data (plan_id,data_no,data_name) values (?,?,?);");
@@ -1083,7 +1082,6 @@ public class SampleDao {
 			insert.setString(3, fileName);
 
 			insert.executeUpdate();
-		}
 
 		return nextFileNo;
 
@@ -1144,5 +1142,36 @@ public class SampleDao {
 
 		return delete.executeUpdate();
 	}
+
+	public List<PlanBean> planKeywordSearch(String keyword) throws SQLException {
+
+		PreparedStatement select = con
+				.prepareStatement("select * from plan p,users u where p.planner = u.user_id and plan_title like ? or plan_comment like ?;");
+
+		keyword.replaceAll("%","\\\\%").replaceAll("_","\\\\_");
+
+		select.setString(1, "%"+keyword+"%");
+		select.setString(2, "%"+keyword+"%");
+		ResultSet result = select.executeQuery();
+
+		ArrayList<PlanBean> table = new ArrayList<PlanBean>();
+		while (result.next()) {
+
+			PlanBean record = new PlanBean();
+			record.setPlanId(result.getInt("plan_id"));
+			record.setPlanner(result.getString("planner"));
+			record.setPlannerName(result.getString("u.last_name")
+					+ result.getString("u.first_name"));
+			record.setPlanTitle(result.getString("plan_title"));
+			record.setPlanDatetime(result.getDate("plan_datetime"));
+			record.setPlanComment(result.getString("plan_comment"));
+
+			table.add(record);
+		}
+		return table;
+	}
+
+
+
 
 }

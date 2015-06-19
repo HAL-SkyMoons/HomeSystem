@@ -107,8 +107,11 @@
 		<%
 			out.println("<input type=\"hidden\" name=\"planId\" value=\""
 					+ plan.getPlanId() + "\">");
+			if(plan.getPlanner().equals(user.getUserId())){
+				out.println("<input type=\"submit\" name=\"editSubmit\" value=\"編集\">");
+			}
 		%>
-		<input type="submit" name="editSubmit" value="編集">
+
 	</form>
 	<hr>
 	<table>
