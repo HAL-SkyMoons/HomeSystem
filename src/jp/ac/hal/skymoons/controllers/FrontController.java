@@ -1,6 +1,7 @@
 package jp.ac.hal.skymoons.controllers;
 
 import java.io.IOException;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,6 +35,8 @@ public class FrontController extends HttpServlet {
 
 		System.out.println("fconGET!");
 
+		request.setCharacterEncoding("UTF-8");
+
 		// リクエストのあったURIを取得
 		String requestURI = request.getRequestURI();
 
@@ -62,6 +65,8 @@ public class FrontController extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("fconPOST!");
+
+		request.setCharacterEncoding("UTF-8");
 
 		request.setCharacterEncoding("UTF-8");
 

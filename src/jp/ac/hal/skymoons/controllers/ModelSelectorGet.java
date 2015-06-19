@@ -2,7 +2,13 @@ package jp.ac.hal.skymoons.controllers;
 
 import java.util.HashMap;
 
-import jp.ac.hal.skymoons.models.*;
+import jp.ac.hal.skymoons.models.EmployeePageModel;
+import jp.ac.hal.skymoons.models.EmployeeSearchModel;
+import jp.ac.hal.skymoons.models.Home;
+import jp.ac.hal.skymoons.models.PlanDetail;
+import jp.ac.hal.skymoons.models.PlanList;
+import jp.ac.hal.skymoons.models.PlanRegister;
+import jp.ac.hal.skymoons.models.TestModel;
 import jp.ac.hal.skymoons.models.customer.AddCustomer;
 import jp.ac.hal.skymoons.models.customer.CreateList;
 import jp.ac.hal.skymoons.models.customer.InsertCustomer;
@@ -18,6 +24,9 @@ public class ModelSelectorGet {
 	static{
 		mapping = new HashMap<String, AbstractModel>();
 		mapping.put("/HomeSystem/fc/test", new TestModel());
+		//社員出力機能
+		mapping.put("/HomeSystem/fc/EmployeeList", new EmployeeSearchModel());
+		mapping.put("/HomeSystem/fc/EmployeePage", new EmployeePageModel());
 		mapping.put("/HomeSystem/fc/PlanList", new PlanList());
 		mapping.put("/HomeSystem/fc/PlanRegister", new PlanRegister());
 		mapping.put("/HomeSystem/fc/PlanDetail", new PlanDetail());
