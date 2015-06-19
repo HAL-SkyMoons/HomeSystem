@@ -13,6 +13,7 @@ import jp.ac.hal.skymoons.models.ContentsUpdateModel;
 import jp.ac.hal.skymoons.models.EmployeePageModel;
 import jp.ac.hal.skymoons.models.EmployeeSearchModel;
 import jp.ac.hal.skymoons.models.Home;
+import jp.ac.hal.skymoons.models.PlanCalendar;
 import jp.ac.hal.skymoons.models.PlanConfirmation;
 import jp.ac.hal.skymoons.models.PlanDetail;
 import jp.ac.hal.skymoons.models.PlanEdit;
@@ -57,7 +58,7 @@ public class ModelSelector {
 		mapping.put("/HomeSystem/fc/contents/regist", new ContentsRegistModel());
 		mapping.put("/HomeSystem/fc/contents/search", new ContentsSearchModel());
 		mapping.put("/HomeSystem/fc/contents/update", new ContentsUpdateModel());
-		
+
 		mapping.put("/homesystem/fc/test", new TestModel());
 		mapping.put("/HomeSystem/fc/PlanList", new PlanList());
 		mapping.put("/HomeSystem/fc/PlanRegister", new PlanRegister());
