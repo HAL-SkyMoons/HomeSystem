@@ -1,19 +1,10 @@
 package jp.ac.hal.skymoons.beans;
 
-import java.io.Serializable;
-
-/*
- * 2015/06/09
- * 中野 裕史郎
- * 社員検索の為のジャンル取得Bean
- * ジャンルID/ジャンル名
- */
-public class GenreBean implements Serializable{
-
+public class GenreBean {
 	private int genreId;
 	private String genreName;
 	private int bigGenreId;
-
+	private String bigGenreName;
 	public int getGenreId() {
 		return genreId;
 	}
@@ -32,5 +23,12 @@ public class GenreBean implements Serializable{
 	public void setBigGenreId(int bigGenreId) {
 		this.bigGenreId = bigGenreId;
 	}
+	public String getBigGenreName() {
+		return bigGenreName;
+	}
+	public void setBigGenreName(String bigGenreName) {
+		this.bigGenreName = bigGenreName;
+	}
+
 
 }

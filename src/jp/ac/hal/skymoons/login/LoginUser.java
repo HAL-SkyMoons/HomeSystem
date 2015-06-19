@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.LoginDAO;
+import jp.ac.hal.skymoons.daoes.SampleDao;
 import jp.ac.hal.skymoons.security.session.SessionController;
 
 /**
@@ -18,7 +19,7 @@ public class LoginUser extends AbstractModel {
 	@Override
 	public String doService(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		
+
 		if(request.getParameter("submit") == null) {
 			// ログインボタンが押されていない
 			return "/login/cs.jsp";
@@ -31,7 +32,7 @@ public class LoginUser extends AbstractModel {
 			return "/login/cs.jsp";
 		}
 		// 未入力項目なし
-		
+
 		// DB問合せ
 		LoginDAO loginDAO = null;
 		try{
@@ -42,6 +43,7 @@ public class LoginUser extends AbstractModel {
 			if(class_flag != null) {
 				// 認証成功
 				loginDAO.close();
+
 				// セッション開始
 				SessionController sessionController = new SessionController(request);
 				sessionController.setUserIdAndGroup(
