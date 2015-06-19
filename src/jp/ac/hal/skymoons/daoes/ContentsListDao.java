@@ -35,88 +35,56 @@ public class ContentsListDao {
 		this.con = con;
 	}
 
-	
-	/**
-	 * 全件取得する
-	 *
-	 * @return 全件
-	 * @throws SQLException
-	 */
-	public ArrayList<ContentsListBean> findAll(String orderColumn, String orderMode) throws SQLException {
-
-		PreparedStatement contentsPst = con.prepareStatement("select * from home_contents order by " + orderColumn + " " + orderMode + ";");
-		ResultSet contentsResult = contentsPst.executeQuery();	
-
-		ArrayList<ContentsListBean> contentsList = convertList(contentsResult);
-		contentsResult.close();
-		contentsPst.close();
-		return contentsList;
-	}
-
-	
-
-	/**
-	 * ジャンルIDで検索
-	 *
-	 * @param genreId
-	 * @return
-	 * @throws SQLException
-	 * 追記分　Aを追加
-	 */
-	
-	public ArrayList<ContentsListBean> selectGenre(ArrayList<Integer> genreList, String orderColumn, String orderMode) throws SQLException {
-		String genre = "?";
-		for(int i = 1;i < genreList.size();i++){
-			genre += ",?";
+	public ArrayList<ContentsListBean> selectContents(String titleKeyword, String commentKeyword, String employeeId, ArrayList<Integer> genreId, String orderColumn, String orderMode) throws SQLException {
+		//SQLの生成
+		String contentsSql = "select * from home_contents hc, home_genre hg where hc.home_content_id = hg.home_content_id ";
+		String sqlword = "and ";
+		if(titleKeyword != null && titleKeyword.length() > 0){
+			contentsSql += sqlword + "hc.home_content_title like ? ";
 		}
-		PreparedStatement contentsPst = con.prepareStatement("select * from home_contents hc, home_genre hg where hc.home_content_id = hg.home_content_id and hg.genre_id in(" + genre + ") order by hc." + orderColumn + " " + orderMode + ";");
-		int cnt = 1;
-		for(int genreId : genreList){
-			contentsPst.setInt(cnt, genreId);
-			cnt++;
+		if(commentKeyword != null && commentKeyword.length() > 0){
+			contentsSql += sqlword + "hc.home_content_comment like ? ";
 		}
-		ResultSet contentsResult = contentsPst.executeQuery();		
-
-		ArrayList<ContentsListBean> contentsList = convertList(contentsResult);
-		contentsResult.close();
-		contentsPst.close();
-		return contentsList;
-	}
-	
-	/**
-	 * 投稿者で検索
-	 *
-	 * @param employeeId
-	 * @return
-	 * @throws SQLException
-	 * 追記分　Aを追加
-	 */
-	
-	public ArrayList<ContentsListBean> selectEmployee(String employeeId, String orderColumn, String orderMode) throws SQLException {
-
-		PreparedStatement contentsPst = con.prepareStatement("select * from home_contents where employee_id = ? order by " + orderColumn + " " + orderMode + ";");
-		contentsPst.setString(1, employeeId);
-		ResultSet contentsResult = contentsPst.executeQuery();		
-
-		ArrayList<ContentsListBean> contentsList = convertList(contentsResult);
-		contentsResult.close();
-		contentsPst.close();
-		return contentsList;
-	}
-
-	public ArrayList<ContentsListBean> selectHomeContentTitle(String homeContentTitle, String orderColumn, String orderMode) throws SQLException {
-
-		PreparedStatement contentsPst = con.prepareStatement("select * from home_contents where home_content_title like ? order by " + orderColumn + " " + orderMode + ";");
-		contentsPst.setString(1, "%" + homeContentTitle + "%");
-		ResultSet contentsResult = contentsPst.executeQuery();		
+		if(employeeId != null && employeeId.length() > 0){
+			contentsSql += sqlword + "hc.employee_id = ? ";
+		}
+		if(genreId != null && genreId.size() > 0){
+			String genre = "?";
+			for(int i = 1;i < genreId.size();i++){
+				genre += ",?";
+			}
+			contentsSql += sqlword + "hg.genre_id in(" + genre + ") ";
+		}
+		contentsSql += "group by hc.home_content_id ";
+		if(genreId != null){
+			contentsSql += "having count(*) >= " + genreId.size() + " ";
+		}
+		contentsSql += "order by hc." + orderColumn + " " + orderMode + ";";
 		
-		ArrayList<ContentsListBean> contentsList = convertList(contentsResult);
-		contentsResult.close();
-		contentsPst.close();
-		return contentsList;
-	}
-	
-	public ArrayList<ContentsListBean> convertList(ResultSet contentsResult) throws SQLException{
+		PreparedStatement contentsPst = con.prepareStatement(contentsSql);
+		int setCnt = 1;
+		System.out.println(contentsSql);
+		if(titleKeyword != null && titleKeyword.length() > 0){
+			contentsPst.setString(setCnt, "%" + titleKeyword + "%");
+			setCnt++;
+		}
+		if(commentKeyword != null && commentKeyword.length() > 0){
+			contentsPst.setString(setCnt, "%" + commentKeyword + "%");
+			setCnt++;
+		}
+		if(employeeId != null && employeeId.length() > 0){
+			contentsPst.setString(setCnt, employeeId);
+			setCnt++;
+		}
+		if(genreId != null && genreId.size() > 0){
+			for(int genre : genreId){
+				contentsPst.setInt(setCnt, genre);
+				setCnt++;
+			}
+		}
+		
+		//データ取得処理
+		ResultSet contentsResult = contentsPst.executeQuery();		
 		ArrayList<ContentsListBean> contentsList = new ArrayList<>();
 		//コンテンツの取得
 		while(contentsResult.next()) {
@@ -151,16 +119,16 @@ public class ContentsListDao {
 			genrePst.setInt(1, homeContentId);
 			ResultSet genreResult = genrePst.executeQuery();
 			
-			ArrayList<Integer> genreId = new ArrayList<>();
-			ArrayList<String> genreName = new ArrayList<>();
+			ArrayList<Integer> genreIdList = new ArrayList<>();
+			ArrayList<String> genreNameList = new ArrayList<>();
 			
 			while(genreResult.next()){
-				genreId.add(genreResult.getInt("genre_id"));
-				genreName.add(genreResult.getString("genre_name"));
+				genreIdList.add(genreResult.getInt("genre_id"));
+				genreNameList.add(genreResult.getString("genre_name"));
 			}
 			
-			listBean.setGenreId(genreId);
-			listBean.setGenreName(genreName);
+			listBean.setGenreId(genreIdList);
+			listBean.setGenreName(genreNameList);
 			
 			genrePst.close();
 
@@ -190,8 +158,11 @@ public class ContentsListDao {
 						
 			contentsList.add(listBean);
 		}
+		contentsResult.close();
+		contentsPst.close();
 		return contentsList;
 	}
+	
 	
 	/**
 	 * 接続を閉じる

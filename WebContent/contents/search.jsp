@@ -11,13 +11,14 @@
 		<form action="../../fc/contents/list" method="post">
 			<table border="1">
 				<tr>
-					<td><input type="radio" name="searchMode" value="homeContentTitle" checked/>記事名</td>
-					<td><input type="radio" name="searchMode" value="genreId"/>ジャンル選択</td>
-					<td><input type="radio" name="searchMode" value="employeeId"/>投稿社員</td>
-					<td><input type="radio" name="searchMode" value="all"/>全件検索</td>
+					<td>記事名検索ワード</td>
+					<td>記事内容検索ワード</td>
+					<td>ジャンル選択</td>
+					<td>投稿社員</td>
 				</tr>
 				<tr>
-					<td>キーワード：<input type="text" name="keyword"/></td>
+					<td>キーワード：<input type="text" name="titleKeyword"/></td>
+					<td>キーワード：<input type="text" name="commentKeyword"/></td>
 					<td>ジャンル<br/>
 						<c:forEach items="${genreList}" var="j">
 							<input type="checkbox" name="genreId" value="${j.genreId}">${j.bigGenreName}-${j.genreName}<br/>
@@ -25,6 +26,7 @@
 					</td>
 					<td>社員
 						<select name="employeeId">
+							<option value="">指定なし</option>
 							<c:forEach items="${employeeList}" var="j">
 								<option value="${j.employeeId}">${j.firstName}${j.lastName}</option>
 							</c:forEach>
