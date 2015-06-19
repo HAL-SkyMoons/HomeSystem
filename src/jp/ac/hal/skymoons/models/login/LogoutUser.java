@@ -1,4 +1,4 @@
-package jp.ac.hal.skymoons.login;
+package jp.ac.hal.skymoons.models.login;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,8 +18,10 @@ public class LogoutUser extends AbstractModel {
 	public String doService(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
+		// セッションの破棄
 		SessionController sessionController = new SessionController(request);
 		sessionController.discardUserSession();
+		
 		return "/login/cs.jsp";
 	}
 

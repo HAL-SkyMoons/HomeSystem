@@ -6,12 +6,18 @@ import javax.servlet.http.HttpSession;
 /**
  * セッションに関する操作と管理を行う。
  * @author YAMAZAKI GEN
- * @since 2015/05/26
- * @version 1.0
+ * @since 2015/06/05
+ * @version 2.0
  */
 public class SessionController {
 	
 	private HttpSession session = null;
+	// リダイレクト用セッションエラーページURL
+	private String redirectSessionErrorPageUrl =
+		"/HomeSystem/error/session.jsp";
+	// フォワード用セッションエラーページURL
+	private String forwardSessionErrorPageUrl =
+		"/error/session.jsp";
 	
 	/**
 	 * セッションを取得し、操作する為の準備を行う。
@@ -19,7 +25,12 @@ public class SessionController {
 	 */
 	public SessionController(HttpServletRequest request) {
 		this.session = request.getSession();
+		this.session.setMaxInactiveInterval(60 * 10);
 	}
+
+// ==========================================================================================
+//  セッションの登録機能
+// ==========================================================================================
 	
 	/**
 	 * 管理者ユーザのユーザIDをセッションに登録する。
@@ -37,35 +48,41 @@ public class SessionController {
 	 * @param group
 	 * 顧客ユーザ又は社員ユーザのユーザグループ
 	 */
-	public void setUserIdAndGroup(String uId, String group) {
-		setId("uId", uId);
-		setId("group", group);
+	public void setUserIdAndGroup(String userId, String classFlag) {
+		setId("uId", userId);
+		setId("group", classFlag);
 	}
 	
 	/**
 	 * セッション登録用共通機能。
 	 * @param id
-	 * セッションの名前
+	 * セッションのキー
 	 * @param value
 	 * セッションに登録する値
 	 */
-	private void setId(String id, String value) {
-		this.session.setAttribute(id, value);
+	private void setId(String key, String value) {
+		this.session.setAttribute(key, value);
 	}
+	
+// ==========================================================================================
+//  セッションの継続確認機能
+// ==========================================================================================
 	
 	/**
 	 * 管理者ユーザのセッションが有効か確認を行う。
 	 * @return
-	 * 有効:nullを返す/無効:セッションエラーページのURLを返す
+	 * セッションが切れている:nullを返す<br />
+	 * セッションが継続されている:セッションエラーページのURLを返す
 	 */
 	public String checkAdministratorSession() {
 		return checkSession("aId");
 	}
 	
 	/**
-	 * 顧客ユーザ・社員ユーザのセッションが有効か確認を行う。
+	 * 顧客ユーザ又は社員ユーザのセッションが有効か確認を行う。
 	 * @return
-	 * 有効:nullを返す/無効:セッションエラーページのURLを返す
+	 * セッションが切れている:nullを返す<br />
+	 * セッションが継続されている:セッションエラーページのURLを返す
 	 */
 	public String checkUserSession() {
 		return checkSession("uId");
@@ -73,22 +90,83 @@ public class SessionController {
 	
 	/**
 	 * セッションが有効か確認を行う共通機能。
-	 * @param id
-	 * セッションの名前
+	 * @param key
+	 * セッションのキー
 	 * @return
-	 * 有効:nullを返す/無効:セッションエラーページのURLを返す
+	 * セッションが切れている:nullを返す<br />
+	 * セッションが継続されている:セッションエラーページのURLを返す
 	 */
-	private String checkSession(String id) {
-		if(this.session.getAttribute(id) != null) {
-			setId(id, this.session.getAttribute(id).toString());
-			if(id.equals("uId")) {
-				setId("group", this.session.getAttribute("group").toString());
+	private String checkSession(String key) {
+		if(this.session.getAttribute(key) != null) {
+			setId(key, this.session.getAttribute(key).toString());
+			if(key.equals("uId")) {
+				if(this.session.getAttribute("classFlag") != null) {
+					setId("classFlag", this.session.getAttribute("classFlag").toString());
+					return null;
+				} else {
+					return "/error/session.jsp";
+				}
+			} else {
+				return null;
 			}
 		} else {
-			return "ERROR_PAGE_URL";
+			return "/error/session.jsp";
 		}
-		return null;
 	}
+
+// ==========================================================================================
+//  セッションの継続確認機能（２）
+// ==========================================================================================
+	
+	/**
+	 * 管理者ユーザのセッションが有効か確認を行う。
+	 * @return
+	 * セッションが切れている:falseを返す<br />
+	 * セッションが継続されている:trueを返す
+	 */
+	public Boolean checkAdministratorSession2() {
+		return checkSession2("aId");
+	}
+	
+	/**
+	 * 顧客ユーザ又は社員ユーザのセッションが有効か確認を行う。
+	 * @return
+	 * セッションが切れている:falseを返す<br />
+	 * セッションが継続されている:trueを返す
+	 */
+	public Boolean checkUserSession2() {
+		return checkSession2("uId");
+	}
+	
+	/**
+	 * セッションが有効か確認を行う共通機能。
+	 * @param key
+	 * セッションのキー
+	 * @return
+	 * セッションが切れている:falseを返す<br />
+	 * セッションが継続されている:trueを返す
+	 */
+	private Boolean checkSession2(String key) {
+		if(this.session.getAttribute(key) != null) {
+			setId(key, this.session.getAttribute(key).toString());
+			if(key.equals("uId")) {
+				if(this.session.getAttribute("classFlag") != null) {
+					setId("classFlag", this.session.getAttribute("classFlag").toString());
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return true;
+			}
+		} else {
+			return false;
+		}
+	}
+
+// ==========================================================================================
+//  セッションの破棄機能
+// ==========================================================================================
 	
 	/**
 	 * 管理者ユーザのセッションを破棄する。
@@ -98,24 +176,28 @@ public class SessionController {
 	}
 	
 	/**
-	 * 顧客ユーザ・社員ユーザのセッションを破棄する。
+	 * 顧客ユーザ又は社員ユーザのセッションを破棄する。
 	 */
 	public void discardUserSession() {
 		discardSession("uId");
-		discardSession("group");
+		discardSession("classFlag");
 	}
 	
 	/**
 	 * セッション破棄を行う共通機能。
-	 * @param id
+	 * @param key
 	 * セッションの名前
 	 */
-	private void discardSession(String id) {
-		this.session.removeAttribute(id);
+	private void discardSession(String key) {
+		this.session.removeAttribute(key);
 	}
 	
+// ==========================================================================================
+//  セッション情報の取得機能
+// ==========================================================================================
+	
 	/**
-	 * セッションから管理者ユーザIDを取得。
+	 * セッションから管理者ユーザIDを取得する。
 	 * @return
 	 * 管理者ユーザID
 	 */
@@ -124,7 +206,7 @@ public class SessionController {
 	}
 	
 	/**
-	 * セッションから顧客ユーザ又は社員ユーザIDを取得。
+	 * セッションから顧客ユーザ又は社員ユーザIDを取得する。
 	 * @return
 	 * 顧客ユーザ又は社員ユーザID
 	 */
@@ -133,12 +215,31 @@ public class SessionController {
 	}
 	
 	/**
-	 * セッションから顧客ユーザ又は社員ユーザクラスフラグを取得。
+	 * セッションから顧客ユーザ又は社員ユーザのクラスフラグを取得する。
 	 * @return
-	 * 顧客ユーザ又は社員ユーザクラスフラグ
+	 * 顧客ユーザ又は社員ユーザのクラスフラグ
 	 */
 	public String getUserClass_flag() {
-		return this.session.getAttribute("group").toString();
+		return this.session.getAttribute("classFlag").toString();
+	}
+
+// ==========================================================================================
+//  セッションエラーページURLの取得機能
+// ==========================================================================================
+	
+	/**
+	 * リダイレクト用のセッションエラーページのURLを取得する。
+	 * @return
+	 */
+	public String getRedirectSessionErrorPageUrl() {
+		return this.redirectSessionErrorPageUrl;
 	}
 	
+	/**
+	 * フォワード用のセッションエラーページのURLを取得する。
+	 * @return
+	 */
+	public String getForwardSessionErrorPageUrl() {
+		return this.forwardSessionErrorPageUrl;
+	}
 }

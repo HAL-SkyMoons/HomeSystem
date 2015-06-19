@@ -66,7 +66,7 @@ public class LoginDAO {
 				return false;
 			}
 		} else {
-			System.out.println("データベースの結果が存在しません。");
+			System.out.println("ERROR:データベースの結果が取得できません。");
 			return false;
 		}
 	}
