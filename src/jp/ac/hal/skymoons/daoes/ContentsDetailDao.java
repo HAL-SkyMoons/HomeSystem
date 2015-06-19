@@ -112,18 +112,18 @@ public class ContentsDetailDao {
 			bigGenrePst.close();
 			
 			//添付資料の取得
-			ArrayList<Integer> homeSourceNo = new ArrayList<>();
-			ArrayList<String> homeSourceName = new ArrayList<>();
-			PreparedStatement sourcePst = con.prepareStatement("select * from home_source where home_content_id = ? ;");
-			sourcePst.setString(1, homeContentId);
-			ResultSet sourceResult = sourcePst.executeQuery();		
-			while(sourceResult.next()){
-				homeSourceNo.add(sourceResult.getInt("home_source_no"));
-				homeSourceName.add(sourceResult.getString("home_source_name"));
+			ArrayList<Integer> homeDataNo = new ArrayList<>();
+			ArrayList<String> homeDataName = new ArrayList<>();
+			PreparedStatement dataPst = con.prepareStatement("select * from home_data where home_content_id = ? ;");
+			dataPst.setString(1, homeContentId);
+			ResultSet dataResult = dataPst.executeQuery();		
+			while(dataResult.next()){
+				homeDataNo.add(dataResult.getInt("home_data_no"));
+				homeDataName.add(dataResult.getString("home_data_name"));
 			}
-			detailBean.setHomeSourceNo(homeSourceNo);
-			detailBean.setHomeSourceName(homeSourceName);
-			sourcePst.close();
+			detailBean.setHomeDataNo(homeDataNo);
+			detailBean.setHomeDataName(homeDataName);
+			dataPst.close();
 			
 		}else{
 			//取得失敗処理をここに記述

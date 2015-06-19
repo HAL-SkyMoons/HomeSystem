@@ -187,24 +187,7 @@ public class ContentsListDao {
 			listBean.setBigGenreName(bigGenreName);
 			
 			bigGenrePst.close();
-			
-			//添付資料の取得
-			//検索時には不要?
-			/*
-			ArrayList<Integer> homeSourceNo = new ArrayList<>();
-			ArrayList<String> homeSourceName = new ArrayList<>();
-			PreparedStatement sourcePst = con.prepareStatement("select * from home_source where home_content_id = ? ;");
-			sourcePst.setInt(1, homeContentId);
-			ResultSet sourceResult = sourcePst.executeQuery();		
-			while(sourceResult.next()){
-				homeSourceNo.add(sourceResult.getInt("home_source_no"));
-				homeSourceName.add(sourceResult.getString("home_source_name"));
-			}
-			listBean.setHomeSourceNo(homeSourceNo);
-			listBean.setHomeSourceName(homeSourceName);
-			sourcePst.close();
-			*/
-			
+						
 			contentsList.add(listBean);
 		}
 		return contentsList;

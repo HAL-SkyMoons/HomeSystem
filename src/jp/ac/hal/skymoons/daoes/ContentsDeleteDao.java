@@ -41,10 +41,10 @@ public class ContentsDeleteDao {
 		genrePst.close();
 		
 		//添付資料の削除
-		PreparedStatement sourcePst = con.prepareStatement("delete from home_source where home_content_id = ? ;");
-		sourcePst.setInt(1, homeContentId);
-		sourcePst.executeUpdate();
-		sourcePst.close();
+		PreparedStatement dataPst = con.prepareStatement("delete from home_data where home_content_id = ? ;");
+		dataPst.setInt(1, homeContentId);
+		dataPst.executeUpdate();
+		dataPst.close();
 		
 		//コンテンツの削除
 		PreparedStatement contentsPst = con.prepareStatement("delete from home_contents where home_contents.home_content_id = ? ;");

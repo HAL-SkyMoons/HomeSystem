@@ -31,12 +31,12 @@
 				</td>
 				<td>コンテンツ内容：${i.homeContentComment}</td>
 				<td>添付資料：
-					<c:set var="homeSourceIndex" value="0"/>
-					<c:forEach items="${i.homeSourceNo}" var="homeSourceNo">
-						<c:forEach items="${i.homeSourceName}" begin="${homeSourceIndex}" end="${homeSourceIndex}" var="homeSourceName">
-							<a href='../../files/master/${homeSourceNo}'>${homeSourceName}</a>
+					<c:set var="homeDataIndex" value="0"/>
+					<c:forEach items="${i.homeDataNo}" var="homeDataNo">
+						<c:forEach items="${i.homeDataName}" begin="${homeDataIndex}" end="${homeDataIndex}" var="homeDataName">
+							<a href='../../files/master/${homeDataNo}'>${homeDataName}</a>
 						</c:forEach>
-						<c:set var="homeSourceIndex" value="${homeSourceIndex + 1}"/>
+						<c:set var="homeDataIndex" value="${homeDataIndex + 1}"/>
 					</c:forEach>
 				</td>
 			</tr>

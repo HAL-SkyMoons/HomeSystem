@@ -53,9 +53,9 @@
 						<textarea name="homeContentComment">${i.homeContentComment}</textarea>
 					</td>
 					<td>添付資料：
-						<input type="text" name="homeSource"/>
-						<input type="text" name="homeSource"/>
-						<input type="text" name="homeSource"/>
+						<input type="text" name="homeData"/>
+						<input type="text" name="homeData"/>
+						<input type="text" name="homeData"/>
 					</td>
 					<td>ジャンル<br/>
 						<c:forEach items="${genreList}" var="j">

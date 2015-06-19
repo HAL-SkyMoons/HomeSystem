@@ -19,6 +19,6 @@ public class ContentsEditBean implements Serializable {
 	private ArrayList<String> bigGenreName;
 	private ArrayList<Integer> genreId;
 	private ArrayList<String> genreName;
-	private ArrayList<Integer> homeSourceNo;
-	private ArrayList<String> homeSourceName;
+	private ArrayList<Integer> homeDataNo;
+	private ArrayList<String> homeDataName;
 }
