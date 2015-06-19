@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="jp.ac.hal.skymoons.beans.UserBean"%>
 <%@page import="jp.ac.hal.skymoons.util.Utility"%>
 <%@page import="jp.ac.hal.skymoons.beans.PlanBean"%>
@@ -20,6 +21,10 @@
 	String planner = plan.getPlanner();
 	String planTitle = plan.getPlanTitle();
 	String planComment = plan.getPlanComment();
+
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
+
+	String implementationDate = sdf.format(plan.getImplementationDate());
 
 %>
 <body>
@@ -49,6 +54,14 @@
 					%>
 				</td>
 			</tr>
+						<tr>
+				<th>実施予定日：</th>
+				<td>
+					<%
+						out.print(implementationDate);
+					%>
+				</td>
+			</tr>
 		</table>
 		<%
 			out.println("<input type=\"hidden\" name=\"planner\" value=\""
@@ -57,6 +70,8 @@
 					+ planTitle + "\">");
 			out.println("<input type=\"hidden\" name=\"planComment\" value=\""
 					+ planComment + "\">");
+			out.println("<input type=\"hidden\" name=\"implementationDate\" value=\""
+					+ new SimpleDateFormat("yyyy-MM-dd").format(plan.getImplementationDate()) + "\">");
 		%>
 
 		<h3>登録ジャンル</h3>

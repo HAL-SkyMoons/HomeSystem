@@ -23,6 +23,7 @@ public class ModelSelector {
 		mapping.put("/HomeSystem/fc/PlanDetail", new PlanDetail());
 		mapping.put("/HomeSystem/fc/PlanEdit", new PlanEdit());
 		mapping.put("/HomeSystem/fc/Home", new Home());
+		mapping.put("/HomeSystem/fc/PlanCalendar", new PlanCalendar());
 
 		// ログイン認証機能
 		mapping.put("/HomeSystem/fc/login/administrator", new LoginAdministrator());

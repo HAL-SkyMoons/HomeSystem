@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import jp.ac.hal.skymoons.beans.GenreBean;
 import jp.ac.hal.skymoons.beans.PlanBean;
+import jp.ac.hal.skymoons.beans.UserBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.SampleDao;
 import jp.ac.hal.skymoons.security.session.SessionController;
@@ -46,6 +47,7 @@ public class PlanList extends AbstractModel{
 			          }
 
 			          planList = result;
+			          request.setAttribute("searchKeyword", request.getParameter("keyword"));
 				}
 
 				//ジャンル検索
@@ -65,14 +67,37 @@ public class PlanList extends AbstractModel{
 			          }
 
 			          planList = result;
+			          request.setAttribute("searchGenre", request.getParameterValues("genre"));
+				}
+
+				//人検索
+				if(request.getParameter("planner") != null && !request.getParameter("planner").equals("")){
+					System.out.println("人検索");
+					List<PlanBean> searchPlannerList = dao.planPlannerSearch(request.getParameter("planner"));
+					Map<Integer, PlanBean> mapT = new HashMap<Integer, PlanBean>();
+			          for (PlanBean plan : searchPlannerList) {
+			               mapT.put(plan.getPlanId(), plan);
+			          }
+
+			         result = new ArrayList<PlanBean>();
+			          for (PlanBean plan : planList) {
+			               if(mapT.containsKey(plan.getPlanId())) {
+			                    result.add(plan);
+			               }
+			          }
+
+			          planList = result;
+			          request.setAttribute("searchPlanner", request.getParameter("planner"));
 				}
 			}
 			List<GenreBean> genreList = dao.genreAll();
+			List<UserBean> employeeList = dao.getAllEmployeeId();
 
 			dao.close();
 			request.setAttribute("planList", planList);
 			request.setAttribute("genreList", genreList);
-			request.setAttribute("searchGenre", request.getParameterValues("genre"));
+			request.setAttribute("employeeList", employeeList);
+
 
 			return "/pages/PlanList.jsp"	;
 		}else{
