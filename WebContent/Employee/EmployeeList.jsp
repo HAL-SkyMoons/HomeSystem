@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,28 +8,32 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="/homesystem/fc/EmployeeList" method="POST">
-		<select name="departmentId">
+	<form action="/HomeSystem/fc/EmployeeList" method="POST">
+
+	<select name="departmentId">
 			<option value="0">ジャンルで検索する</option>
-			<option value="1">部署1</option>
-			<option value="2">部署2</option>
-			<option value="3">部署3</option>
-			<option value="4">部署4</option>
-		</select>
-		<input type="checkbox" name="genre" value="1">ジャンル1
-		<input type="checkbox" name="genre" value="2">ジャンル2<br/>
-		<input type="checkbox" name="genre" value="3">ジャンル3
-		<input type="checkbox" name="genre" value="4">ジャンル4<br/>
-		<input type="checkbox" name="genre" value="5">ジャンル5
-		<input type="checkbox" name="genre" value="6">ジャンル6<br/>
-		<input type="checkbox" name="genre" value="7">ジャンル7
-		<input type="checkbox" name="genre" value="8">ジャンル8<br/>
-		<input type="checkbox" name="genre" value="9">ジャンル9
-		<input type="checkbox" name="genre" value="10">ジャンル10<br/>
-		<input type="submit" name="submit" value="検索">
+		<c:forEach var="department" items="${departments}">
+			<option value="${department.departmentId}">${department.departmentName}</option>
+		</c:forEach>
+	</select>
+	<input type="submit" name="submit" value="検索">
+	<br/>
+		<c:forEach var="genre" items="${genres}">
+			<input type="checkbox" name="genre" value="${genre.genreId}">${genre.genreName}
+			<br/>
+		</c:forEach>
+	<br/>
+	<input type="submit" name="submit" value="検索">
 	</form>
-
-
-
+	<c:forEach var="employee" items="${employees}">
+		<a href="./EmployeePage?employeeId=${employee.employeeId}"><img src="../img/employees/${employee.employeeId}.jpg"></a><br>
+		${employee.departmentName}
+		<a href="./EmployeePage?employeeId=${employee.employeeId}">${employee.employeeName}</a>
+		<br>
+		<c:forEach var="employeeGenre" items="${employee.employeeGenre}">
+			${employeeGenre}
+		</c:forEach>
+		<br/>
+	</c:forEach>
 </body>
 </html>

@@ -6,6 +6,7 @@ import jp.ac.hal.skymoons.login.LoginAdministrator;
 import jp.ac.hal.skymoons.login.LoginUser;
 import jp.ac.hal.skymoons.login.LogoutAdministrator;
 import jp.ac.hal.skymoons.login.LogoutUser;
+import jp.ac.hal.skymoons.models.EmployeePageModel;
 import jp.ac.hal.skymoons.models.EmployeeSearchModel;
 import jp.ac.hal.skymoons.models.TestModel;
 
@@ -15,8 +16,9 @@ public class ModelSelectorGet {
 	static{
 		mapping = new HashMap<String, AbstractModel>();
 		mapping.put("/HomeSystem/fc/test", new TestModel());
+		//社員出力機能
 		mapping.put("/HomeSystem/fc/EmployeeList", new EmployeeSearchModel());
-		mapping.put("/homesystem/fc/test", new TestModel());
+		mapping.put("/HomeSystem/fc/EmployeePage", new EmployeePageModel());
 
 		// ログイン認証機能
 		mapping.put("/HomeSystem/fc/login/administrator", new LoginAdministrator());

@@ -31,17 +31,19 @@ public class EmployeeSearchModel extends AbstractModel {
 			String[] genres = request.getParameterValues("genre");
 			//部署検索orジャンル検索判定、実行結果取得
 			if(departmentId==0&&genres!=null){
-				employeeReturn.addAll(dao.getEmployeeByGenre(genres));
+				employeeReturn = (ArrayList<EmployeeListBean>)dao.getEmployeeByGenre(genres);
+			}else if(departmentId>0&&genres==null){
+				employeeReturn = (ArrayList<EmployeeListBean>)dao.getEmployeeByDepartment(departmentId);
 			}else{
-				employeeReturn.addAll(dao.getEmployeeByDepartment(departmentId));
+				employeeReturn=(ArrayList<EmployeeListBean>)dao.getEmployee();
 			}
 		}else{
-			employeeReturn.addAll(dao.getEmployee());
+			employeeReturn=(ArrayList<EmployeeListBean>)dao.getEmployee();
 		}
 
 		//ジャンル、部署取得
-		genreReturn.addAll(dao.getGenreList());
-		departmentReturn.addAll(dao.getDepartmentList());
+		genreReturn = (ArrayList<GenreBean>)dao.getGenreList();
+		departmentReturn = (ArrayList<DepartmentBean>)dao.getDepartmentList();
 
 		//Daoクローズ
 		dao.close();
