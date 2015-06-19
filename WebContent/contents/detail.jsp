@@ -6,6 +6,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>コンテンツ詳細</title>
 	</head>
+	<c:if test="${scriptMessage != null}" >${scriptMessage}</c:if>
 	<body>
 		<table border="1">
 			<c:set var="i" value="${detailList}"/>

@@ -1,18 +1,11 @@
 package jp.ac.hal.skymoons.models;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jp.ac.hal.skymoons.beans.ContentsDetailBean;
-import jp.ac.hal.skymoons.beans.ContentsDetailHomeLogBean;
 import jp.ac.hal.skymoons.beans.ContentsUpdateBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
-import jp.ac.hal.skymoons.daoes.ContentsDetailDao;
 import jp.ac.hal.skymoons.daoes.ContentsUpdateDao;
 import jp.ac.hal.skymoons.security.session.SessionController;
 
@@ -73,9 +66,10 @@ public class ContentsUpdateModel extends AbstractModel{
 			//コミットと終了処理
 			dao.commit();
 			dao.close();
+			request.setAttribute("scriptMessage","<script>alert('更新が完了しました。')</script>");
 		//}
 		//遷移先を指定
-		return "/contents/edit.jsp?homeContentId=" + request.getAttribute("homeContentId");
+		return "/fc/contents/edit?homeContentId=" + updateBean.getHomeContentId();
 	}
 
 }

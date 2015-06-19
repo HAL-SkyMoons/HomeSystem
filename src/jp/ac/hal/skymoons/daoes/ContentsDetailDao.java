@@ -1,19 +1,14 @@
 package jp.ac.hal.skymoons.daoes;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-
 import javax.naming.NamingException;
 
 import jp.ac.hal.skymoons.beans.ContentsDetailBean;
 import jp.ac.hal.skymoons.beans.ContentsDetailHomeLogBean;
-import jp.ac.hal.skymoons.beans.ContentsSearchBean;
-import jp.ac.hal.skymoons.beans.SampleBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
 
 
@@ -133,6 +128,7 @@ public class ContentsDetailDao {
 		}else{
 			//取得失敗処理をここに記述
 		}
+		contentsPst.close();
 		return detailBean;
 	}
 	public ArrayList<ContentsDetailHomeLogBean> findHomeLog(String homeContentId) throws SQLException {
@@ -159,6 +155,7 @@ public class ContentsDetailDao {
 			homeLogBean.setHomeComment(homeLogResult.getString("home_comment"));
 			homeLogList.add(homeLogBean);
 		}
+		homeLogPst.close();
 		return homeLogList;
 	}
 	

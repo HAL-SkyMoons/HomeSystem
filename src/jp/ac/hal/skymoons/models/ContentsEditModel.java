@@ -5,12 +5,9 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jp.ac.hal.skymoons.beans.ContentsDetailBean;
-import jp.ac.hal.skymoons.beans.ContentsDetailHomeLogBean;
 import jp.ac.hal.skymoons.beans.ContentsEditBean;
 import jp.ac.hal.skymoons.beans.ContentsGenreBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
-import jp.ac.hal.skymoons.daoes.ContentsDetailDao;
 import jp.ac.hal.skymoons.daoes.ContentsEditDao;
 import jp.ac.hal.skymoons.daoes.ContentsGenreDao;
 

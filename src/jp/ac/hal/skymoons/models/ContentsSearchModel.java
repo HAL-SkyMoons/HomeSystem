@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import jp.ac.hal.skymoons.beans.ContentsEmployeeBean;
 import jp.ac.hal.skymoons.beans.ContentsGenreBean;
-import jp.ac.hal.skymoons.beans.ContentsListBean;
-import jp.ac.hal.skymoons.beans.ContentsSearchBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.ContentsGenreDao;
 import jp.ac.hal.skymoons.daoes.ContentsSearchDao;

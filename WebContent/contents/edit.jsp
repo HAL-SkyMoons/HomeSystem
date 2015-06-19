@@ -6,6 +6,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>コンテンツ編集</title>
 	</head>
+	<c:if test="${scriptMessage != null}" >${scriptMessage}</c:if>
 	<body>
 		<c:set var="i" value="${editData}"/>
 		<form action="delete" method="post">
@@ -15,7 +16,7 @@
 		<form action="update" method="post">
 			<table border="1">
 				<tr>
-					<td>コンテンツ名：<input type="text" value="${i.homeContentTitle}"></td>
+					<td>コンテンツ名：<input type="text" name="homeContentTitle" value="${i.homeContentTitle}"></td>
 					<td>日時：${i.homeContentDatetime}<br/>
 						<select name="contentsYear">
 							<c:forEach begin="1950" end="2020" step="1" varStatus="status">

@@ -1,21 +1,12 @@
 package jp.ac.hal.skymoons.daoes;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.naming.NamingException;
 
 import jp.ac.hal.skymoons.beans.ContentsAdditionBean;
-import jp.ac.hal.skymoons.beans.ContentsDetailBean;
-import jp.ac.hal.skymoons.beans.ContentsDetailHomeLogBean;
-import jp.ac.hal.skymoons.beans.ContentsSearchBean;
-import jp.ac.hal.skymoons.beans.ContentsUpdateBean;
-import jp.ac.hal.skymoons.beans.SampleBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
 
 
@@ -60,6 +51,7 @@ public class ContentsAdditionDao {
 		ResultSet getContentIdResult = getContentIdPst.executeQuery();
 		getContentIdResult.next();
 		additionBean.setHomeContentId(getContentIdResult.getInt("last_insert_id()"));
+		getContentIdResult.close();
 	}
 	
 	public boolean addGenre(ContentsAdditionBean additionBean) throws SQLException{
@@ -69,14 +61,15 @@ public class ContentsAdditionDao {
 		deleteGenrePst.setInt(1, homeContentId);
 		deleteGenrePst.executeUpdate();
 		deleteGenrePst.close();
-		for(int genreId : additionBean.getGenreId()){
-			PreparedStatement insertGenrePst = con.prepareStatement("insert into home_genre(home_content_id, genre_id) values(?, ?) ;");
-			insertGenrePst.setInt(1, homeContentId);
-			insertGenrePst.setInt(2, genreId);
-			insertGenrePst.executeUpdate();
-			insertGenrePst.close();
+		if(additionBean.getGenreId() != null){
+			for(int genreId : additionBean.getGenreId()){
+				PreparedStatement insertGenrePst = con.prepareStatement("insert into home_genre(home_content_id, genre_id) values(?, ?) ;");
+				insertGenrePst.setInt(1, homeContentId);
+				insertGenrePst.setInt(2, genreId);
+				insertGenrePst.executeUpdate();
+				insertGenrePst.close();
+			}
 		}
-		
 		return true;
 	}
 	

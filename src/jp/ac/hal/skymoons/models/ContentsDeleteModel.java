@@ -31,6 +31,7 @@ public class ContentsDeleteModel extends AbstractModel{
 			//コミットと終了処理
 			deleteDao.commit();
 			deleteDao.close();
+			request.setAttribute("scriptMessage","<script>alert('削除が完了しました。')</script>");
 		//}
 		//遷移先を指定
 		return "/fc/contents/list";

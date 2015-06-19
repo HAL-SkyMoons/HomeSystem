@@ -1,13 +1,10 @@
 package jp.ac.hal.skymoons.daoes;
 
-import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
-
 import javax.naming.NamingException;
 
 import jp.ac.hal.skymoons.beans.ContentsListBean;
@@ -51,6 +48,7 @@ public class ContentsListDao {
 		ResultSet contentsResult = contentsPst.executeQuery();	
 
 		ArrayList<ContentsListBean> contentsList = convertList(contentsResult);
+		contentsResult.close();
 		contentsPst.close();
 		return contentsList;
 	}
@@ -80,6 +78,7 @@ public class ContentsListDao {
 		ResultSet contentsResult = contentsPst.executeQuery();		
 
 		ArrayList<ContentsListBean> contentsList = convertList(contentsResult);
+		contentsResult.close();
 		contentsPst.close();
 		return contentsList;
 	}
@@ -100,6 +99,7 @@ public class ContentsListDao {
 		ResultSet contentsResult = contentsPst.executeQuery();		
 
 		ArrayList<ContentsListBean> contentsList = convertList(contentsResult);
+		contentsResult.close();
 		contentsPst.close();
 		return contentsList;
 	}
@@ -111,6 +111,7 @@ public class ContentsListDao {
 		ResultSet contentsResult = contentsPst.executeQuery();		
 		
 		ArrayList<ContentsListBean> contentsList = convertList(contentsResult);
+		contentsResult.close();
 		contentsPst.close();
 		return contentsList;
 	}

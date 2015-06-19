@@ -24,6 +24,9 @@ public class ContentsRegistModel extends AbstractModel{
 		//結果をリクエストに保存
 		request.setAttribute("genreList",genreData);
 		
+		genreDao.commit();
+		genreDao.close();
+		
 		//遷移先を指定
 		return "/contents/regist.jsp";
 	}

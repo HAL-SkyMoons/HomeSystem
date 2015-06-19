@@ -6,6 +6,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>コンテンツリスト</title>
 	</head>
+	<c:if test="${scriptMessage != null}" >${scriptMessage}</c:if>
 	<body>
 		<table border="1">
 			<c:forEach items="${contentsList}" var="i">

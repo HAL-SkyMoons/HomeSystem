@@ -1,20 +1,11 @@
 package jp.ac.hal.skymoons.daoes;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.naming.NamingException;
 
-import jp.ac.hal.skymoons.beans.ContentsDetailBean;
-import jp.ac.hal.skymoons.beans.ContentsDetailHomeLogBean;
-import jp.ac.hal.skymoons.beans.ContentsSearchBean;
 import jp.ac.hal.skymoons.beans.ContentsUpdateBean;
-import jp.ac.hal.skymoons.beans.SampleBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
 
 

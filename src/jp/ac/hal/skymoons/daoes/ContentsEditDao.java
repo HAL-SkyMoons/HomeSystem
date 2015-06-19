@@ -119,6 +119,7 @@ public class ContentsEditDao {
 		}else{
 			//取得失敗処理をここに記述
 		}
+		contentsPst.close();
 		return editBean;
 	}
 	/**
