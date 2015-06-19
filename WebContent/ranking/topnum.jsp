@@ -12,6 +12,7 @@
 	</head>
 	<body>
 		<h1>総獲得数ランキング</h1>
+		<h1><a href="/HomeSystem/fc/ranking/badge">バッジ毎獲得数ランキング</a></h1>
 		
 		<form action="/HomeSystem/fc/ranking/topnum">
 			<p>日付指定</p>
