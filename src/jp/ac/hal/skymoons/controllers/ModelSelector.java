@@ -2,6 +2,14 @@ package jp.ac.hal.skymoons.controllers;
 
 import java.util.HashMap;
 
+import jp.ac.hal.skymoons.models.ContentsAdditionModel;
+import jp.ac.hal.skymoons.models.ContentsDeleteModel;
+import jp.ac.hal.skymoons.models.ContentsDetailModel;
+import jp.ac.hal.skymoons.models.ContentsEditModel;
+import jp.ac.hal.skymoons.models.ContentsListModel;
+import jp.ac.hal.skymoons.models.ContentsRegistModel;
+import jp.ac.hal.skymoons.models.ContentsSearchModel;
+import jp.ac.hal.skymoons.models.ContentsUpdateModel;
 import jp.ac.hal.skymoons.models.EmployeePageModel;
 import jp.ac.hal.skymoons.models.EmployeeSearchModel;
 import jp.ac.hal.skymoons.models.Home;
@@ -37,6 +45,19 @@ public class ModelSelector {
 		mapping.put("/HomeSystem/fc/EmployeeList", new EmployeeSearchModel());
 		mapping.put("/HomeSystem/fc/EmployeePage", new EmployeePageModel());
 
+		mapping.put("/homesystem/fcon/test", new TestModel());
+		mapping.put("/HomeSystem/fc/test", new TestModel());
+
+		// コンテンツモデル
+		mapping.put("/HomeSystem/fc/contents/addition", new ContentsAdditionModel());
+		mapping.put("/HomeSystem/fc/contents/detail", new ContentsDetailModel());
+		mapping.put("/HomeSystem/fc/contents/delete", new ContentsDeleteModel());
+		mapping.put("/HomeSystem/fc/contents/edit", new ContentsEditModel());
+		mapping.put("/HomeSystem/fc/contents/list", new ContentsListModel());
+		mapping.put("/HomeSystem/fc/contents/regist", new ContentsRegistModel());
+		mapping.put("/HomeSystem/fc/contents/search", new ContentsSearchModel());
+		mapping.put("/HomeSystem/fc/contents/update", new ContentsUpdateModel());
+		
 		mapping.put("/homesystem/fc/test", new TestModel());
 		mapping.put("/HomeSystem/fc/PlanList", new PlanList());
 		mapping.put("/HomeSystem/fc/PlanRegister", new PlanRegister());
