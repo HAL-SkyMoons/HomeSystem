@@ -6,8 +6,19 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>コンテンツリスト</title>
 	</head>
-	<c:if test="${scriptMessage != null}" >${scriptMessage}</c:if>
+	<c:if test="${scriptMessage} != null">${scriptMessage}</c:if>
 	<body>
+		<table border="1">
+			<tr>
+				<form action="list" method="post">
+					<td>文字列：<input type="text" name="titleKeyword"></td>
+					<td><input type="submit" value="タイトル検索"></td>
+				</form>
+				<td>
+					<a href="./search">検索条件指定画面へ</a>
+				</td>
+			</tr>
+		</table>
 		<table border="1">
 			<c:forEach items="${contentsList}" var="i">
 			<tr>
