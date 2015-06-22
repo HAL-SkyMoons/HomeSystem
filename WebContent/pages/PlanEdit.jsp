@@ -172,21 +172,21 @@
 							}
 						%>
 				</select> 日
-<!-- 				<SELECT name="hour"> -->
+				<SELECT name="hour">
 						<%
-// 							for (int i = 1; i <= 24; i++) {
-// 								out.println("<option value=\"" + i + "\">" + i + "</option>");
-// 							}
+							for (int i = 1; i <= 24; i++) {
+								out.println("<option value=\"" + i + "\">" + i + "</option>");
+							}
 						%>
-<!-- 				</select> 時 <SELECT name="minutes"> -->
+				</select> 時 <SELECT name="minutes">
 						<%
-// 							for (int i = 0; i < 60; i++) {
-// 								out.println("<option value=\"" + i + "\">" + i + "</option>");
-// 							}
+							for (int i = 0; i < 60; i++) {
+								out.println("<option value=\"" + i + "\">" + i + "</option>");
+							}
 						%>
 
 
-<!-- 				</select> 分</td> -->
+				</select> 分</td>
 			</tr>
 		</table>
 		<input type="submit" name="edit" value="登録">

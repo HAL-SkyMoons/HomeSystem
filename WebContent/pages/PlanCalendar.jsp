@@ -26,7 +26,8 @@
 			header: {
 				left: 'prev,next today',
 				center: 'title',
-				right: 'month'
+				right: 'month,agendaWeek,agendaDay'
+
 			},
 			editable: false,
 			eventLimit: true, // allow "more" link when too many events

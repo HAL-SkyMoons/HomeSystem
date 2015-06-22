@@ -31,8 +31,8 @@ public class PlanRegister extends AbstractModel{
 			plan.setPlanTitle(request.getParameter("planTitle"));
 			plan.setPlanComment(request.getParameter("planComment"));
 
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-			String implementationDateStr = request.getParameter("year")+"-"+request.getParameter("month")+"-"+request.getParameter("day");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String implementationDateStr = request.getParameter("year")+"-"+request.getParameter("month")+"-"+request.getParameter("day")+" "+request.getParameter("hour")+":"+request.getParameter("minutes")+":00";
 
 			plan.setImplementationDate(sdf.parse(implementationDateStr));
 

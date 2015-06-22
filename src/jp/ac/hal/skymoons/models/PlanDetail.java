@@ -149,8 +149,8 @@ public class PlanDetail extends AbstractModel {
 				planEdit.setPlanTitle(request.getParameter("planTitle"));
 				planEdit.setPlanComment(request.getParameter("planComment"));
 
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				planEdit.setImplementationDate(sdf.parse(request.getParameter("year")+"-"+request.getParameter("month")+"-"+request.getParameter("day")));
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				planEdit.setImplementationDate(sdf.parse(request.getParameter("year")+"-"+request.getParameter("month")+"-"+request.getParameter("day")+" "+request.getParameter("hour")+":"+request.getParameter("minutes")+":00"));
 
 				dao.planEdit(planEdit);
 
