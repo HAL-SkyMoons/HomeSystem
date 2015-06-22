@@ -27,5 +27,6 @@ if(url != null) {
 		<a href="../../pages/windowTest.html">ホメ</a>
 		<a href="/HomeSystem/fc/PlanList">企画一覧</a>
 		<a href="/HomeSystem/fc/PlanRegister">企画登録</a>
+		<a href="/HomeSystem/fc/PlanCalendar">企画カレンダー</a>
 	</body>
 </html>
