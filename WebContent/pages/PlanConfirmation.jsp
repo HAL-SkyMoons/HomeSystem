@@ -22,7 +22,7 @@
 	String planTitle = plan.getPlanTitle();
 	String planComment = plan.getPlanComment();
 
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日");
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH時mm分");
 
 	String implementationDate = sdf.format(plan.getImplementationDate());
 
@@ -71,7 +71,7 @@
 			out.println("<input type=\"hidden\" name=\"planComment\" value=\""
 					+ planComment + "\">");
 			out.println("<input type=\"hidden\" name=\"implementationDate\" value=\""
-					+ new SimpleDateFormat("yyyy-MM-dd").format(plan.getImplementationDate()) + "\">");
+					+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(plan.getImplementationDate()) + "\">");
 		%>
 
 		<h3>登録ジャンル</h3>

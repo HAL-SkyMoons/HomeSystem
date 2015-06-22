@@ -23,12 +23,21 @@
 		// 日
 		var day_val = current.getDate();
 
+		var hour_val = current.getHours();
+
+		var minutes_val = current.getMinutes();
+
 		// デフォルト
 		$('select[name=year] option[value=' + year_val + ']').prop('selected',
 				true);
 		$('select[name=month] option[value=' + month_val + ']').prop(
 				'selected', true);
 		$('select[name=day] option[value=' + day_val + ']').prop('selected',
+				true);
+
+		$('select[name=hour] option[value=' + hour_val + ']').prop('selected',
+				true);
+		$('select[name=minutes] option[value=' + minutes_val + ']').prop('selected',
 				true);
 		setDay();
 
@@ -123,21 +132,21 @@
 							}
 						%>
 				</select> 日
-<!-- 				<SELECT name="hour"> -->
+				<SELECT name="hour">
 						<%
-// 							for (int i = 1; i <= 24; i++) {
-// 								out.println("<option value=\"" + i + "\">" + i + "</option>");
-// 							}
+							for (int i = 1; i <= 24; i++) {
+								out.println("<option value=\"" + i + "\">" + i + "</option>");
+							}
 						%>
-<!-- 				</select> 時 <SELECT name="minutes"> -->
+				</select> 時 <SELECT name="minutes">
 						<%
-// 							for (int i = 0; i < 60; i++) {
-// 								out.println("<option value=\"" + i + "\">" + i + "</option>");
-// 							}
+							for (int i = 0; i < 60; i++) {
+								out.println("<option value=\"" + i + "\">" + i + "</option>");
+							}
 						%>
 
 
-<!-- 				</select> 分</td> -->
+				</select> 分</td>
 			</tr>
 		</table>
 		<input type="submit" name="submit" value="登録"><br>

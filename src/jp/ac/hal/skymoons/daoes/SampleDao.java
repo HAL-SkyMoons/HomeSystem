@@ -1,6 +1,7 @@
 ﻿package jp.ac.hal.skymoons.daoes;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -597,7 +598,7 @@ public class SampleDao {
 			record.setPlanTitle(result.getString("plan_title"));
 			record.setPlanDatetime(result.getDate("plan_datetime"));
 			record.setPlanComment(result.getString("plan_comment"));
-			record.setImplementationDate(result.getDate("implementation_date"));
+			record.setImplementationDate(result.getTimestamp("implementation_date"));
 
 			table.add(record);
 		}
@@ -615,11 +616,12 @@ public class SampleDao {
 	public int planRegister(PlanBean newRecord) throws SQLException {
 
 		PreparedStatement insert = con
-				.prepareStatement("insert into plan(planner,plan_title,plan_datetime,plan_comment,implementation_date) values (?,?,now(),?,?);");
+				.prepareStatement("insert into plan(planner,plan_title,plan_datetime,plan_comment,implementation_date) values (?,?,now(),?,cast(? as datetime));");
 		insert.setString(1, newRecord.getPlanner());
 		insert.setString(2, newRecord.getPlanTitle());
 		insert.setString(3, newRecord.getPlanComment());
-		insert.setDate(4, new java.sql.Date( newRecord.getImplementationDate().getTime()));
+
+		insert.setTimestamp(4, new java.sql.Timestamp( newRecord.getImplementationDate().getTime()));
 
 		int planId = 0;
 
@@ -660,7 +662,7 @@ public class SampleDao {
 			record.setPlanTitle(result.getString("plan_title"));
 			record.setPlanDatetime(result.getDate("plan_datetime"));
 			record.setPlanComment(result.getString("plan_comment"));
-			record.setImplementationDate(result.getDate("implementation_date"));
+			record.setImplementationDate(result.getTimestamp("implementation_date"));
 		}
 
 		return record;
@@ -883,7 +885,7 @@ public class SampleDao {
 				record.setPlanTitle(result.getString("p.plan_title"));
 				record.setPlanDatetime(result.getDate("p.plan_datetime"));
 				record.setPlanComment(result.getString("p.plan_comment"));
-				record.setImplementationDate(result.getDate("implementation_date"));
+				record.setImplementationDate(result.getTimestamp("implementation_date"));
 
 				table.add(record);
 			}
@@ -902,11 +904,12 @@ public class SampleDao {
 	public int planEdit(PlanBean updateRecord) throws SQLException {
 
 		PreparedStatement update = con
-				.prepareStatement("update plan set plan_title = ?, plan_comment = ? ,implementation_date = ? where plan_id = ? ;");
+				.prepareStatement("update plan set plan_title = ?, plan_comment = ? ,implementation_date = cast(? as datetime) where plan_id = ? ;");
 
 		update.setString(1, updateRecord.getPlanTitle());
 		update.setString(2, updateRecord.getPlanComment());
-		update.setDate(3, new java.sql.Date( updateRecord.getImplementationDate().getTime()));
+//		update.setDate(3, new java.sql.Date( updateRecord.getImplementationDate().getTime()));
+		update.setTimestamp(3, new java.sql.Timestamp( updateRecord.getImplementationDate().getTime()));
 		update.setInt(4, updateRecord.getPlanId());
 
 
@@ -1573,7 +1576,7 @@ public class SampleDao {
 			record.setPlanTitle(result.getString("plan_title"));
 			record.setPlanDatetime(result.getDate("plan_datetime"));
 			record.setPlanComment(result.getString("plan_comment"));
-			record.setImplementationDate(result.getDate("implementation_date"));
+			record.setImplementationDate(result.getTimestamp("implementation_date"));
 
 			table.add(record);
 		}
@@ -1620,7 +1623,7 @@ public class SampleDao {
 			record.setPlanTitle(result.getString("plan_title"));
 			record.setPlanDatetime(result.getDate("plan_datetime"));
 			record.setPlanComment(result.getString("plan_comment"));
-			record.setImplementationDate(result.getDate("implementation_date"));
+			record.setImplementationDate(result.getTimestamp("implementation_date"));
 
 			table.add(record);
 		}

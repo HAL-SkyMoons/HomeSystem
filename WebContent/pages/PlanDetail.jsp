@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="jp.ac.hal.skymoons.beans.FileBean"%>
 <%@page import="jp.ac.hal.skymoons.beans.UserBean"%>
 <%@page import="jp.ac.hal.skymoons.beans.PlanPointBean"%>
@@ -86,7 +87,7 @@
 				<th>実施予定日</th>
 				<td>
 					<%
-						out.println(plan.getImplementationDate());
+						out.println(new SimpleDateFormat("yyyy年MM月dd日 HH時mm分").format(plan.getImplementationDate()));
 					%>
 				</td>
 			</tr>
