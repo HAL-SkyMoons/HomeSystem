@@ -26,13 +26,19 @@ public class ContentsUpdateModel extends AbstractModel{
 			updateBean.setHomeContentId(Integer.parseInt((String) request.getParameter("homeContentId")));
 			
 			//日時の文字列生成
-			String year = request.getParameter("contentsYear");
-			String month = request.getParameter("contentsMonth");
-			String day = request.getParameter("contentsDay");
-			String hour = request.getParameter("contentsHour");
-			String minute = request.getParameter("contentsMinute");
-			String contentsDatetime = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":00";		
-			updateBean.setHomeContentDatetime(contentsDatetime);
+			String startYear = request.getParameter("startYear");
+			String startMonth = request.getParameter("startMonth");
+			String startDay = request.getParameter("startDay");
+			String startHour = request.getParameter("startHour");
+			String startMinute = request.getParameter("startMinute");
+			String startDatetime = startYear + "-" + startMonth + "-" + startDay + " " + startHour + ":" + startMinute + ":00";		
+			updateBean.setHomeContentDatetime(startDatetime);
+			
+			String endYear = request.getParameter("endYear");
+			String endMonth = request.getParameter("endMonth");
+			String endDay = request.getParameter("endDay");
+			String endDatetime = endYear + "-" + endMonth + "-" + endDay;		
+			updateBean.setEndDate(endDatetime);
 	
 			//コンテンツタイトル
 			updateBean.setHomeContentTitle(request.getParameter("homeContentTitle"));

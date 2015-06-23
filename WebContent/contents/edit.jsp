@@ -17,37 +17,57 @@
 			<table border="1">
 				<tr>
 					<td>コンテンツ名：<input type="text" name="homeContentTitle" value="${i.homeContentTitle}"></td>
-					<td>日時：${i.homeContentDatetime}<br/>
-						<select name="contentsYear">
+					<td>開始日時：${i.homeContentDatetime}<br/>
+						<select name="startYear">
 							<c:forEach begin="1950" end="2020" step="1" varStatus="status">
 								<option value="${status.index}">${status.index}</option>
 							</c:forEach>
 						</select>
 						年
-						<select name="contentsMonth">
+						<select name="startMonth">
 							<c:forEach begin="1" end="12" step="1" varStatus="status">
 								<option value="${status.index}">${status.index}</option>
 							</c:forEach>
 						</select>
 						月
-						<select name="contentsDay">
+						<select name="startDay">
 							<c:forEach begin="1" end="31" step="1" varStatus="status">
 								<option value="${status.index}">${status.index}</option>
 							</c:forEach>
 						</select>
 						日
-						<select name="contentsHour">
+						<select name="startHour">
 							<c:forEach begin="0" end="23" step="1" varStatus="status">
 								<option value="${status.index}">${status.index}</option>
 							</c:forEach>
 						</select>
 						時
-						<select name="contentsMinute">
+						<select name="startMinute">
 							<c:forEach begin="0" end="59" step="1" varStatus="status">
 								<option value="${status.index}">${status.index}</option>
 							</c:forEach>
 						</select>
 						分
+					</td>
+					<td>終了日：${i.homeContentDatetime}<br/>
+						<select name="endYear">
+							<c:forEach begin="1950" end="2020" step="1" varStatus="status">
+								<option value="${status.index}">${status.index}</option>
+							</c:forEach>
+						</select>
+						年
+						<select name="endMonth">
+							<c:forEach begin="1" end="12" step="1" varStatus="status">
+								<option value="${status.index}">${status.index}</option>
+							</c:forEach>
+						</select>
+						月
+						<select name="endDay">
+							<c:forEach begin="1" end="31" step="1" varStatus="status">
+								<option value="${status.index}">${status.index}</option>
+							</c:forEach>
+						</select>
+						日
 					</td>
 					<td>コンテンツ内容：<br/>
 						<textarea name="homeContentComment">${i.homeContentComment}</textarea>

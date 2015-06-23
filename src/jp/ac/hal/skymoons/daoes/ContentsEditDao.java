@@ -51,6 +51,7 @@ public class ContentsEditDao {
 			editBean.setHomeContentComment(contentsResult.getString("home_content_comment"));
 			editBean.setHomeContentDatetime(contentsResult.getString("home_content_datetime"));
 			editBean.setEmployeeId(contentsResult.getString("employee_id"));
+			editBean.setEndDate(contentsResult.getString("end_date"));
 			
 			//名前の取得
 			PreparedStatement namePst = con.prepareStatement("select * from users where user_id = ? ;");
