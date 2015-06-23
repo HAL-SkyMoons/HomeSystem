@@ -12,6 +12,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>企画編集</title>
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+<link rel="stylesheet" type="text/css"
+	href="../css/bootstrap-responsive.css">
 <%
 	PlanBean plan = (PlanBean) request.getAttribute("plan");
 		ArrayList<GenreBean> genreList = (ArrayList<GenreBean>) request
@@ -23,7 +26,8 @@
 <script type="text/javascript">
 	$(function() {
 		// 現在日時
-		var current = new Date(<% out.print(plan.getImplementationDate().getTime()); %>);
+		var current = new Date(<% out.print(plan.getStartDate().getTime()); %>);
+		var end = new Date(<% out.print(plan.getEndDate().getTime()); %>);
 
 		// 年
 		var year_val = current.getFullYear();
@@ -34,32 +38,69 @@
 
 		var hour_val = current.getHours();
 
-		var minutes_val = current.getMinutes();
+		var minutes_val = Math.floor(current.getMinutes()/10)*10;
+
+		// 年
+		var end_year_val = end.getFullYear();
+		// 月 0（1月）～11（12月）
+		var end_month_val = end.getMonth() + 1;
+		// 日
+		var end_day_val = end.getDate();
+
+		var end_hour_val = end.getHours();
+
+		var end_minutes_val = Math.floor(end.getMinutes()/10)*10;
 
 		// デフォルト
-		$('select[name=year] option[value=' + year_val + ']').prop('selected',
+		$('select[name=startYear] option[value=' + year_val + ']').prop('selected',
 				true);
-		$('select[name=month] option[value=' + month_val + ']').prop(
+		$('select[name=startMonth] option[value=' + month_val + ']').prop(
 				'selected', true);
-		$('select[name=day] option[value=' + day_val + ']').prop('selected',
+		$('select[name=startDay] option[value=' + day_val + ']').prop('selected',
 				true);
-		$('select[name=hour] option[value=' + hour_val + ']').prop('selected',
+
+		$('select[name=startHour] option[value=' + hour_val + ']').prop('selected',
 				true);
-		$('select[name=minutes] option[value=' + minutes_val + ']').prop('selected',
+		$('select[name=startMinutes] option[value=' + minutes_val + ']').prop('selected',
 				true);
-		setDay();
+
+		$('select[name=endYear] option[value=' + end_year_val + ']').prop('selected',
+				true);
+		$('select[name=endMonth] option[value=' + end_month_val + ']').prop(
+				'selected', true);
+		$('select[name=endDay] option[value=' + end_day_val + ']').prop('selected',
+				true);
+
+		$('select[name=endHour] option[value=' + end_hour_val + ']').prop('selected',
+				true);
+		$('select[name=endMinutes] option[value=' + end_minutes_val + ']').prop('selected',
+				true);
+
+		setStartDay();
+		setEndDay();
+		inputCheck();
 
 		// 年/月 選択
-		$('select[name=year], select[name=month]').change(function() {
-			setDay();
+		$('select[name=startYear], select[name=startMonth]').change(function() {
+			setStartDay();
 		});
+
+		$('select[name=endYear], select[name=endMonth]').change(function() {
+			setEndDay();
+		});
+
+		$('select[name=endYear], select[name=endMonth], select[name=endDay], select[name=endHour], select[name=endMinutes],select[name=startYear], select[name=startMonth], select[name=startDay], select[name=startHour], select[name=startMinutes]').change(function() {
+			inputCheck();
+		});
+
+
 
 		/**
 		 * 日プルダウンの制御
 		 */
-		function setDay() {
-			year_val = $('select[name=year]').val();
-			month_val = $('select[name=month]').val();
+		function setStartDay() {
+			year_val = $('select[name=startYear]').val();
+			month_val = $('select[name=startMonth]').val();
 
 			// 指定月の末日
 			var t = 31;
@@ -80,29 +121,66 @@
 			}
 
 			// 初期化
-			$('select[name=day] option').remove();
+			$('select[name=startDay] option').remove();
 			for (var i = 1; i <= t; i++) {
 				if (i == day_val) {
-					$('select[name=day]').append(
+					$('select[name=startDay]').append(
 							'<option value="' + i + '" selected>' + i
 									+ '</option>')
 				} else {
-					$('select[name=day]').append(
+					$('select[name=startDay]').append(
 							'<option value="' + i + '">' + i + '</option>');
 				}
 
 			}
-			$('select[name=hour] option').remove();
+		}
+
+		function setEndDay() {
+			year_val = $('select[name=endYear]').val();
+			month_val = $('select[name=endMonth]').val();
+
+			// 指定月の末日
+			var t = 31;
+			// 2月
+			if (month_val == 2) {
+				//　4で割りきれる且つ100で割りきれない年、または400で割り切れる年は閏年
+				if (Math.floor(year_val % 4) == 0
+						&& Math.floor(year_val % 100) != 0
+						|| Math.floor(year_val % 400) == 0) {
+					t = 29;
+				} else {
+					t = 28;
+				}
+				// 4,6,9,11月
+			} else if (month_val == 4 || month_val == 6 || month_val == 9
+					|| month_val == 11) {
+				t = 30;
+			}
+
+			// 初期化
+			$('select[name=endDay] option').remove();
 			for (var i = 1; i <= t; i++) {
-				if (i == hour_val) {
-					$('select[name=hour]').append(
+				if (i == day_val) {
+					$('select[name=endDay]').append(
 							'<option value="' + i + '" selected>' + i
 									+ '</option>')
 				} else {
-					$('select[name=hour]').append(
+					$('select[name=endDay]').append(
 							'<option value="' + i + '">' + i + '</option>');
 				}
 
+			}
+
+		}
+
+		function inputCheck() {
+			var startDate = new Date($('select[name=startYear]').val(),$('select[name=startMonth]').val(),$('select[name=startDay]').val(),$('select[name=startHour]').val(),$('select[name=startMinutes]').val());
+			var endDate = new Date($('select[name=endYear]').val(),$('select[name=endMonth]').val(),$('select[name=endDay]').val(),$('select[name=endHour]').val(),$('select[name=endMinutes]').val());
+
+			if(endDate < startDate){
+				$('#submit').prop('disabled',true);
+			}else{
+				$('#submit').prop('disabled',false);
 			}
 		}
 	});
@@ -153,43 +231,77 @@
 			</tr>
 			<tr>
 				<th>実施予定日：</th>
-				<td><select name="year">
+				<td><select name="startYear">
 						<%
 							for (int i = 2000; i <= 2100; i++) {
 								out.println("<option value=\"" + i + "\">" + i + "</option>");
 							}
 						%>
-				</select> 年 <SELECT name="month">
+				</select> 年 <SELECT name="startMonth">
 						<%
 							for (int i = 1; i <= 12; i++) {
 								out.println("<option value=\"" + i + "\">" + i + "</option>");
 							}
 						%>
-				</SELECT> 月 <SELECT name="day">
+				</SELECT> 月 <SELECT name="startDay">
 						<%
 							for (int i = 1; i <= 31; i++) {
 								out.println("<option value=\"" + i + "\">" + i + "</option>");
 							}
 						%>
 				</select> 日
-				<SELECT name="hour">
+				<SELECT name="startHour">
 						<%
 							for (int i = 1; i <= 24; i++) {
 								out.println("<option value=\"" + i + "\">" + i + "</option>");
 							}
 						%>
-				</select> 時 <SELECT name="minutes">
+				</select> 時 <SELECT name="startMinutes">
 						<%
-							for (int i = 0; i < 60; i++) {
+							for (int i = 0; i < 60; i+=10) {
 								out.println("<option value=\"" + i + "\">" + i + "</option>");
 							}
 						%>
 
+				</select> 分
+				～
+				<select name="endYear">
+						<%
+							for (int i = 2000; i <= 2100; i++) {
+								out.println("<option value=\"" + i + "\">" + i + "</option>");
+							}
+						%>
+				</select> 年 <SELECT name="endMonth">
+						<%
+							for (int i = 1; i <= 12; i++) {
+								out.println("<option value=\"" + i + "\">" + i + "</option>");
+							}
+						%>
+				</SELECT> 月 <SELECT name="endDay">
+						<%
+							for (int i = 1; i <= 31; i++) {
+								out.println("<option value=\"" + i + "\">" + i + "</option>");
+							}
+						%>
+				</select> 日
+				<SELECT name="endHour">
+						<%
+							for (int i = 1; i <= 24; i++) {
+								out.println("<option value=\"" + i + "\">" + i + "</option>");
+							}
+						%>
+				</select> 時 <SELECT name="endMinutes">
+						<%
+							for (int i = 0; i < 60; i+=10) {
+								out.println("<option value=\"" + i + "\">" + i + "</option>");
+							}
+						%>
 
-				</select> 分</td>
+				</select> 分
+				</td>
 			</tr>
 		</table>
-		<input type="submit" name="edit" value="登録">
+		<input type="submit" name="edit" id="submit" value="登録">
 		<hr>
 		<%
 			int genreIndex = 0;

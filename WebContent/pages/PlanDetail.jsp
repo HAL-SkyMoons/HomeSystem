@@ -16,6 +16,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>企画詳細</title>
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+<link rel="stylesheet" type="text/css"
+	href="../css/bootstrap-responsive.css">
 </head>
 <body>
 	<form action="/HomeSystem/fc/PlanEdit" method="post">
@@ -79,7 +82,7 @@
 				<th>企画日</th>
 				<td>
 					<%
-						out.println(plan.getPlanDatetime());
+						out.println(new SimpleDateFormat("yyyy年MM月dd日").format(plan.getPlanDatetime()));
 					%>
 				</td>
 			</tr>
@@ -87,8 +90,12 @@
 				<th>実施予定日</th>
 				<td>
 					<%
-						if(plan.getImplementationDate() != null ){
-							out.println(new SimpleDateFormat("yyyy年MM月dd日 HH時mm分").format(plan.getImplementationDate()));
+						if(plan.getStartDate() != null ){
+							out.println(new SimpleDateFormat("yyyy年MM月dd日 HH時mm分").format(plan.getStartDate()));
+						}
+						if(plan.getEndDate() != null){
+							out.println("～");
+							out.println(new SimpleDateFormat("yyyy年MM月dd日 HH時mm分").format(plan.getEndDate()));
 						}
 					%>
 				</td>
@@ -143,7 +150,7 @@
 						+ plan.getPlanId() + "\"><input type=\"hidden\" name=\"path\" value=\""+ path +"\"/><input type=\"hidden\" name=\"fileName\" value=\""+ file.getDataName()  +"\"/><input type=\"submit\" name=\"download\" value=\"ダウンロード\"></form></td>");
 				System.out.println(path);
 				if(plan.getPlanner().equals(user.getUserId())){
-					out.println("<td><form action=\"/HomeSystem/fc/PlanDetail\" method=\"post\"><input type=\"image\" src=\"../images/icon/del.png\" width=\"15\" name=\"fileDelete\" value=\"削除\"><input type=\"hidden\" name=\"planId\" value=\""+plan.getPlanId()+"\"><input type=\"hidden\" name=\"dataNo\" value=\""+file.getDataNo()+"\"><input type=\"hidden\" name=\"fileName\" value=\""+file.getDataName()+"\"></form></td>");
+					out.println("<td><form action=\"/HomeSystem/fc/PlanDetail\" method=\"post\"><input type=\"image\" src=\"../images/icon/del.png\" width=\"15\" height=\"15\" name=\"fileDelete\" value=\"削除\"><input type=\"hidden\" name=\"planId\" value=\""+plan.getPlanId()+"\"><input type=\"hidden\" name=\"dataNo\" value=\""+file.getDataNo()+"\"><input type=\"hidden\" name=\"fileName\" value=\""+file.getDataName()+"\"></form></td>");
 				}
 
 				out.println("</tr>");
