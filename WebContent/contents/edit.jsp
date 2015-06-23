@@ -52,11 +52,6 @@
 					<td>コンテンツ内容：<br/>
 						<textarea name="homeContentComment">${i.homeContentComment}</textarea>
 					</td>
-					<td>添付資料：
-						<input type="text" name="homeData"/>
-						<input type="text" name="homeData"/>
-						<input type="text" name="homeData"/>
-					</td>
 					<td>ジャンル<br/>
 						<c:forEach items="${genreList}" var="j">
 							<c:set var="check" value="" />
@@ -68,12 +63,50 @@
 							<input type="checkbox" name="genreId" value="${j.genreId}" ${check}>${j.bigGenreName}-${j.genreName}<br/>
 						</c:forEach>
 					</td>
+
 					<td>
 						<input type="hidden" name="homeContentId" value="${i.homeContentId}">
 						<input type="submit" value="編集完了">
 					</td>
 				</tr>
 			</table>
+			
+		</form>
+		<table>
+			<tr>
+				<th>No</th>
+				<th>画像</th>
+				<th>ファイル名</th>
+				<th>ダウンロード</th>
+			</tr>
+			<c:forEach items="${dataList}" var="j">
+				<tr>
+					<td>${j.homeDataNo}</td>
+					<td><img src="${j.fileImagePath}" width="50" height="50"></td>
+					<td>${j.homeDataName}</td>
+					<td>
+						<form action="/HomeSystem/fc/contents/edit?homeContentId=${i.homeContentId}" method="post">
+							<input type="hidden" name="homeContentId" value="${j.homeContentId}">
+							<input type="hidden" name="path" value="../files/contents/master/${j.homeContentId}/${j.homeDataNo}/${j.homeDataName}" />
+							<input type="hidden" name="fileName" value="${j.homeDataName}"/>
+							<input type="submit" name="download" value="ダウンロード">
+						</form>
+					</td>
+					<td>
+						<form action="/HomeSystem/fc/contents/edit?homeContentId=${i.homeContentId}" method="post">
+							<input type="submit" src="../../images/icon/del.png" width="15" name="fileDelete" value="削除">
+							<input type="hidden" name="homeContentId" value="${j.homeContentId}">
+							<input type="hidden" name="homeDataNo" value="${j.homeDataNo}">
+							<input type="hidden" name="fileName" value="${j.homeDataName}">
+						</form>
+					</td>
+				</tr>
+			</c:forEach>
+		</table>
+		<form method="POST" enctype="multipart/form-data" action="/HomeSystem/fc/contents/edit?homeContentId=${i.homeContentId}">
+			<input type="hidden" name="homeContentId" value="${i.homeContentId}" />
+			<input type="file" name="file" />
+			<input type="submit" name="upload" value="送信"/>
 		</form>
 	</body>
 </html>
