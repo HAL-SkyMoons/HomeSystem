@@ -14,12 +14,21 @@
 			<c:set var="i" value="${detailList}"/>
 			<tr>
 				<td>
-					<form action="./edit?homeContentId=${i.homeContentId}" method="post">
-						<input type="submit" value="編集">
-					</form>
+					<c:if test="${i.endDate == null}" >
+						<form action="./edit?homeContentId=${i.homeContentId}" method="post">
+							<input type="submit" value="編集">
+						</form>
+					</c:if>
+					<c:if test="${i.endDate != null}" >
+						<c:out value="編集不可" />
+					</c:if>
 				</td>
 				<td>コンテンツ名：${i.homeContentTitle}</td>
-				<td>日時：${i.homeContentDatetime}</td>
+				<td>実施日：${i.homeContentDatetime}</td>
+				<td>終了日：
+					<c:if test="${i.endDate != null}" >${i.endDate}</c:if>
+					<c:if test="${i.endDate == null}" >未定</c:if>
+				</td>	
 				<td>投稿者名：${i.firstName}${i.lastName}</td>
 				<td>大ジャンル：
 					<c:forEach items="${i.bigGenreName}" var="bigGenreName">
@@ -27,8 +36,10 @@
 					</c:forEach>
 				</td>
 				<td>ジャンル：
+					<c:set var="cnt" value="0"/>
 					<c:forEach items="${i.genreName}" var="genreName">
-						<c:out value="${genreName}"/>
+						<a href="./list?genreId=${i.genreId[cnt]}"><c:out value="${genreName}"/></a>
+						<c:set var="cnt" value="${cnt + 1}"/>
 					</c:forEach>
 				</td>
 			</tr>
