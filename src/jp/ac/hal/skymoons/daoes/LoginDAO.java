@@ -85,7 +85,7 @@ public class LoginDAO {
 		return checkUser(
 					id,
 					pass,
-					"SELECT COUNT(*) FROM administrators WHERE administrator_ID = ? AND password = ?");
+					"SELECT COUNT(*) FROM administrators WHERE BINARY administrator_ID = ? AND BINARY password = ?");
 	}
 	
 	/**
@@ -101,7 +101,7 @@ public class LoginDAO {
 		return checkUser(
 					id,
 					pass,
-					"SELECT COUNT(*) FROM users WHERE user_id = ? AND password = ?");
+					"SELECT COUNT(*) FROM users WHERE BINARY user_id = ? AND BINARY password =　?");
 	}
 	
 	/**
@@ -115,7 +115,7 @@ public class LoginDAO {
 	 */
 	public String checkCsUser(String id,String pass) throws Exception {
 		PreparedStatement statement = con.prepareStatement(
-				"SELECT Class_flag FROM users WHERE user_id = ? AND password = ?");
+				"SELECT Class_flag FROM users WHERE BINARY user_id = ? AND BINARY password = ?");
 		statement.setString(1, id);
 		statement.setString(2, pass);
 		ResultSet result = statement.executeQuery();
