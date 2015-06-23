@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import jp.ac.hal.skymoons.controllers.AbstractModel;
-import jp.ac.hal.skymoons.daoes.LoginDAO;
+import jp.ac.hal.skymoons.daoes.login.LoginDAO;
 import jp.ac.hal.skymoons.security.session.SessionController;
 
 /**

@@ -1,4 +1,4 @@
-package jp.ac.hal.skymoons.beans;
+package jp.ac.hal.skymoons.beans.ranking;
 
 /**
  * 獲得数ランキングbeans。

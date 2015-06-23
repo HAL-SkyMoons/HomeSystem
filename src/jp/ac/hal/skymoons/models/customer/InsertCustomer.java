@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import jp.ac.hal.skymoons.controllers.AbstractModel;
-import jp.ac.hal.skymoons.daoes.CustomerDAO;
+import jp.ac.hal.skymoons.daoes.customer.CustomerDAO;
 
 /**
  * 顧客情報データベース登録処理。

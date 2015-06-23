@@ -5,9 +5,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jp.ac.hal.skymoons.beans.TopNumRankingBean;
+import jp.ac.hal.skymoons.beans.ranking.TopNumRankingBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
-import jp.ac.hal.skymoons.daoes.RankingDAO;
+import jp.ac.hal.skymoons.daoes.ranking.RankingDAO;
 
 /**
  * ランキング作成機能。

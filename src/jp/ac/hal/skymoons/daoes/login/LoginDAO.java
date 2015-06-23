@@ -1,5 +1,5 @@
 
-package jp.ac.hal.skymoons.daoes;
+package jp.ac.hal.skymoons.daoes.login;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

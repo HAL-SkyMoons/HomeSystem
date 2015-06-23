@@ -1,4 +1,4 @@
-<%@page import="jp.ac.hal.skymoons.beans.TopNumRankingBean"%>
+<%@page import="jp.ac.hal.skymoons.beans.ranking.TopNumRankingBean"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%

@@ -1,4 +1,4 @@
-package jp.ac.hal.skymoons.daoes;
+package jp.ac.hal.skymoons.daoes.ranking;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.ac.hal.skymoons.beans.TopNumRankingBean;
+import jp.ac.hal.skymoons.beans.ranking.TopNumRankingBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
 
 /**

@@ -5,9 +5,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jp.ac.hal.skymoons.beans.CustomerTestBean;
+import jp.ac.hal.skymoons.beans.customer.CustomerUsersBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
-import jp.ac.hal.skymoons.daoes.CustomerDAO;
+import jp.ac.hal.skymoons.daoes.customer.CustomerDAO;
 import jp.ac.hal.skymoons.security.session.SessionController;
 
 /**
@@ -34,7 +34,7 @@ public class CreateList extends AbstractModel{
 		CustomerDAO customerDAO = null;
 		try {
 			customerDAO = new CustomerDAO();
-			List<CustomerTestBean> list = customerDAO.getCustomerList();
+			List<CustomerUsersBean> list = customerDAO.getCustomerUsersList(request.getParameter("keyword"));
 			request.setAttribute("list", list);
 		} catch(Exception e) {
 			// 例外処理

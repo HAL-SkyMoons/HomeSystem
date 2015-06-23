@@ -1,4 +1,4 @@
-package jp.ac.hal.skymoons.beans;
+package jp.ac.hal.skymoons.beans.customer;
 
 /**
  * 顧客情報テストBean。

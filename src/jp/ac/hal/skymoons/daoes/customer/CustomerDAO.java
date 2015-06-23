@@ -1,4 +1,4 @@
-package jp.ac.hal.skymoons.daoes;
+package jp.ac.hal.skymoons.daoes.customer;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import jp.ac.hal.skymoons.beans.CustomerTestBean;
+import jp.ac.hal.skymoons.beans.customer.CustomerTestBean;
+import jp.ac.hal.skymoons.beans.customer.CustomerUsersBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
 
 /**
@@ -42,7 +43,69 @@ public class CustomerDAO {
 			e.printStackTrace();
 		}
 	}
-	
+
+// ==========================================================================================
+//  SELECT
+// ==========================================================================================
+
+	/**
+	 * 顧客ユーザリストを取得する。
+	 * @param keyword
+	 * 検索キーワード
+	 * @return
+	 * @throws SQLException
+	 */
+	public List<CustomerUsersBean> getCustomerUsersList(String keyword) throws SQLException {
+		String sql	=	"SELECT user_id, password, last_name, first_name, Class_flag,"
+					+		" delete_flag, lapse_flag, customer_id, customer_company"
+					+	" FROM users"
+					+	" JOIN customers AS cus"
+					+	" ON users.user_id = cus.customer_id" 
+					+	" WHERE users.delete_flag = 0";
+
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		if(keyword != null) {
+			if(keyword.equals("") == false) {
+				// 半角スペース削除
+				keyword = keyword.replace(" ", "");
+				// 全角スペース削除
+				keyword = keyword.replace("　", "");
+				sql +=	" AND (cus.customer_company LIKE ?"
+					+	" OR users.last_name LIKE ?"
+					+	" OR users.first_name LIKE ?"
+					+	" OR users.last_name || users.first_name LIKE ?)";
+				preparedStatement = con.prepareStatement(sql);
+				preparedStatement.setString(1, "%" + keyword + "%");
+				preparedStatement.setString(2, "%" + keyword + "%");
+				preparedStatement.setString(3, "%" + keyword + "%");
+				preparedStatement.setString(4, "%" + keyword + "%");
+				resultSet = preparedStatement.executeQuery();
+			}
+		}
+		if(resultSet == null) {
+			preparedStatement = con.prepareStatement(sql);
+			resultSet = preparedStatement.executeQuery();
+		}
+		
+		List<CustomerUsersBean> list = new ArrayList<CustomerUsersBean>();
+		while(resultSet.next()) {
+			CustomerUsersBean record = new CustomerUsersBean();
+			record.setUser_id(resultSet.getString("user_id"));
+			record.setPassword(resultSet.getString("password"));
+			record.setLast_name(resultSet.getString("last_name"));
+			record.setFirst_name(resultSet.getString("first_name"));
+			record.setClass_flag(resultSet.getInt("Class_flag"));
+			record.setDelete_flag(resultSet.getInt("delete_flag"));
+			record.setLapse_flag(resultSet.getInt("lapse_flag"));
+			record.setCustomer_id(resultSet.getString("customer_id"));
+			record.setCustomer_company(resultSet.getString("customer_company"));
+			list.add(record);
+		}
+		
+		return list;
+	}
+
 	/**
 	 * 顧客ユーザリストを取得する。
 	 * @return
@@ -100,6 +163,10 @@ public class CustomerDAO {
 		value.put("password", result.getString(5));
 		return value;
 	}
+
+// ==========================================================================================
+//  INSERT
+// ==========================================================================================
 	
 	/**
 	 * データベースに顧客情報をINSERTする。
@@ -132,6 +199,14 @@ public class CustomerDAO {
 			this.con.rollback();
 		}
 	}
+	
+// ==========================================================================================
+//  UPDATE
+// ==========================================================================================
+
+// ==========================================================================================
+//  DELETE
+// ==========================================================================================
 	
 	/**
 	 * データベースの顧客テーブルとユーザテーブルから、顧客ユーザIDで指定した顧客ユーザ情報を削除する。
