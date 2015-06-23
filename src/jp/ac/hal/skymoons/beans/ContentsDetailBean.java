@@ -12,6 +12,7 @@ public class ContentsDetailBean implements Serializable {
 	private String homeContentTitle;
 	private String homeContentComment;
 	private String homeContentDatetime;
+	private String endDate;
 	private String employeeId;
 	private String firstName;
 	private String lastName;
@@ -19,6 +20,6 @@ public class ContentsDetailBean implements Serializable {
 	private ArrayList<String> bigGenreName;
 	private ArrayList<Integer> genreId;
 	private ArrayList<String> genreName;
-	private ArrayList<Integer> homeDataNo;
-	private ArrayList<String> homeDataName;
+	//private ArrayList<Integer> homeDataNo;
+	//private ArrayList<String> homeDataName;
 }

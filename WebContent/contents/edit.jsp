@@ -17,45 +17,60 @@
 			<table border="1">
 				<tr>
 					<td>コンテンツ名：<input type="text" name="homeContentTitle" value="${i.homeContentTitle}"></td>
-					<td>日時：${i.homeContentDatetime}<br/>
-						<select name="contentsYear">
+					<td>実施日時：${i.homeContentDatetime}<br/>
+						<select name="startYear">
 							<c:forEach begin="1950" end="2020" step="1" varStatus="status">
 								<option value="${status.index}">${status.index}</option>
 							</c:forEach>
 						</select>
 						年
-						<select name="contentsMonth">
+						<select name="startMonth">
 							<c:forEach begin="1" end="12" step="1" varStatus="status">
 								<option value="${status.index}">${status.index}</option>
 							</c:forEach>
 						</select>
 						月
-						<select name="contentsDay">
+						<select name="startDay">
 							<c:forEach begin="1" end="31" step="1" varStatus="status">
 								<option value="${status.index}">${status.index}</option>
 							</c:forEach>
 						</select>
 						日
-						<select name="contentsHour">
+						<select name="startHour">
 							<c:forEach begin="0" end="23" step="1" varStatus="status">
 								<option value="${status.index}">${status.index}</option>
 							</c:forEach>
 						</select>
 						時
-						<select name="contentsMinute">
+						<select name="startMinute">
 							<c:forEach begin="0" end="59" step="1" varStatus="status">
 								<option value="${status.index}">${status.index}</option>
 							</c:forEach>
 						</select>
 						分
 					</td>
+					<td>終了日：${i.homeContentDatetime}<br/>
+						<select name="endYear">
+							<c:forEach begin="1950" end="2020" step="1" varStatus="status">
+								<option value="${status.index}">${status.index}</option>
+							</c:forEach>
+						</select>
+						年
+						<select name="endMonth">
+							<c:forEach begin="1" end="12" step="1" varStatus="status">
+								<option value="${status.index}">${status.index}</option>
+							</c:forEach>
+						</select>
+						月
+						<select name="endDay">
+							<c:forEach begin="1" end="31" step="1" varStatus="status">
+								<option value="${status.index}">${status.index}</option>
+							</c:forEach>
+						</select>
+						日
+					</td>
 					<td>コンテンツ内容：<br/>
 						<textarea name="homeContentComment">${i.homeContentComment}</textarea>
-					</td>
-					<td>添付資料：
-						<input type="text" name="homeData"/>
-						<input type="text" name="homeData"/>
-						<input type="text" name="homeData"/>
 					</td>
 					<td>ジャンル<br/>
 						<c:forEach items="${genreList}" var="j">
@@ -68,12 +83,51 @@
 							<input type="checkbox" name="genreId" value="${j.genreId}" ${check}>${j.bigGenreName}-${j.genreName}<br/>
 						</c:forEach>
 					</td>
+
 					<td>
 						<input type="hidden" name="homeContentId" value="${i.homeContentId}">
 						<input type="submit" value="編集完了">
 					</td>
 				</tr>
 			</table>
+			
+		</form>
+		<table>
+			<tr>
+				<th>No</th>
+				<th>画像</th>
+				<th>ファイル名</th>
+				<th>ダウンロード</th>
+			</tr>
+			<c:forEach items="${dataList}" var="j">
+				<tr>
+					<td>${j.homeDataNo}</td>
+					<td><img src="${j.fileImagePath}" width="50" height="50"></td>
+					<td>${j.homeDataName}</td>
+					<td>
+						<form action="/HomeSystem/fc/contents/edit?homeContentId=${i.homeContentId}" method="post">
+							<input type="hidden" name="homeContentId" value="${j.homeContentId}">
+							<input type="hidden" name="path" value="../files/contents/master/${j.homeContentId}/${j.homeDataNo}/${j.homeDataName}" />
+							<input type="hidden" name="fileName" value="${j.homeDataName}"/>
+							<input type="submit" name="download" value="ダウンロード">
+						</form>
+					</td>
+					<td>
+						<form action="/HomeSystem/fc/contents/edit?homeContentId=${i.homeContentId}" method="post">
+							<input type="image" src="../../images/icon/del.png" width="15" name="fileDelete" value="削除">
+							<input type="hidden" name="homeContentId" value="${j.homeContentId}">
+							<input type="hidden" name="homeDataNo" value="${j.homeDataNo}">
+							<input type="hidden" name="fileName" value="${j.homeDataName}">
+							<input type="hidden" name="fileDelete" value="削除">
+						</form>
+					</td>
+				</tr>
+			</c:forEach>
+		</table>
+		<form method="POST" enctype="multipart/form-data" action="/HomeSystem/fc/contents/edit?homeContentId=${i.homeContentId}">
+			<input type="hidden" name="homeContentId" value="${i.homeContentId}" />
+			<input type="file" name="file" />
+			<input type="submit" name="upload" value="送信"/>
 		</form>
 	</body>
 </html>

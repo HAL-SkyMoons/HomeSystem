@@ -5,11 +5,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import javax.naming.NamingException;
 
+import jp.ac.hal.skymoons.beans.ContentsDataBean;
 import jp.ac.hal.skymoons.beans.ContentsDetailBean;
 import jp.ac.hal.skymoons.beans.ContentsDetailHomeLogBean;
+import jp.ac.hal.skymoons.beans.FileBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
+import jp.ac.hal.skymoons.util.Utility;
 
 
 public class ContentsDetailDao {
@@ -44,12 +48,12 @@ public class ContentsDetailDao {
 	 * @throws SQLException
 	 * 追記分　Aを追加
 	 */
-	public ContentsDetailBean findDetail(String homeContentId) throws SQLException {
+	public ContentsDetailBean findDetail(int homeContentId) throws SQLException {
 		//戻り値のbeanを生成
 		ContentsDetailBean detailBean = new ContentsDetailBean();
 		//コンテンツの取得
 		PreparedStatement contentsPst = con.prepareStatement("select * from home_contents hc where hc.home_content_id = ? ;");
-		contentsPst.setString(1, homeContentId);
+		contentsPst.setInt(1, homeContentId);
 		ResultSet contentsResult = contentsPst.executeQuery();
 		if (contentsResult.next()) {
 			detailBean.setHomeContentId(contentsResult.getInt("home_content_id"));
@@ -57,6 +61,7 @@ public class ContentsDetailDao {
 			detailBean.setHomeContentComment(contentsResult.getString("home_content_comment"));
 			detailBean.setHomeContentDatetime(contentsResult.getString("home_content_datetime"));
 			detailBean.setEmployeeId(contentsResult.getString("employee_id"));
+			detailBean.setEndDate(contentsResult.getString("end_date"));
 			
 			//名前の取得
 			PreparedStatement namePst = con.prepareStatement("select * from users where user_id = ? ;");
@@ -76,7 +81,7 @@ public class ContentsDetailDao {
 					+ "where home_genre.home_content_id = ? "
 					+ "and home_genre.genre_id = genre.genre_id;");
 			
-			genrePst.setString(1, homeContentId);
+			genrePst.setInt(1, homeContentId);
 			ResultSet genreResult = genrePst.executeQuery();
 			
 			ArrayList<Integer> genreId = new ArrayList<>();
@@ -98,7 +103,7 @@ public class ContentsDetailDao {
 					+ "and home_genre.genre_id = genre.genre_id "
 					+ "and genre.big_genre_id = big_genre.big_genre_id "
 					+ "group by big_genre.big_genre_id;");
-			bigGenrePst.setString(1, homeContentId);
+			bigGenrePst.setInt(1, homeContentId);
 			ResultSet bigGenreResult = bigGenrePst.executeQuery();
 			
 			ArrayList<Integer> bigGenreId = new ArrayList<>();
@@ -112,10 +117,11 @@ public class ContentsDetailDao {
 			bigGenrePst.close();
 			
 			//添付資料の取得
+			/*
 			ArrayList<Integer> homeDataNo = new ArrayList<>();
 			ArrayList<String> homeDataName = new ArrayList<>();
 			PreparedStatement dataPst = con.prepareStatement("select * from home_data where home_content_id = ? ;");
-			dataPst.setString(1, homeContentId);
+			dataPst.setInt(1, homeContentId);
 			ResultSet dataResult = dataPst.executeQuery();		
 			while(dataResult.next()){
 				homeDataNo.add(dataResult.getInt("home_data_no"));
@@ -124,6 +130,7 @@ public class ContentsDetailDao {
 			detailBean.setHomeDataNo(homeDataNo);
 			detailBean.setHomeDataName(homeDataName);
 			dataPst.close();
+			*/
 			
 		}else{
 			//取得失敗処理をここに記述
@@ -131,16 +138,16 @@ public class ContentsDetailDao {
 		contentsPst.close();
 		return detailBean;
 	}
-	public ArrayList<ContentsDetailHomeLogBean> findHomeLog(String homeContentId) throws SQLException {
+	public ArrayList<ContentsDetailHomeLogBean> findHomeLog(int homeContentId) throws SQLException {
 		//戻り値のListを生成
 		ArrayList<ContentsDetailHomeLogBean> homeLogList = new ArrayList<>();
 		//コンテンツの取得
 		PreparedStatement homeLogPst = con.prepareStatement("select * from home_log hl, batch b, users u1, users u2 where hl.home_content_id = ? and hl.home_target = u1.user_id and hl.home_user = u2.user_id and hl.batch_id = b.batch_id");
-		homeLogPst.setString(1, homeContentId);
+		homeLogPst.setInt(1, homeContentId);
 		ResultSet homeLogResult = homeLogPst.executeQuery();
 		while(homeLogResult.next()){
 			ContentsDetailHomeLogBean homeLogBean = new ContentsDetailHomeLogBean();
-			homeLogBean.setHomeContentId(Integer.parseInt(homeContentId));
+			homeLogBean.setHomeContentId(homeContentId);
 			homeLogBean.setHomeTarget(homeLogResult.getString("home_target"));
 			homeLogBean.setHomeTargetFirstName(homeLogResult.getString("u1.first_name"));
 			homeLogBean.setHomeTargetLastName(homeLogResult.getString("u1.last_name"));
@@ -157,6 +164,26 @@ public class ContentsDetailDao {
 		}
 		homeLogPst.close();
 		return homeLogList;
+	}
+
+	public ArrayList<ContentsDataBean> findData(int homeContentId) throws SQLException {
+		//戻り値のListを生成
+		ArrayList<ContentsDataBean> homeDataList = new ArrayList<>();
+		//コンテンツの取得
+		PreparedStatement homeDataPst = con.prepareStatement("select * from home_data where home_content_id = ? and delete_flag = 0 order by home_data_no;");
+		homeDataPst.setInt(1, homeContentId);
+		ResultSet homeDataResult = homeDataPst.executeQuery();
+		while(homeDataResult.next()){
+			ContentsDataBean homeDataBean = new ContentsDataBean();
+			homeDataBean.setHomeContentId(homeContentId);
+			homeDataBean.setHomeDataNo(homeDataResult.getInt("home_data_no"));
+			homeDataBean.setHomeDataName(homeDataResult.getString("home_data_name"));
+			homeDataBean.setDeleteFlag(homeDataResult.getInt("delete_flag"));
+			homeDataBean.setFileImagePath("../" + Utility.getFileImage(homeDataResult.getString("home_data_name")));
+			homeDataList.add(homeDataBean);
+		}
+		homeDataPst.close();
+		return homeDataList;
 	}
 	
 	/**
@@ -185,5 +212,6 @@ public class ContentsDetailDao {
 	public void rollback() throws SQLException {
 		con.rollback();
 	}
+
 }
 

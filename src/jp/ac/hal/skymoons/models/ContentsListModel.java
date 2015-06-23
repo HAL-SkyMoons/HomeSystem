@@ -26,7 +26,7 @@ public class ContentsListModel extends AbstractModel{
 		//ジャンルの取得
 		String[] genreArray = request.getParameterValues("genreId");
 		ArrayList<Integer> genreId = new ArrayList<>();
-		if(genreArray != null){
+		if(genreArray != null && genreArray.length > 0){
 			for(String genreString : genreArray){
 				genreId.add(Integer.parseInt(genreString));
 			}
