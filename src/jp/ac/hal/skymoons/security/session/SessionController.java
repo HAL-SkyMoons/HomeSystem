@@ -50,7 +50,7 @@ public class SessionController {
 	 */
 	public void setUserIdAndGroup(String userId, String classFlag) {
 		setId("uId", userId);
-		setId("group", classFlag);
+		setId("classFlag", classFlag);
 	}
 	
 	/**
