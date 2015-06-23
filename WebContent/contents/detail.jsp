@@ -24,7 +24,7 @@
 					</c:if>
 				</td>
 				<td>コンテンツ名：${i.homeContentTitle}</td>
-				<td>実施日：${i.homeContentDatetime}</td>
+				<td>実施日時：${i.homeContentDatetime}</td>
 				<td>終了日：
 					<c:if test="${i.endDate != null}" >${i.endDate}</c:if>
 					<c:if test="${i.endDate == null}" >未定</c:if>

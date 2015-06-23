@@ -38,7 +38,6 @@ public class ContentsDetailModel extends AbstractModel{
 			System.out.println("download");
 			Utility utility = new Utility();
 			utility.download(request, response);
-			return null;
 		}
 		
 		//DAOのインスタンス化

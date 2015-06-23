@@ -17,7 +17,7 @@
 			<table border="1">
 				<tr>
 					<td>コンテンツ名：<input type="text" name="homeContentTitle" value="${i.homeContentTitle}"></td>
-					<td>開始日時：${i.homeContentDatetime}<br/>
+					<td>実施日時：${i.homeContentDatetime}<br/>
 						<select name="startYear">
 							<c:forEach begin="1950" end="2020" step="1" varStatus="status">
 								<option value="${status.index}">${status.index}</option>
@@ -114,10 +114,11 @@
 					</td>
 					<td>
 						<form action="/HomeSystem/fc/contents/edit?homeContentId=${i.homeContentId}" method="post">
-							<input type="submit" src="../../images/icon/del.png" width="15" name="fileDelete" value="削除">
+							<input type="image" src="../../images/icon/del.png" width="15" name="fileDelete" value="削除">
 							<input type="hidden" name="homeContentId" value="${j.homeContentId}">
 							<input type="hidden" name="homeDataNo" value="${j.homeDataNo}">
 							<input type="hidden" name="fileName" value="${j.homeDataName}">
+							<input type="hidden" name="fileDelete" value="削除">
 						</form>
 					</td>
 				</tr>

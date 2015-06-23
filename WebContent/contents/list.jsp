@@ -35,8 +35,10 @@
 					</c:forEach>
 				</td>
 				<td>ジャンル：
+					<c:set var="cnt" value="0"/>
 					<c:forEach items="${i.genreName}" var="genreName">
-						<c:out value="${genreName}"/>
+						<a href="./list?genreId=${i.genreId[cnt]}"><c:out value="${genreName}"/></a>
+						<c:set var="cnt" value="${cnt + 1}"/>
 					</c:forEach>
 				</td>
 			</tr>

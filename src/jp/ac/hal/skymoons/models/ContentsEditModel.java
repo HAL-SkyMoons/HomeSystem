@@ -37,11 +37,11 @@ public class ContentsEditModel extends AbstractModel{
 			System.out.println("download");
 			Utility utility = new Utility();
 			utility.download(request, response);
-			return null;
 		}
 
 		//添付資料削除処理
 		if (request.getParameter("fileDelete") != null) {
+			System.out.println("aaaaaaaa");
 			int dataNo = Integer.valueOf(request.getParameter("homeDataNo"));
 			String fileName = request.getParameter("fileName");
 

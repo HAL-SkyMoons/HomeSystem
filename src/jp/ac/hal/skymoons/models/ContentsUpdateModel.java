@@ -75,7 +75,7 @@ public class ContentsUpdateModel extends AbstractModel{
 			request.setAttribute("scriptMessage","<script>alert('更新が完了しました。')</script>");
 		//}
 		//遷移先を指定
-		return "/fc/contents/edit?homeContentId=" + updateBean.getHomeContentId();
+		return "/fc/contents/detail?homeContentId=" + updateBean.getHomeContentId();
 	}
 
 }
