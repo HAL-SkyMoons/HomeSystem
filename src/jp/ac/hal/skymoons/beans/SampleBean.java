@@ -13,7 +13,4 @@ public class SampleBean implements Serializable {
 	public void setSumple(String sumple) {
 		Sumple = sumple;
 	}
-
-
-
 }

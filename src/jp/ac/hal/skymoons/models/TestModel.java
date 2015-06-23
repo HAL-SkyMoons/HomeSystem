@@ -12,7 +12,7 @@ public class TestModel extends AbstractModel{
 			HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 
-		return "/error.html"	;
+		return "/pages/error.html"	;
 	}
 
 }

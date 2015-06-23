@@ -1,6 +1,7 @@
 package jp.ac.hal.skymoons.controllers;
 
 import java.io.IOException;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,10 +31,13 @@ public class FrontController extends HttpServlet {
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
 		request.setCharacterEncoding("UTF-8");
-		
+		response.setHeader("Pragma", "no-cache");
+		response.setHeader("Cache-Control","no-cache");
+
 		System.out.println("fconGET!");
+
+		request.setCharacterEncoding("UTF-8");
 
 		// リクエストのあったURIを取得
 		String requestURI = request.getRequestURI();
@@ -43,7 +47,7 @@ public class FrontController extends HttpServlet {
 		System.out.println("targetModel:" + targetModel);
 
 		// 業務ロジックを実行しJSP名を取得
-		String jspName = "/jsp/error.jsp";
+		String jspName = "/pages/error.html";
 		try {
 			jspName = targetModel.doService(request, response);
 			System.out.println(jspName);
@@ -63,7 +67,11 @@ public class FrontController extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("fconPOST!");
-		
+		response.setHeader("Pragma", "no-cache");
+		response.setHeader("Cache-Control","no-cache");
+
+		request.setCharacterEncoding("UTF-8");
+
 		request.setCharacterEncoding("UTF-8");
 
 		// リクエストのあったURIを取得
@@ -77,7 +85,7 @@ public class FrontController extends HttpServlet {
 		// targetModel.setLanguage(languageDao);
 
 		// 業務ロジックを実行しJSP名を取得
-		String jspName = "/jsp/error.jsp";
+		String jspName = "/pages/error.html";
 		try {
 			jspName = targetModel.doService(request, response);
 		} catch (Exception e) {
@@ -90,5 +98,5 @@ public class FrontController extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher(jspName);
 		dispatcher.forward(request, response);
 	}
-	
+
 }
