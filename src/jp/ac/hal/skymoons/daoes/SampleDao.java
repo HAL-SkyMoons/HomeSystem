@@ -462,7 +462,7 @@ public class SampleDao {
 			where += ",?";
 
 		PreparedStatement select = con
-				.prepareStatement("select p.plan_id,p.planner,u.last_name,u.first_name,p.plan_title,p.plan_datetime,p.plan_comment,count(*) from plan p, users u, plan_genre g where p.planner = u.user_id and p.plan_id = g.plan_id and genre_id in ("
+				.prepareStatement("select p.plan_id,p.planner,u.last_name,u.first_name,p.plan_title,p.plan_datetime,p.plan_comment,p.implementation_date,count(*) from plan p, users u, plan_genre g where p.planner = u.user_id and p.plan_id = g.plan_id and genre_id in ("
 						+ where + ") group by p.plan_id;");
 
 		for (int i = 1; i <= idCount; i++)
@@ -483,7 +483,7 @@ public class SampleDao {
 				record.setPlanTitle(result.getString("p.plan_title"));
 				record.setPlanDatetime(result.getDate("p.plan_datetime"));
 				record.setPlanComment(result.getString("p.plan_comment"));
-				record.setImplementationDate(result.getTimestamp("implementation_date"));
+				record.setImplementationDate(result.getTimestamp("p.implementation_date"));
 
 				table.add(record);
 			}

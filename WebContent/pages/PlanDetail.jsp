@@ -87,7 +87,9 @@
 				<th>実施予定日</th>
 				<td>
 					<%
-						out.println(new SimpleDateFormat("yyyy年MM月dd日 HH時mm分").format(plan.getImplementationDate()));
+						if(plan.getImplementationDate() != null ){
+							out.println(new SimpleDateFormat("yyyy年MM月dd日 HH時mm分").format(plan.getImplementationDate()));
+						}
 					%>
 				</td>
 			</tr>
