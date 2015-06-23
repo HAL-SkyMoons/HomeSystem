@@ -47,7 +47,6 @@
 					<td>コンテンツ内容：<br/>
 						<textarea name="homeContentComment"></textarea>
 					</td>
-					<td>添付資料：</td>
 					<td>ジャンル<br/>
 						<c:forEach items="${genreList}" var="j">
 							<c:set var="check" value="" />

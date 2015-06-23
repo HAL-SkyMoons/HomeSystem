@@ -59,6 +59,14 @@ public class ContentsListDao {
 		if(genreId != null){
 			contentsSql += "having count(*) >= " + genreId.size() + " ";
 		}
+		
+		//並び替え
+		if(orderColumn == null || orderColumn.length() <= 0){
+			orderColumn = "home_content_id";
+		}
+		if(orderMode == null || orderMode.length() <= 0){
+			orderMode = "ASC";
+		}
 		contentsSql += "order by hc." + orderColumn + " " + orderMode + ";";
 		
 		PreparedStatement contentsPst = con.prepareStatement(contentsSql);

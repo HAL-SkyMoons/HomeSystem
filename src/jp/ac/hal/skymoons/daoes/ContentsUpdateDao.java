@@ -39,14 +39,16 @@ public class ContentsUpdateDao {
 				+ "employee_id = ?, "
 				+ "home_content_title = ?, "
 				+ "home_content_datetime = ?, "
-				+ "home_content_comment = ? "
+				+ "home_content_comment = ? ,"
+				+ "end_date = ? "
 				+ "where home_content_id = ?");
 		updateContentsPst.setInt(1, updateBean.getHomeContentId());
 		updateContentsPst.setString(2, updateBean.getEmployeeId());
 		updateContentsPst.setString(3, updateBean.getHomeContentTitle());
 		updateContentsPst.setString(4, updateBean.getHomeContentDatetime());
 		updateContentsPst.setString(5, updateBean.getHomeContentComment());
-		updateContentsPst.setInt(6, updateBean.getHomeContentId());
+		updateContentsPst.setString(6, updateBean.getEndDate());
+		updateContentsPst.setInt(7, updateBean.getHomeContentId());
 		updateContentsPst.executeUpdate();
 		updateContentsPst.close();
 		return;

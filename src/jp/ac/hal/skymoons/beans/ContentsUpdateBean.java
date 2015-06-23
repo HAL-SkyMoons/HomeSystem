@@ -12,6 +12,7 @@ public class ContentsUpdateBean implements Serializable {
 	private String homeContentTitle;
 	private String homeContentComment;
 	private String homeContentDatetime;
+	private String endDate;
 	private String employeeId;
 	private String firstName;
 	private String lastName;
