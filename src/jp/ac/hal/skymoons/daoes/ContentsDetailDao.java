@@ -58,7 +58,8 @@ public class ContentsDetailDao {
 		if (contentsResult.next()) {
 			detailBean.setHomeContentId(contentsResult.getInt("home_content_id"));
 			detailBean.setHomeContentTitle(contentsResult.getString("home_content_title"));
-			detailBean.setHomeContentComment(contentsResult.getString("home_content_comment"));
+			detailBean.setHomeContentComment(Utility.nlToBR(contentsResult.getString("home_content_comment")));
+			//detailBean.setHomeContentComment(contentsResult.getString("home_content_comment"));
 			detailBean.setHomeContentDatetime(contentsResult.getString("home_content_datetime"));
 			detailBean.setEmployeeId(contentsResult.getString("employee_id"));
 			detailBean.setEndDate(contentsResult.getString("end_date"));

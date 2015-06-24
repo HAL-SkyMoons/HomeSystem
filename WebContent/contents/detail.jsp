@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page import="jp.ac.hal.skymoons.security.session.SessionController"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	SessionController sessionController = new SessionController(request);
+	String url = sessionController.checkUserSession();
+	if(url != null) {
+		response.sendRedirect(url);
+	}
+%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -29,7 +37,10 @@
 					<c:if test="${i.endDate != null}" >${i.endDate}</c:if>
 					<c:if test="${i.endDate == null}" >未定</c:if>
 				</td>	
-				<td>投稿者名：${i.firstName}${i.lastName}</td>
+				<td>投稿者名：<a href="./list?employeeId=${i.employeeId}">${i.firstName}${i.lastName}</a></td>
+				<td>内容：<br/>
+					${i.homeContentComment}
+				</td>
 				<td>大ジャンル：
 					<c:forEach items="${i.bigGenreName}" var="bigGenreName">
 						<c:out value="${bigGenreName}"/>

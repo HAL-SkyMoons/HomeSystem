@@ -18,7 +18,7 @@ public class ContentsUpdateModel extends AbstractModel{
 		
 		//ログインユーザーが社員であるかを確認する
 		SessionController sc = new SessionController(request);
-		if(sc.getUserClass_flag() != null && sc.getUserClass_flag() == "1"){
+		if(sc.checkUserSession2() == true && sc.getUserClass_flag() != null && sc.getUserClass_flag().equals("1") && sc.getUserId() != null){
 			//updateBeanに入力値を保存
 			ContentsUpdateBean updateBean = new ContentsUpdateBean();
 			

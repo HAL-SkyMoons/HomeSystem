@@ -48,6 +48,7 @@ public class ContentsEditDao {
 		if (contentsResult.next()) {
 			editBean.setHomeContentId(contentsResult.getInt("home_content_id"));
 			editBean.setHomeContentTitle(contentsResult.getString("home_content_title"));
+			//editBean.setHomeContentComment(Utility.nlToBR(contentsResult.getString("home_content_comment")));
 			editBean.setHomeContentComment(contentsResult.getString("home_content_comment"));
 			editBean.setHomeContentDatetime(contentsResult.getString("home_content_datetime"));
 			editBean.setEmployeeId(contentsResult.getString("employee_id"));
