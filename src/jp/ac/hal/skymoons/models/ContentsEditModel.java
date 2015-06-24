@@ -41,7 +41,6 @@ public class ContentsEditModel extends AbstractModel{
 
 		//添付資料削除処理
 		if (request.getParameter("fileDelete") != null) {
-			System.out.println("aaaaaaaa");
 			int dataNo = Integer.valueOf(request.getParameter("homeDataNo"));
 			String fileName = request.getParameter("fileName");
 

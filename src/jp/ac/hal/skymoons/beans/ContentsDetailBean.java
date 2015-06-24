@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ContentsDetailBean implements Serializable {
+	private String userId;
 	private int homeContentId;
 	private String homeContentTitle;
 	private String homeContentComment;

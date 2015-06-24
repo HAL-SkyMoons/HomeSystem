@@ -51,6 +51,13 @@ public class ContentsDetailModel extends AbstractModel{
 		ArrayList<ContentsDataBean> homeData = null;
 		homeData = dao.findData(homeContentId);
 		
+		//ユーザーIDを追加
+		SessionController sc = new SessionController(request);
+		if(sc.checkUserSession2()){
+			String userId = sc.getUserId();
+			detailData.setUserId(userId);
+		}
+		
 		//結果をリクエストに保存
 		request.setAttribute("detailList",detailData);
 		request.setAttribute("homeLogList",homeLogData);

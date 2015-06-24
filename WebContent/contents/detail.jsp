@@ -1,6 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ page import="jp.ac.hal.skymoons.util.Utility"%>
-<%@ page import="jp.ac.hal.skymoons.beans.ContentsDataBean"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
@@ -14,12 +12,14 @@
 			<c:set var="i" value="${detailList}"/>
 			<tr>
 				<td>
-					<c:if test="${i.endDate == null}" >
-						<form action="./edit?homeContentId=${i.homeContentId}" method="post">
-							<input type="submit" value="編集">
+					<c:if test="${i.endDate == null && i.employeeId == i.userId}" >
+						<form action="./edit" method="post">
+							<input type="hidden" name="homeContentId" value="${i.homeContentId}"/>
+							<input type="submit" value="編集"/>
 						</form>
 					</c:if>
-					<c:if test="${i.endDate != null}" >
+					<c:if test="${i.endDate != null || i.employeeId != i.userId}" >
+						${i.endDate}
 						<c:out value="編集不可" />
 					</c:if>
 				</td>
@@ -58,7 +58,7 @@
 					<td><img src="${j.fileImagePath}" width="50" height="50"></td>
 					<td>${j.homeDataName}</td>
 					<td>
-						<form action="/HomeSystem/fc/contents/detail?homeContentId=${i.homeContentId}" method="post">
+						<form action="/HomeSystem/fc/contents/detail" method="post">
 							<input type="hidden" name="homeContentId" value="${j.homeContentId}">
 							<input type="hidden" name="path" value="../files/contents/master/${j.homeContentId}/${j.homeDataNo}/${j.homeDataName}" />
 							<input type="hidden" name="fileName" value="${j.homeDataName}"/>

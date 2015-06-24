@@ -18,7 +18,7 @@ public class ContentsUpdateModel extends AbstractModel{
 		
 		//ログインユーザーが社員であるかを確認する
 		SessionController sc = new SessionController(request);
-		//if(sc.getUserClass_flag() != null && sc.getUserClass_flag() == "1"){
+		if(sc.getUserClass_flag() != null && sc.getUserClass_flag() == "1"){
 			//updateBeanに入力値を保存
 			ContentsUpdateBean updateBean = new ContentsUpdateBean();
 			
@@ -73,9 +73,11 @@ public class ContentsUpdateModel extends AbstractModel{
 			dao.commit();
 			dao.close();
 			request.setAttribute("scriptMessage","<script>alert('更新が完了しました。')</script>");
-		//}
-		//遷移先を指定
-		return "/fc/contents/detail?homeContentId=" + updateBean.getHomeContentId();
+			return "/fc/contents/detail?homeContentId=" + updateBean.getHomeContentId();
+		}
+		//遷移先を指定	
+		request.setAttribute("scriptMessage","<script>alert('更新に失敗しました。')</script>");
+		return "/fc/contents/edit?homeContentId=" + request.getParameter("homeContentId");
 	}
 
 }
