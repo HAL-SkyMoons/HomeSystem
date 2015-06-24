@@ -14,7 +14,7 @@
 <title>企画登録確認</title>
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
 <link rel="stylesheet" type="text/css"
-	href="../css/bootstrap-responsive.css">
+	href="../css/bootstrap-theme.min.css">
 </head>
 <%
 	Utility util = new Utility();

@@ -14,7 +14,7 @@
 <title>企画編集</title>
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
 <link rel="stylesheet" type="text/css"
-	href="../css/bootstrap-responsive.css">
+	href="../css/bootstrap-theme.min.css">
 <%
 	PlanBean plan = (PlanBean) request.getAttribute("plan");
 		ArrayList<GenreBean> genreList = (ArrayList<GenreBean>) request
