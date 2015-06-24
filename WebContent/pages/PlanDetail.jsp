@@ -23,7 +23,13 @@
 <link rel="stylesheet" type="text/css" href="../css/PlanDetail.css">
 <script src="../js/jquery-2.1.4.min.js"></script>
 <script src="../js/masonry.min.js"></script>
-
+<script type="text/javascript">
+	//　イメージポップアップ表示
+	function home(toUser) {
+		var url = "/HomeSystem/fc/Home?toUser=" + toUser;
+		window.open(url, "homeWindow", "width=1000,height=500");
+	}
+</script>
 </head>
 <%
 	Utility util = new Utility();
@@ -149,7 +155,7 @@
 				<div id="planner">
 					企画者
 					<%
-					out.print("<div id=\"img\"><img src=\"../img/employees/"
+					out.print("<div id=\"img\"><img src=\"../images/employees/"
 							+ plan.getPlanner()
 							+ ".jpg\" width=\"100\" height=\"100\"></div>");
 					out.print(plan.getPlannerName());
@@ -229,7 +235,6 @@
 						out.println("<form method=\"POST\" enctype=\"multipart/form-data\" action=\"/HomeSystem/fc/PlanDetail\">");
 						out.println("<input type=\"hidden\" name=\"planId\" value="
 								+ plan.getPlanId() + " />");
-						// 						out.println("<input type=\"file\" name=\"file\" />");
 
 						out.println("<input type=\"file\" name=\"file\" id=\"file\" style=\"display:none;\" onchange=\"$('#fake_input_file').text($(this)[0].files[0].name)\">");
 						out.println("<input type=\"button\" class=\"btn btn-2 btn-2c uploadBtn\" value=\"ファイル選択\" onClick=\"$('#file').click();\">");
@@ -254,7 +259,7 @@
 					<td>コメント</td>
 				</tr>
 				<tr>
-					<td><textarea name="comment" id="comment"></textarea></td>
+					<td><textarea name="comment" id="planComment"></textarea></td>
 				</tr>
 			</table>
 			<input type="submit" name="commentSubmit" value="送信"
@@ -264,50 +269,165 @@
 				value="<%out.print(user.getUserId());%>">
 		</form>
 		<hr>
-		<table>
-			<tr>
-				<td>コメント番号</td>
-				<td>コメントユーザー</td>
-				<td>コメント</td>
-				<td>コメント日</td>
-				<td>削除</td>
-			</tr>
+		<!-- 		<div id="comments"> -->
+		<!-- 			<div class="commentData"> -->
+		<!-- 				<div class="planner"> -->
+		<!-- 					<div class="face"> -->
+		<!-- 						<img src="../images/employees/E0001.jpg"> -->
+		<!-- 					</div> -->
+		<!-- 					<div class="name">木村拓哉</div> -->
+		<!-- 					<div class="home"> -->
+		<!-- 						<input type="button" class="btn btn-2 btn-2c" value="ホメ"> -->
+		<!-- 					</div> -->
+		<!-- 				</div> -->
+		<!-- 				<div class="plannerComment"> -->
+		<!-- 					<div class="commentHeader"> -->
+		<!-- 						<div class="commentNo">No.1</div> -->
+		<!-- 						<div class="commentBody"> -->
+		<!-- 							コメント<br>コメント<br>コメント<br>コメント<br>コメント<br>コメント<br>コメント -->
+		<!-- 						</div> -->
+		<!-- 						<div class="commentDate">2015-06-24</div> -->
+		<!-- 					</div> -->
+		<!-- 					<div class="commentFooter"> -->
+		<!-- 						<div class="commentFile"> -->
+		<!-- 							<div class="file"> -->
+		<!-- 								<div class="fileImage"> -->
+		<!-- 									<img src="../images/icon/txt.png"> -->
+		<!-- 								</div> -->
+		<!-- 								<div class="del"> -->
+		<!-- 									<form action="/HomeSystem/fc/PlanDetail" method="post"> -->
+		<!-- 										<input type="image" src="../images/icon/del.png" width="15" -->
+		<!-- 											height="15" name="fileDelete" value="削除"><input -->
+		<!-- 											type="hidden" name="planId" value="1" /><input type="hidden" -->
+		<!-- 											name="dataNo" value="1" /><input type="hidden" -->
+		<!-- 											name="fileName" value="データベース変更依頼.txt" /><input -->
+		<!-- 											type="hidden" name="fileDelete" value="del" /> -->
+		<!-- 									</form> -->
+		<!-- 								</div> -->
+		<!-- 								<div class="fileName">データベース変更依頼.txt</div> -->
+		<!-- 								<form action="/HomeSystem/fc/PlanDetail" method="post"> -->
+		<!-- 									<input type="hidden" name="planId" value="1" /><input -->
+		<!-- 										type="hidden" name="path" -->
+		<!-- 										value="C:\School\IH4C\ケーススタディ\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp1\wtpwebapps\HomeSystem\files\plan\master\1\1\データベース変更依頼.txt" /><input -->
+		<!-- 										type="hidden" name="fileName" value="データベース変更依頼.txt" /><input -->
+		<!-- 										type="submit" name="download" value="ダウンロード" -->
+		<!-- 										class="btn btn-2 btn-2c download" /> -->
+		<!-- 								</form> -->
+		<!-- 							</div> -->
+
+		<!-- 						</div> -->
+		<!-- 					</div> -->
+		<!-- 				</div> -->
+		<!-- 			</div> -->
+		<!-- 			<div class="commentData"> -->
+		<!-- 				<div class="gest"> -->
+		<!-- 					<div class="face"> -->
+		<!-- 						<img src="../images/employees/E0001.jpg"> -->
+		<!-- 					</div> -->
+		<!-- 					<div class="name">木村拓哉</div> -->
+		<!-- 					<div class="home"> -->
+		<!-- 						<input type="button" class="btn btn-2 btn-2c" value="ホメ"> -->
+		<!-- 					</div> -->
+		<!-- 				</div> -->
+		<!-- 				<div class="gestComment"> -->
+		<!-- 					<div class="commentHeader"> -->
+		<!-- 						<div class="commentNo">No.1</div> -->
+		<!-- 						<div class="commentBody"> -->
+		<!-- 							コメント<br>コメント<br>コメント<br>コメント<br>コメント -->
+		<!-- 						</div> -->
+		<!-- 						<div class="commentDate">2015-06-24</div> -->
+		<!-- 					</div> -->
+		<!-- 					<div class="commentFooter"></div> -->
+		<!-- 				</div> -->
+		<!-- 			</div> -->
+
+		<!-- 		</div> -->
+		<div id="comments">
 			<%
+				boolean isPlanner = false;
 				for (CommentBean comment : commentList) {
-					out.println("<tr>");
-					if (comment.getDeleteFrag() == 0) {
-						out.println("<td>" + comment.getCommentNo() + "</td>");
-						out.println("<td>" + comment.getCommentName() + "</td>");
-						out.println("<td>" + util.nlToBR(comment.getComment())
-								+ "</td>");
-						out.println("<td>" + comment.getCommentDatetime() + "</td>");
-
-						System.out.print(comment.getCommentUser() + ":"
-								+ user.getUserId());
-
-						if (comment.getCommentUser().equals(user.getUserId())) {
-							out.println("<td><form action=\"/HomeSystem/fc/PlanDetail\" method=\"post\"><input type=\"hidden\" name=\"planId\" value=\""
-									+ comment.getPlanID()
-									+ "\"><input type=\"hidden\" name=\"commentNo\" value=\""
-									+ comment.getCommentNo()
-									+ "\"><input type=\"submit\" name=\"delete\" value=\"削除\" class=\"btn btn-2 btn-2c\"></form></td>");
-						} else {
-							out.println("<td></td>");
-						}
-
+					out.println("<div class=\"commentData\">");
+					if (plan.getPlanner().equals(comment.getCommentUser())) {
+						isPlanner = true;
 					} else {
-						out.println("<td>" + comment.getCommentNo() + "</td>");
-						out.println("<td>" + comment.getCommentName() + "</td>");
-						out.println("<td>このコメントは削除されました</td>");
-						out.println("<td>" + comment.getCommentDatetime() + "</td>");
-						out.println("<td></td>");
-
+						isPlanner = false;
 					}
 
-					out.println("</tr>");
+					if (isPlanner) {
+						out.println("<div class=\"planner\">");
+					} else {
+						out.println("<div class=\"gest\">");
+					}
+
+					out.println("<div class=\"face\"><img src=\"../images/employees/"
+							+ comment.getCommentUser() + ".jpg\"></div>");
+					out.println("<div class=\"name\">" + comment.getCommentName()
+							+ "</div>");
+					out.println("<div class=\"home\">");
+
+					if(!user.getUserId().equals(comment.getCommentUser())){
+						out.println("<a href=\"javascript:home('"
+								+ comment.getCommentUser()
+								+ "');\"><input type=\"button\" name=\"submit\" class=\"btn btn-2 btn-2c\" value=\"ホメ\"/></a>");
+					}else{
+						//out.println("<input type=\"button\" name=\"submit\" class=\"btn btn-2 btn-2c\" disabled=\"disabled\" value=\"ホメ\"/>");
+					}
+
+
+
+					out.println("</div>");//planner or gest
+
+					out.println("</div>");//planner or gest
+
+					if (isPlanner) {
+						out.println("<div class=\"plannerComment\">");
+					} else {
+						out.println("<div class=\"gestComment\">");
+					}
+					out.println("<div class=\"commentHeader\">");
+
+					out.println("<div class=\"commentNo\">");
+					out.println(comment.getCommentNo());
+					out.println("</div>");//commentNo
+
+					out.println("<div class=\"commentBody\">");
+					if (comment.getDeleteFrag() == 0) {
+						//コメント表示
+						out.println(comment.getComment());
+					} else {
+						//コメント非表示
+						out.println("このコメントは削除されました");
+
+					}
+					out.println("</div>");//commentBody
+
+					out.println("<div class=\"commentDate\">");
+					out.println(comment.getCommentDatetime());
+					out.println("</div>");//commentDate
+
+					out.println("</div>");//commentHeader
+
+					out.println("<div class=\"commenFootert\">");
+
+					out.println("<div class=\"commentFile\">");
+					out.println("</div>");//commentFile
+
+					if (comment.getCommentUser().equals(user.getUserId())
+							&& comment.getDeleteFrag() == 0) {
+						out.println("<div class=\"commentDelete\"><form action=\"/HomeSystem/fc/PlanDetail\" method=\"post\"><input type=\"hidden\" name=\"planId\" value=\""
+								+ comment.getPlanID()
+								+ "\"><input type=\"hidden\" name=\"commentNo\" value=\""
+								+ comment.getCommentNo()
+								+ "\"><input type=\"submit\" name=\"delete\" value=\"削除\" class=\"btn btn-2 btn-2c commentDel\"></form></div>");
+					}
+
+					out.println("</div>");//commenFootert
+
+					out.println("</div>");//plannerComment or gestComment
+					out.println("</div>");//commentData
 				}
 			%>
-		</table>
+		</div>
 	</div>
 </body>
 </html>
