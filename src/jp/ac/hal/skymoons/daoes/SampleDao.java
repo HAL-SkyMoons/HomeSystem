@@ -450,6 +450,88 @@ public class SampleDao {
 	}
 
 	/*
+	 * 2015/6/23
+	 * 中野 裕史郎
+	 * チャート描画用配列の取得
+	 */
+	public String[] getEmployeeDetailOfBadgeNameForChart(String employeeId){
+		int max =0;
+		try {
+			PreparedStatement select = con.prepareStatement("SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
+					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? GROUP BY hl.batch_id "
+					+"ORDER BY b.batch_id");
+			select.setString(1, employeeId);
+			ResultSet result = select.executeQuery();
+			while(result.next()){
+				max++;
+			}
+			System.out.println("Name for Chart Max is" +max);
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		String[] resultTable = new String[max];
+		int count =0;
+		try {
+			PreparedStatement select = con.prepareStatement("SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
+					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
+					+"GROUP BY hl.batch_id ORDER BY hl.batch_id");
+			select.setString(1, employeeId);
+			ResultSet result = select.executeQuery();
+			while(result.next()){
+				System.out.println("Name for Chart is" +result.getString("b.batch_name"));
+				resultTable[count] = result.getString("b.batch_name");
+				count++;
+			}
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+
+		return resultTable;
+	}
+	/*
+	 * 2015/6/23
+	 * 中野 裕史郎
+	 * チャート描画用配列の取得
+	 */
+	public int[] getEmployeeDetailOfBadgeCountForChart(String employeeId){
+		int max =0;
+		try {
+			PreparedStatement select = con.prepareStatement("SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
+					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? GROUP BY hl.batch_id "
+					+"ORDER BY b.batch_id");
+			select.setString(1, employeeId);
+			ResultSet result = select.executeQuery();
+			while(result.next()){
+				max++;
+			}
+			System.out.println("Name for Chart Max is" +max);
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		int[] resultTable = new int[max];
+		int count =0;
+		try {
+			PreparedStatement select = con.prepareStatement("SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
+					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
+					+"GROUP BY hl.batch_id ORDER BY hl.batch_id");
+			select.setString(1, employeeId);
+			ResultSet result = select.executeQuery();
+			while(result.next()){
+				System.out.println("Name for Chart Count is" +result.getInt("COUNT(*)"));
+				resultTable[count]=result.getInt("COUNT(*)");
+				count++;
+			}
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+
+		return resultTable;
+	}
+	/*
 	 * 2015/6/19
 	 * 中野 裕史郎
 	 * 社員一人が持つジャンル情報の取得
