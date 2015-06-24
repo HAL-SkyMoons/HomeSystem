@@ -1,0 +1,199 @@
+@CHARSET "UTF-8";
+
+#wrapper {
+	width: 500px;
+	margin: 0 auto;
+	font-family: 'Lucida Grande', 'Hiragino Kaku Gothic ProN',
+		'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, sans-serif;
+}
+
+#plan {
+	width: 500px;
+}
+
+#planHeader {
+	overflow: hidden;
+}
+
+#id {
+	float: left;
+}
+
+#planDate {
+	float: right;
+}
+
+#title {
+	font-size: 20px;
+	text-align: center;
+}
+
+#planDetail {
+	overflow: hidden;
+}
+
+#startEnd {
+	float: left;
+}
+
+#planner {
+	float: right;
+	text-align: center;
+}
+
+#planComment {
+	margin: 0 auto;
+	width: 490px;
+	border: 1px solid black;
+	padding: 10px;
+}
+
+#genre {
+	overflow: hidden;
+}
+
+.genres {
+	float: left;
+	margin: 5px;
+}
+
+#files {
+
+}
+
+.file {
+	position: relative;
+	width: 120px;
+	/* 	float: left; */
+	display: inline-block;
+	text-align: center;
+}
+
+.del {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+
+.fileName {
+	width: 120px;
+	white-space: pre; /* CSS 2.0 */
+	white-space: pre-wrap; /* CSS 2.1 */
+	white-space: pre-line; /* CSS 3.0 */
+	white-space: -pre-wrap; /* Opera 4-6 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	white-space: -moz-pre-wrap; /* Mozilla */
+	white-space: -hp-pre-wrap; /* HP Printers */
+	word-wrap: break-word; /* IE 5+ */
+}
+
+#comment{
+	width: 500px;
+	height: 50px;
+}
+
+#fileImage{
+	width: 80px;
+	height: 80px;
+}
+
+
+
+/*ボタン*/
+.btn {
+	border: none;
+	font-family: inherit;
+	font-size: inherit;
+	color: inherit;
+	background: none;
+	cursor: pointer;
+	display: inline-block;
+	margin-bottom:10px ;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 700;
+	outline: none;
+	position: relative;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+
+.btn:after {
+	content: '';
+	position: absolute;
+	z-index: -1;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.btn-2 {
+	background: #cb4e4e;
+	color: #fff;
+	box-shadow: 0 3px #ab3c3c;
+	-webkit-transition: none;
+	-moz-transition: none;
+	transition: none;
+}
+
+.btn-2[disabled] {
+	background: #cb4e4e;
+	color: #fff;
+	box-shadow: 0 3px #ab3c3c;
+	-webkit-transition: none;
+	-moz-transition: none;
+	transition: none;
+}
+
+.btn-2c {
+	border-radius: 5px;
+}
+
+.btn-2c:hover {
+	background: #cb4e4e;
+	color: #fff;
+	box-shadow: 0 1.5px #ab3c3c;
+	top: 2px;
+}
+
+
+.btn-2c:active {
+	box-shadow: 0 0 #ab3c3c;
+	top: 6px;
+}
+
+#fake_input_file{
+	width: auto;
+}
+
+.point{
+	text-align: center;
+	width: 80px;
+}
+
+.commentSubmit{
+	display:block;
+	margin:10px auto;
+	width: 500px;
+}
+
+.uploadBtn{
+	width: 120px;
+}
+
+.download{
+	margin:10px auto;
+	width: 120px;
+}
+
+.edit{
+	display:block;
+	width: 120px;
+	margin:10px auto;
+}
+
+#upload{
+	margin-top: 20px;
+}
