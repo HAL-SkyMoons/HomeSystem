@@ -1,0 +1,110 @@
+@CHARSET "UTF-8";
+div.contents{
+	width:1165px;
+	margin-top:30px;
+	margin-bottom:30px;
+	background-color: red;
+}
+div.searchPart{
+	float: left;
+	width:290px;
+	margin-left:15px;
+	margin-right:10px;
+	background-color: #ffcccc;
+}
+h2.searchTitle{
+	width:280px;
+	margin-top:5px;
+	margin-left:5px;
+	margin-right:5px;
+	margin-bottom:5px;
+	font-size:30px;
+	text-align: center;
+}
+div.departmentSearch{
+	width:280px;
+	height:50px;
+	margin-top:5px;
+	margin-left:5px;
+	margin-right:5px;
+	margin-bottom:5px;
+	text-align: center;
+	font-size: 25px;
+}
+select.departmentSelect{
+	width:200px;
+	height:50px;
+	margin:0px;
+	font-size: 100%;
+}
+input.departmentButton{
+	width:70px;
+	height: 50px;
+	margin:0px;
+	font-size: 100%;
+}
+div.genreList{
+	width:280px;
+	margin-top:5px;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom:10px;
+}
+h4.genreTitle{
+	font-size:25px;
+}
+h5.bigGenreTitle{
+	text-align: center;
+	font-size:25px;
+}
+div.bigGenre1{
+	width:270px;
+	margin-top:10px;
+	margin-left:5px;
+	margin-right:5px;
+	background-color: #dd6666;
+	font-size:20px;
+}
+div.bigGenre2{
+	width:270px;
+	margin-top:10px;
+	margin-left:5px;
+	margin-left:5px;
+	background-color: #dd6666;
+	font-size:20px;
+}
+input.genreButton{
+	clear:both;
+	width:270px;
+	height:50px;
+	margin-left:5px;
+	margin-right:5px;
+	font-size:40px;
+}
+div.employeeListPart{
+	float: right;
+	width:840px;
+	margin-left:10px;
+	background-color: #ffee99;
+}
+h1.employeeListTitle{
+	font-size: 40px;
+	text-align:center;
+}
+table.employeeList{
+	width:810px;
+	margin-left:15px;
+	margin-right:15px;
+	border: 3px #000000 solid;
+	text-align: center;
+}
+td.employeeColumn{
+	width:150px;
+	border:10px transparent solid;
+	padding-top:10px;
+	padding-bottom:10px;
+	font-size: 20px;
+}
+div.employeeImage{
+	text-align:center;
+}

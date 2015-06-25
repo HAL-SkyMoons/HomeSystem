@@ -506,7 +506,6 @@ public class SampleDao {
 			while(result.next()){
 				max++;
 			}
-			System.out.println("Name for Chart Max is" +max);
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
@@ -520,7 +519,6 @@ public class SampleDao {
 			select.setString(1, employeeId);
 			ResultSet result = select.executeQuery();
 			while(result.next()){
-				System.out.println("Name for Chart Count is" +result.getInt("COUNT(*)"));
 				resultTable[count]=result.getInt("COUNT(*)");
 				count++;
 			}

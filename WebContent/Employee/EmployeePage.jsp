@@ -8,7 +8,8 @@
 <html lang="ja">
 <head>
 <meta charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="../css/reset.css">
+<link rel="stylesheet" type="text/css" href="../css/employeePage.css">
 <title>Employee Page</title>
 <script type="text/javascript" src="../js/Chart.js-master/Chart.js"></script>
 <script>
@@ -25,6 +26,9 @@
 		document.getElementById(tabName).style.display = 'block';
 	}
 </script>
+
+</head>
+<body>
 <%
 	//チャート出力用配列の準備
 	String[] chartName = (String[])request.getAttribute("chartName");
@@ -34,117 +38,140 @@
 	}
 
 %>
-</head>
-<body>
-
-	<h1>社員ページ</h1>
-	<c:forEach var="employeeDetail" items="${employeeDetail}">
-		<h2>${employeeDetail.employeeName}</h2>
-		<ul>
-			<li>所属部：${employeeDetail.departmentName}</li>
-			<li>一言コメント：${employeeDetail.employeeComment}</li>
-			<li>社員ID：${employeeDetail.employeeId}</li>
-			<li>レベル：${employeeDetail.level}</li>
-			<li>経験値：${employeeDetail.experience}</li>
-		</ul>
-	<c:if test="${sessionId != employeeDetail.employeeId}">
-		<a href="javascript:ImageUp('${employeeDetail.employeeId}');" ><input type="button" value="この人を褒める"></a>
-	</c:if>
-	<canvas id="radar" height="250" width="350"></canvas>
-	</c:forEach>
-		<script>
-		var radarChartData = {
-			  labels : [<% if(chartName.length !=0 && chartCount.length !=0){
-				  for (int i = 0; i < chartName.length;) {
-	    	       out.print("\""+chartName[i]+"\"");
-	    	       i++;
-	    	       if(i==chartCount.length){
-	    	    	   break;
-	    	       }
-	    	       out.print(",");
-		    	 }
-				  }%>],
-			  datasets : [
-			    {
-			      fillColor : "rgba(200,50,50,0.8)",
-			      strokeColor : "rgba(255,0,0,1)",
-			      pointColor : "rgba(255,0,0,1)",
-			      pointStrokeColor : "#fff",
-			      data : [<% if(chartName.length !=0 && chartCount.length !=0){
-			    	  for (int i = 0; i < chartCount.length;) {
-
-			    	       out.print(chartCount[i]);
-			    	       i++;
-			    	       if(i==chartCount.length){
-			    	    	   break;
-			    	       }
-			    	       out.print(",");
-				    	 }}%>]
-			    }
-			  ]
-			}
-			var myRadar = new Chart(document.getElementById("radar").getContext("2d")).Radar(radarChartData,{scaleShowLabels : false, pointLabelFontSize : 15});
-</script>
-
-
-	<div class="genreExperience">
-	<h4>経験ジャンル</h4>
-	<c:forEach var="employeeGenre" items="${employeeGenreDetail}" varStatus="status">
-	<c:choose>
-		<c:when test="${status.index <3}">
-			<p style="font-size: 20px;">${employeeGenre.genreName}</p><br/>
-		</c:when>
-		<c:when test="${3<status.index && status.index<5}">
-			<p style="font-size: 15px;">${employeeGenre.genreName}</p><br/>
-		</c:when>
-		<c:when test="${5<status.index }">
-			<p style="font-size: 10px;">${employeeGenre.genreName}</p><br/>
-		</c:when>
-	</c:choose>
-	</c:forEach>
-	</div>
-	<div class="activities">
-		<div id="tabs">
-			<a href="javascript:activityChange('homeTab')" class="homeTab">ホメホメ履歴</a>
-			<a href="javascript:activityChange('planTab')" class="planTab">企画投稿履歴</a>
-			<a href="javascript:activityChange('planCommentTab')" class="planCommentTab">企画コメント履歴</a>
+<div class="contents">
+	<h1 class="employeePageTitle">社員ページ</h1>
+	<div class="leftContents">
+		<div class="employeeStatus">
+				<c:forEach var="employeeDetail" items="${employeeDetail}">
+					<ul class="employeeData">
+						<li class="employeeImage"><img src="../images/employees/${employeeDetail.employeeId}.jpg"></li>
+						<li class="employeeComment">${employeeDetail.employeeComment}</li>
+						<li class="employeeName">${employeeDetail.employeeName}</li>
+						<li class="departmentName">${employeeDetail.departmentName}</li>
+						<li class="employeeLevel">レベル：${employeeDetail.level}</li>
+						<li class="employeeExperience">経験値：${employeeDetail.experience}</li>
+					</ul>
+				<c:if test="${sessionId != employeeDetail.employeeId}">
+					<a href="javascript:ImageUp('${employeeDetail.employeeId}');" ><input type="button" value="この人を褒める" class="homeButton"></a>
+				</c:if>
+				</c:forEach>
 		</div>
-		<div id="homeTab" class="activityTab">
-		<c:if test="${empty employeeHomeLogDetail}" var="flgA"/>
-			<c:if test="${flgA == true}">
-				<h4>まだホメホメ活動はありません</h4>
-			</c:if>
+		<div class="genreExperience">
+			<h4 class="experienceTitle">経験ジャンル</h4>
+			<div class="experienceList">
 			<ul>
-			<c:forEach var="employeeHomeLog" items="${employeeHomeLogDetail}">
-				<li>${employeeHomeLog.days}に${employeeHomeLog.targetName}さんへホメポイントを付与しました</li>
+			<c:forEach var="employeeGenre" items="${employeeGenreDetail}" varStatus="status">
+				<c:choose>
+					<c:when test="${status.index <2}">
+						<li style="font-size: 20px; color:#ff6666;">${employeeGenre.genreName}：${employeeGenre.genreCount}回</li>
+					</c:when>
+					<c:when test="${2<=status.index && status.index<4}">
+						<li style="font-size: 20px; color:#6666ff;">${employeeGenre.genreName}：${employeeGenre.genreCount}回</li>
+					</c:when>
+					<c:when test="${5<=status.index}">
+						<li style="font-size: 20px;">${employeeGenre.genreName}：${employeeGenre.genreCount}回</li>
+					</c:when>
+				</c:choose>
 			</c:forEach>
 			</ul>
-		</div>
-		<div id="planTab" class="activityTab">
-		<c:if test="${empty employeePlanDetail}" var="flgB"/>
-			<c:if test="${flgB == true}">
-				<h4>まだ企画投稿活動はありません</h4>
-			</c:if>
-			<ul>
-			<c:forEach var="employeePlan" items="${employeePlanDetail}">
-				<li>${employeePlan.days}に企画：${employeePlan.planTitle}を発案しました</li>
-			</c:forEach>
-			</ul>
-		</div>
-		<div id="planCommentTab" class="activityTab">
-		<c:if test="${empty employeePlanCommentDetail}" var="flgC"/>
-			<c:if test="${flgC ==true}">
-				<h4>まだ企画コメント活動はありません</h4>
-			</c:if>
-			<ul>
-			<c:forEach var="employeePlanComment" items="${employeePlanCommentDetail}">
-				<li>${employeePlanComment.days}に${employeePlanComment.plannerName}さんの${employeePlanComment.planName}にコメントしました</li>
-			</c:forEach>
-			</ul>
+			</div>
 		</div>
 	</div>
-		<script type="text/javascript">
-			activityChange('homeTab');
-		</script>
+	<div class="rightContents">
+		<div class="radarChart">
+			<canvas id="radar" height="500" width="700"></canvas>
+		</div>
+			<script>
+				var radarChartData = {
+					labels : [<% if(chartName.length !=0 && chartCount.length !=0){
+						for (int i = 0; i < chartName.length;) {
+							out.print("\""+chartName[i]+"\"");
+							i++;
+							if(i==chartCount.length){
+								break;
+							}
+								out.print(",");
+						}
+						}%>],
+					datasets : [
+						{
+						fillColor : "rgba(200,50,50,0.8)",
+						strokeColor : "rgba(255,0,0,1)",
+						pointColor : "rgba(255,0,0,1)",
+						pointStrokeColor : "#fff",
+						data : [<% if(chartName.length !=0 && chartCount.length !=0){
+							for (int i = 0; i < chartCount.length;) {
+								out.print(chartCount[i]);
+								i++;
+								if(i==chartCount.length){
+									break;
+								}
+								out.print(",");
+							}
+							}%>]
+						}
+					]
+				}
+				var myRadar = new Chart(document.getElementById("radar").getContext("2d"))
+					.Radar(radarChartData,{
+						scaleShowLabels : true, scaleFontSize : 15, scaleLineColor: "rgba(0,0,0,0.9)", pointLabelFontSize : 20, });
+				</script>
+		<div class="activities">
+			<div class="tabs">
+				<a href="javascript:activityChange('homeTab')" class="homeTab">ホメホメ履歴</a>
+				<a href="javascript:activityChange('planTab')" class="planTab">企画投稿履歴</a>
+				<a href="javascript:activityChange('planCommentTab')" class="planCommentTab">企画コメント履歴</a>
+			</div>
+			<div id="homeTab" class="activityTab">
+			<hr>
+			<c:if test="${empty employeeHomeLogDetail}" var="flgA"/>
+				<c:if test="${flgA == true}">
+					<h4 class="notActivity">まだホメホメ活動はありません</h4>
+				</c:if>
+				<c:forEach var="employeeHomeLog" items="${employeeHomeLogDetail}">
+				<ul>
+					<li class="days">${employeeHomeLog.days}</li>
+					<li class="activity">${employeeHomeLog.targetName}さんへホメポイントを付与しました</li>
+				</ul>
+				<hr>
+				</c:forEach>
+
+			</div>
+			<div id="planTab" class="activityTab">
+			<hr>
+			<c:if test="${empty employeePlanDetail}" var="flgB"/>
+				<c:if test="${flgB == true}">
+					<h4 class="notActivity">まだ企画投稿活動はありません</h4>
+				</c:if>
+
+				<c:forEach var="employeePlan" items="${employeePlanDetail}">
+					<ul>
+						<li class="days">${employeePlan.days}</li>
+						<li class="activity">企画：${employeePlan.planTitle}を発案しました</li>
+					</ul>
+					<hr>
+				</c:forEach>
+
+			</div>
+			<div id="planCommentTab" class="activityTab">
+			<hr>
+			<c:if test="${empty employeePlanCommentDetail}" var="flgC"/>
+				<c:if test="${flgC ==true}">
+					<h4 class="notActivity">まだ企画コメント活動はありません</h4>
+				</c:if>
+				<c:forEach var="employeePlanComment" items="${employeePlanCommentDetail}">
+					<ul>
+						<li class="days">${employeePlanComment.days}</li>
+						<li class="activity">${employeePlanComment.plannerName}さんの${employeePlanComment.planName}にコメントしました</li>
+					</ul>
+				<hr>
+				</c:forEach>
+			</div>
+		</div>
+			<script type="text/javascript">
+				activityChange('homeTab');
+			</script>
+	</div>
+</div>
 </body>
 </html>
