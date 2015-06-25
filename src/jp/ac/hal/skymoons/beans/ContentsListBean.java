@@ -21,4 +21,5 @@ public class ContentsListBean implements Serializable {
 	private ArrayList<String> genreName;
 	private ArrayList<Integer> homeDataNo;
 	private ArrayList<String> homeDataName;
+	private int deleteFlag;
 }

@@ -63,6 +63,7 @@ public class ContentsDetailDao {
 			detailBean.setHomeContentDatetime(contentsResult.getString("home_content_datetime"));
 			detailBean.setEmployeeId(contentsResult.getString("employee_id"));
 			detailBean.setEndDate(contentsResult.getString("end_date"));
+			detailBean.setDeleteFlag(contentsResult.getInt("delete_flag"));
 			
 			//名前の取得
 			PreparedStatement namePst = con.prepareStatement("select * from users where user_id = ? ;");

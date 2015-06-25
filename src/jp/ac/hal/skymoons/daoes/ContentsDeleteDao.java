@@ -32,7 +32,8 @@ public class ContentsDeleteDao {
 		this.con = con;
 	}
 
-	public void deleteDetail(int homeContentId) throws SQLException {
+	//データの完全削除
+	public void hardDeleteDetail(int homeContentId) throws SQLException {
 		//ジャンルの削除
 		PreparedStatement genrePst = con.prepareStatement(
 				"delete from home_genre where home_genre.home_content_id = ?;");
@@ -54,7 +55,23 @@ public class ContentsDeleteDao {
 		
 		return;
 	}
-	
+
+	//データの削除（データは削除しない）
+	public void deleteDetail(int homeContentId) throws SQLException {
+		//添付資料の削除
+		PreparedStatement dataPst = con.prepareStatement("update home_data set delete_flag = '1' where home_content_id = ? ;");
+		dataPst.setInt(1, homeContentId);
+		dataPst.executeUpdate();
+		dataPst.close();
+		
+		//コンテンツの削除
+		PreparedStatement contentsPst = con.prepareStatement("update home_contents set delete_flag = '1' where home_content_id = ? ;");
+		contentsPst.setInt(1, homeContentId);
+		contentsPst.executeUpdate();
+		contentsPst.close();
+		
+		return;
+	}
 	/**
 	 * 接続を閉じる
 	 *

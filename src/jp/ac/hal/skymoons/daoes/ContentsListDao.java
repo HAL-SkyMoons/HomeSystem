@@ -37,7 +37,7 @@ public class ContentsListDao {
 
 	public ArrayList<ContentsListBean> selectContents(String titleKeyword, String commentKeyword, String employeeId, ArrayList<Integer> genreId, String orderColumn, String orderMode) throws SQLException {
 		//SQLの生成
-		String contentsSql = "select * from home_contents hc, home_genre hg where hc.home_content_id = hg.home_content_id ";
+		String contentsSql = "select * from home_contents hc, home_genre hg where hc.delete_flag != '1' and hc.home_content_id = hg.home_content_id ";
 		String sqlword = "and ";
 		if(titleKeyword != null && titleKeyword.length() > 0){
 			contentsSql += sqlword + "hc.home_content_title like ? ";
@@ -105,6 +105,7 @@ public class ContentsListDao {
 			listBean.setHomeContentComment(contentsResult.getString("home_content_comment"));
 			listBean.setHomeContentDatetime(contentsResult.getString("home_content_datetime"));
 			listBean.setEmployeeId(contentsResult.getString("employee_id"));
+			//listBean.setDeleteFlag(contentsResult.getInt("delete_flag"));
 			
 			//名前の取得
 			PreparedStatement namePst = con.prepareStatement("select * from users where user_id = ? ;");
