@@ -94,7 +94,9 @@
 
 #planComment {
 	width: 500px;
-	height: 50px;
+	max-width: 500px;
+	-webkit-border-radius: 10px;
+/* 	height: 50px; */
 }
 
 .fileImage>img {
@@ -120,6 +122,7 @@
 	-webkit-transition: all 0.3s;
 	-moz-transition: all 0.3s;
 	transition: all 0.3s;
+	background: #e6002d;
 }
 
 .btn:after {
@@ -132,18 +135,19 @@
 }
 
 .btn-2 {
-	background: #cb4e4e;
+/* 	background: #cb4e4e; */
+	background: #e6002d;
 	color: #fff;
-	box-shadow: 0 3px #ab3c3c;
+	box-shadow: 0 3px #CD0014;
 	-webkit-transition: none;
 	-moz-transition: none;
 	transition: none;
 }
 
 .btn-2[disabled] {
-	background: #cb4e4e;
+	background: #e6002d;
 	color: #fff;
-	box-shadow: 0 3px #ab3c3c;
+	box-shadow: 0 3px #CD0014;
 	-webkit-transition: none;
 	-moz-transition: none;
 	transition: none;
@@ -154,14 +158,14 @@
 }
 
 .btn-2c:hover {
-	background: #cb4e4e;
+	background: #e6002d;
 	color: #fff;
-	box-shadow: 0 1.5px #ab3c3c;
+	box-shadow: 0 1.5px #CD0014;
 	top: 2px;
 }
 
 .btn-2c:active {
-	box-shadow: 0 0 #ab3c3c;
+	box-shadow: 0 0 #CD0014;
 	top: 6px;
 }
 
@@ -290,7 +294,8 @@
 }
 
 .commentDel{
-	padding:3px 5px;
+	width: 15px;
+	height: 15px;
 }
 
 /*******************************

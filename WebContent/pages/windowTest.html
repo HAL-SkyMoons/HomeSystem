@@ -3,21 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <title>ホメテスト</title>
+<link rel="stylesheet" type="text/css"
+	href="../js/Magnific-Popup/magnific-popup.css">
+<link rel="stylesheet" type="text/css"
+	href="../js/colorbox/colorbox.css">
+<script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="../js/colorbox/jquery.colorbox.js"></script>
 <script type="text/javascript">
-//　イメージポップアップ表示
-	function home(toUser,contentsId) {
-		var url = "/HomeSystem/fc/Home?toUser=" + toUser + "&contentsId=" + contentsId;
-	    window.open(url, "homeWindow","width=1000,height=500");
+	//　イメージポップアップ表示
+	function home(toUser, contentsId) {
+		var url = "/HomeSystem/fc/Home?toUser=" + toUser + "&contentsId="
+				+ contentsId;
+		window.open(url, "homeWindow", "width=500,height=650");
 	}
 
 	function home(toUser) {
 		var url = "/HomeSystem/fc/Home?toUser=" + toUser;
-	    window.open(url, "homeWindow","width=1000,height=500");
+		window.open(url, "homeWindow", "width=500,height=650");
 	}
+
+	$(function() {
+		$(".iframe").colorbox({
+			iframe : true,
+			width : "500px",
+			height : "90%",
+			opacity : 0.7
+		});
+	});
 </script>
 </head>
 <body>
-<a href="javascript:home('E0002');" ><input type="button" value="ホメ(E0002)"></a>
-<a href="javascript:home('E0003','1');" ><input type="button" value="ホメ(E0003:1)"></a>
+	<a href="javascript:home('E0002');"><input type="button"
+		value="ホメ(E0002)"></a>
+	<a href="javascript:home('E0003','1');"><input type="button"
+		value="ホメ(E0003:1)"></a>
+
+	<a class="iframe" href="/HomeSystem/fc/Home?toUser=E0002">Webページ</a>
+	<a class="popup-iframe"
+		href="/HomeSystem/fc/Home?toUser=E0002&contentsId=1">Webページ</a>
 </body>
 </html>
