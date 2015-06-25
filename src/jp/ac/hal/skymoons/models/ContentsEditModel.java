@@ -140,7 +140,7 @@ public class ContentsEditModel extends AbstractModel{
 		//ジャンル検索
 		ContentsGenreDao genreDao = new ContentsGenreDao();
 		ArrayList<ContentsGenreBean> genreData = null;
-		genreData = genreDao.findAll();
+		genreData = genreDao.findGenre();
 		genreDao.close();
 		
 		ArrayList<ContentsDataBean> homeData = null;

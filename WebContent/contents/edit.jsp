@@ -9,16 +9,17 @@
 	}
 %>
 <!DOCTYPE html>
+<c:if test="${scriptMessage != null}" >${scriptMessage}</c:if>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>コンテンツ編集</title>
 	</head>
-	<c:if test="${scriptMessage != null}" >${scriptMessage}</c:if>
 	<body>
 		<c:set var="i" value="${editData}"/>
 		<form action="delete" method="post">
 			<input type="hidden" name="homeContentId" value="${i.homeContentId}">
+			<input type="hidden" name="employeeId" value="${i.employeeId}">
 			<input type="submit" value="削除する"/>
 		</form>
 		<form action="update" method="post">

@@ -32,6 +32,11 @@
 							<input type="checkbox" name="genreId" value="${j.genreId}">${j.bigGenreName}-${j.genreName}<br/>
 						</c:forEach>
 					</td>
+					<td>大ジャンル<br/>
+						<c:forEach items="${bigGenreList}" var="j">
+							<input type="checkbox" name="bigGenreId" value="${j.bigGenreId}">${j.bigGenreName}<br/>
+						</c:forEach>
+					</td>
 					<td>社員
 						<select name="employeeId">
 							<option value="">指定なし</option>

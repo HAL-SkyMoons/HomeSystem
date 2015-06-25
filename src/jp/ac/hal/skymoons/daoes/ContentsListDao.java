@@ -35,9 +35,9 @@ public class ContentsListDao {
 		this.con = con;
 	}
 
-	public ArrayList<ContentsListBean> selectContents(String titleKeyword, String commentKeyword, String employeeId, ArrayList<Integer> genreId, String orderColumn, String orderMode) throws SQLException {
+	public ArrayList<ContentsListBean> selectContents(String titleKeyword, String commentKeyword, String employeeId, ArrayList<Integer> genreId, ArrayList<Integer> bigGenreId, String orderColumn, String orderMode) throws SQLException {
 		//SQLの生成
-		String contentsSql = "select * from home_contents hc, home_genre hg where hc.delete_flag != '1' and hc.home_content_id = hg.home_content_id ";
+		String contentsSql = "select * from home_contents hc, home_genre hg, genre g where hc.delete_flag != '1' and hc.home_content_id = hg.home_content_id and hg.genre_id = g.genre_id ";
 		String sqlword = "and ";
 		if(titleKeyword != null && titleKeyword.length() > 0){
 			contentsSql += sqlword + "hc.home_content_title like ? ";
@@ -54,6 +54,13 @@ public class ContentsListDao {
 				genre += ",?";
 			}
 			contentsSql += sqlword + "hg.genre_id in(" + genre + ") ";
+		}
+		if(bigGenreId != null && bigGenreId.size() > 0){
+			String bigGenre = "?";
+			for(int i = 1;i < genreId.size();i++){
+				bigGenre += ",?";
+			}
+			contentsSql += sqlword + "g.big_genre_id in(" + bigGenre + ") ";
 		}
 		contentsSql += "group by hc.home_content_id ";
 		if(genreId != null){
@@ -87,6 +94,12 @@ public class ContentsListDao {
 		if(genreId != null && genreId.size() > 0){
 			for(int genre : genreId){
 				contentsPst.setInt(setCnt, genre);
+				setCnt++;
+			}
+		}
+		if(bigGenreId != null && bigGenreId.size() > 0){
+			for(int bigGenre : bigGenreId){
+				contentsPst.setInt(setCnt, bigGenre);
 				setCnt++;
 			}
 		}
@@ -152,16 +165,16 @@ public class ContentsListDao {
 			bigGenrePst.setInt(1, homeContentId);
 			ResultSet bigGenreResult = bigGenrePst.executeQuery();
 			
-			ArrayList<Integer> bigGenreId = new ArrayList<>();
-			ArrayList<String> bigGenreName = new ArrayList<>();
+			ArrayList<Integer> bigGenreIdList = new ArrayList<>();
+			ArrayList<String> bigGenreNameList = new ArrayList<>();
 			
 			while(bigGenreResult.next()){
-				bigGenreId.add(bigGenreResult.getInt("big_genre_id"));
-				bigGenreName.add(bigGenreResult.getString("big_genre_name"));
+				bigGenreIdList.add(bigGenreResult.getInt("big_genre_id"));
+				bigGenreNameList.add(bigGenreResult.getString("big_genre_name"));
 			}
 			
-			listBean.setBigGenreId(bigGenreId);
-			listBean.setBigGenreName(bigGenreName);
+			listBean.setBigGenreId(bigGenreIdList);
+			listBean.setBigGenreName(bigGenreNameList);
 			
 			bigGenrePst.close();
 						

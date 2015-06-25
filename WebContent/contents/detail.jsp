@@ -9,12 +9,19 @@
 	}
 %>
 <!DOCTYPE html>
+<c:if test="${scriptMessage != null}" >${scriptMessage}</c:if>
 <html>
+	<script type="text/javascript">
+	//　イメージポップアップ表示
+		function home(toUser,contentsId) {
+			var url = "/HomeSystem/fc/Home?toUser=" + toUser + "&contentsId=" + contentsId;
+		    window.open(url, "homeWindow","width=1000,height=500");
+		}
+	</script>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>コンテンツ詳細</title>
 	</head>
-	<c:if test="${scriptMessage != null}" >${scriptMessage}</c:if>
 	<body>
 		<c:set var="i" value="${detailList}"/>
 		<c:if test="${i.deleteFlag == '1'}" ><h2>データが既に削除されています。</h2></c:if>
@@ -61,8 +68,10 @@
 				<tr>
 					<td>大ジャンル：</td>
 					<td>
+						<c:set var="cnt" value="0"/>
 						<c:forEach items="${i.bigGenreName}" var="bigGenreName">
-							<c:out value="${bigGenreName}"/>
+							<a href="./list?bigGenreId=${i.bigGenreId[cnt]}"><c:out value="${bigGenreName}"/></a>
+							<c:set var="cnt" value="${cnt + 1}"/>
 						</c:forEach>
 					</td>
 				</tr>
@@ -102,6 +111,9 @@
 				</c:forEach>
 			</table>
 			
+			<c:if test="${i.employeeId != i.userId}">
+				<a href="javascript:home('${i.employeeId}','${i.homeContentId}');" ><input type="button" value="ホメる"></a>
+			</c:if>
 			<c:forEach items="${homeLogList}" var="homeLog">
 				<table border="1">
 					<tr>

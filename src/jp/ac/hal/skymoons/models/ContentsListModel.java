@@ -32,6 +32,15 @@ public class ContentsListModel extends AbstractModel{
 			}
 		}
 		
+		//大ジャンルの取得
+		String[] bigGenreArray = request.getParameterValues("bigGenreId");
+		ArrayList<Integer> bigGenreId = new ArrayList<>();
+		if(bigGenreArray != null && bigGenreArray.length > 0){
+			for(String bigGenreString : bigGenreArray){
+				bigGenreId.add(Integer.parseInt(bigGenreString));
+			}
+		}
+		
 		//並び替え条件の取得
 		String orderColumn = request.getParameter("orderColumn");
 		String orderMode = request.getParameter("orderMode");
@@ -41,7 +50,7 @@ public class ContentsListModel extends AbstractModel{
 		
 		//検索に使用するDAOを選択しRequestにコンテンツを設定
 		ArrayList<ContentsListBean> resultData = null;
-		resultData = dao.selectContents(titleKeyword, commentKeyword, employeeId, genreId, orderColumn, orderMode);
+		resultData = dao.selectContents(titleKeyword, commentKeyword, employeeId, genreId, bigGenreId, orderColumn, orderMode);
 		
 		//結果をリクエストに保存
 		request.setAttribute("contentsList",resultData);

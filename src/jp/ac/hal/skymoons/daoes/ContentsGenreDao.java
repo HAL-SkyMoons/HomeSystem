@@ -35,7 +35,7 @@ public class ContentsGenreDao {
 		this.con = con;
 	}
 
-	public ArrayList<ContentsGenreBean> findAll() throws SQLException{
+	public ArrayList<ContentsGenreBean> findGenre() throws SQLException{
 		//戻り値のListを生成
 		ArrayList<ContentsGenreBean> genreList = new ArrayList<>();
 		//コンテンツの取得
@@ -52,6 +52,22 @@ public class ContentsGenreDao {
 		genreResult.close();
 		genrePst.close();
 		return genreList;
+	}
+	public ArrayList<ContentsGenreBean> findBigGenre() throws SQLException{
+		//戻り値のListを生成
+		ArrayList<ContentsGenreBean> bigGenreList = new ArrayList<>();
+		//コンテンツの取得
+		PreparedStatement bigGenrePst = con.prepareStatement("select * from big_genre;");
+		ResultSet bigGenreResult = bigGenrePst.executeQuery();
+		while (bigGenreResult.next()) {
+			ContentsGenreBean genreBean = new ContentsGenreBean();
+			genreBean.setBigGenreId(bigGenreResult.getInt("big_genre_id"));
+			genreBean.setBigGenreName(bigGenreResult.getString("big_genre_name"));
+			bigGenreList.add(genreBean);
+		}
+		bigGenreResult.close();
+		bigGenrePst.close();
+		return bigGenreList;
 	}
 	/**
 	 * 接続を閉じる
