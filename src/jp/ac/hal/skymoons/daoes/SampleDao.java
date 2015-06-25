@@ -451,6 +451,88 @@ public class SampleDao {
 	}
 
 	/*
+	 * 2015/6/23
+	 * 中野 裕史郎
+	 * チャート描画用配列の取得
+	 */
+	public String[] getEmployeeDetailOfBadgeNameForChart(String employeeId){
+		int max =0;
+		try {
+			PreparedStatement select = con.prepareStatement("SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
+					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? GROUP BY hl.batch_id "
+					+"ORDER BY b.batch_id");
+			select.setString(1, employeeId);
+			ResultSet result = select.executeQuery();
+			while(result.next()){
+				max++;
+			}
+			System.out.println("Name for Chart Max is" +max);
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		String[] resultTable = new String[max];
+		int count =0;
+		try {
+			PreparedStatement select = con.prepareStatement("SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
+					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
+					+"GROUP BY hl.batch_id ORDER BY hl.batch_id");
+			select.setString(1, employeeId);
+			ResultSet result = select.executeQuery();
+			while(result.next()){
+				System.out.println("Name for Chart is" +result.getString("b.batch_name"));
+				resultTable[count] = result.getString("b.batch_name");
+				count++;
+			}
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+
+		return resultTable;
+	}
+	/*
+	 * 2015/6/23
+	 * 中野 裕史郎
+	 * チャート描画用配列の取得
+	 */
+	public int[] getEmployeeDetailOfBadgeCountForChart(String employeeId){
+		int max =0;
+		try {
+			PreparedStatement select = con.prepareStatement("SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
+					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? GROUP BY hl.batch_id "
+					+"ORDER BY b.batch_id");
+			select.setString(1, employeeId);
+			ResultSet result = select.executeQuery();
+			while(result.next()){
+				max++;
+			}
+			System.out.println("Name for Chart Max is" +max);
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		int[] resultTable = new int[max];
+		int count =0;
+		try {
+			PreparedStatement select = con.prepareStatement("SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
+					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
+					+"GROUP BY hl.batch_id ORDER BY hl.batch_id");
+			select.setString(1, employeeId);
+			ResultSet result = select.executeQuery();
+			while(result.next()){
+				System.out.println("Name for Chart Count is" +result.getInt("COUNT(*)"));
+				resultTable[count]=result.getInt("COUNT(*)");
+				count++;
+			}
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+
+		return resultTable;
+	}
+	/*
 	 * 2015/6/19
 	 * 中野 裕史郎
 	 * 社員一人が持つジャンル情報の取得
@@ -598,7 +680,9 @@ public class SampleDao {
 			record.setPlanTitle(result.getString("plan_title"));
 			record.setPlanDatetime(result.getDate("plan_datetime"));
 			record.setPlanComment(result.getString("plan_comment"));
-			record.setImplementationDate(result.getTimestamp("implementation_date"));
+			record.setStartDate(result.getTimestamp("start_date"));
+			record.setEndDate(result.getTimestamp("end_date"));
+			record.setExecuteFlag(result.getInt("execute_flag"));
 
 			table.add(record);
 		}
@@ -616,12 +700,19 @@ public class SampleDao {
 	public int planRegister(PlanBean newRecord) throws SQLException {
 
 		PreparedStatement insert = con
-				.prepareStatement("insert into plan(planner,plan_title,plan_datetime,plan_comment,implementation_date) values (?,?,now(),?,cast(? as datetime));");
+				.prepareStatement("insert into plan(planner,plan_title,plan_datetime,plan_comment,start_date,end_date) values (?,?,now(),?,cast(? as datetime),cast(? as datetime));");
 		insert.setString(1, newRecord.getPlanner());
 		insert.setString(2, newRecord.getPlanTitle());
 		insert.setString(3, newRecord.getPlanComment());
 
-		insert.setTimestamp(4, new java.sql.Timestamp( newRecord.getImplementationDate().getTime()));
+		insert.setTimestamp(4, new java.sql.Timestamp( newRecord.getStartDate().getTime()));
+		if(newRecord.getEndDate()!=null){
+			insert.setTimestamp(5, new java.sql.Timestamp( newRecord.getEndDate().getTime()));
+		}else{
+			insert.setTimestamp(5, null);
+		}
+
+
 
 		int planId = 0;
 
@@ -662,7 +753,10 @@ public class SampleDao {
 			record.setPlanTitle(result.getString("plan_title"));
 			record.setPlanDatetime(result.getDate("plan_datetime"));
 			record.setPlanComment(result.getString("plan_comment"));
-			record.setImplementationDate(result.getTimestamp("implementation_date"));
+			record.setStartDate(result.getTimestamp("start_date"));
+			record.setEndDate(result.getTimestamp("end_date"));
+			record.setExecuteFlag(result.getInt("execute_flag"));
+
 		}
 
 		return record;
@@ -864,7 +958,7 @@ public class SampleDao {
 			where += ",?";
 
 		PreparedStatement select = con
-				.prepareStatement("select p.plan_id,p.planner,u.last_name,u.first_name,p.plan_title,p.plan_datetime,p.plan_comment,count(*) from plan p, users u, plan_genre g where p.planner = u.user_id and p.plan_id = g.plan_id and genre_id in ("
+				.prepareStatement("select p.plan_id,p.planner,u.last_name,u.first_name,p.plan_title,p.plan_datetime,p.plan_comment,p.start_date,p.end_date,p.execute_flag,count(*) from plan p, users u, plan_genre g where p.planner = u.user_id and p.plan_id = g.plan_id and genre_id in ("
 						+ where + ") group by p.plan_id;");
 
 		for (int i = 1; i <= idCount; i++)
@@ -885,7 +979,9 @@ public class SampleDao {
 				record.setPlanTitle(result.getString("p.plan_title"));
 				record.setPlanDatetime(result.getDate("p.plan_datetime"));
 				record.setPlanComment(result.getString("p.plan_comment"));
-				record.setImplementationDate(result.getTimestamp("implementation_date"));
+				record.setStartDate(result.getTimestamp("p.start_date"));
+				record.setEndDate(result.getTimestamp("p.end_date"));
+				record.setExecuteFlag(result.getInt("p.execute_flag"));
 
 				table.add(record);
 			}
@@ -904,13 +1000,14 @@ public class SampleDao {
 	public int planEdit(PlanBean updateRecord) throws SQLException {
 
 		PreparedStatement update = con
-				.prepareStatement("update plan set plan_title = ?, plan_comment = ? ,implementation_date = cast(? as datetime) where plan_id = ? ;");
+				.prepareStatement("update plan set plan_title = ?, plan_comment = ? ,start_date = cast(? as datetime),end_date = cast(? as datetime) where plan_id = ? ;");
 
 		update.setString(1, updateRecord.getPlanTitle());
 		update.setString(2, updateRecord.getPlanComment());
 //		update.setDate(3, new java.sql.Date( updateRecord.getImplementationDate().getTime()));
-		update.setTimestamp(3, new java.sql.Timestamp( updateRecord.getImplementationDate().getTime()));
-		update.setInt(4, updateRecord.getPlanId());
+		update.setTimestamp(3, new java.sql.Timestamp( updateRecord.getStartDate().getTime()));
+		update.setTimestamp(4, new java.sql.Timestamp( updateRecord.getEndDate().getTime()));
+		update.setInt(5, updateRecord.getPlanId());
 
 
 		return update.executeUpdate();
@@ -1576,7 +1673,9 @@ public class SampleDao {
 			record.setPlanTitle(result.getString("plan_title"));
 			record.setPlanDatetime(result.getDate("plan_datetime"));
 			record.setPlanComment(result.getString("plan_comment"));
-			record.setImplementationDate(result.getTimestamp("implementation_date"));
+			record.setStartDate(result.getTimestamp("start_date"));
+			record.setEndDate(result.getTimestamp("end_date"));
+			record.setExecuteFlag(result.getInt("execute_flag"));
 
 			table.add(record);
 		}
@@ -1623,7 +1722,9 @@ public class SampleDao {
 			record.setPlanTitle(result.getString("plan_title"));
 			record.setPlanDatetime(result.getDate("plan_datetime"));
 			record.setPlanComment(result.getString("plan_comment"));
-			record.setImplementationDate(result.getTimestamp("implementation_date"));
+			record.setStartDate(result.getTimestamp("start_date"));
+			record.setEndDate(result.getTimestamp("end_date"));
+			record.setExecuteFlag(result.getInt("execute_flag"));
 
 			table.add(record);
 		}

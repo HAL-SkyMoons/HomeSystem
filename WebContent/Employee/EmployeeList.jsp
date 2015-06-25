@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
 <title>Insert title here</title>
 <script type="text/javascript">
 	function ImageUp(employeeId) {
@@ -16,22 +17,41 @@
 	<form action="/HomeSystem/fc/EmployeeList" method="POST">
 
 	<select name="departmentId">
-			<option value="0">ジャンルで検索する</option>
+			<option value="0">部署で検索する</option>
 		<c:forEach var="department" items="${departments}">
 			<option value="${department.departmentId}">${department.departmentName}</option>
 		</c:forEach>
 	</select>
 	<input type="submit" name="submit" value="検索">
 	<br/>
-		<c:forEach var="genre" items="${genres}">
-			<input type="checkbox" name="genre" value="${genre.genreId}">${genre.genreName}
-			<br/>
-		</c:forEach>
-	<br/>
+	<div class="genreList">
+	<h4>ジャンルで検索する</h4>
+		<div class="BigGenre 1">
+			<h5>BigGenre 1</h5>
+			<c:forEach var="genre" items="${genres}" varStatus="status">
+				<c:if test="${genre.bigGenreId ==1}">
+				<input type="checkbox" name="genre" value="${genre.genreId}">${genre.genreName}
+				<br/>
+				</c:if>
+			</c:forEach>
+		</div>
+		<div class="BigGenre 2">
+			<h5>BigGenre 2</h5>
+			<c:forEach var="genre" items="${genres}" varStatus="status">
+				<c:if test="${genre.bigGenreId ==2}">
+				<input type="checkbox" name="genre" value="${genre.genreId}">${genre.genreName}
+				<br/>
+				</c:if>
+			</c:forEach>
+		</div>
+	</div>
 	<input type="submit" name="submit" value="検索">
 	</form>
-	<c:forEach var="employee" items="${employees}">
-		<a href="./EmployeePage?employeeId=${employee.employeeId}"><img src="../img/employees/${employee.employeeId}.jpg"></a><br>
+	<table>
+	<tr>
+	<c:forEach var="employee" items="${employees}" varStatus="status">
+		<td>
+		<a href="./EmployeePage?employeeId=${employee.employeeId}"><img src="../images/employees/${employee.employeeId}.jpg"></a><br>
 		${employee.departmentName}
 		<a href="./EmployeePage?employeeId=${employee.employeeId}">${employee.employeeName}</a>
 		<br>
@@ -43,7 +63,14 @@
 		<c:forEach var="employeeGenre" items="${employee.employeeGenre}">
 			${employeeGenre}
 		</c:forEach>
-		<br/>
+		</td>
+		<c:if test="${status.count%5 ==0}">
+			</tr>
+		</c:if>
+		<c:if test="${status.count%5 ==0}">
+			<tr>
+		</c:if>
 	</c:forEach>
+	</table>
 </body>
 </html>

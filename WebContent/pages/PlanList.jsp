@@ -10,6 +10,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>企画一覧</title>
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+<link rel="stylesheet" type="text/css"
+	href="../css/bootstrap-theme.min.css">
 </head>
 <body>
 	<form action="/HomeSystem/fc/PlanList" method="post">

@@ -37,7 +37,12 @@
 						out.println("{");
 			         	out.println("title: '" + plan.getPlanTitle() + "',");
 			         	out.println("url: 'http://localhost:8080/HomeSystem/fc/PlanDetail?planId="+ plan.getPlanId() +"&detail=true',");
-			         	out.println("start: '"+ plan.getImplementationDate() +"'");
+			         	out.println("start: '"+ plan.getStartDate() +"',");
+			         	out.println("end: '"+ plan.getEndDate() +"',");
+			        	out.println("backgroundColor: ' #ffd280',");
+			        	out.println("borderColor: ' #ffa600',");
+			        	out.println("textColor: ' #666'");
+
 
 			         	out.println("},");
 			         	}
