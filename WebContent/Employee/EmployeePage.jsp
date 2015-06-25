@@ -10,13 +10,25 @@
 <meta charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../css/reset.css">
 <link rel="stylesheet" type="text/css" href="../css/employeePage.css">
+<link rel="stylesheet" type="text/css"
+	href="../js/colorbox/colorbox.css">
+<script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="../js/colorbox/jquery.colorbox.js"></script>
 <title>Employee Page</title>
 <script type="text/javascript" src="../js/Chart.js-master/Chart.js"></script>
 <script>
 	//ホメボタン
-	function ImageUp(employeeId) {
-		window.open("/HomeSystem/fc/Home?toUser="+employeeId,"window2","width=1000,height=500");
-	}
+// 	function ImageUp(employeeId) {
+// 		window.open("/HomeSystem/fc/Home?toUser="+employeeId,"window2","width=1000,height=500");
+// 	}
+	$(function() {
+		$(".iframe").colorbox({
+			iframe : true,
+			width : "500px",
+			height : "90%",
+			opacity : 0.7
+		});
+	});
 	//履歴タブ切り替え
 	function activityChange(tabName){
 		document.getElementById("homeTab").style.display = 'none';
@@ -52,7 +64,7 @@
 						<li class="employeeExperience">経験値：${employeeDetail.experience}</li>
 					</ul>
 				<c:if test="${sessionId != employeeDetail.employeeId}">
-					<a href="javascript:ImageUp('${employeeDetail.employeeId}');" ><input type="button" value="この人を褒める" class="homeButton"></a>
+					<a class="iframe" href="/HomeSystem/fc/Home?toUser=${employeeDetail.employeeId}" ><input type="button" value="この人を褒める" class="homeButton"></a>
 				</c:if>
 				</c:forEach>
 		</div>
