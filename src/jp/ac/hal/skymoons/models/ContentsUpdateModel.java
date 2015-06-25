@@ -33,13 +33,16 @@ public class ContentsUpdateModel extends AbstractModel{
 			String startMinute = request.getParameter("startMinute");
 			String startDatetime = startYear + "-" + startMonth + "-" + startDay + " " + startHour + ":" + startMinute + ":00";		
 			updateBean.setHomeContentDatetime(startDatetime);
+
+			//終了日の設定
+			if(request.getParameter("addEndDate") != null){
+				String endYear = request.getParameter("endYear");
+				String endMonth = request.getParameter("endMonth");
+				String endDay = request.getParameter("endDay");
+				String endDatetime = endYear + "-" + endMonth + "-" + endDay;		
+				updateBean.setEndDate(endDatetime);
+			}
 			
-			String endYear = request.getParameter("endYear");
-			String endMonth = request.getParameter("endMonth");
-			String endDay = request.getParameter("endDay");
-			String endDatetime = endYear + "-" + endMonth + "-" + endDay;		
-			updateBean.setEndDate(endDatetime);
-	
 			//コンテンツタイトル
 			updateBean.setHomeContentTitle(request.getParameter("homeContentTitle"));
 			
@@ -64,6 +67,11 @@ public class ContentsUpdateModel extends AbstractModel{
 			ContentsUpdateDao dao = new ContentsUpdateDao();
 			dao.updateContent(updateBean);
 			dao.changeGenre(updateBean);
+			
+			//終了日の設定
+			if(request.getParameter("addEndDate") != null){
+				dao.updateEndDate(updateBean);
+			}
 			
 			//結果をリクエストに保存
 			//request.setAttribute("detailList",detailData);
