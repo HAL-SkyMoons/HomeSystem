@@ -32,6 +32,8 @@ public class FrontController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("UTF-8");
+		response.setHeader("Pragma", "no-cache");
+		response.setHeader("Cache-Control","no-cache");
 
 		System.out.println("fconGET!");
 
@@ -65,6 +67,8 @@ public class FrontController extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("fconPOST!");
+		response.setHeader("Pragma", "no-cache");
+		response.setHeader("Cache-Control","no-cache");
 
 		request.setCharacterEncoding("UTF-8");
 

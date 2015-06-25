@@ -1,3 +1,4 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="jp.ac.hal.skymoons.beans.UserBean"%>
 <%@page import="jp.ac.hal.skymoons.util.Utility"%>
 <%@page import="jp.ac.hal.skymoons.beans.PlanBean"%>
@@ -11,6 +12,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>企画登録確認</title>
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+<link rel="stylesheet" type="text/css"
+	href="../css/bootstrap-theme.min.css">
 </head>
 <%
 	Utility util = new Utility();
@@ -20,6 +24,11 @@
 	String planner = plan.getPlanner();
 	String planTitle = plan.getPlanTitle();
 	String planComment = plan.getPlanComment();
+
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH時mm分");
+
+	String startDate = sdf.format(plan.getStartDate());
+	String endDate = sdf.format(plan.getEndDate());
 
 %>
 <body>
@@ -49,6 +58,17 @@
 					%>
 				</td>
 			</tr>
+						<tr>
+				<th>実施予定日：</th>
+				<td>
+					<%
+						out.print(startDate);
+						if(endDate!=null){
+							out.print("～"+endDate);
+						}
+					%>
+				</td>
+			</tr>
 		</table>
 		<%
 			out.println("<input type=\"hidden\" name=\"planner\" value=\""
@@ -57,6 +77,10 @@
 					+ planTitle + "\">");
 			out.println("<input type=\"hidden\" name=\"planComment\" value=\""
 					+ planComment + "\">");
+			out.println("<input type=\"hidden\" name=\"startDate\" value=\""
+					+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(plan.getStartDate()) + "\">");
+			out.println("<input type=\"hidden\" name=\"endDate\" value=\""
+					+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(plan.getEndDate()) + "\">");
 		%>
 
 		<h3>登録ジャンル</h3>

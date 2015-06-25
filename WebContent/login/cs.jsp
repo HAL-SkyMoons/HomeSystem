@@ -1,13 +1,5 @@
 <%@page import="jp.ac.hal.skymoons.security.session.SessionController"%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%
-/**
- * 顧客・社員用ログインページ
- * @author YAMAZAKI GEN
- * @since 2015/05/22
- * @version 1.0
-**/
-%>
 <!DOCTYPE html>
 <html>
 	<head>

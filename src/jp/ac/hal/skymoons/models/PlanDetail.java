@@ -1,5 +1,6 @@
 package jp.ac.hal.skymoons.models;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +44,7 @@ public class PlanDetail extends AbstractModel {
 		}
 
 		int planId = 0;
+
 
 		SessionController sessionController = new SessionController(request);
 
@@ -147,6 +149,10 @@ public class PlanDetail extends AbstractModel {
 				planEdit.setPlanId(planId);
 				planEdit.setPlanTitle(request.getParameter("planTitle"));
 				planEdit.setPlanComment(request.getParameter("planComment"));
+
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				planEdit.setStartDate(sdf.parse(request.getParameter("startYear")+"-"+request.getParameter("startMonth")+"-"+request.getParameter("startDay")+" "+request.getParameter("startHour")+":"+request.getParameter("startMinutes")+":00"));
+				planEdit.setEndDate(sdf.parse(request.getParameter("endYear")+"-"+request.getParameter("endMonth")+"-"+request.getParameter("endDay")+" "+request.getParameter("endHour")+":"+request.getParameter("endMinutes")+":00"));
 
 				dao.planEdit(planEdit);
 

@@ -1,0 +1,359 @@
+@CHARSET "UTF-8";
+
+#wrapper {
+	width: 500px;
+	margin: 0 auto;
+	font-family: 'Lucida Grande', 'Hiragino Kaku Gothic ProN',
+		'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, sans-serif;
+}
+
+#plan {
+	width: 500px;
+}
+
+#planHeader {
+	overflow: hidden;
+}
+
+#id {
+	float: left;
+}
+
+#planDate {
+	float: right;
+}
+
+#title {
+	font-size: 20px;
+	text-align: center;
+}
+
+#planDetail {
+	overflow: hidden;
+}
+
+#startEnd {
+	float: left;
+}
+
+#planner {
+	float: right;
+	text-align: center;
+}
+
+#planComment {
+	margin: 0 auto;
+	width: 490px;
+	border: 1px solid black;
+	padding: 10px;
+}
+
+#genre {
+	overflow: hidden;
+}
+
+.genres {
+	float: left;
+	margin: 5px;
+}
+
+#files {
+	/* 	overflow: hidden; */
+
+}
+
+.file {
+	position: relative;
+	width: 80px;
+	margin: 8px;
+	/* 	float: left; */
+	display: inline-block;
+	text-align: center;
+	display: inline-block
+}
+
+.del {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+
+.fileName {
+	width: 80px;
+	font-size: 11px;
+	white-space: pre; /* CSS 2.0 */
+	white-space: pre-wrap; /* CSS 2.1 */
+	white-space: pre-line; /* CSS 3.0 */
+	white-space: -pre-wrap; /* Opera 4-6 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	white-space: -moz-pre-wrap; /* Mozilla */
+	white-space: -hp-pre-wrap; /* HP Printers */
+	word-wrap: break-word;
+	white-space: pre; /* IE 5+ */
+}
+
+#planComment {
+	width: 500px;
+	max-width: 500px;
+	-webkit-border-radius: 10px;
+/* 	height: 50px; */
+}
+
+.fileImage>img {
+	width: 60px;
+	height: 60px;
+}
+
+/*ボタン*/
+.btn {
+	border: none;
+	font-family: inherit;
+	font-size: inherit;
+	color: inherit;
+	background: none;
+	cursor: pointer;
+	display: inline-block;
+	margin-bottom: 10px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 700;
+	outline: none;
+	position: relative;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+	background: #e6002d;
+}
+
+.btn:after {
+	content: '';
+	position: absolute;
+	z-index: -1;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.btn-2 {
+/* 	background: #cb4e4e; */
+	background: #e6002d;
+	color: #fff;
+	box-shadow: 0 3px #CD0014;
+	-webkit-transition: none;
+	-moz-transition: none;
+	transition: none;
+}
+
+.btn-2[disabled] {
+	background: #e6002d;
+	color: #fff;
+	box-shadow: 0 3px #CD0014;
+	-webkit-transition: none;
+	-moz-transition: none;
+	transition: none;
+}
+
+.btn-2c {
+	border-radius: 5px;
+}
+
+.btn-2c:hover {
+	background: #e6002d;
+	color: #fff;
+	box-shadow: 0 1.5px #CD0014;
+	top: 2px;
+}
+
+.btn-2c:active {
+	box-shadow: 0 0 #CD0014;
+	top: 6px;
+}
+
+#fake_input_file {
+	width: auto;
+}
+
+.point {
+	text-align: center;
+	width: 80px;
+}
+
+.commentSubmit {
+	display: block;
+	margin: 10px auto;
+	width: 500px;
+}
+
+.uploadBtn {
+	width: 120px;
+}
+
+.download {
+	margin: 10px auto;
+	width: 80px;
+	font-size: 10px;
+	padding: 8px;
+	text-align: center;
+}
+
+.edit {
+	display: block;
+	width: 120px;
+	margin: 10px auto;
+}
+
+#upload {
+	margin-top: 20px;
+}
+
+/*コメント*/
+#comments {
+	width: 500px;
+}
+
+.commentData {
+	width: 500px;
+	overflow: hidden;
+}
+
+.plannerComment {
+	width: 400px;
+	float: left;
+	border: 1px solid black;
+	-webkit-border-radius: 10px;
+	padding: 10px;
+}
+
+.gestComment {
+	width: 400px;
+	float: right;
+	border: 1px solid black;
+	-webkit-border-radius: 10px;
+	padding: 10px;
+}
+
+.planner {
+	float: right;
+}
+
+.gest {
+	float: left;
+}
+
+.face>img {
+	width: 80px;
+	height: 80px;
+}
+
+.name{
+	text-align: center;
+}
+
+.home {
+	text-align: center;
+}
+
+.home>a>input {
+	width: 80px;
+}
+
+.commnetHeader {
+	width: 400px;
+}
+
+.commentNo {
+	text-align: left;
+}
+
+.commentData{
+	margin: 10px 0px;
+}
+
+.commentBody {
+	text-align: left;
+}
+
+.commentDate {
+	text-align: right;
+}
+
+.commentFooter {
+	width: 380px;
+	margin: 0 auto;
+}
+
+.commentFile {
+	width: 80px;
+	display: inline-block;
+	text-align: center;
+}
+
+.commentDelete{
+	font-size: 12px;
+	float: right;
+}
+
+.commentDel{
+	width: 15px;
+	height: 15px;
+}
+
+/*******************************
+* 右からの吹き出し
+********************************/
+.plannerComment {
+    position: relative;
+    max-width: 400px;
+}
+
+.plannerComment:after,
+.plannerComment:before {
+    left: 100%;
+    top: 30px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+.plannerComment:after {
+    border-left-color: #fff;
+    border-width: 7px;
+    margin-top: -7px;
+}
+.plannerComment:before {
+    border-left-color: #000;
+    border-width: 8px;
+    margin-top: -8px;
+}
+
+/*******************************
+* 左からの吹き出し
+********************************/
+.gestComment {
+    position: relative;
+}
+.gestComment:after,
+.gestComment:before {
+    right: 100%;
+    top: 30px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+.gestComment:after {
+    border-color: rgba(255, 255, 255, 0);
+    border-right-color: #fff;
+    border-width: 7px;
+    margin-top: -7px;
+}
+.gestComment:before {
+    border-color: rgba(0, 0, 0, 0);
+    border-right-color: #000;
+    border-width: 8px;
+    margin-top: -8px;
+}

@@ -1,3 +1,4 @@
+<%@page import="jp.ac.hal.skymoons.beans.UserBean"%>
 <%@page import="jp.ac.hal.skymoons.beans.GenreBean"%>
 <%@page import="jp.ac.hal.skymoons.beans.PlanBean"%>
 <%@page import="java.util.ArrayList"%>
@@ -9,18 +10,25 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>企画一覧</title>
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+<link rel="stylesheet" type="text/css"
+	href="../css/bootstrap-theme.min.css">
 </head>
 <body>
 	<form action="/HomeSystem/fc/PlanList" method="post">
+		<label>キーワード：<input type="text" name="keyword" value="<% if(request.getAttribute("searchKeyword")!=null)out.print(request.getAttribute("searchKeyword")); %>"></label><br>
 		<%
 			ArrayList<GenreBean> genreList = (ArrayList<GenreBean>) request
 					.getAttribute("genreList");
 			String[] searchGenre = (String[]) request
 					.getAttribute("searchGenre");
+			ArrayList<UserBean> employeeList = (ArrayList<UserBean>) request
+					.getAttribute("employeeList");
+
 			int genreIndex = 0;
 			int genreMaxIndex = 0;
 
-			if(searchGenre != null)
+			if (searchGenre != null)
 				genreMaxIndex = searchGenre.length;
 
 			for (GenreBean genre : genreList) {
@@ -32,26 +40,40 @@
 							+ genre.getGenreName()
 							+ "</label>");
 				} else {
-					if(Integer.valueOf(searchGenre[genreIndex]) == genre.getGenreId()){
+					if (Integer.valueOf(searchGenre[genreIndex]) == genre
+							.getGenreId()) {
 						out.println("<label><input type=\"checkbox\" name=\"genre\" value=\""
 								+ genre.getGenreId()
 								+ "\" checked=\"checked\">"
-								+ genre.getGenreName()
-								+ "</label>");
-						genreIndex ++;
-					}else{
+								+ genre.getGenreName() + "</label>");
+						genreIndex++;
+					} else {
 						out.println("<label><input type=\"checkbox\" name=\"genre\" value=\""
 								+ genre.getGenreId()
 								+ "\">"
-								+ genre.getGenreName()
-								+ "</label>");
+								+ genre.getGenreName() + "</label>");
 					}
 
 				}
 
 			}
 		%>
-		<input type="submit" name="search" value="検索">
+		<br>
+		企画者：
+		<select name="planner">
+			<option value="">--指定なし--
+			<%
+				for(UserBean employee :employeeList){
+					if(employee.getUserId().equals(request.getAttribute("searchPlanner"))){
+						out.println("<option value=\""+ employee.getUserId() +"\" selected>"+ employee.getLastName() + employee.getFirstName());
+					}else{
+						out.println("<option value=\""+ employee.getUserId() +"\">"+ employee.getLastName() + employee.getFirstName());
+					}
+
+				}
+
+			%>
+		</select> <br> <input type="submit" name="search" value="検索">
 	</form>
 	<hr>
 	<table>

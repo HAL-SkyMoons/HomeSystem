@@ -1,3 +1,4 @@
+
 @CHARSET "UTF-8";
 
 html, body, div, span, applet, object, iframe,
@@ -21,148 +22,148 @@ time, mark, audio, video {
     font-size: 100%;
     vertical-align: baseline;
 }
- 
+
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
     display: block;
 }
- 
+
 html{
     overflow-y: scroll;
 }
- 
+
 blockquote, q {
     quotes: none;
 }
- 
+
 blockquote:before, blockquote:after,
 q:before, q:after {
     content: '';
     content: none;
 }
- 
+
 input, textarea,{
     margin: 0;
     padding: 0;
 }
- 
+
 ol, ul{
     list-style:none;
 }
- 
+
 table{
-    border-collapse: collapse; 
+    border-collapse: collapse;
     border-spacing:0;
 }
- 
+
 caption, th{
     text-align: left;
 }
- 
+
 a:focus {
     outline:none;
 }
- 
+
 .clearfix:after {
-    content: "."; 
+    content: ".";
     display: block;
     clear: both;
     height: 0;
     visibility: hidden;
 }
- 
+
 .clearfix {
     min-height: 1px;
 }
- 
+
 * html .clearfix {
     height: 1px;
-    /*¥*//*/
+    /*ﾂ･*//*/
     height: auto;
     overflow: hidden;
     /**/
 }
- 
+
 .both{
     clear:both;
 }
- 
-.inline_block {  
-    display: inline-block;  
-    *display: inline;  
-    *zoom: 1;  
+
+.inline_block {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
 }
- 
-/* よく使うCSS start
- 
+
+/* 繧医￥菴ｿ縺�CSS start
+
 img {
     max-width:100%;
 }
- 
+
 table {
     width:100%;
 }
- 
+
 a,a:hover {
     -webkit-transition: 0.7s;
     -moz-transition: 0.7s;
     -o-transition: 0.7s;
     transition: 0.7s;
 }
- 
+
 a img:hover {
     filter: alpha(opacity=75);
     -moz-opacity:0.75;
     opacity:0.75;
 }
- 
-よく使うCSS end -----
-時々使うCSS3 start ---
- 
-テキストシャドウ {
+
+繧医￥菴ｿ縺�CSS end -----
+譎ゅ��菴ｿ縺�CSS3 start ---
+
+繝�繧ｭ繧ｹ繝医す繝｣繝峨え {
     text-shadow: 1px 1px 3px #000;
 }
- 
-テキストシャドウ {
+
+繝�繧ｭ繧ｹ繝医す繝｣繝峨え {
     text-shadow: 1px 1px 3px #000;
 }
- 
-ボックスシャドウ {
+
+繝懊ャ繧ｯ繧ｹ繧ｷ繝｣繝峨え {
     -moz-box-shadow: 1px 1px 3px #000;
     -webkit-box-shadow: 1px 1px 3px #000;
     box-shadow: 1px 1px 3px #000;
 }
- 
-ボックスシャドウ内側 {
+
+繝懊ャ繧ｯ繧ｹ繧ｷ繝｣繝峨え蜀�蛛ｴ {
     -moz-box-shadow: inset 1px 1px 3px #000;
     -webkit-box-shadow: inset 1px 1px 3px #000;
     box-shadow: inset 1px 1px 3px #000;
 }
- 
-角丸 {
-    border-radius: 8px; 
+
+隗剃ｸｸ {
+    border-radius: 8px;
     -webkit-border-radius: 8px;
-    -moz-border-radius: 8px; 
+    -moz-border-radius: 8px;
 }
- 
-トランジション {
+
+繝医Λ繝ｳ繧ｸ繧ｷ繝ｧ繝ｳ {
     -webkit-transition: 1.5s;
     -moz-transition: 1.5s;
     -o-transition: 1.5s;
     transition: 1.5s;
 }
- 
-透明 {
+
+騾乗�� {
     filter: alpha(opacity=25);
     -moz-opacity:0.25;
     opacity:0.25;
 }
- 
-背景のみ透明 {
+
+閭梧勹縺ｮ縺ｿ騾乗�� {
     background-color:rgba(255,255,255,0.2);
 }
- 
-グラデーション {
+
+繧ｰ繝ｩ繝�繝ｼ繧ｷ繝ｧ繝ｳ {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr = '#ffffff', endColorstr = '#000000');
     -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr = '#ffffff', endColorstr = '#000000')";
     background-image: -moz-linear-gradient(top, #ffffff, #000000);
@@ -172,13 +173,13 @@ a img:hover {
     background-image: -webkit-linear-gradient(top, #ffffff, #000000);
     background-image: linear-gradient(top, #ffffff, #000000);
 }
- 
-スマホ対応
+
+繧ｹ繝槭�帛ｯｾ蠢�
 @media screen and (max-width: 480px){
-    
+
 }
 @media screen and (max-width: 320px){
-    
+
 }
- 
-時々使うCSS3 end */
+
+譎ゅ��菴ｿ縺�CSS3 end */

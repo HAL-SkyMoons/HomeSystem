@@ -1,6 +1,7 @@
 ﻿package jp.ac.hal.skymoons.daoes;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -677,6 +678,9 @@ public class SampleDao {
 			record.setPlanTitle(result.getString("plan_title"));
 			record.setPlanDatetime(result.getDate("plan_datetime"));
 			record.setPlanComment(result.getString("plan_comment"));
+			record.setStartDate(result.getTimestamp("start_date"));
+			record.setEndDate(result.getTimestamp("end_date"));
+			record.setExecuteFlag(result.getInt("execute_flag"));
 
 			table.add(record);
 		}
@@ -694,10 +698,19 @@ public class SampleDao {
 	public int planRegister(PlanBean newRecord) throws SQLException {
 
 		PreparedStatement insert = con
-				.prepareStatement("insert into plan(planner,plan_title,plan_datetime,plan_comment) values (?,?,now(),?);");
+				.prepareStatement("insert into plan(planner,plan_title,plan_datetime,plan_comment,start_date,end_date) values (?,?,now(),?,cast(? as datetime),cast(? as datetime));");
 		insert.setString(1, newRecord.getPlanner());
 		insert.setString(2, newRecord.getPlanTitle());
 		insert.setString(3, newRecord.getPlanComment());
+
+		insert.setTimestamp(4, new java.sql.Timestamp( newRecord.getStartDate().getTime()));
+		if(newRecord.getEndDate()!=null){
+			insert.setTimestamp(5, new java.sql.Timestamp( newRecord.getEndDate().getTime()));
+		}else{
+			insert.setTimestamp(5, null);
+		}
+
+
 
 		int planId = 0;
 
@@ -738,6 +751,10 @@ public class SampleDao {
 			record.setPlanTitle(result.getString("plan_title"));
 			record.setPlanDatetime(result.getDate("plan_datetime"));
 			record.setPlanComment(result.getString("plan_comment"));
+			record.setStartDate(result.getTimestamp("start_date"));
+			record.setEndDate(result.getTimestamp("end_date"));
+			record.setExecuteFlag(result.getInt("execute_flag"));
+
 		}
 
 		return record;
@@ -939,7 +956,7 @@ public class SampleDao {
 			where += ",?";
 
 		PreparedStatement select = con
-				.prepareStatement("select p.plan_id,p.planner,u.last_name,u.first_name,p.plan_title,p.plan_datetime,p.plan_comment,count(*) from plan p, users u, plan_genre g where p.planner = u.user_id and p.plan_id = g.plan_id and genre_id in ("
+				.prepareStatement("select p.plan_id,p.planner,u.last_name,u.first_name,p.plan_title,p.plan_datetime,p.plan_comment,p.start_date,p.end_date,p.execute_flag,count(*) from plan p, users u, plan_genre g where p.planner = u.user_id and p.plan_id = g.plan_id and genre_id in ("
 						+ where + ") group by p.plan_id;");
 
 		for (int i = 1; i <= idCount; i++)
@@ -960,6 +977,9 @@ public class SampleDao {
 				record.setPlanTitle(result.getString("p.plan_title"));
 				record.setPlanDatetime(result.getDate("p.plan_datetime"));
 				record.setPlanComment(result.getString("p.plan_comment"));
+				record.setStartDate(result.getTimestamp("p.start_date"));
+				record.setEndDate(result.getTimestamp("p.end_date"));
+				record.setExecuteFlag(result.getInt("p.execute_flag"));
 
 				table.add(record);
 			}
@@ -978,11 +998,15 @@ public class SampleDao {
 	public int planEdit(PlanBean updateRecord) throws SQLException {
 
 		PreparedStatement update = con
-				.prepareStatement("update plan set plan_title = ?, plan_comment = ? where plan_id = ? ;");
+				.prepareStatement("update plan set plan_title = ?, plan_comment = ? ,start_date = cast(? as datetime),end_date = cast(? as datetime) where plan_id = ? ;");
 
 		update.setString(1, updateRecord.getPlanTitle());
 		update.setString(2, updateRecord.getPlanComment());
-		update.setInt(3, updateRecord.getPlanId());
+//		update.setDate(3, new java.sql.Date( updateRecord.getImplementationDate().getTime()));
+		update.setTimestamp(3, new java.sql.Timestamp( updateRecord.getStartDate().getTime()));
+		update.setTimestamp(4, new java.sql.Timestamp( updateRecord.getEndDate().getTime()));
+		update.setInt(5, updateRecord.getPlanId());
+
 
 		return update.executeUpdate();
 	}
@@ -1549,14 +1573,13 @@ public class SampleDao {
 
 		int nextFileNo = getPlanFileUploadNo(planId);
 
-		PreparedStatement select = con
-				.prepareStatement("select count(*) from plan_data where plan_id = ? and data_name = ? group by plan_id;");
-		select.setInt(1, planId);
-		select.setString(2, fileName);
+//		PreparedStatement select = con
+//				.prepareStatement("select count(*) from plan_data where plan_id = ? and data_name = ? group by plan_id;");
+//		select.setInt(1, planId);
+//		select.setString(2, fileName);
+//
+//		ResultSet result = select.executeQuery();
 
-		ResultSet result = select.executeQuery();
-
-		if (!result.next()) {
 			// 新規作成
 			PreparedStatement insert = con
 					.prepareStatement("insert into plan_data (plan_id,data_no,data_name) values (?,?,?);");
@@ -1565,7 +1588,6 @@ public class SampleDao {
 			insert.setString(3, fileName);
 
 			insert.executeUpdate();
-		}
 
 		return nextFileNo;
 
@@ -1626,5 +1648,86 @@ public class SampleDao {
 
 		return delete.executeUpdate();
 	}
+
+	public List<PlanBean> planKeywordSearch(String keyword) throws SQLException {
+
+		PreparedStatement select = con
+				.prepareStatement("select * from plan p,users u where p.planner = u.user_id and plan_title like ? or plan_comment like ?;");
+
+		keyword.replaceAll("%","\\\\%").replaceAll("_","\\\\_");
+
+		select.setString(1, "%"+keyword+"%");
+		select.setString(2, "%"+keyword+"%");
+		ResultSet result = select.executeQuery();
+
+		ArrayList<PlanBean> table = new ArrayList<PlanBean>();
+		while (result.next()) {
+
+			PlanBean record = new PlanBean();
+			record.setPlanId(result.getInt("plan_id"));
+			record.setPlanner(result.getString("planner"));
+			record.setPlannerName(result.getString("u.last_name")
+					+ result.getString("u.first_name"));
+			record.setPlanTitle(result.getString("plan_title"));
+			record.setPlanDatetime(result.getDate("plan_datetime"));
+			record.setPlanComment(result.getString("plan_comment"));
+			record.setStartDate(result.getTimestamp("start_date"));
+			record.setEndDate(result.getTimestamp("end_date"));
+			record.setExecuteFlag(result.getInt("execute_flag"));
+
+			table.add(record);
+		}
+		return table;
+	}
+
+	public List<UserBean> getAllEmployeeId() throws SQLException {
+
+		PreparedStatement select = con
+				.prepareStatement("select * from employees e,users u where e.employee_id = u.user_id;");
+
+		ResultSet result = select.executeQuery();
+
+		ArrayList<UserBean> table = new ArrayList<UserBean>();
+		while (result.next()) {
+
+			UserBean record = new UserBean();
+			record.setUserId(result.getString("employee_id"));
+			record.setFirstName(result.getString("first_name"));
+			record.setLastName(result.getString("last_name"));
+
+			table.add(record);
+		}
+		return table;
+	}
+
+	public List<PlanBean> planPlannerSearch(String employeeId) throws SQLException {
+
+		PreparedStatement select = con
+				.prepareStatement("select * from plan p,users u where p.planner = u.user_id and planner = ?;");
+
+
+		select.setString(1, employeeId);
+		ResultSet result = select.executeQuery();
+
+		ArrayList<PlanBean> table = new ArrayList<PlanBean>();
+		while (result.next()) {
+
+			PlanBean record = new PlanBean();
+			record.setPlanId(result.getInt("plan_id"));
+			record.setPlanner(result.getString("planner"));
+			record.setPlannerName(result.getString("u.last_name")
+					+ result.getString("u.first_name"));
+			record.setPlanTitle(result.getString("plan_title"));
+			record.setPlanDatetime(result.getDate("plan_datetime"));
+			record.setPlanComment(result.getString("plan_comment"));
+			record.setStartDate(result.getTimestamp("start_date"));
+			record.setEndDate(result.getTimestamp("end_date"));
+			record.setExecuteFlag(result.getInt("execute_flag"));
+
+			table.add(record);
+		}
+		return table;
+	}
+
 
 }
