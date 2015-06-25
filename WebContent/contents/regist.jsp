@@ -9,12 +9,12 @@
 	}
 %>
 <!DOCTYPE html>
+<c:if test="${scriptMessage != null}" >${scriptMessage}</c:if>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>コンテンツ登録</title>
 	</head>
-	<c:if test="${scriptMessage != null}" >${scriptMessage}</c:if>
 	<body>
 		<form action="addition" method="post">
 			<table border="1">

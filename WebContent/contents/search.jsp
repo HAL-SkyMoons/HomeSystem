@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page import="jp.ac.hal.skymoons.security.session.SessionController"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	SessionController sessionController = new SessionController(request);
+	String url = sessionController.checkUserSession();
+	if(url != null) {
+		response.sendRedirect(url);
+	}
+%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -22,6 +30,11 @@
 					<td>ジャンル<br/>
 						<c:forEach items="${genreList}" var="j">
 							<input type="checkbox" name="genreId" value="${j.genreId}">${j.bigGenreName}-${j.genreName}<br/>
+						</c:forEach>
+					</td>
+					<td>大ジャンル<br/>
+						<c:forEach items="${bigGenreList}" var="j">
+							<input type="checkbox" name="bigGenreId" value="${j.bigGenreId}">${j.bigGenreName}<br/>
 						</c:forEach>
 					</td>
 					<td>社員

@@ -12,6 +12,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>企画登録確認</title>
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+<link rel="stylesheet" type="text/css"
+	href="../css/bootstrap-theme.min.css">
 </head>
 <%
 	Utility util = new Utility();
@@ -24,7 +27,8 @@
 
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH時mm分");
 
-	String implementationDate = sdf.format(plan.getImplementationDate());
+	String startDate = sdf.format(plan.getStartDate());
+	String endDate = sdf.format(plan.getEndDate());
 
 %>
 <body>
@@ -58,7 +62,10 @@
 				<th>実施予定日：</th>
 				<td>
 					<%
-						out.print(implementationDate);
+						out.print(startDate);
+						if(endDate!=null){
+							out.print("～"+endDate);
+						}
 					%>
 				</td>
 			</tr>
@@ -70,8 +77,10 @@
 					+ planTitle + "\">");
 			out.println("<input type=\"hidden\" name=\"planComment\" value=\""
 					+ planComment + "\">");
-			out.println("<input type=\"hidden\" name=\"implementationDate\" value=\""
-					+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(plan.getImplementationDate()) + "\">");
+			out.println("<input type=\"hidden\" name=\"startDate\" value=\""
+					+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(plan.getStartDate()) + "\">");
+			out.println("<input type=\"hidden\" name=\"endDate\" value=\""
+					+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(plan.getEndDate()) + "\">");
 		%>
 
 		<h3>登録ジャンル</h3>
