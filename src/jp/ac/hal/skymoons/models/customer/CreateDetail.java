@@ -9,12 +9,12 @@ import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.customer.CustomerDAO;
 
 /**
- * 顧客詳細情報の取得。
+ * 顧客詳細画面作成処理。
  * @author YAMAZAKI GEN
  * @since 2015/06/17
  * @version 1.0
  */
-public class DetailCustomer extends AbstractModel {
+public class CreateDetail extends AbstractModel {
 
 	@Override
 	public String doService(HttpServletRequest request,
@@ -26,7 +26,7 @@ public class DetailCustomer extends AbstractModel {
 			value = customerDAO.getCustomerDetail(request.getParameter("id").toString());
 		} catch(Exception e) {
 			e.printStackTrace();
-			System.out.println("顧客詳細情報の取得処理中に問題が発生しました。");
+			System.out.println("ERROR:顧客詳細情報の取得処理中に問題が発生しました。");
 		} finally {
 			customerDAO.close();
 		}

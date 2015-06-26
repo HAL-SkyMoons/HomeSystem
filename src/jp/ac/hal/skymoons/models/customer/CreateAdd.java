@@ -1,12 +1,12 @@
 package jp.ac.hal.skymoons.models.customer;
 
-import java.util.HashMap;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import jp.ac.hal.skymoons.beans.customer.CustomerUsersBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
+import jp.ac.hal.skymoons.daoes.customer.CustomerDAO;
 import jp.ac.hal.skymoons.security.session.SessionController;
 
 /**
@@ -15,7 +15,7 @@ import jp.ac.hal.skymoons.security.session.SessionController;
  * @since 2015/06/12
  * @version 1.0
  */
-public class AddCustomer extends AbstractModel {
+public class CreateAdd extends AbstractModel {
 
 	@Override
 	public String doService(HttpServletRequest request,
@@ -34,38 +34,60 @@ public class AddCustomer extends AbstractModel {
 			// 確認ボタンが押された
 			String message = "";
 			
-			HashMap<String, String> value = new HashMap<>();
-			value.put("company",	request.getParameter("company"));
-			value.put("lastname",	request.getParameter("lastname"));
-			value.put("firstname",	request.getParameter("firstname"));
-			value.put("id",			request.getParameter("id"));
-			value.put("password",	request.getParameter("password"));
-			value.put("password2",	request.getParameter("password2"));
+			CustomerUsersBean record = new CustomerUsersBean();
+			record.setUser_id(request.getParameter("id"));
+			record.setPassword(request.getParameter("password"));
+			record.setLast_name(request.getParameter("lastname"));
+			record.setFirst_name(request.getParameter("firstname"));
+			record.setCustomer_company(request.getParameter("company"));
 			
 			// 「企業名」の入力値チェック
-			if(checkInputString(value.get("company").toString(), 20, "「企業名」") != null) {
-				message += checkInputString(value.get("company").toString(), 20, "「企業名」");
+			if(checkInputString(record.getCustomer_company(), 20, "「企業名」") != null) {
+				message += checkInputString(record.getCustomer_company(), 20, "「企業名」");
 			}
 			
 			// 「姓」の入力値チェック
-			if(checkInputString(value.get("lastname").toString(), 6, "「性」") != null) {
-				message += checkInputString(value.get("lastname").toString(), 6, "「性」");
+			if(checkInputString(record.getLast_name(), 6, "「性」") != null) {
+				message += checkInputString(record.getLast_name(), 6, "「性」");
 			}
 			
 			// 「名」の入力値チェック
-			if(checkInputString(value.get("firstname").toString(), 6, "「名」") != null) {
-				message += checkInputString(value.get("firstname").toString(), 6, "「名」");
+			if(checkInputString(record.getFirst_name(), 6, "「名」") != null) {
+				message += checkInputString(record.getFirst_name(), 6, "「名」");
 			}
 			
 			// 「ログインID」の入力値チェック
-			if(checkInputString(value.get("id").toString(), 24, "「ログインID」") != null) {
-				message += checkInputString(value.get("id").toString(), 24, "「ログインID」");
+			if(checkInputString(record.getUser_id(), 24, "「ログインID」") != null) {
+				message += checkInputString(record.getUser_id(), 24, "「ログインID」");
+			} else {
+				
+				byte[] code = record.getUser_id().getBytes("UTF-8");
+				for(int i = 0; i < record.getUser_id().length(); i++) {
+					if(String.valueOf(record.getUser_id().substring(i, i + 1)).getBytes().length < 2) {
+						System.out.println(record.getUser_id().substring(i, i + 1) + ":半:" + Integer.toHexString(code[i]));
+					} else {
+						System.out.println(record.getUser_id().substring(i, i + 1) + ":全:" + Integer.toHexString(code[i]));
+					}
+				}
+				
+				// 「ログインID」の重複チェック
+				CustomerDAO customerDAO = null;
+				try {
+					customerDAO = new CustomerDAO();
+					if(customerDAO.checkUserId(record.getUser_id()) == true) {
+						// 重複あり
+						message += "<p>「ログインID」の" + record.getUser_id() + "は既に使用されていますので変更してください。</p>";
+					}
+				} catch(Exception e) {
+					e.printStackTrace();
+					System.out.print("ERROR:「ログインID」の重複チェック処理中に問題が発生しました。");
+				}
 			}
 			
 			// 「パスワード」の入力値チェック
-			if(value.get("password").length() < 8) {
+			if(record.getPassword().length() < 8) {
 				message += "<p>「パスワード」は8～24文字以内で入力してください。</p>";
-			} else if(value.get("password").equals(value.get("password2"))) {
+			} else if(record.getPassword().equals(request.getParameter("password2"))) {
 				// 一致する
 			} else {
 				// 一致しない
@@ -74,7 +96,7 @@ public class AddCustomer extends AbstractModel {
 			
 			HttpSession session = request.getSession();
 			session.setMaxInactiveInterval(60 * 5);
-			session.setAttribute("CustomerAddValue", value);
+			session.setAttribute("CustomerAddValue", record);
 			
 			// 入力値エラーチェック
 			if(message == "") {
@@ -105,7 +127,7 @@ public class AddCustomer extends AbstractModel {
 		if(value.equals("")) {
 			// 未入力
 			return "<p>" + word + "を入力してください。</p>";
-		} else {
+		} else {			
 			// 入力済み
 			// 最大文字数チェック
 			if(value.length() <= maxlength) {

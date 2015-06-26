@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import jp.ac.hal.skymoons.beans.customer.CustomerTestBean;
 import jp.ac.hal.skymoons.beans.customer.CustomerUsersBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
 
@@ -105,38 +104,17 @@ public class CustomerDAO {
 		
 		return list;
 	}
-
+	
 	/**
-	 * 顧客ユーザリストを取得する。
+	 * 指定の顧客ユーザIDの顧客ユーザ詳細１件を取得する。
+	 * @param customer_id
+	 * 顧客ユーザID
 	 * @return
-	 * 顧客ユーザリスト
 	 * @throws SQLException
 	 */
-	public List<CustomerTestBean> getCustomerList() throws SQLException {
-		String sql =	"SELECT * "
-					+	"FROM Customers AS cus "
-					+	"JOIN users "
-					+	"ON cus.customer_id = users.user_id "
-					+	"ORDER BY cus.customer_company";
-		PreparedStatement statement = con.prepareStatement(sql);
-		ResultSet resultSet = statement.executeQuery();
-		List<CustomerTestBean> result = new ArrayList<CustomerTestBean>();
-		if(resultSet != null) {
-			while(resultSet.next()) {
-				CustomerTestBean record = new CustomerTestBean();
-				record.setCustomer_id(resultSet.getString(1));
-				record.setCustomer_company(resultSet.getString(2));
-				record.setUser_id(resultSet.getString(3));
-				record.setPassword(resultSet.getString(4));
-				record.setLast_name(resultSet.getString(5));
-				record.setFirst_name(resultSet.getString(6));
-				record.setClass_flag(resultSet.getInt(7));
-				result.add(record);
-			}
-			return result;
-		} else {
-			return null;
-		}
+	public CustomerUsersBean getCustomerUsersDetail(String customer_id) throws SQLException {
+		CustomerUsersBean record = new CustomerUsersBean();
+		return record;
 	}
 	
 	/**
@@ -163,40 +141,67 @@ public class CustomerDAO {
 		value.put("password", result.getString(5));
 		return value;
 	}
+	
+	/**
+	 * 指定したユーザIDが、登録されているユーザIDと重複していないかチェックする。
+	 * @param userId
+	 * ユーザID
+	 * @return
+	 * false:重複無し<br />
+	 * true:重複有り
+	 * @throws SQLException 
+	 */
+	public Boolean checkUserId(String userId) throws SQLException {
+		String sql = "SELECT COUNT(*) AS count FROM users WHERE BINARY user_id = ?";
+		PreparedStatement preparedStatement = con.prepareStatement(sql);
+		preparedStatement.setString(1, userId);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		resultSet.next();
+		int count = resultSet.getInt("count");
+		if(count == 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 
 // ==========================================================================================
 //  INSERT
 // ==========================================================================================
 	
 	/**
-	 * データベースに顧客情報をINSERTする。
-	 * @param value
+	 * 顧客ユーザ情報を追加する。
+	 * @param record
+	 * 顧客ユーザ情報
 	 * @throws SQLException 
 	 */
-	public void insertCustomer(HashMap<String, String> value) throws SQLException {
-		String sql1 = "INSERT INTO"
-			+ " users(user_id, password, last_name, first_name, Class_flag)"
-			+ " VALUES(?, ?, ?, ?, 0)";
-		String sql2 = "INSERT INTO"
-			+ " customers(customer_id, customer_company)"
-			+ " VALUES(?, ?)";
+	public void insertCustomerUsers(CustomerUsersBean record) throws Exception {
+		String usersSQL =	"INSERT INTO users(user_id, password, last_name, first_name, Class_flag, delete_flag, lapse_flag)"
+						+	" VALUES(?, ?, ?, ?, 0, 0, 0)";
+		String customersSQL =	"INSERT INTO customers(customer_id, customer_company)"
+							+	" VALUES(?, ?)";
 		
-		this.con.setAutoCommit(false);
+		con.setAutoCommit(false);
 		try {
-			PreparedStatement preparedStatement = this.con.prepareStatement(sql1);
-			preparedStatement.setString(1, value.get("id").toString());
-			preparedStatement.setString(2, value.get("password").toString());
-			preparedStatement.setString(3, value.get("lastname").toString());
-			preparedStatement.setString(4, value.get("firstname").toString());
+			PreparedStatement preparedStatement = con.prepareStatement(usersSQL);
+			preparedStatement.setString(1, record.getUser_id());
+			preparedStatement.setString(2, record.getPassword());
+			preparedStatement.setString(3, record.getLast_name());
+			preparedStatement.setString(4, record.getFirst_name());
 			preparedStatement.executeUpdate();
-			preparedStatement = this.con.prepareStatement(sql2);
-			preparedStatement.setString(1, value.get("id").toString());
-			preparedStatement.setString(2, value.get("company").toString());
+		
+			preparedStatement = con.prepareStatement(customersSQL);
+			preparedStatement.setString(1, record.getUser_id());
+			preparedStatement.setString(2, record.getCustomer_company());
 			preparedStatement.executeUpdate();
-			this.con.commit();
+			
+			con.commit();
 		} catch(Exception e) {
 			e.printStackTrace();
-			this.con.rollback();
+			System.out.println("ERROR:データベース追加処理中に問題が発生しました。ロールバックを実行します。");
+			con.rollback();
+			System.out.println("ロールバックが完了しました。");
+			throw new RuntimeException("ERROR:データベース追加処理中に問題が発生しました。");
 		}
 	}
 	

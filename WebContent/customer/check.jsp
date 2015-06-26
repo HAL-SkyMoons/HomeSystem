@@ -1,18 +1,21 @@
-<%@page import="java.util.HashMap"%>
 <%@page import="jp.ac.hal.skymoons.security.session.SessionController"%>
+<%@page import="jp.ac.hal.skymoons.beans.customer.CustomerUsersBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%!
-	@SuppressWarnings("unchecked")
-	HashMap<String, String> getValue(HttpSession session) {
-		return (HashMap<String, String>)session.getAttribute("CustomerAddValue");
-	}
-%>
 <%
-	HashMap<String, String> value = null;
-	if(session.getAttribute("CustomerAddValue") != null) {
-		value = getValue(session);
-	} else {
+	// セッションチェック
+	SessionController sessionController = new SessionController(request);
+	if(sessionController.checkAdministratorSession2() == false) {
+		// セッションが無効
+		response.sendRedirect(sessionController.getRedirectSessionErrorPageUrl());
+		return;
+	}
+
+	// セッションチェック
+	CustomerUsersBean record = (CustomerUsersBean)session.getAttribute("CustomerAddValue");
+	if(record == null) {
+		// セッションが無効
 		response.sendRedirect("/HomeSystem/fc/customer/add");
+		return;
 	}
 %>
 <!DOCTYPE html>
@@ -24,13 +27,13 @@
 	<body>
 		<h1>確認</h1>
 		
-		<p>企業名=><%= value.get("company").toString() %></p>
-		<p>姓=><%= value.get("lastname").toString() %></p>
-		<p>名=><%= value.get("firstname").toString() %></p>
-		<p>ログインID=><%= value.get("id").toString() %></p>
+		<p>企業名=><%= record.getCustomer_company() %></p>
+		<p>姓=><%= record.getLast_name() %></p>
+		<p>名=><%= record.getFirst_name() %></p>
+		<p>ログインID=><%= record.getUser_id() %></p>
 		<p>パスワード=>
 <%
-	for(int i = 0; i < value.get("password").toString().length(); i++) {
+	for(int i = 0; i < record.getPassword().length(); i++) {
 		out.print("*");
 	}
 %>
