@@ -21,6 +21,10 @@
 // 	function ImageUp(employeeId) {
 // 		window.open("/HomeSystem/fc/Home?toUser="+employeeId,"window2","width=1000,height=500");
 // 	}
+
+	//今後追加するもの
+	//社員プロフィール変更(顔写真)
+	//
 	$(function() {
 		$(".iframe").colorbox({
 			iframe : true,
