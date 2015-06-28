@@ -10,13 +10,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>企画一覧</title>
+<link rel="stylesheet" type="text/css" href="../css/reset.css">
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
 <link rel="stylesheet" type="text/css"
 	href="../css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css" href="../css/PlanList.css">
 </head>
 <body>
 	<form action="/HomeSystem/fc/PlanList" method="post">
-		<label>キーワード：<input type="text" name="keyword" value="<% if(request.getAttribute("searchKeyword")!=null)out.print(request.getAttribute("searchKeyword")); %>"></label><br>
+		<label>キーワード：<input type="text" name="keyword"
+			value="<%if (request.getAttribute("searchKeyword") != null)
+				out.print(request.getAttribute("searchKeyword"));%>"></label><br>
 		<%
 			ArrayList<GenreBean> genreList = (ArrayList<GenreBean>) request
 					.getAttribute("genreList");
@@ -58,23 +62,49 @@
 
 			}
 		%>
-		<br>
-		企画者：
-		<select name="planner">
+		<br> 企画者： <select name="planner">
 			<option value="">--指定なし--
-			<%
-				for(UserBean employee :employeeList){
-					if(employee.getUserId().equals(request.getAttribute("searchPlanner"))){
-						out.println("<option value=\""+ employee.getUserId() +"\" selected>"+ employee.getLastName() + employee.getFirstName());
-					}else{
-						out.println("<option value=\""+ employee.getUserId() +"\">"+ employee.getLastName() + employee.getFirstName());
+				<%
+				for (UserBean employee : employeeList) {
+					if (employee.getUserId().equals(
+							request.getAttribute("searchPlanner"))) {
+						out.println("<option value=\"" + employee.getUserId()
+								+ "\" selected>" + employee.getLastName()
+								+ employee.getFirstName());
+					} else {
+						out.println("<option value=\"" + employee.getUserId()
+								+ "\">" + employee.getLastName()
+								+ employee.getFirstName());
 					}
 
 				}
-
 			%>
+
 		</select> <br> <input type="submit" name="search" value="検索">
 	</form>
+	<hr>
+	<div id="list">
+		<div class="data">
+			<div class="title">2泊3日湘南キャンプ</div>
+			<div class="left">
+
+				<div class="name">企画者：大河要祐</div>
+				<div class="period">期間：2015年8月1日～2015年8月3日</div>
+				<div class="genre">
+					<span class="col">ジャンル：</span><a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,
+				</div>
+			</div>
+			<div class="right">
+				<div class="evaluation">
+					<span class="like"><img src="../images/icon/like.png">いいね:100</span>/<span class="dislike"><img src="../images/icon/dislike.png">ダメだね：100</span>
+				</div>
+			</div>
+
+
+
+		</div>
+	</div>
+
 	<hr>
 	<table>
 		<tr>
