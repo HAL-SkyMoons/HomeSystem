@@ -9,10 +9,10 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html">
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
 <title>企画一覧</title>
 <link rel="stylesheet" type="text/css" href="../css/reset.css">
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
@@ -47,32 +47,22 @@
 			<tr>
 				<th>キーワード</th>
 				<form action="/HomeSystem/fc/PlanList" method="post">
-					<td class="searchDataColumn">
-
-						<input type="text" class="keyword" name="keyword" value="${searchKeyword}">
-
-
-					</td>
-					<td class="searchBtnColumn">
-						<input type="submit" name="search" class="btn btn-2 btn-2c searchBtn" value="検索">
-
-					</td>
+					<td class="searchDataColumn"><input type="text" class="keyword" name="keyword" value="${searchKeyword}"></td>
+					<td class="searchBtnColumn"><input type="submit" name="search" class="btn btn-2 btn-2c searchBtn" value="検索"></td>
 				</form>
 			</tr>
 			<tr>
 				<th>詳細検索</th>
 				<form action="/HomeSystem/fc/PlanSearch" method="post">
-				<td class="searchDetailColumn">
-					<div class="detailData">ジャンル：<span class="detailInside">JavaJavaJava</span>,<span class="detailInside">JavaJavaJava</span>,<span class="detailInside">phpphpphpphp</span>,<span class="detailInside">PythonPythonPython</span>,<span class="detailInside">PythonPythonPython</span></div>
-					<div class="detailData">ジャンル：<span class="detailInside">JavaJava</span>,<span class="detailInside">php</span>,<span class="detailInside">PythonPythonPython</span></div>
-					<div class="detailData">ジャンル：<span class="detailInside">Java</span>,<span class="detailInside">php</span>,<span class="detailInside">Python</span></div>
-					<div class="detailData">ジャンル：<span class="detailInside">Java</span>,<span class="detailInside">php</span>,<span class="detailInside">Python</span></div>
-				</td>
-				<td class="searchBtnColumn">
-
-					<input type="submit" name="searchDetail" class="btn btn-2 btn-2c searchDetailBtn" value="詳細検索">
-
-				</td>
+					<td class="searchDetailColumn">
+						<div class="detailData">
+							<span class="detailTitle">ジャンル:</span><span class="detailInside">Java</span>,<span class="detailInside">php</span>,<span class="detailInside">Python</span>
+						</div>
+						<div class="detailData">
+							<span class="detailTitle">ジャンル:</span><span class="detailInside">Java</span>,<span class="detailInside">php</span>,<span class="detailInside">Python</span>
+						</div>
+					</td>
+					<td class="searchBtnColumn"><input type="submit" name="searchDetail" class="btn btn-2 btn-2c searchDetailBtn" value="詳細検索"></td>
 				</form>
 			</tr>
 

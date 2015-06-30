@@ -8,6 +8,7 @@ body {
 .wrapper {
 	width: 800px;
 	margin: 0 auto;
+	margin-top: 20px;
 }
 
 .search {
@@ -19,8 +20,10 @@ body {
 
 th {
 	background-color: #F29900;
-	width: 15%; text-align : center;
+	width: 15%;
+	text-align: center;
 	vertical-align: middle;
+	border-bottom: 1px solid #666;
 	text-align: center
 }
 
@@ -28,6 +31,7 @@ th {
 	text-align: center;
 	width: 70%;
 	vertical-align: middle;
+	border-bottom: 1px solid #666;
 }
 
 .searchDetailColumn {
@@ -36,19 +40,21 @@ th {
 }
 
 .detailData {
-/* 	word-break: keep-all; */
 	margin-left: 5px;
 	display: inline-block;
 }
 
-.detailInsideData {
-	word-break: keep-all;
+.detailInside {
+	word-break: break-all;
+	word-wrap: break-word;
+	display: inline-block;
 }
 
 .searchBtnColumn {
 	text-align: center;
 	width: 15%;
 	min-width: 15%;
+	border-bottom: 1px solid #666;
 	vertical-align: middle;
 }
 
@@ -66,6 +72,10 @@ th {
 	margin-top: 10%;
 }
 
+.detailTitle {
+	color: #F29900;
+}
+
 #list {
 	width: 800px;
 }
@@ -73,9 +83,6 @@ th {
 .data {
 	padding: 5px;
 	width: 100%;
-	min-height: 100%;
-	height: auto;
-	height: 100%;
 	border: 1px solid black;
 	overflow: hidden;
 	margin-top: 10px;
@@ -133,7 +140,6 @@ th {
 
 .evaluation {
 	width: auto;
-	height: 100%;
 }
 
 img {
