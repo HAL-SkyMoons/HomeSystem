@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import jp.ac.hal.skymoons.beans.GenreBean;
 import jp.ac.hal.skymoons.beans.PlanBean;
+import jp.ac.hal.skymoons.beans.PlanPointsBean;
 import jp.ac.hal.skymoons.beans.UserBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.SampleDao;
@@ -93,10 +94,16 @@ public class PlanList extends AbstractModel{
 			List<GenreBean> genreList = dao.genreAll();
 			List<UserBean> employeeList = dao.getAllEmployeeId();
 
+			HashMap<Integer, PlanPointsBean> pointMap = dao.planPointAll();
+			HashMap<Integer, List<GenreBean>> genreMap = dao.planGenreAll();
+
+
 			dao.close();
 			request.setAttribute("planList", planList);
 			request.setAttribute("genreList", genreList);
 			request.setAttribute("employeeList", employeeList);
+			request.setAttribute("pointMap", pointMap);
+			request.setAttribute("genreMap", genreMap);
 
 
 			return "/pages/PlanList.jsp"	;

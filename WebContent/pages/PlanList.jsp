@@ -1,10 +1,15 @@
+<%@page import="java.util.Iterator"%>
+<%@page import="jp.ac.hal.skymoons.beans.PlanPointsBean"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="jp.ac.hal.skymoons.beans.UserBean"%>
 <%@page import="jp.ac.hal.skymoons.beans.GenreBean"%>
 <%@page import="jp.ac.hal.skymoons.beans.PlanBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -13,119 +18,140 @@
 <link rel="stylesheet" type="text/css" href="../css/reset.css">
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
 <link rel="stylesheet" type="text/css"
-	href="../css/bootstrap-theme.min.css">
+	href="../css/bootstrap-theme.min.css"
+>
 <link rel="stylesheet" type="text/css" href="../css/PlanList.css">
+<script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
+
+<script type="text/javascript">
+	function Post(planId) {
+		form1.detail.value = "detail";
+		form1.planId.value = planId;
+		form1.submit();
+	}
+
+	$(document).ready(function() {
+
+		//Hide (Collapse) the toggle containers on load
+		$(".toggle_container").hide();
+
+		//Switch the "Open" and "Close" state per click then slide up/down (depending on open/close state)
+		$(".trigger").click(function() {
+			$(this).toggleClass("active").next().slideToggle("slow");
+			return false; //Prevent the browser jump to the link anchor
+		});
+
+	});
+</script>
 </head>
 <body>
-	<form action="/HomeSystem/fc/PlanList" method="post">
-		<label>キーワード：<input type="text" name="keyword"
-			value="<%if (request.getAttribute("searchKeyword") != null)
-				out.print(request.getAttribute("searchKeyword"));%>"></label><br>
-		<%
-			ArrayList<GenreBean> genreList = (ArrayList<GenreBean>) request
-					.getAttribute("genreList");
-			String[] searchGenre = (String[]) request
-					.getAttribute("searchGenre");
-			ArrayList<UserBean> employeeList = (ArrayList<UserBean>) request
-					.getAttribute("employeeList");
+	<div class="wrapper">
+		<form action="/HomeSystem/fc/PlanList" method="post">
+			<label>キーワード：<input type="text" name="keyword"
+				value="<%if (request.getAttribute("searchKeyword") != null)
+		out.print(request.getAttribute("searchKeyword"));%>"
+			></label><br> <input type="submit" name="search" value="検索">
+		</form>
+		<form action="/HomeSystem/fc/PlanSearch" method="post">
+            <input type="submit" name="searchDetail" value="詳細検索">
+        </form>
+		<hr>
 
-			int genreIndex = 0;
-			int genreMaxIndex = 0;
+		<div id="list">
+			<div class="data">
+				<div class="title">2泊3日湘南キャンプ</div>
+				<div class="left">
 
-			if (searchGenre != null)
-				genreMaxIndex = searchGenre.length;
+					<div class="name">企画者：大河要祐</div>
+					<div class="period">期間：2015年8月1日～2015年8月3日</div>
+					<div class="genre">
+						<span class="col">ジャンル：</span><a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,
+					</div>
+				</div>
+				<div class="right">
+					<div class="evaluation">
+						<span class="like"><img src="../images/icon/like.png">いいね:100</span>/<span
+							class="dislike"
+						><img src="../images/icon/dislike.png">ダメだね：100</span>
+					</div>
+				</div>
+			</div>
+			<%
+			    ArrayList<PlanBean> planList = (ArrayList<PlanBean>) request
+					    .getAttribute("planList");
+			    HashMap<Integer, PlanPointsBean> pointMap = (HashMap<Integer, PlanPointsBean>) request
+					    .getAttribute("pointMap");
+			    HashMap<Integer, List<GenreBean>> genreMap = (HashMap<Integer, List<GenreBean>>) request
+					    .getAttribute("genreMap");
+			    SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH時mm分");
+			    for (PlanBean plan : planList) {
+					out.println("<div class=\"data\">");
+					out.println("<div class=\"title\"><a href=\"javascript:Post("
+						+ plan.getPlanId() + ");\">" + plan.getPlanTitle()
+						+ "</a></div>");
+					out.println("<div class=\"left\">");
+					out.println("<div class=\"name\">企画者：" + plan.getPlannerName()
+						+ "</div>");
 
-			for (GenreBean genre : genreList) {
-				//検索ジャンル指定なし　または　既存検索ジャンル出力済み
-				if (genreMaxIndex == genreIndex) {
-					out.println("<label><input type=\"checkbox\" name=\"genre\" value=\""
+					out.println("<div class=\"period\">期間："
+						+ sdf.format(plan.getStartDate()) + "～"
+						+ sdf.format(plan.getEndDate()) + "</div>");
+
+					out.println("<div class=\"genre\">");
+					out.println("<span class=\"col\">ジャンル：</span>");
+
+					if (genreMap.containsKey(plan.getPlanId())) {
+					    Iterator iterator = genreMap.get(plan.getPlanId())
+						    .iterator();
+					    while (iterator.hasNext()) {
+						GenreBean genre = (GenreBean) iterator.next();
+						out.print("<a href=\"/HomeSystem/fc/PlanList?search=検索&genre="
 							+ genre.getGenreId()
 							+ "\">"
-							+ genre.getGenreName()
-							+ "</label>");
-				} else {
-					if (Integer.valueOf(searchGenre[genreIndex]) == genre
-							.getGenreId()) {
-						out.println("<label><input type=\"checkbox\" name=\"genre\" value=\""
-								+ genre.getGenreId()
-								+ "\" checked=\"checked\">"
-								+ genre.getGenreName() + "</label>");
-						genreIndex++;
+							+ genre.getGenreName() + "</a>");
+						if (iterator.hasNext()) {
+						    out.print(",");
+						}
+					    }
+
 					} else {
-						out.println("<label><input type=\"checkbox\" name=\"genre\" value=\""
-								+ genre.getGenreId()
-								+ "\">"
-								+ genre.getGenreName() + "</label>");
+					    out.println("なし");
 					}
 
-				}
+					out.println("</div>");//genre
 
-			}
-		%>
-		<br> 企画者： <select name="planner">
-			<option value="">--指定なし--
-				<%
-				for (UserBean employee : employeeList) {
-					if (employee.getUserId().equals(
-							request.getAttribute("searchPlanner"))) {
-						out.println("<option value=\"" + employee.getUserId()
-								+ "\" selected>" + employee.getLastName()
-								+ employee.getFirstName());
-					} else {
-						out.println("<option value=\"" + employee.getUserId()
-								+ "\">" + employee.getLastName()
-								+ employee.getFirstName());
+					out.println("</div>");//left
+					out.println("<div class=\"right\">");
+
+					out.println("<div class=\"evaluation\">");
+
+					int like = 0;
+					int dislike = 0;
+
+					if (pointMap.containsKey(plan.getPlanId())) {
+					    like = pointMap.get(plan.getPlanId()).getGoodCount();
+					    dislike = pointMap.get(plan.getPlanId()).getBadCount();
 					}
 
-				}
+					out.println("<span class=\"like\"><img src=\"../images/icon/like.png\">いいね:"
+						+ like + "</span>");
+					out.println("<span class=\"dislike\"><img src=\"../images/icon/dislike.png\">ダメだね："
+						+ dislike + "</span>");
+
+					out.println("</div>");//evaluation
+
+					out.println("</div>");//right
+
+					out.println("</div>");//data
+			    }
 			%>
-
-		</select> <br> <input type="submit" name="search" value="検索">
-	</form>
-	<hr>
-	<div id="list">
-		<div class="data">
-			<div class="title">2泊3日湘南キャンプ</div>
-			<div class="left">
-
-				<div class="name">企画者：大河要祐</div>
-				<div class="period">期間：2015年8月1日～2015年8月3日</div>
-				<div class="genre">
-					<span class="col">ジャンル：</span><a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,<a>キャンプ</a>,<a>海</a>,
-				</div>
-			</div>
-			<div class="right">
-				<div class="evaluation">
-					<span class="like"><img src="../images/icon/like.png">いいね:100</span>/<span class="dislike"><img src="../images/icon/dislike.png">ダメだね：100</span>
-				</div>
-			</div>
-
-
-
 		</div>
+		<form name="form1" method="post" action="/HomeSystem/fc/PlanDetail">
+			<input type="hidden" name="detail"> <input type="hidden"
+				name="planId"
+			>
+		</form>
+		<hr>
 	</div>
-
-	<hr>
-	<table>
-		<tr>
-			<th>企画名</th>
-			<th>企画者</th>
-			<th>企画日</th>
-			<th>詳細</th>
-		</tr>
-		<%
-			ArrayList<PlanBean> planList = (ArrayList<PlanBean>) request
-					.getAttribute("planList");
-			for (PlanBean plan : planList) {
-				out.println("<tr>");
-				out.println("<td>" + plan.getPlanTitle() + "</td>");
-				out.println("<td>" + plan.getPlannerName() + "</td>");
-				out.println("<td>" + plan.getPlanDatetime() + "</td>");
-				out.println("<td><form action=\"/HomeSystem/fc/PlanDetail\" method=\"post\"><input type=\"submit\" name=\"detail\" value=\"詳細\"><input type=\"hidden\" name=\"planId\" value=\""
-						+ plan.getPlanId() + "\"></form></td>");
-				out.println("</tr>");
-			}
-		%>
-	</table>
 </body>
 </html>

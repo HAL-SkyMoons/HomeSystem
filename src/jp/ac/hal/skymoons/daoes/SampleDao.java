@@ -14,6 +14,7 @@ import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 
 import jp.ac.hal.skymoons.beans.BatchBean;
+import jp.ac.hal.skymoons.beans.BigGenreBean;
 import jp.ac.hal.skymoons.beans.CommentBean;
 import jp.ac.hal.skymoons.beans.ContentGenreBean;
 import jp.ac.hal.skymoons.beans.DepartmentBean;
@@ -29,6 +30,7 @@ import jp.ac.hal.skymoons.beans.GenreBean;
 import jp.ac.hal.skymoons.beans.HomeBean;
 import jp.ac.hal.skymoons.beans.PlanBean;
 import jp.ac.hal.skymoons.beans.PlanPointBean;
+import jp.ac.hal.skymoons.beans.PlanPointsBean;
 import jp.ac.hal.skymoons.beans.SampleBean;
 import jp.ac.hal.skymoons.beans.UserBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
@@ -1117,6 +1119,52 @@ public class SampleDao {
 	return record;
     }
 
+    public HashMap<Integer, PlanPointsBean> planPointAll()
+	    throws SQLException {
+
+	PreparedStatement select = con
+		.prepareStatement("select plan_id,count(point = 1 or null),count(point = 3 or null) from plan_point group by plan_id ;");
+
+	ResultSet result = select.executeQuery();
+
+
+	HashMap<Integer, PlanPointsBean> pointMap = new HashMap<Integer, PlanPointsBean>();
+
+	while (result.next()) {
+	    PlanPointsBean record = new PlanPointsBean();
+	    record.setPlanId(result.getInt("plan_id"));
+	    record.setGoodCount(result.getInt("count(point = 1 or null)"));
+	    record.setBadCount(result.getInt("count(point = 3 or null)"));
+
+	    pointMap.put(record.getPlanId(), record);
+	}
+
+	return pointMap;
+    }
+
+    public HashMap<Integer, List<GenreBean>> planGenreAll()
+	    throws SQLException {
+
+
+	PreparedStatement select = con
+		.prepareStatement("select plan_id from plan;");
+
+	ResultSet result = select.executeQuery();
+
+
+	HashMap<Integer, List<GenreBean>> genreMap = new HashMap<Integer, List<GenreBean>>();
+
+	while (result.next()) {
+
+	    int planId = result.getInt("plan_id");
+	    List<GenreBean> genreList = planGenreList(planId);
+
+	    genreMap.put(planId, genreList);
+	}
+
+	return genreMap;
+    }
+
     /**
      * 企画評価数取得
      *
@@ -1926,6 +1974,27 @@ public class SampleDao {
 	    return 0;
 	}
 
+    }
+
+
+    public List<BigGenreBean> getAllGenre() throws SQLException {
+
+	PreparedStatement select = con
+		.prepareStatement("select * from big_genre;");
+
+	ResultSet result = select.executeQuery();
+
+	ArrayList<BigGenreBean> table = new ArrayList<BigGenreBean>();
+	while (result.next()) {
+
+	    BigGenreBean record = new BigGenreBean();
+
+	    record.setBigGenreId(result.getInt("big_genre_id"));
+	    record.setBigGenreName(result.getString("big_genre_name"));
+
+	    table.add(record);
+	}
+	return table;
     }
 
 }
