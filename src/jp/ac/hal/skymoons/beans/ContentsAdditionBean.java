@@ -11,7 +11,7 @@ public class ContentsAdditionBean implements Serializable {
 	private int homeContentId;
 	private String homeContentTitle;
 	private String homeContentComment;
-	private String homeContentDatetime;
+	private String startDatetime;
 	private String employeeId;
 	private String firstName;
 	private String lastName;

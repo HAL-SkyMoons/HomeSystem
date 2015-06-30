@@ -35,15 +35,16 @@ public class ContentsListDao {
 		this.con = con;
 	}
 
-	public ArrayList<ContentsListBean> selectContents(String titleKeyword, String commentKeyword, String employeeId, ArrayList<Integer> genreId, ArrayList<Integer> bigGenreId, String orderColumn, String orderMode) throws SQLException {
+	public ArrayList<ContentsListBean> selectContents(String keyword, String employeeId, ArrayList<Integer> genreId, ArrayList<Integer> bigGenreId, String orderColumn, String orderMode) throws SQLException {
 		//SQLの生成
-		String contentsSql = "select * from home_contents hc, home_genre hg, genre g where hc.delete_flag != '1' and hc.home_content_id = hg.home_content_id and hg.genre_id = g.genre_id ";
+		String contentsSql = "select * from home_contents hc, home_genre hg, genre g, users u "
+				+ "where hc.delete_flag != '1' "
+				+ "and hc.home_content_id = hg.home_content_id "
+				+ "and hg.genre_id = g.genre_id "
+				+ "and u.user_id = hc.employee_id ";
 		String sqlword = "and ";
-		if(titleKeyword != null && titleKeyword.length() > 0){
-			contentsSql += sqlword + "hc.home_content_title like ? ";
-		}
-		if(commentKeyword != null && commentKeyword.length() > 0){
-			contentsSql += sqlword + "hc.home_content_comment like ? ";
+		if(keyword != null && keyword.length() > 0){
+			contentsSql += sqlword + "hc.home_content_title like ? or hc.home_content_comment like ? ";
 		}
 		if(employeeId != null && employeeId.length() > 0){
 			contentsSql += sqlword + "hc.employee_id = ? ";
@@ -69,23 +70,17 @@ public class ContentsListDao {
 		
 		//並び替え
 		if(orderColumn == null || orderColumn.length() <= 0){
-			orderColumn = "home_content_id";
+			orderColumn = "hc.home_content_id";
 		}
-		if(orderMode == null || orderMode.length() <= 0){
-			orderMode = "ASC";
-		}
-		contentsSql += "order by hc." + orderColumn + " " + orderMode + ";";
+		contentsSql += "order by " + orderColumn + ";";
 		
 		PreparedStatement contentsPst = con.prepareStatement(contentsSql);
 		int setCnt = 1;
-		System.out.println(contentsSql);
-		if(titleKeyword != null && titleKeyword.length() > 0){
-			contentsPst.setString(setCnt, "%" + titleKeyword + "%");
-			setCnt++;
-		}
-		if(commentKeyword != null && commentKeyword.length() > 0){
-			contentsPst.setString(setCnt, "%" + commentKeyword + "%");
-			setCnt++;
+		System.out.println("生成SQL[" + contentsSql + "]");
+		if(keyword != null && keyword.length() > 0){
+			contentsPst.setString(setCnt, "%" + keyword + "%");
+			contentsPst.setString(setCnt + 1, "%" + keyword + "%");
+			setCnt += 2;
 		}
 		if(employeeId != null && employeeId.length() > 0){
 			contentsPst.setString(setCnt, employeeId);
@@ -116,7 +111,7 @@ public class ContentsListDao {
 			listBean.setHomeContentId(homeContentId);
 			listBean.setHomeContentTitle(contentsResult.getString("home_content_title"));
 			listBean.setHomeContentComment(contentsResult.getString("home_content_comment"));
-			listBean.setHomeContentDatetime(contentsResult.getString("home_content_datetime"));
+			listBean.setStartDatetime(contentsResult.getString("start_datetime"));
 			listBean.setEmployeeId(contentsResult.getString("employee_id"));
 			//listBean.setDeleteFlag(contentsResult.getInt("delete_flag"));
 			

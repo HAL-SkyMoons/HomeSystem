@@ -19,14 +19,12 @@
 		<form action="../../fc/contents/list" method="post">
 			<table border="1">
 				<tr>
-					<td>記事名検索ワード</td>
-					<td>記事内容検索ワード</td>
+					<td>検索ワード</td>
 					<td>ジャンル選択</td>
 					<td>投稿社員</td>
 				</tr>
 				<tr>
-					<td>キーワード：<input type="text" name="titleKeyword"/></td>
-					<td>キーワード：<input type="text" name="commentKeyword"/></td>
+					<td>キーワード：<input type="text" name="keyword"/></td>
 					<td>ジャンル<br/>
 						<c:forEach items="${genreList}" var="j">
 							<input type="checkbox" name="genreId" value="${j.genreId}">${j.bigGenreName}-${j.genreName}<br/>
@@ -47,15 +45,22 @@
 					</td>
 				</tr>
 				<tr>
-					<td>順序
-						<input type="radio" name="orderColumn" value="home_content_id" checked/>作成順
-						<input type="radio" name="orderColumn" value="home_content_datetime"/>日付順
-						<input type="radio" name="orderColumn" value="home_content_title"/>タイトル順
-						<input type="radio" name="orderColumn" value="employee_id"/>社員順
+					<td>並び替え
+						<select name="orderColumn">
+							<option value="hc.home_content_id asc" selected>作成新しい順</option>
+							<option value="hc.home_content_id desc">作成古い順</option>
+							<option value="hc.start_datetime asc">開始日時新しい順</option>
+							<option value="hc.start_datetime desc">開始日時古い順</option>
+							<option value="hc.end_datetime asc">終了日新しい順</option>
+							<option value="hc.end_datetime desc">終了日古い順</option>
+							<option value="hc.home_content_title asc">タイトル昇順</option>
+							<option value="hc.home_content_title desc">タイトル降順</option>
+							<option value="u.first_name, u.last_name asc">社員名昇順</option>
+							<option value="u.first_name, u.last_name desc">社員名降順</option>
+						</select>
 					</td>
 					<td>
-						<input type="radio" name="orderMode" value="asc" checked/>昇順
-						<input type="radio" name="orderMode" value="desc"/>降順
+						<input type="checkbox" name="contentEnded"/>終了したものも検索
 					</td>
 					<td><input type="submit" value="検索"></td>
 				</tr>

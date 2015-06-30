@@ -44,7 +44,7 @@ public class ContentsSearchDao {
 		//戻り値のListを生成
 		ArrayList<ContentsEmployeeBean> employeeList = new ArrayList<>();
 		//コンテンツの取得
-		PreparedStatement employeePst = con.prepareStatement("select * from employees, users where employees.employee_id = users.user_id;");
+		PreparedStatement employeePst = con.prepareStatement("select * from employees, users where employees.employee_id = users.user_id order by users.first_name, users.last_name asc;");
 		ResultSet employeeResult = employeePst.executeQuery();
 		while (employeeResult.next()) {
 			ContentsEmployeeBean employeeBean = new ContentsEmployeeBean();

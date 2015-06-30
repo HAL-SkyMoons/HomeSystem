@@ -17,8 +17,7 @@ public class ContentsListModel extends AbstractModel{
 		// TODO Auto-generated method stub
 		
 		//キーワードの取得
-		String titleKeyword = request.getParameter("titleKeyword");
-		String commentKeyword = request.getParameter("commentKeyword");
+		String keyword = request.getParameter("keyword");
 		
 		//社員IDの取得
 		String employeeId = request.getParameter("employeeId");
@@ -50,7 +49,7 @@ public class ContentsListModel extends AbstractModel{
 		
 		//検索に使用するDAOを選択しRequestにコンテンツを設定
 		ArrayList<ContentsListBean> resultData = null;
-		resultData = dao.selectContents(titleKeyword, commentKeyword, employeeId, genreId, bigGenreId, orderColumn, orderMode);
+		resultData = dao.selectContents(keyword, employeeId, genreId, bigGenreId, orderColumn, orderMode);
 		
 		//結果をリクエストに保存
 		request.setAttribute("contentsList",resultData);

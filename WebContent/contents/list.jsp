@@ -35,7 +35,7 @@
 						コンテンツ名：${i.homeContentTitle}
 					</a>
 				</td>
-				<td>実施日時：${i.homeContentDatetime}</td>
+				<td>実施日時：${i.startDatetime}</td>
 				<td>投稿者名：<a href="./list?employeeId=${i.employeeId}">${i.firstName}${i.lastName}</a></td>
 				<td>大ジャンル：
 					<c:set var="cnt" value="0"/>

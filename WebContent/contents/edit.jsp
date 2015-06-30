@@ -26,7 +26,7 @@
 			<table border="1">
 				<tr>
 					<td>コンテンツ名：<input type="text" name="homeContentTitle" value="${i.homeContentTitle}"></td>
-					<td>実施日時：${i.homeContentDatetime}<br/>
+					<td>実施日時：${i.startDatetime}<br/>
 						<select name="startYear">
 							<c:forEach begin="1950" end="2020" step="1" varStatus="status">
 								<option value="${status.index}">${status.index}</option>
@@ -59,8 +59,8 @@
 						分
 					</td>
 					<td>終了日：
-						<c:if test="${i.endDate != null}" >${i.endDate}<br/></c:if>
-						<c:if test="${i.endDate == null}" >未定<br/></c:if>
+						<c:if test="${i.endDatetime != null}" >${i.endDatetime}<br/></c:if>
+						<c:if test="${i.endDatetime == null}" >未定<br/></c:if>
 						<input type="checkbox" name="addEndDate" value="true"/>終了日を確定する
 						<br/>
 						<select name="endYear">

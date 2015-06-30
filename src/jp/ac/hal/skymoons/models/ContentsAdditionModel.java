@@ -28,8 +28,8 @@ public class ContentsAdditionModel extends AbstractModel{
 			String day = request.getParameter("contentsDay");
 			String hour = request.getParameter("contentsHour");
 			String minute = request.getParameter("contentsMinute");
-			String contentsDatetime = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":00";		
-			additionBean.setHomeContentDatetime(contentsDatetime);
+			String startDatetime = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":00";		
+			additionBean.setStartDatetime(startDatetime);
 	
 			//コンテンツタイトル
 			additionBean.setHomeContentTitle(request.getParameter("homeContentTitle"));

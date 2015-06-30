@@ -60,9 +60,9 @@ public class ContentsDetailDao {
 			detailBean.setHomeContentTitle(contentsResult.getString("home_content_title"));
 			detailBean.setHomeContentComment(Utility.nlToBR(contentsResult.getString("home_content_comment")));
 			//detailBean.setHomeContentComment(contentsResult.getString("home_content_comment"));
-			detailBean.setHomeContentDatetime(contentsResult.getString("home_content_datetime"));
+			detailBean.setStartDatetime(contentsResult.getString("start_datetime"));
 			detailBean.setEmployeeId(contentsResult.getString("employee_id"));
-			detailBean.setEndDate(contentsResult.getString("end_date"));
+			detailBean.setEndDatetime(contentsResult.getString("end_datetime"));
 			detailBean.setDeleteFlag(contentsResult.getInt("delete_flag"));
 			
 			//名前の取得

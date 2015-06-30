@@ -32,7 +32,7 @@ public class ContentsUpdateModel extends AbstractModel{
 			String startHour = request.getParameter("startHour");
 			String startMinute = request.getParameter("startMinute");
 			String startDatetime = startYear + "-" + startMonth + "-" + startDay + " " + startHour + ":" + startMinute + ":00";		
-			updateBean.setHomeContentDatetime(startDatetime);
+			updateBean.setStartDatetime(startDatetime);
 
 			//終了日の設定
 			if(request.getParameter("addEndDate") != null){
@@ -40,7 +40,7 @@ public class ContentsUpdateModel extends AbstractModel{
 				String endMonth = request.getParameter("endMonth");
 				String endDay = request.getParameter("endDay");
 				String endDatetime = endYear + "-" + endMonth + "-" + endDay;		
-				updateBean.setEndDate(endDatetime);
+				updateBean.setEndDatetime(endDatetime);
 			}
 			
 			//コンテンツタイトル
