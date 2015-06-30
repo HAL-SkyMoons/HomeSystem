@@ -1977,7 +1977,7 @@ public class SampleDao {
     }
 
 
-    public List<BigGenreBean> getAllGenre() throws SQLException {
+    public List<BigGenreBean> getAllBigGenre() throws SQLException {
 
 	PreparedStatement select = con
 		.prepareStatement("select * from big_genre;");

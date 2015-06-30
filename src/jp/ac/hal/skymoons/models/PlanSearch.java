@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jp.ac.hal.skymoons.beans.BigGenreBean;
 import jp.ac.hal.skymoons.beans.GenreBean;
 import jp.ac.hal.skymoons.beans.PlanBean;
 import jp.ac.hal.skymoons.beans.PlanPointsBean;
@@ -29,10 +30,12 @@ public class PlanSearch extends AbstractModel{
 
 			List<GenreBean> genreList = dao.genreAll();
 			List<UserBean> employeeList = dao.getAllEmployeeId();
+			List<BigGenreBean> bigGenreList = dao.getAllBigGenre();
 
 
 			dao.close();
 			request.setAttribute("genreList", genreList);
+			request.setAttribute("bigGenreList", bigGenreList);
 			request.setAttribute("employeeList", employeeList);
 
 

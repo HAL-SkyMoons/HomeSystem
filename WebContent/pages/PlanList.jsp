@@ -7,9 +7,8 @@
 <%@page import="jp.ac.hal.skymoons.beans.PlanBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"
-%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,9 +16,7 @@
 <title>企画一覧</title>
 <link rel="stylesheet" type="text/css" href="../css/reset.css">
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
-<link rel="stylesheet" type="text/css"
-	href="../css/bootstrap-theme.min.css"
->
+<link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
 <link rel="stylesheet" type="text/css" href="../css/PlanList.css">
 <script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
 
@@ -46,20 +43,47 @@
 </head>
 <body>
 	<div class="wrapper">
-		<form action="/HomeSystem/fc/PlanList" method="post">
-			<label>キーワード：<input type="text" name="keyword"
-				value="<%if (request.getAttribute("searchKeyword") != null)
-		out.print(request.getAttribute("searchKeyword"));%>"
-			></label><br> <input type="submit" name="search" value="検索">
-		</form>
-		<form action="/HomeSystem/fc/PlanSearch" method="post">
-            <input type="submit" name="searchDetail" value="詳細検索">
-        </form>
+		<table class="search">
+			<tr>
+				<th>キーワード</th>
+				<form action="/HomeSystem/fc/PlanList" method="post">
+					<td class="searchDataColumn">
+
+						<input type="text" class="keyword" name="keyword" value="${searchKeyword}">
+
+
+					</td>
+					<td class="searchBtnColumn">
+						<input type="submit" name="search" class="btn btn-2 btn-2c searchBtn" value="検索">
+
+					</td>
+				</form>
+			</tr>
+			<tr>
+				<th>詳細検索</th>
+				<form action="/HomeSystem/fc/PlanSearch" method="post">
+				<td class="searchDetailColumn">
+					<div class="detailData">ジャンル：<span class="detailInside">JavaJavaJava</span>,<span class="detailInside">JavaJavaJava</span>,<span class="detailInside">phpphpphpphp</span>,<span class="detailInside">PythonPythonPython</span>,<span class="detailInside">PythonPythonPython</span></div>
+					<div class="detailData">ジャンル：<span class="detailInside">JavaJava</span>,<span class="detailInside">php</span>,<span class="detailInside">PythonPythonPython</span></div>
+					<div class="detailData">ジャンル：<span class="detailInside">Java</span>,<span class="detailInside">php</span>,<span class="detailInside">Python</span></div>
+					<div class="detailData">ジャンル：<span class="detailInside">Java</span>,<span class="detailInside">php</span>,<span class="detailInside">Python</span></div>
+				</td>
+				<td class="searchBtnColumn">
+
+					<input type="submit" name="searchDetail" class="btn btn-2 btn-2c searchDetailBtn" value="詳細検索">
+
+				</td>
+				</form>
+			</tr>
+
+
+		</table>
 		<hr>
 
 		<div id="list">
 			<div class="data">
 				<div class="title">2泊3日湘南キャンプ</div>
+				<hr>
 				<div class="left">
 
 					<div class="name">企画者：大河要祐</div>
@@ -70,9 +94,7 @@
 				</div>
 				<div class="right">
 					<div class="evaluation">
-						<span class="like"><img src="../images/icon/like.png">いいね:100</span>/<span
-							class="dislike"
-						><img src="../images/icon/dislike.png">ダメだね：100</span>
+						<span class="like"><img src="../images/icon/like.png">いいね:100</span>/<span class="dislike"><img src="../images/icon/dislike.png">ダメだね：100</span>
 					</div>
 				</div>
 			</div>
@@ -88,7 +110,7 @@
 					out.println("<div class=\"data\">");
 					out.println("<div class=\"title\"><a href=\"javascript:Post("
 						+ plan.getPlanId() + ");\">" + plan.getPlanTitle()
-						+ "</a></div>");
+						+ "</a></div><hr>");
 					out.println("<div class=\"left\">");
 					out.println("<div class=\"name\">企画者：" + plan.getPlannerName()
 						+ "</div>");
@@ -147,9 +169,8 @@
 			%>
 		</div>
 		<form name="form1" method="post" action="/HomeSystem/fc/PlanDetail">
-			<input type="hidden" name="detail"> <input type="hidden"
-				name="planId"
-			>
+			<input type="hidden" name="detail">
+			<input type="hidden" name="planId">
 		</form>
 		<hr>
 	</div>

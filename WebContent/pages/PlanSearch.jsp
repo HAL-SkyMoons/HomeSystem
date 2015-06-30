@@ -122,7 +122,7 @@
 				</tr>
 				<tr>
 					<th>企画者：</th>
-					<td><select>
+					<td><select name="planner">
 							<option value="">-指定なし-</option>
 							<c:forEach var="employee" items="${employeeList}">
 								<option value="${employee.userId}">${employee.lastName}${employee.firstName}</option>
@@ -135,7 +135,7 @@
 				</tr>
 				<tr>
 					<th>順序：</th>
-					<td><select>
+					<td><select name="order">
 							<option>-指定なし-</option>
 							<option>投稿日時が新しい順</option>
 							<option>投稿日時が古い順</option>
@@ -158,64 +158,29 @@
 				<div class="toggle_container">
 					<table>
 						<tr>
+							<c:set var="count" value="0" />
 							<c:forEach var="genre" items="${genreList}" varStatus="status">
 
-								<c:choose>
-									<c:when test="${genre.bigigGenreId == bigGenre.bigigGenreId}">
-										<td><label><input type="checkbox">${genre.getGenreName() }</label></td>
-									</c:when>
-									<c:otherwise>
-                                        ${status.count}-1
-                                    </c:otherwise>
-								</c:choose>
+								<c:if test="${genre.bigGenreId == bigGenre.bigGenreId}">
 
-								<c:if test="${status.count%3 ==0}">
+									<td><label><input type="checkbox" name="genre" value="${genre.genreId }">${genre.genreName }</label></td>
+									<c:set var="count" value="${count+1}" />
+								</c:if>
+
+
+								<c:if test="${count%3 ==0}">
 						</tr>
 						<tr>
 							</c:if>
+
 							</c:forEach>
 						</tr>
 					</table>
 				</div>
+				<br>
 
 			</c:forEach>
-			<span class="trigger">&#9661;業務</span>
 
-			<div class="toggle_container">
-				<table>
-					<tr>
-						<c:forEach var="genre" items="${genreList}" varStatus="status">
-							<td><label><input type="checkbox">${genre.getGenreName() }</label></td>
-							<c:if test="${status.count%5 ==0}">
-					</tr>
-					<tr>
-						</c:if>
-						</c:forEach>
-					</tr>
-				</table>
-			</div>
-
-			<br> <span class="trigger">&#9661;非業務</span>
-
-			<div class="toggle_container">
-				<table>
-					<tr>
-						<td>a</td>
-						<td>a</td>
-						<td>a</td>
-					</tr>
-					<tr>
-						<td>a</td>
-						<td>a</td>
-						<td>a</td>
-					</tr>
-					<tr>
-						<td>a</td>
-						<td>a</td>
-						<td>a</td>
-					</tr>
-				</table>
-			</div>
 		</form>
 </body>
 </html>

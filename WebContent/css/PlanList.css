@@ -10,6 +10,62 @@ body {
 	margin: 0 auto;
 }
 
+.search {
+	width: 100%;
+	overflow: hidden;
+	border: 1px solid #666;
+	table-layout: fixed
+}
+
+th {
+	background-color: #F29900;
+	width: 15%; text-align : center;
+	vertical-align: middle;
+	text-align: center
+}
+
+.searchDataColumn {
+	text-align: center;
+	width: 70%;
+	vertical-align: middle;
+}
+
+.searchDetailColumn {
+	vertical-align: middle;
+	width: 70%;
+}
+
+.detailData {
+/* 	word-break: keep-all; */
+	margin-left: 5px;
+	display: inline-block;
+}
+
+.detailInsideData {
+	word-break: keep-all;
+}
+
+.searchBtnColumn {
+	text-align: center;
+	width: 15%;
+	min-width: 15%;
+	vertical-align: middle;
+}
+
+.keyword {
+	width: 98%;
+}
+
+.searchBtn {
+	width: 90%;
+	margin-top: 5%;
+}
+
+.searchDetailBtn {
+	width: 90%;
+	margin-top: 10%;
+}
+
 #list {
 	width: 800px;
 }
@@ -24,6 +80,11 @@ body {
 	overflow: hidden;
 	margin-top: 10px;
 	-webkit-border-radius: 10px;
+}
+
+.data>hr {
+	margin: 5px 0;
+	border-top: solid 1px #888;
 }
 
 .title {
@@ -78,4 +139,69 @@ body {
 img {
 	width: 2em;
 	height: 2em;
+}
+
+/*ボタン*/
+.btn {
+	border: none;
+	font-family: inherit;
+	font-size: inherit;
+	color: inherit;
+	background: none;
+	cursor: pointer;
+	display: inline-block;
+	margin-bottom: 10px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 700;
+	outline: none;
+	position: relative;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+	background: #e6002d;
+}
+
+.btn:after {
+	content: '';
+	position: absolute;
+	z-index: -1;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.btn-2 {
+	/*  background: #cb4e4e; */
+	background: #e6002d;
+	color: #fff;
+	box-shadow: 0 3px #CD0014;
+	-webkit-transition: none;
+	-moz-transition: none;
+	transition: none;
+}
+
+.btn-2[disabled] {
+	background: #e6002d;
+	color: #fff;
+	box-shadow: 0 3px #CD0014;
+	-webkit-transition: none;
+	-moz-transition: none;
+	transition: none;
+}
+
+.btn-2c {
+	border-radius: 5px;
+}
+
+.btn-2c:hover {
+	background: #e6002d;
+	color: #fff;
+	box-shadow: 0 1.5px #CD0014;
+	top: 2px;
+}
+
+.btn-2c:active {
+	box-shadow: 0 0 #CD0014;
+	top: 6px;
 }
