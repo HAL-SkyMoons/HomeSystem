@@ -35,7 +35,7 @@ public class ContentsListDao {
 		this.con = con;
 	}
 
-	public ArrayList<ContentsListBean> selectContents(String keyword, String employeeId, ArrayList<Integer> genreId, ArrayList<Integer> bigGenreId, String orderColumn, String orderMode) throws SQLException {
+	public ArrayList<ContentsListBean> selectContents(String keyword, String employeeId, ArrayList<Integer> genreId, ArrayList<Integer> bigGenreId, String endContent, String existPlan, String orderColumn) throws SQLException {
 		//SQLの生成
 		String contentsSql = "select * from home_contents hc, home_genre hg, genre g, users u "
 				+ "where hc.delete_flag != '1' "
@@ -62,6 +62,12 @@ public class ContentsListDao {
 				bigGenre += ",?";
 			}
 			contentsSql += sqlword + "g.big_genre_id in(" + bigGenre + ") ";
+		}
+		if(endContent != null && endContent.length() > 0){
+			contentsSql += sqlword + "hc.end_datetime is null ";
+		}
+		if(existPlan != null && existPlan.length() > 0){
+			contentsSql += sqlword + "hc.plan_id is not null ";
 		}
 		contentsSql += "group by hc.home_content_id ";
 		if(genreId != null){

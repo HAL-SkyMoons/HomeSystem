@@ -63,7 +63,7 @@
 						<div id="img">
 							<img src="../../images/employees/${i.employeeId}.jpg" width="100" height="100">
 						</div>
-						${i.firstName}${i.lastName}
+						${i.lastName}${i.firstName}
 					</div>
 				</div>
 				<div id="planComment">
@@ -119,7 +119,7 @@
 							<c:if test="${fromUser}"><div class="planner"></c:if>
 							<c:if test="${!fromUser}"><div class="gest"></c:if>
 								<div class="face"><img src="../../images/employees/${homeLog.homeUser}.jpg"></div>
-								<div class="name">${homeLog.homeUserFirstName}${homeLog.homeUserLastName}</div>
+								<div class="name">${homeLog.homeUserLastName}${homeLog.homeUserFirstName}</div>
 								<div class="home">
 									<c:if test="${i.userId != homeLog.homeUser && i.employeeId != i.userId}">
 										<a class="iframe" href="/HomeSystem/fc/Home?toUser=${homeLog.homeUser}&contentsId=${i.homeContentId}"><input type="button" value="ホメる" class="btn btn-2 btn-2c"></a>

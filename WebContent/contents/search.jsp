@@ -39,7 +39,7 @@
 						<select name="employeeId">
 							<option value="">指定なし</option>
 							<c:forEach items="${employeeList}" var="j">
-								<option value="${j.employeeId}">${j.firstName}${j.lastName}</option>
+								<option value="${j.employeeId}">${j.lastName}${j.firstName}</option>
 							</c:forEach>
 						</select>
 					</td>
@@ -60,7 +60,8 @@
 						</select>
 					</td>
 					<td>
-						<input type="checkbox" name="contentEnded"/>終了したものも検索
+						<input type="checkbox" name="endContent" value="true"/>終了していないコンテンツのみを検索
+						<input type="checkbox" name="existPlan" value="true"/>企画が存在する物のみを検索
 					</td>
 					<td><input type="submit" value="検索"></td>
 				</tr>

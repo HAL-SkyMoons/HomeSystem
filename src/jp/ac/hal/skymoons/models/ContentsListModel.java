@@ -39,17 +39,20 @@ public class ContentsListModel extends AbstractModel{
 				bigGenreId.add(Integer.parseInt(bigGenreString));
 			}
 		}
+
+		//検索条件の取得
+		String existPlan = request.getParameter("existPlan");
+		String endContent = request.getParameter("endContent");
 		
 		//並び替え条件の取得
 		String orderColumn = request.getParameter("orderColumn");
-		String orderMode = request.getParameter("orderMode");
 		
 		//DAOのインスタンス化
 		ContentsListDao dao = new ContentsListDao();
 		
 		//検索に使用するDAOを選択しRequestにコンテンツを設定
 		ArrayList<ContentsListBean> resultData = null;
-		resultData = dao.selectContents(keyword, employeeId, genreId, bigGenreId, orderColumn, orderMode);
+		resultData = dao.selectContents(keyword, employeeId, genreId, bigGenreId, endContent, existPlan, orderColumn);
 		
 		//結果をリクエストに保存
 		request.setAttribute("contentsList",resultData);
@@ -57,6 +60,8 @@ public class ContentsListModel extends AbstractModel{
 		//コミットと終了処理
 		dao.commit();
 		dao.close();
+		
+		request.setAttribute("keyword", keyword);
 		
 		//遷移先を指定
 		return "/contents/list.jsp"	;

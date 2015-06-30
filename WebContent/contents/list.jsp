@@ -19,7 +19,11 @@
 		<table border="1">
 			<tr>
 				<form action="list" method="post">
-					<td>文字列：<input type="text" name="titleKeyword"></td>
+					<c:set var="currentKeyword" value=""/>
+					<c:if test="${keyword != null}">
+						<c:set var="currentKeyword" value="${keyword}"/>
+					</c:if>
+					<td>文字列：<input type="text" name="keyword" value="${keyword}"></td>
 					<td><input type="submit" value="タイトル検索"></td>
 				</form>
 				<td>
@@ -36,7 +40,7 @@
 					</a>
 				</td>
 				<td>実施日時：${i.startDatetime}</td>
-				<td>投稿者名：<a href="./list?employeeId=${i.employeeId}">${i.firstName}${i.lastName}</a></td>
+				<td>投稿者名：<a href="./list?employeeId=${i.employeeId}">${i.lastName}${i.firstName}</a></td>
 				<td>大ジャンル：
 					<c:set var="cnt" value="0"/>
 					<c:forEach items="${i.bigGenreName}" var="bigGenreName">
