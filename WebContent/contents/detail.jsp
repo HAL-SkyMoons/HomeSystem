@@ -108,7 +108,7 @@
 				</div>
 				
 				<c:if test="${i.employeeId != i.userId}">
-					<a class="iframe" href="/HomeSystem/fc/Home?toUser=${i.employeeId}&contentsId=${i.homeContentId}" ><input type="button" value="ホメる"></a>
+					<a class="iframe" href="/HomeSystem/fc/Home?toUser=${i.employeeId}&contentsId=${i.homeContentId}" ><input type="button" value="ホメる" class="btn btn-2 btn-2c"></a>
 				</c:if>
 				
 				<div class="commentData">
@@ -121,8 +121,8 @@
 								<div class="face"><img src="../../images/employees/${homeLog.homeUser}.jpg"></div>
 								<div class="name">${homeLog.homeUserFirstName}${homeLog.homeUserLastName}</div>
 								<div class="home">
-									<c:if test="${i.employeeId != i.userId}">
-										<a class="iframe" href="/HomeSystem/fc/Home?toUser=${i.employeeId}&contentsId=${i.homeContentId}"><input type="button" value="ホメる" class="btn btn-2 btn-2c"></a>
+									<c:if test="${i.userId != homeLog.homeUser && i.employeeId != i.userId}">
+										<a class="iframe" href="/HomeSystem/fc/Home?toUser=${homeLog.homeUser}&contentsId=${i.homeContentId}"><input type="button" value="ホメる" class="btn btn-2 btn-2c"></a>
 									</c:if>
 								</div>
 								
