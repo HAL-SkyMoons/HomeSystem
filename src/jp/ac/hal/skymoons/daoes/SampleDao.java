@@ -679,10 +679,55 @@ public class SampleDao {
     /**
      * @author Taiga 企画一覧
      */
-    public List<PlanBean> planList() throws SQLException {
+    public List<PlanBean> planListAll(String order) throws SQLException {
+	String sql = "select p.plan_id,p.planner,u.last_name,u.first_name,p.plan_title,p.plan_datetime,p.plan_comment"
+		+ ",p.delete_flag,p.start_date,p.end_date,p.execute_flag ,count(c.plan_id) as comment_count,"
+		+ "count(po.plan_id) as point_count,count(po.point = 1 or null) as like_count, DATEDIFF( p.start_date, p.end_date ) AS period"
+		+ " from plan as p left join plan_comment as c on p.plan_id = c.plan_id left join plan_point as po on p.plan_id = po.plan_id  join users u on p.planner = u.user_id group by p.plan_id";
 
-	PreparedStatement select = con
-		.prepareStatement("select * from plan p,users u where p.planner = u.user_id;");
+	if (order != null) {
+	    switch (order) {
+	    case "dateDesc":
+		sql += " order by p.plan_datetime desc";
+		break;
+	    case "dateAsc":
+		sql += " order by p.plan_datetime asc";
+		break;
+	    case "commentDesc":
+		sql += " order by comment_count desc";
+		break;
+	    case "commentAsc":
+		sql += " order by comment_count asc";
+		break;
+	    case "evaluationDesc":
+		sql += " order by pointt_count desc";
+		break;
+	    case "evaluationAsc":
+		sql += " order by point_count asc";
+		break;
+	    case "likeDesc":
+		sql += " order by like_count desc";
+		break;
+	    case "likeAsc":
+		sql += " order by like_count asc";
+		break;
+	    case "startDesc":
+		sql += " order by p.start_date desc";
+		break;
+	    case "startAsc":
+		sql += " order by p.start_date asc";
+		break;
+	    case "periodDesc":
+		sql += " order by period desc";
+		break;
+	    case "periodAsc":
+		sql += " order by period asc";
+		break;
+
+	    }
+	}
+
+	PreparedStatement select = con.prepareStatement(sql);
 
 	ResultSet result = select.executeQuery();
 
@@ -700,6 +745,92 @@ public class SampleDao {
 	    record.setStartDate(result.getTimestamp("start_date"));
 	    record.setEndDate(result.getTimestamp("end_date"));
 	    record.setExecuteFlag(result.getInt("execute_flag"));
+
+	    record.setCommentCount(result.getInt("comment_count"));
+	    record.setPointCount(result.getInt("point_count"));
+
+	    table.add(record);
+	}
+	return table;
+    }
+
+    /**
+     * 企画一覧(終了済み企画を除く)
+     *
+     * @return
+     * @throws SQLException
+     */
+    public List<PlanBean> planListNoEnd(String order) throws SQLException {
+
+	String sql = "select p.plan_id,p.planner,u.last_name,u.first_name,p.plan_title,p.plan_datetime,p.plan_comment"
+		+ ",p.delete_flag,p.start_date,p.end_date,p.execute_flag ,count(c.plan_id) as comment_count,"
+		+ "count(po.plan_id) as point_count,count(po.point = 1 or null) as like_count, DATEDIFF( p.start_date, p.end_date ) AS period"
+		+ " from plan as p left join plan_comment as c on p.plan_id = c.plan_id left join plan_point as po on p.plan_id = po.plan_id join users u on p.planner = u.user_id"
+		+ " where p.execute_flag = 0 group by p.plan_id";
+
+	if (order != null) {
+	    switch (order) {
+	    case "dateDesc":
+		sql += " order by p.plan_datetime desc";
+		break;
+	    case "dateAsc":
+		sql += " order by p.plan_datetime asc";
+		break;
+	    case "commentDesc":
+		sql += " order by comment_count desc";
+		break;
+	    case "commentAsc":
+		sql += " order by comment_count asc";
+		break;
+	    case "evaluationDesc":
+		sql += " order by pointt_count desc";
+		break;
+	    case "evaluationAsc":
+		sql += " order by point_count asc";
+		break;
+	    case "likeDesc":
+		sql += " order by like_count desc";
+		break;
+	    case "likeAsc":
+		sql += " order by like_count asc";
+		break;
+	    case "startDesc":
+		sql += " order by p.start_date desc";
+		break;
+	    case "startAsc":
+		sql += " order by p.start_date asc";
+		break;
+	    case "periodDesc":
+		sql += " order by period desc";
+		break;
+	    case "periodAsc":
+		sql += " order by period asc";
+		break;
+
+	    }
+	}
+
+	PreparedStatement select = con.prepareStatement(sql);
+
+	ResultSet result = select.executeQuery();
+
+	ArrayList<PlanBean> table = new ArrayList<PlanBean>();
+	while (result.next()) {
+
+	    PlanBean record = new PlanBean();
+	    record.setPlanId(result.getInt("plan_id"));
+	    record.setPlanner(result.getString("planner"));
+	    record.setPlannerName(result.getString("u.last_name")
+		    + result.getString("u.first_name"));
+	    record.setPlanTitle(result.getString("plan_title"));
+	    record.setPlanDatetime(result.getDate("plan_datetime"));
+	    record.setPlanComment(result.getString("plan_comment"));
+	    record.setStartDate(result.getTimestamp("start_date"));
+	    record.setEndDate(result.getTimestamp("end_date"));
+	    record.setExecuteFlag(result.getInt("execute_flag"));
+
+	    record.setCommentCount(result.getInt("comment_count"));
+	    record.setPointCount(result.getInt("point_count"));
 
 	    table.add(record);
 	}
@@ -1119,14 +1250,12 @@ public class SampleDao {
 	return record;
     }
 
-    public HashMap<Integer, PlanPointsBean> planPointAll()
-	    throws SQLException {
+    public HashMap<Integer, PlanPointsBean> planPointAll() throws SQLException {
 
 	PreparedStatement select = con
 		.prepareStatement("select plan_id,count(point = 1 or null),count(point = 3 or null) from plan_point group by plan_id ;");
 
 	ResultSet result = select.executeQuery();
-
 
 	HashMap<Integer, PlanPointsBean> pointMap = new HashMap<Integer, PlanPointsBean>();
 
@@ -1142,15 +1271,12 @@ public class SampleDao {
 	return pointMap;
     }
 
-    public HashMap<Integer, List<GenreBean>> planGenreAll()
-	    throws SQLException {
-
+    public HashMap<Integer, List<GenreBean>> planGenreAll() throws SQLException {
 
 	PreparedStatement select = con
 		.prepareStatement("select plan_id from plan;");
 
 	ResultSet result = select.executeQuery();
-
 
 	HashMap<Integer, List<GenreBean>> genreMap = new HashMap<Integer, List<GenreBean>>();
 
@@ -1961,7 +2087,7 @@ public class SampleDao {
 	    plan.next();
 
 	    PreparedStatement insert = con
-		    .prepareStatement("insert into home_contents (employee_id,home_content_title,home_content_comment,end_date,start_datetime,end_datetime,plan_id) values (?,?,?,now(),?,?,?);");
+		    .prepareStatement("insert into home_contents (employee_id,home_content_title,home_content_comment,end_flag,start_datetime,end_datetime,plan_id) values (?,?,?,1,?,?,?);");
 	    insert.setString(1, plan.getString("planner"));
 	    insert.setString(2, plan.getString("plan_title"));
 	    insert.setString(3, plan.getString("plan_comment"));
@@ -1975,7 +2101,6 @@ public class SampleDao {
 	}
 
     }
-
 
     public List<BigGenreBean> getAllBigGenre() throws SQLException {
 
@@ -1994,6 +2119,62 @@ public class SampleDao {
 
 	    table.add(record);
 	}
+	return table;
+    }
+
+    /**
+     * 社員の名前を取得
+     *
+     * @param employeeId
+     * @return
+     * @throws SQLException
+     */
+    public String getEmployeeName(String employeeId) throws SQLException {
+	ArrayList<EmployeePageBean> resultTable = new ArrayList<EmployeePageBean>();
+
+	PreparedStatement select = con
+		.prepareStatement("select u.last_name,u.first_name from users u,employees e where u.user_id = e.employee_id and e.employee_id = ?");
+	select.setString(1, employeeId);
+	ResultSet result = select.executeQuery();
+	String name = "";
+	if (result.next()) {
+	    name = result.getString("u.last_name") + " "
+		    + result.getString("u.first_name");
+
+	}
+
+	return name;
+    }
+
+    public List<GenreBean> getGenres(String[] genreIds) throws SQLException {
+	ArrayList<EmployeePageBean> resultTable = new ArrayList<EmployeePageBean>();
+
+	String sql = "select * from genre where genre_id in (?";
+	for (int i = 1; i < genreIds.length; i++) {
+	    sql += ",?";
+	}
+	sql += ")";
+
+	System.out.println(sql);
+
+	PreparedStatement select = con.prepareStatement(sql);
+
+	for (int i = 1; i <= genreIds.length; i++) {
+	    select.setString(i, genreIds[i - 1]);
+	}
+
+	ResultSet result = select.executeQuery();
+
+	ArrayList<GenreBean> table = new ArrayList<GenreBean>();
+
+	while (result.next()) {
+	    GenreBean record = new GenreBean();
+	    record.setGenreId(result.getInt("genre_id"));
+	    record.setGenreName(result.getString("genre_name"));
+	    record.setBigGenreId(result.getInt("big_genre_id"));
+	    table.add(record);
+	}
+
 	return table;
     }
 

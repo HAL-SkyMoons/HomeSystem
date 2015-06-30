@@ -11,14 +11,22 @@ body {
 	margin-top: 20px;
 }
 
+th, td {
+	padding: 20px;
+}
+
+table {
+	table-layout: fixed
+}
+
+
 .search {
 	width: 100%;
 	overflow: hidden;
 	border: 1px solid #666;
-	table-layout: fixed
 }
 
-.search tr th {
+.searchTitle {
 	background-color: #F29900;
 	width: 15%;
 	text-align: center;
@@ -27,33 +35,17 @@ body {
 	text-align: center
 }
 
-.searchDataColumn {
-	text-align: center;
-	width: 70%;
+.searchForm {
+	width: 60%;
 	vertical-align: middle;
 	border-bottom: 1px solid #666;
 }
 
-.searchDetailColumn {
-	vertical-align: middle;
-	width: 70%;
-}
-
-.detailData {
-	margin-left: 5px;
-	display: inline-block;
-}
-
-.detailInside {
-	word-break: break-all;
-	word-wrap: break-word;
-	display: inline-block;
-}
-
-.searchBtnColumn {
+.help {
 	text-align: center;
-	width: 15%;
-	min-width: 15%;
+	background-color: #FFFFB3;
+	width: 25%;
+	min-width: 25%;
 	border-bottom: 1px solid #666;
 	vertical-align: middle;
 }
@@ -62,90 +54,18 @@ body {
 	width: 98%;
 }
 
-.searchBtn {
-	width: 90%;
-	margin-top: 5%;
-}
-
-.searchDetailBtn {
-	width: 90%;
-	margin-top: 10%;
-}
-
-.detailTitle {
-	color: #F29900;
-}
-
-#list {
-	width: 800px;
-}
-
-.data {
-	padding: 5px;
+.trigger {
+	display: inline-block;
 	width: 100%;
-	border: 1px solid black;
-	overflow: hidden;
-	margin-top: 10px;
-	-webkit-border-radius: 10px;
-}
-
-.data>hr {
-	margin: 5px 0;
-	border-top: solid 1px #888;
-}
-
-.title {
+	background-color: #F29900;
 	font-size: 18px;
+	margin-top: 10px;
 }
 
-.title>a:LINK {
-	color: #F29900;
-}
-
-.left {
-	/* 	float: left; */
-	width: auto;
-	/* 	max-width: 70%; */
-}
-
-.left table {
-	margin-left: 50px;
-}
-
-
-.right {
-	/* 	float: right; */
-	text-align: right;
-}
-
-.like, .dislike {
+.toggle_container {
 	display: inline-block;
-	min-width: 9em;
-	margin-left: 1em;
-	text-align: left;
-}
-
-.name, .period, .evaluations, .comments {
-	width: 100px;
-}
-
-.left table tr td a {
-	word-break: break-all;
-	word-wrap: break-word;
-	display: inline-block;
-}
-
-.col {
-	display: block;
-}
-
-.evaluation {
-	width: auto;
-}
-
-img {
-	width: 2em;
-	height: 2em;
+	width: 100%;
+	border: 1px solid #F29900;
 }
 
 /*ボタン*/
@@ -211,4 +131,15 @@ img {
 .btn-2c:active {
 	box-shadow: 0 0 #CD0014;
 	top: 6px;
+}
+
+.btnZone{
+	text-align: center;
+}
+
+.searchBtn{
+	margin-top:20px;
+	width: 50%;
+	height: 50px;
+	font-size: 25px;
 }

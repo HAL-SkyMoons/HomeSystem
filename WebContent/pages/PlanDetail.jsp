@@ -396,7 +396,7 @@
 					                                            out.println("<img src=\""
 					                                            + util.getFileImage(file.getDataName()) + "\">");
 					                                            out.println("</div>");
-					                                            if (plan.getPlanner().equals(user.getUserId()) && plan.getExecuteFlag() == 0) {
+					                                            if (comment.getCommentUser().equals(user.getUserId()) && plan.getExecuteFlag() == 0) {
 					                                                out.println("<div class=\"del\">");
 					                                                out.println("<form action=\"/HomeSystem/fc/PlanDetail\" method=\"post\"><input type=\"image\" src=\"../images/icon/del.png\" width=\"15\" height=\"15\" name=\"commentFileDelete\" value=\"削除\"><input type=\"hidden\" name=\"planId\" value=\""
 					                                                + plan.getPlanId()
