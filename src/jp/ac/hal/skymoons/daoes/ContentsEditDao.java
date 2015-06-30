@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.naming.NamingException;
@@ -50,9 +51,9 @@ public class ContentsEditDao {
 			editBean.setHomeContentTitle(contentsResult.getString("home_content_title"));
 			//editBean.setHomeContentComment(Utility.nlToBR(contentsResult.getString("home_content_comment")));
 			editBean.setHomeContentComment(contentsResult.getString("home_content_comment"));
-			editBean.setStartDatetime(contentsResult.getString("start_datetime"));
+			editBean.setStartDatetime(new SimpleDateFormat("yyyy年MM月dd日").format(contentsResult.getDate("start_datetime")));
 			editBean.setEmployeeId(contentsResult.getString("employee_id"));
-			editBean.setEndDatetime(contentsResult.getString("end_datetime"));
+			editBean.setEndDatetime(new SimpleDateFormat("yyyy年MM月dd日").format(contentsResult.getDate("end_datetime")));
 			
 			//名前の取得
 			PreparedStatement namePst = con.prepareStatement("select * from users where user_id = ? ;");

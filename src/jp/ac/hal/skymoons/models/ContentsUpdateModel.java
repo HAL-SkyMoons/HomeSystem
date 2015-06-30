@@ -39,7 +39,9 @@ public class ContentsUpdateModel extends AbstractModel{
 				String endYear = request.getParameter("endYear");
 				String endMonth = request.getParameter("endMonth");
 				String endDay = request.getParameter("endDay");
-				String endDatetime = endYear + "-" + endMonth + "-" + endDay;		
+				String endHour = request.getParameter("endHour");
+				String endMinute = request.getParameter("endMinute");
+				String endDatetime = endYear + "-" + endMonth + "-" + endDay + " " + endHour + ":" + endMinute + ":00";		
 				updateBean.setEndDatetime(endDatetime);
 			}
 			
@@ -51,7 +53,6 @@ public class ContentsUpdateModel extends AbstractModel{
 			
 			//社員ID
 			//updateBean.setEmployeeId(sc.getUserId());
-			updateBean.setEmployeeId("E0001");
 			
 			//添付資料
 			

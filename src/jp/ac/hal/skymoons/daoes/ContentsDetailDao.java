@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.naming.NamingException;
@@ -60,9 +61,13 @@ public class ContentsDetailDao {
 			detailBean.setHomeContentTitle(contentsResult.getString("home_content_title"));
 			detailBean.setHomeContentComment(Utility.nlToBR(contentsResult.getString("home_content_comment")));
 			//detailBean.setHomeContentComment(contentsResult.getString("home_content_comment"));
-			detailBean.setStartDatetime(contentsResult.getString("start_datetime"));
+			detailBean.setStartDatetime(new SimpleDateFormat("yyyy年MM月dd日").format(contentsResult.getDate("start_datetime")));
 			detailBean.setEmployeeId(contentsResult.getString("employee_id"));
-			detailBean.setEndDatetime(contentsResult.getString("end_datetime"));
+			if(contentsResult.getDate("end_datetime") != null){
+				detailBean.setEndDatetime(new SimpleDateFormat("yyyy年MM月dd日").format(contentsResult.getDate("end_datetime")));
+			}else{
+				detailBean.setEndDatetime("未完了");
+			}
 			detailBean.setDeleteFlag(contentsResult.getInt("delete_flag"));
 			
 			//名前の取得
