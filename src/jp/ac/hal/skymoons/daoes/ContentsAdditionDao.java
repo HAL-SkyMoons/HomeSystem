@@ -73,6 +73,17 @@ public class ContentsAdditionDao {
 		return true;
 	}
 	
+	public void addEndDatetime(ContentsAdditionBean additionBean) throws SQLException{
+		PreparedStatement updateContentsPst = con.prepareStatement(
+				"update home_contents set end_datetime = ? "
+				+ "where home_content_id = ?");
+		updateContentsPst.setString(1, additionBean.getEndDatetime());
+		updateContentsPst.setInt(2, additionBean.getHomeContentId());
+		updateContentsPst.executeUpdate();
+		updateContentsPst.close();
+		return;
+	}
+	
 	/**
 	 * 接続を閉じる
 	 *

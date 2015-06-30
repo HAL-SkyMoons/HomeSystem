@@ -27,47 +27,75 @@
 				<div id="plan">
 					<div id="planHeader">
 						<div id="id"></div>
-						<div id="planDate">
-							開始日時：<br/>
-							<select name="contentsYear">
-								<c:forEach begin="1950" end="2020" step="1" varStatus="status">
-									<option value="${status.index}">${status.index}</option>
-								</c:forEach>
-							</select>
-							年
-							<select name="contentsMonth">
-								<c:forEach begin="1" end="12" step="1" varStatus="status">
-									<option value="${status.index}">${status.index}</option>
-								</c:forEach>
-							</select>
-							月
-							<select name="contentsDay">
-								<c:forEach begin="1" end="31" step="1" varStatus="status">
-									<option value="${status.index}">${status.index}</option>
-								</c:forEach>
-							</select>
-							日
-							<select name="contentsHour">
-								<c:forEach begin="0" end="23" step="1" varStatus="status">
-									<option value="${status.index}">${status.index}</option>
-								</c:forEach>
-							</select>
-							時
-							<select name="contentsMinute">
-								<c:forEach begin="0" end="59" step="1" varStatus="status">
-									<option value="${status.index}">${status.index}</option>
-								</c:forEach>
-							</select>
-							分
-						</div>
+						<div id="planDate"></div>
 					</div>
 					<div id="title">
 						コンテンツタイトル：<input type="text" name="homeContentTitle">
 					</div>
 					<div id="planDetail">
 						<div id="startEnd">
-							実施期間：<br>
-							～
+							実施期間：<br/>
+							<select name="startYear">
+								<c:forEach begin="1950" end="2020" step="1" varStatus="status">
+									<option value="${status.index}">${status.index}</option>
+								</c:forEach>
+							</select>
+							年
+							<select name="startMonth">
+								<c:forEach begin="1" end="12" step="1" varStatus="status">
+									<option value="${status.index}">${status.index}</option>
+								</c:forEach>
+							</select>
+							月
+							<select name="startDay">
+								<c:forEach begin="1" end="31" step="1" varStatus="status">
+									<option value="${status.index}">${status.index}</option>
+								</c:forEach>
+							</select>
+							日
+							<select name="startHour">
+								<c:forEach begin="0" end="23" step="1" varStatus="status">
+									<option value="${status.index}">${status.index}</option>
+								</c:forEach>
+							</select>
+							時
+							<select name="startMinute">
+								<c:forEach begin="0" end="59" step="1" varStatus="status">
+									<option value="${status.index}">${status.index}</option>
+								</c:forEach>
+							</select>
+							分～<br/>
+							<select name="endYear">
+								<c:forEach begin="1950" end="2020" step="1" varStatus="status">
+									<option value="${status.index}">${status.index}</option>
+								</c:forEach>
+							</select>
+							年
+							<select name="endMonth">
+								<c:forEach begin="1" end="12" step="1" varStatus="status">
+									<option value="${status.index}">${status.index}</option>
+								</c:forEach>
+							</select>
+							月
+							<select name="endDay">
+								<c:forEach begin="1" end="31" step="1" varStatus="status">
+									<option value="${status.index}">${status.index}</option>
+								</c:forEach>
+							</select>
+							日
+							<select name="endHour">
+								<c:forEach begin="0" end="23" step="1" varStatus="status">
+									<option value="${status.index}">${status.index}</option>
+								</c:forEach>
+							</select>
+							時
+							<select name="endMinute">
+								<c:forEach begin="0" end="59" step="1" varStatus="status">
+									<option value="${status.index}">${status.index}</option>
+								</c:forEach>
+							</select>
+							分<br/>
+							<input type="checkbox" name="addEndDatetime" value="false"/>終了日を登録しない
 						</div>
 						<div id="planner">
 							企画者
@@ -95,7 +123,7 @@
 							</div>
 						</c:forEach>
 					</div>
-					<input type="submit" value="登録をする"　class="btn btn-2 btn-2c">
+					<input type="submit" value="登録をする" class="btn btn-2 btn-2c">
 				</div>
 			</div>
 		</form>

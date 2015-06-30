@@ -1,6 +1,7 @@
 package jp.ac.hal.skymoons.models;
 
 import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,13 +24,26 @@ public class ContentsAdditionModel extends AbstractModel{
 			ContentsAdditionBean additionBean = new ContentsAdditionBean();
 						
 			//日時の文字列生成
-			String year = request.getParameter("contentsYear");
-			String month = request.getParameter("contentsMonth");
-			String day = request.getParameter("contentsDay");
-			String hour = request.getParameter("contentsHour");
-			String minute = request.getParameter("contentsMinute");
+			String year = request.getParameter("startYear");
+			String month = request.getParameter("startMonth");
+			String day = request.getParameter("startDay");
+			String hour = request.getParameter("startHour");
+			String minute = request.getParameter("startMinute");
 			String startDatetime = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":00";		
 			additionBean.setStartDatetime(startDatetime);
+			
+			//終了日の取得
+			if(request.getParameter("addEndDatetime") == null){
+				String endYear = request.getParameter("endYear");
+				String endMonth = request.getParameter("endMonth");
+				String endDay = request.getParameter("endDay");
+				String endHour = request.getParameter("endHour");
+				String endMinute = request.getParameter("endMinute");
+				String endDatetime = endYear + "-" + endMonth + "-" + endDay + " " + endHour + ":" + endMinute + ":00";		
+				additionBean.setEndDatetime(endDatetime);
+			}else{
+				additionBean.setEndDatetime(null);
+			}
 	
 			//コンテンツタイトル
 			additionBean.setHomeContentTitle(request.getParameter("homeContentTitle"));
@@ -57,6 +71,10 @@ public class ContentsAdditionModel extends AbstractModel{
 			ContentsAdditionDao dao = new ContentsAdditionDao();
 			dao.addContent(additionBean);
 			dao.addGenre(additionBean);
+			
+			if(additionBean.getEndDatetime() != null){
+				dao.addEndDatetime(additionBean);
+			}
 			
 			//結果をリクエストに保存
 			//request.setAttribute("detailList",detailData);
