@@ -49,10 +49,10 @@
 						<select name="orderColumn">
 							<option value="hc.home_content_id asc" selected>作成新しい順</option>
 							<option value="hc.home_content_id desc">作成古い順</option>
-							<option value="hc.home_content_datetime asc">開始日時新しい順</option>
-							<option value="hc.home_content_datetime desc">開始日時古い順</option>
-							<option value="hc.end_date,asc">終了日新しい順</option>
-							<option value="hc.end_date,desc">終了日古い順</option>
+							<option value="hc.start_datetime asc">開始日時新しい順</option>
+							<option value="hc.start_datetime desc">開始日時古い順</option>
+							<option value="hc.end_datetime asc">終了日新しい順</option>
+							<option value="hc.end_datetime desc">終了日古い順</option>
 							<option value="hc.home_content_title asc">タイトル昇順</option>
 							<option value="hc.home_content_title desc">タイトル降順</option>
 							<option value="u.first_name, u.last_name asc">社員名昇順</option>

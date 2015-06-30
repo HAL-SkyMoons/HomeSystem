@@ -111,7 +111,7 @@ public class ContentsListDao {
 			listBean.setHomeContentId(homeContentId);
 			listBean.setHomeContentTitle(contentsResult.getString("home_content_title"));
 			listBean.setHomeContentComment(contentsResult.getString("home_content_comment"));
-			listBean.setHomeContentDatetime(contentsResult.getString("home_content_datetime"));
+			listBean.setStartDatetime(contentsResult.getString("start_datetime"));
 			listBean.setEmployeeId(contentsResult.getString("employee_id"));
 			//listBean.setDeleteFlag(contentsResult.getInt("delete_flag"));
 			

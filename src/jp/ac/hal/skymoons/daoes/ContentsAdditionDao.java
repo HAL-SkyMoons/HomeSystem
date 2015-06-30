@@ -37,11 +37,11 @@ public class ContentsAdditionDao {
 	public void addContent(ContentsAdditionBean additionBean) throws SQLException{
 		PreparedStatement contentsAdditionPst = con.prepareStatement(
 				"insert into home_contents(employee_id, "
-				+ "home_content_title, home_content_datetime, home_content_comment) "
+				+ "home_content_title, start_datetime, home_content_comment) "
 				+ "values(?,?,?,?);");
 		contentsAdditionPst.setString(1, additionBean.getEmployeeId());
 		contentsAdditionPst.setString(2, additionBean.getHomeContentTitle());
-		contentsAdditionPst.setString(3, additionBean.getHomeContentDatetime());
+		contentsAdditionPst.setString(3, additionBean.getStartDatetime());
 		contentsAdditionPst.setString(4, additionBean.getHomeContentComment());
 		contentsAdditionPst.executeUpdate();
 		contentsAdditionPst.close();

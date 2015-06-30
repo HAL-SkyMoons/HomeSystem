@@ -44,7 +44,7 @@
 						No.${i.homeContentId}
 					</div>
 					<div id="planDate">
-						実施日：${i.homeContentDatetime}
+						開始日時：${i.startDatetime}
 					</div>
 				</div>
 				<div id="title">
@@ -52,8 +52,8 @@
 				</div>
 				<div id="planDetail">
 					<div id="startEnd">
-						実施日：<br>
-						${i.homeContentDatetime}～${i.endDate}
+						開始日時：<br>
+						${i.startDatetime}～${i.endDatetime}
 						<c:if test="${i.employeeId != i.userId}">
 							<a class="iframe" href="/HomeSystem/fc/Home?toUser=${i.employeeId}&contentsId=${i.homeContentId}" ><input type="button" value="ホメる" class="btn btn-2 btn-2c"></a>
 						</c:if>
@@ -77,7 +77,7 @@
 						<c:set var="cnt" value="${cnt + 1}"/>
 					</c:forEach>
 				</div>
-				<c:if test="${i.endDate == null && i.employeeId == i.userId}" >
+				<c:if test="${i.endDatetime == null && i.employeeId == i.userId}" >
 					<form action="./edit" method="post">
 						<input type="hidden" name="homeContentId" value="${i.homeContentId}"/>
 						<input type="submit" value="編集" class="btn btn-2 btn-2c edit"/>
@@ -175,13 +175,13 @@
 			<table border="1">
 				<tr>
 					<td colspan="2">
-						<c:if test="${i.endDate == null && i.employeeId == i.userId}" >
+						<c:if test="${i.endDatetime == null && i.employeeId == i.userId}" >
 							<form action="./edit" method="post">
 								<input type="hidden" name="homeContentId" value="${i.homeContentId}"/>
 								<input type="submit" value="編集"/>
 							</form>
 						</c:if>
-						<c:if test="${i.endDate != null || i.employeeId != i.userId}" >
+						<c:if test="${i.endDatetime != null || i.employeeId != i.userId}" >
 							<c:out value="編集不可" />
 						</c:if>
 					</td>
@@ -192,13 +192,13 @@
 				</tr>
 				<tr>
 					<td>実施日時：</td>
-					<td>${i.homeContentDatetime}</td>
+					<td>${i.startDatetime}</td>
 				</tr>
 				<tr>
 					<td>終了日：</td>
 					<td>
-						<c:if test="${i.endDate != null}" >${i.endDate}</c:if>
-						<c:if test="${i.endDate == null}" >未定</c:if>
+						<c:if test="${i.endDatetime != null}" >${i.endDatetime}</c:if>
+						<c:if test="${i.endDatetime == null}" >未定</c:if>
 					</td>
 				</tr>
 				<tr>

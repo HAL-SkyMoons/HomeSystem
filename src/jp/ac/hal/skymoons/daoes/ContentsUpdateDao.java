@@ -39,16 +39,16 @@ public class ContentsUpdateDao {
 				"update home_contents set home_content_id = ?, "
 				+ "employee_id = ?, "
 				+ "home_content_title = ?, "
-				+ "home_content_datetime = ?, "
+				+ "start_datetime = ?, "
 				+ "home_content_comment = ? "
-				//+ "end_date = ? "
+				//+ "end_datetime = ? "
 				+ "where home_content_id = ?");
 		updateContentsPst.setInt(1, updateBean.getHomeContentId());
 		updateContentsPst.setString(2, updateBean.getEmployeeId());
 		updateContentsPst.setString(3, updateBean.getHomeContentTitle());
-		updateContentsPst.setString(4, updateBean.getHomeContentDatetime());
+		updateContentsPst.setString(4, updateBean.getStartDatetime());
 		updateContentsPst.setString(5, updateBean.getHomeContentComment());
-		//updateContentsPst.setString(6, updateBean.getEndDate());
+		//updateContentsPst.setString(6, updateBean.getEndDatetime());
 		updateContentsPst.setInt(6, updateBean.getHomeContentId());
 		updateContentsPst.executeUpdate();
 		updateContentsPst.close();
@@ -57,9 +57,9 @@ public class ContentsUpdateDao {
 	
 	public void updateEndDate(ContentsUpdateBean updateBean) throws SQLException{
 		PreparedStatement updateContentsPst = con.prepareStatement(
-				"update home_contents set end_date = ? "
+				"update home_contents set end_datetime = ? "
 				+ "where home_content_id = ?");
-		updateContentsPst.setString(1, updateBean.getEndDate());
+		updateContentsPst.setString(1, updateBean.getEndDatetime());
 		updateContentsPst.setInt(2, updateBean.getHomeContentId());
 		updateContentsPst.executeUpdate();
 		updateContentsPst.close();

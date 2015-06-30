@@ -50,9 +50,9 @@ public class ContentsEditDao {
 			editBean.setHomeContentTitle(contentsResult.getString("home_content_title"));
 			//editBean.setHomeContentComment(Utility.nlToBR(contentsResult.getString("home_content_comment")));
 			editBean.setHomeContentComment(contentsResult.getString("home_content_comment"));
-			editBean.setHomeContentDatetime(contentsResult.getString("home_content_datetime"));
+			editBean.setStartDatetime(contentsResult.getString("start_datetime"));
 			editBean.setEmployeeId(contentsResult.getString("employee_id"));
-			editBean.setEndDate(contentsResult.getString("end_date"));
+			editBean.setEndDatetime(contentsResult.getString("end_datetime"));
 			
 			//名前の取得
 			PreparedStatement namePst = con.prepareStatement("select * from users where user_id = ? ;");
