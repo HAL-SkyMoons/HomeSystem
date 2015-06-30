@@ -76,8 +76,8 @@
 							</c:forEach>
 						</div>
 					</div>
-					<input type="submit" name="submit" value="検索" class="genreButton">
 				</div>
+					<input type="submit" name="submit" value="検索" class="genreButton">
 			</form>
 		</div>
 		<div class="employeeListPart">
@@ -90,8 +90,8 @@
 								<a href="./EmployeePage?employeeId=${employee.employeeId}"><img
 									src="../images/employees/${employee.employeeId}.jpg"></a>
 							</div> <a href="./EmployeePage?employeeId=${employee.employeeId}">${employee.employeeName}</a>
-							<br> ${employee.departmentName} <br> <c:if
-								test="${sessionId != employee.employeeId}">
+							<br> ${employee.departmentName} <br>
+							<c:if test="${sessionId != employee.employeeId}">
 								<a class="iframe"
 									href="/HomeSystem/fc/Home?toUser=${employee.employeeId}"><input
 									type="button" value="この人を褒める"></a>
@@ -104,9 +104,9 @@
 							</ul>
 						</td>
 						<c:if test="${status.count%5 ==0}">
-				</tr>
-				<tr>
-					</c:if>
+							</tr>
+							<tr>
+						</c:if>
 					</c:forEach>
 			</table>
 		</div>

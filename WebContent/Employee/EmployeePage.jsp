@@ -41,6 +41,14 @@
 		//指定箇所の出力
 		document.getElementById(tabName).style.display = 'block';
 	}
+	//バッジタブ切り替え
+	function badgeChange(tabName){
+		document.getElementById("totalTab").style.display = 'none';
+		document.getElementById("monthTab").style.display = 'none';
+		document.getElementById("yearTab").style.display = 'none';
+		//指定箇所の出力
+		document.getElementById(tabName).style.display = 'block';
+	}
 </script>
 
 </head>
@@ -95,7 +103,7 @@
 	</div>
 	<div class="rightContents">
 		<div class="radarChart">
-			<canvas id="radar" height="500" width="700"></canvas>
+			<canvas id="radar" height="400" width="540"></canvas>
 		</div>
 			<script>
 				var radarChartData = {
@@ -132,6 +140,47 @@
 					.Radar(radarChartData,{
 						scaleShowLabels : true, scaleFontSize : 15, scaleLineColor: "rgba(0,0,0,0.9)", pointLabelFontSize : 20, });
 				</script>
+		<div class="badgeView">
+			<div class="badgeTabs">
+				<a href="javascript:badgeChange('totalTab')" class="totalTab"><h4>入社以来</h4></a>
+				<a href="javascript:badgeChange('monthTab')" class="monthTab"><h4>1ケ月間</h4></a>
+				<a href="javascript:badgeChange('yearTab')" class="yearTab"><h4>1年間</h4></a>
+			</div>
+			<div class="badgeTotal" id="totalTab">
+			<table class="badgeTable">
+				<tr>
+				<c:forEach var="employeeBadge" items="${employeeBadgeDetail}" varStatus="status">
+					<td class="badgeTd"><img src="../images/batch/${employeeBadge.badgeImgPath}.png" class="badgeImg"> × ${employeeBadge.badgeCount}</td>
+					<c:if test="${status.count%6 ==0}">
+						</tr>
+						<tr>
+					</c:if>
+				</c:forEach>
+			</table>
+			</div>
+			<div class="badgeMonth" id="monthTab">
+			<table class="badgeTable">
+				<c:forEach var="employeeBadgeMonth" items="${employeeBadgeMonth}">
+					<td class="badgeTd"><img src="../images/batch/${employeeBadgeMonth.badgeImgPath}.png" class="badgeImg"> × ${employeeBadgeMonth.badgeCount}</td>
+					<c:if test="${status.count%6 ==0}">
+						</tr>
+						<tr>
+					</c:if>
+				</c:forEach>
+			</table>
+			</div>
+			<div class="badgeYear" id="yearTab">
+			<table class="badgeTable">
+				<c:forEach var="employeeBadgeYear" items="${employeeBadgeYear}">
+					<td class="badgeTd"><img src="../images/batch/${employeeBadgeYear.badgeImgPath}.png" class="badgeImg"> × ${employeeBadgeYear.badgeCount}</td>
+					<c:if test="${status.count%6 ==0}">
+						</tr>
+						<tr>
+					</c:if>
+				</c:forEach>
+			</table>
+			</div>
+		</div>
 		<div class="activities">
 			<div class="tabs">
 				<a href="javascript:activityChange('homeTab')" class="homeTab">ホメホメ履歴</a>
@@ -147,7 +196,7 @@
 				<c:forEach var="employeeHomeLog" items="${employeeHomeLogDetail}">
 				<ul>
 					<li class="days">${employeeHomeLog.days}</li>
-					<li class="activity">${employeeHomeLog.targetName}さんへホメポイントを付与しました</li>
+					<li class="activity"><a href="EmployeePage?employeeId=${employeeHomeLog.employeeId}">${employeeHomeLog.targetName}さん</a>へホメポイントを付与しました</li>
 				</ul>
 				<hr>
 				</c:forEach>
@@ -163,7 +212,7 @@
 				<c:forEach var="employeePlan" items="${employeePlanDetail}">
 					<ul>
 						<li class="days">${employeePlan.days}</li>
-						<li class="activity">企画：${employeePlan.planTitle}を発案しました</li>
+						<li class="activity">企画：<a href="PlanDetail?planId=${employeePlan.planId}&detail=view">${employeePlan.planTitle}</a>を発案しました</li>
 					</ul>
 					<hr>
 				</c:forEach>
@@ -178,7 +227,7 @@
 				<c:forEach var="employeePlanComment" items="${employeePlanCommentDetail}">
 					<ul>
 						<li class="days">${employeePlanComment.days}</li>
-						<li class="activity">${employeePlanComment.plannerName}さんの${employeePlanComment.planName}にコメントしました</li>
+						<li class="activity">${employeePlanComment.plannerName}さんの<a href="PlanDetail?planId=${employeePlanComment.planId}&detail=view">${employeePlanComment.planName}</a>にコメントしました</li>
 					</ul>
 				<hr>
 				</c:forEach>
@@ -186,6 +235,7 @@
 		</div>
 			<script type="text/javascript">
 				activityChange('homeTab');
+				badgeChange('totalTab');
 			</script>
 	</div>
 </div>

@@ -1,7 +1,6 @@
 ﻿package jp.ac.hal.skymoons.daoes;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -451,6 +450,34 @@ public class SampleDao {
 	}
 
 	/*
+	 * 2015/06/30
+	 * 中野 裕史郎
+	 * 社員の取得バッジの期間絞りアリ取得
+	 */
+	public List<EmployeeBadgeBean>getEmployeeDetailOfBadgeInLimited(String employeeId ,String outPutDate){
+		ArrayList<EmployeeBadgeBean> resultTable = new ArrayList<EmployeeBadgeBean>();
+		try {
+			PreparedStatement select = con.prepareStatement("SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
+					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? AND hl.home_datetime >= ? "
+					+"GROUP BY hl.batch_id ORDER BY hl.batch_id");
+			select.setString(1, employeeId);
+			select.setString(2, outPutDate);
+			ResultSet result = select.executeQuery();
+			while(result.next()){
+				EmployeeBadgeBean recode = new EmployeeBadgeBean();
+				recode.setBadgeName(result.getString("b.batch_name"));
+				recode.setBadgeCount(result.getInt("COUNT(*)"));
+				recode.setBadgeImgPath(result.getString("hl.batch_id"));
+				resultTable.add(recode);
+			}
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+
+		return resultTable;
+	}
+	/*
 	 * 2015/6/23
 	 * 中野 裕史郎
 	 * チャート描画用配列の取得
@@ -565,13 +592,14 @@ public class SampleDao {
 	public List<EmployeePlanBean> getEmployeeDetailOfPlan(String employeeId){
 		ArrayList<EmployeePlanBean> resultTable = new ArrayList<EmployeePlanBean>();
 		try {
-			PreparedStatement select = con.prepareStatement("SELECT plan_title , plan_datetime FROM `plan` WHERE planner LIKE ? ORDER BY plan_datetime DESC");
+			PreparedStatement select = con.prepareStatement("SELECT plan_title , plan_datetime , plan_id FROM `plan` WHERE planner LIKE ? ORDER BY plan_datetime DESC");
 			select.setString(1, employeeId);
 			ResultSet result = select.executeQuery();
 			while(result.next()){
 				EmployeePlanBean recode = new EmployeePlanBean();
 				recode.setPlanTitle(result.getString("plan_title"));
 				recode.setDays(result.getDate("plan_datetime"));
+				recode.setPlanId(result.getString("plan_id"));
 				resultTable.add(recode);
 			}
 		} catch (SQLException e) {
@@ -588,7 +616,7 @@ public class SampleDao {
 	public List<EmployeePlanCommentBean> getEmployeeDetailOfPlanComment(String employeeId){
 		ArrayList<EmployeePlanCommentBean> resultTable = new ArrayList<EmployeePlanCommentBean>();
 		try {
-			PreparedStatement select = con.prepareStatement("SELECT p.plan_title , pc.comment_datetime ,  u.last_name , u.first_name "
+			PreparedStatement select = con.prepareStatement("SELECT p.plan_id , p.plan_title , pc.comment_datetime ,  u.last_name , u.first_name "
 					+"FROM plan_comment AS pc JOIN plan AS p ON pc.plan_id = p.plan_id JOIN users AS u ON p.planner = u.user_id "
 					+"WHERE comment_user LIKE ? ORDER BY pc.comment_datetime DESC");
 			select.setString(1, employeeId);
@@ -598,6 +626,7 @@ public class SampleDao {
 				recode.setPlannerName(result.getString("u.last_name")+result.getString("u.first_name"));
 				recode.setPlanName(result.getString("p.plan_title"));
 				recode.setDays(result.getDate("pc.comment_datetime"));
+				recode.setPlanId(result.getString("p.plan_id"));
 				resultTable.add(recode);
 			}
 		} catch (SQLException e) {
@@ -614,7 +643,7 @@ public class SampleDao {
 	public List<EmployeeHomeLogBean> getEmployeeDetailOfHomeLog(String employeeId){
 		ArrayList<EmployeeHomeLogBean> resultTable = new ArrayList<EmployeeHomeLogBean>();
 		try {
-			PreparedStatement select = con.prepareStatement("SELECT hl.home_target , hl.home_datetime , u.last_name ,u.first_name FROM home_log AS hl "
+			PreparedStatement select = con.prepareStatement("SELECT hl.home_user , hl.home_target , hl.home_datetime , u.last_name ,u.first_name FROM home_log AS hl "
 					+"JOIN users AS u ON hl.home_target = u.user_id WHERE home_user LIKE ? ORDER BY home_datetime DESC");
 			select.setString(1, employeeId);
 			ResultSet result = select.executeQuery();
@@ -622,6 +651,7 @@ public class SampleDao {
 				EmployeeHomeLogBean recode = new EmployeeHomeLogBean();
 				recode.setTargetName(result.getString("u.last_name")+result.getString("u.first_name"));
 				recode.setDays(result.getDate("hl.home_datetime"));
+				recode.setEmployeeId(result.getString("hl.home_target"));
 				resultTable.add(recode);
 			}
 		} catch (SQLException e) {

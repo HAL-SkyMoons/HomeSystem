@@ -1,6 +1,10 @@
 package jp.ac.hal.skymoons.models;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,12 +40,22 @@ public class EmployeePageModel extends AbstractModel{
 		ArrayList<EmployeePlanBean> employeePlanReturn = new ArrayList<EmployeePlanBean>();
 		ArrayList<EmployeePlanCommentBean> employeePlanCommentReturn = new ArrayList<EmployeePlanCommentBean>();
 		ArrayList<EmployeeHomeLogBean> employeeHomeLogReturn = new ArrayList<EmployeeHomeLogBean>();
+		ArrayList<EmployeeBadgeBean> employeeBadgeMonthReturn = new ArrayList<EmployeeBadgeBean>();
+		ArrayList<EmployeeBadgeBean> employeeBadgeYearReturn = new ArrayList<EmployeeBadgeBean>();
 		//チャート描画用変数
 		String[] employeeChartBadgeName = {};
 		int[] employeeChartBadgeCount = {};
 		//引数取得
 		String employeeId = request.getParameter("employeeId");
-
+		DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+		Calendar cal = Calendar.getInstance();
+		Date nowDate = new Date();
+		cal.setTime(nowDate);
+		cal.add(Calendar.MONTH, -1);
+		String monthDate = df.format(cal.getTime());
+		cal.setTime(nowDate);
+		cal.add(Calendar.YEAR, -1);
+		String yearDate = df.format(cal.getTime());
 		//DBコネクション取得
 		SampleDao dao = new SampleDao();
 
@@ -52,6 +66,8 @@ public class EmployeePageModel extends AbstractModel{
 		employeePlanReturn = (ArrayList<EmployeePlanBean>)dao.getEmployeeDetailOfPlan(employeeId);
 		employeePlanCommentReturn = (ArrayList<EmployeePlanCommentBean>)dao.getEmployeeDetailOfPlanComment(employeeId);
 		employeeHomeLogReturn = (ArrayList<EmployeeHomeLogBean>)dao.getEmployeeDetailOfHomeLog(employeeId);
+		employeeBadgeMonthReturn = (ArrayList<EmployeeBadgeBean>)dao.getEmployeeDetailOfBadgeInLimited(employeeId,monthDate);
+		employeeBadgeYearReturn = (ArrayList<EmployeeBadgeBean>)dao.getEmployeeDetailOfBadgeInLimited(employeeId,yearDate);
 		//チャート描画用情報取得処理
 		employeeChartBadgeName = (String[])dao.getEmployeeDetailOfBadgeNameForChart(employeeId);
 		employeeChartBadgeCount = (int[])dao.getEmployeeDetailOfBadgeCountForChart(employeeId);
@@ -65,6 +81,8 @@ public class EmployeePageModel extends AbstractModel{
 		request.setAttribute("employeePlanCommentDetail", employeePlanCommentReturn);
 		request.setAttribute("employeeHomeLogDetail",employeeHomeLogReturn);
 		request.setAttribute("sessionId", (String)sessionController.getUserId());
+		request.setAttribute("employeeBadgeMonth", employeeBadgeMonthReturn);
+		request.setAttribute("employeeBadgeYear", employeeBadgeYearReturn);
 		//チャート用の引数をsetAttribute
 		request.setAttribute("chartName", employeeChartBadgeName);
 		request.setAttribute("chartCount", employeeChartBadgeCount);
