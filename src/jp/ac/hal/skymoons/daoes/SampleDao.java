@@ -700,7 +700,7 @@ public class SampleDao {
 		sql += " order by comment_count asc";
 		break;
 	    case "evaluationDesc":
-		sql += " order by pointt_count desc";
+		sql += " order by point_count desc";
 		break;
 	    case "evaluationAsc":
 		sql += " order by point_count asc";
@@ -783,7 +783,7 @@ public class SampleDao {
 		sql += " order by comment_count asc";
 		break;
 	    case "evaluationDesc":
-		sql += " order by pointt_count desc";
+		sql += " order by point_count desc";
 		break;
 	    case "evaluationAsc":
 		sql += " order by point_count asc";

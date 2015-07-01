@@ -35,7 +35,8 @@ public class PlanList extends AbstractModel {
 		// 終了済み企画を含める
 		if (request.getParameter("endPlan") != null) {
 		    planList = dao.planListAll(request.getParameter("order"));
-		    request.setAttribute("endPlan",request.getParameter("endPlan"));
+		    request.setAttribute("endPlan",
+			    request.getParameter("endPlan"));
 		}
 
 		// キーワード検索
@@ -121,7 +122,10 @@ public class PlanList extends AbstractModel {
 	    request.setAttribute("employeeList", employeeList);
 	    request.setAttribute("pointMap", pointMap);
 	    request.setAttribute("genreMap", genreMap);
-	    request.setAttribute("order", request.getParameter("order"));
+
+	    if (request.getParameter("order") != null && !request.getParameter("order").equals("")) {
+		request.setAttribute("order", request.getParameter("order"));
+	    }
 
 	    return "/pages/PlanList.jsp";
 	} else if (sessionController.checkUserSession() != null) {

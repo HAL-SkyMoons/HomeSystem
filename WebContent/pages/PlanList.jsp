@@ -40,6 +40,10 @@
 		});
 
 	});
+
+	function change() {
+		document.getElementById('outputKeyword').value = document.forms['formKeyword'].elements['inputKeyword'].value;
+	}
 </script>
 </head>
 <body>
@@ -47,37 +51,28 @@
 		<table class="search">
 			<tr>
 				<th>キーワード</th>
-				<form action="/HomeSystem/fc/PlanList" method="post">
-					<td class="searchDataColumn">
-						<input type="text" class="keyword" name="keyword" value="${searchKeyword}">
-					</td>
-					<td class="searchBtnColumn">
-						<input type="submit" name="search" class="btn btn-2 btn-2c searchBtn" value="検索">
-					</td>
+				<form action="/HomeSystem/fc/PlanList" method="post" id="formKeyword">
+					<td class="searchDataColumn"><input type="text" class="keyword" id="inputKeyword"  name="keyword" value="${searchKeyword}" onchange="javascript:change();"></td>
+					<td class="searchBtnColumn"><input type="submit" name="search" class="btn btn-2 btn-2c searchBtn" value="検索"></td>
 				</form>
 			</tr>
 			<tr>
 				<th>詳細検索</th>
 				<form action="/HomeSystem/fc/PlanSearch" method="post">
-					<td class="searchDetailColumn">
-						<c:if test="${searchPlanner != null}">
+					<input type="hidden" name="searchKeyword" id="outputKeyword" value="${searchKeyword}">
+					<td class="searchDetailColumn"><c:if test="${searchPlanner != null}">
 							<div class="detailData">
-								<span class="detailTitle">企画者:</span>
-								<span class="detailInside">${searchPlannerName}</span>
+								<span class="detailTitle">企画者:</span> <span class="detailInside">${searchPlannerName}</span>
+								<input type="hidden" name="searchPlanner" value="${searchPlanner}" />
 							</div>
-						</c:if>
-						<c:if test="${endPlan != null}">
+						</c:if> <c:if test="${endPlan != null}">
 							<div class="detailData">
-								<span class="detailTitle">オプション:</span>
-								<span class="detailInside">終了済企画を含む</span>
+								<span class="detailTitle">オプション:</span> <span class="detailInside">終了済企画を含む</span>
+								<input type="hidden" name="endPlan" value="${endPlan}" />
 							</div>
-						</c:if>
-						<c:if test="${order != null}">
+						</c:if> <c:if test="${order != null}">
 							<div class="detailData">
-								<span class="detailTitle">順序:</span>
-								<span class="detailInside">
-
-									<c:choose>
+								<span class="detailTitle">順序:</span> <span class="detailInside"> <c:choose>
 										<c:when test="${order == 'dateDesc'}">投稿日時が新しい順</c:when>
 										<c:when test="${order == 'dateAsc'}">投稿日時が古い順</c:when>
 										<c:when test="${order == 'commentDesc'}">コメントが多い順</c:when>
@@ -92,24 +87,23 @@
 										<c:when test="${order == 'periodAsc'}">企画期間が短い順</c:when>
 									</c:choose>
 								</span>
+								<input type="hidden" name="searchOrder" value="${order}" />
 							</div>
-						</c:if>
-
-						<c:if test="${searchGenre != null}">
+						</c:if> <c:if test="${searchGenre != null}">
 							<div class="detailData">
 								<span class="detailTitle">ジャンル:</span>
 								<c:forEach var="genre" items="${searchGenre}">
 
 									<span class="detailInside">${genre.genreName}</span>
+									<input type="hidden" name="searchGenre" value="${genre.genreId}" />
+
 
 								</c:forEach>
+
 							</div>
 
-						</c:if>
-					</td>
-					<td class="searchBtnColumn">
-						<input type="submit" name="searchDetail" class="btn btn-2 btn-2c searchDetailBtn" value="詳細検索">
-					</td>
+						</c:if></td>
+					<td class="searchBtnColumn"><input type="submit" name="searchDetail" class="btn btn-2 btn-2c searchDetailBtn" value="詳細検索"></td>
 				</form>
 			</tr>
 
@@ -132,11 +126,7 @@
 							</tr>
 							<tr>
 								<th class="period">期間</th>
-								<td>
-									<fmt:formatDate value="${plan.startDate}" pattern="yyyy年MM月dd日 KK時mm分" />
-									&nbsp;&sim;&nbsp;
-									<fmt:formatDate value="${plan.endDate}" pattern="yyyy年MM月dd日 KK時mm分" />
-								</td>
+								<td><fmt:formatDate value="${plan.startDate}" pattern="yyyy年MM月dd日 KK時mm分" /> &nbsp;&sim;&nbsp; <fmt:formatDate value="${plan.endDate}" pattern="yyyy年MM月dd日 KK時mm分" /></td>
 							</tr>
 							<tr>
 								<th class="comments">コメント数</th>
@@ -148,29 +138,21 @@
 							</tr>
 							<tr>
 								<th class="genre">ジャンル</th>
-								<td>
-									<c:forEach var="genre" items="${genreMap[plan.planId]}" varStatus="status">
+								<td><c:forEach var="genre" items="${genreMap[plan.planId]}" varStatus="status">
 										<a href="/HomeSystem/fc/PlanList?search=検索&genre=${genre.genreId}"> <c:out value="${genre.genreName}" />
 										</a>
 										<c:if test="${!status.last}">
 											<c:out value="," />
 										</c:if>
-									</c:forEach>
-								</td>
+									</c:forEach></td>
 							</tr>
 
 						</table>
 					</div>
 					<div class="right">
 						<div class="evaluation">
-							<span class="like">
-								<img src="../images/icon/like.png">いいね:
-								<c:out value="${pointMap[plan.planId].goodCount}" default="0" />
-							</span>
-							/
-							<span class="dislike">
-								<img src="../images/icon/dislike.png">ダメだね：
-								<c:out value="${pointMap[plan.planId].badCount}" default="0" />
+							<span class="like"> <img src="../images/icon/like.png">いいね: <c:out value="${pointMap[plan.planId].goodCount}" default="0" />
+							</span> / <span class="dislike"> <img src="../images/icon/dislike.png">ダメだね： <c:out value="${pointMap[plan.planId].badCount}" default="0" />
 							</span>
 						</div>
 					</div>

@@ -47,49 +47,52 @@
 			<table class="search">
 				<tr>
 					<th class="searchTitle">キーワード</th>
-					<td class="searchForm">
-						<input type="text" name="keyword" class="keyword" />
-					</td>
+					<td class="searchForm"><input type="text" name="keyword" class="keyword" value="${searchKeyword}" /></td>
 					<td class="help"></td>
 				</tr>
 				<tr>
 					<th class="searchTitle">企画者</th>
-					<td class="searchForm">
-						<select name="planner">
+					<td class="searchForm"><select name="planner">
 							<option value="">---指定なし---</option>
 							<c:forEach var="employee" items="${employeeList}">
-								<option value="${employee.userId}">${employee.lastName}&nbsp;${employee.firstName}</option>
+								<c:if test="${searchPlanner != null && searchPlanner == employee.userId}">
+									<option value="${employee.userId}" selected="selected">${employee.lastName}&nbsp;${employee.firstName}</option>
+								</c:if>
+
+								<c:if test="${searchPlanner == null || searchPlanner != employee.userId}">
+									<option value="${employee.userId}">${employee.lastName}&nbsp;${employee.firstName}</option>
+								</c:if>
+
 							</c:forEach>
-						</select>
-					</td>
+						</select></td>
 					<td class="help"></td>
 				</tr>
 				<tr>
 					<th class="searchTitle">オプション</th>
-					<td class="searchForm">
-						<label><input type="checkbox" name="endPlan" value="check">終了企画を含める</label>
-					</td>
+					<td class="searchForm"><label> <c:if test="${endPlan != null}">
+								<input type="checkbox" name="endPlan" value="check" checked="checked">
+							</c:if> <c:if test="${endPlan == null}">
+								<input type="checkbox" name="endPlan" value="check">
+							</c:if> 終了企画を含める
+					</label></td>
 					<td class="help"></td>
 				</tr>
 				<tr>
 					<th class="searchTitle">順序</th>
-					<td class="searchForm">
-						<select name="order">
+					<td class="searchForm"><select name="order">
 							<option value="">---指定なし---</option>
-							<option value="dateDesc">投稿日時が新しい順</option>
-							<option value="dateAsc">投稿日時が古い順</option>
-							<option value="commentDesc">コメントが多い順</option>
-							<option value="commentAsc">コメントが少ない順</option>
-							<option value="evaluationDesc">評価数が多い順</option>
-							<option value="evaluationAsc">評価数が少ない順</option>
-							<option value="likeDesc">いいねが多い順</option>
-							<option value="likeAsc">いいねが少ない順</option>
-							<option value="startDesc">企画開始日時が新しい順</option>
-							<option value="startAsc">企画開始日時が古い順順</option>
-							<option value="periodDesc">企画期間が長い順</option>
-							<option value="periodAsc">企画期間が短い順</option>
-						</select>
-					</td>
+							<c:forEach var="order" items="${orderList}">
+
+								<c:if test="${searchOrder != null && order.key == searchOrder}">
+									<option value="${order.key}" selected="selected">${order.value}</option>
+								</c:if>
+								<c:if test="${searchOrder  == null || order.key != searchOrder}">
+									<option value="${order.key}">${order.value}</option>
+								</c:if>
+
+
+							</c:forEach>
+						</select></td>
 					<td class="help"></td>
 				</tr>
 			</table>
@@ -104,9 +107,13 @@
 
 								<c:if test="${genre.bigGenreId == bigGenre.bigGenreId}">
 
-									<td>
-										<label><input type="checkbox" name="genre" value="${genre.genreId }">${genre.genreName }</label>
-									</td>
+									<td><label> <c:if test="${searchGenre.containsKey(genre.genreId)}">
+												<input type="checkbox" name="genre" value="${genre.genreId }" checked="checked">${genre.genreName }
+									</c:if> <c:if test="${!searchGenre.containsKey(genre.genreId)}">
+												<input type="checkbox" name="genre" value="${genre.genreId }">${genre.genreName }
+									</c:if>
+
+									</label></td>
 									<c:set var="count" value="${count+1}" />
 								</c:if>
 								<c:if test="${count%3 ==0}">
@@ -121,7 +128,9 @@
 
 			</c:forEach>
 
-			<div class="btnZone"><input type="submit" name="search" class="btn btn-2 btn-2c searchBtn" value="検索"></div>
+			<div class="btnZone">
+				<input type="submit" name="search" class="btn btn-2 btn-2c searchBtn" value="検索">
+			</div>
 
 		</form>
 	</div>
