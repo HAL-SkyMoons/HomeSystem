@@ -59,17 +59,7 @@ public class CreateAdd extends AbstractModel {
 			// 「ログインID」の入力値チェック
 			if(checkInputString(record.getUser_id(), 24, "「ログインID」") != null) {
 				message += checkInputString(record.getUser_id(), 24, "「ログインID」");
-			} else {
-				
-				byte[] code = record.getUser_id().getBytes("UTF-8");
-				for(int i = 0; i < record.getUser_id().length(); i++) {
-					if(String.valueOf(record.getUser_id().substring(i, i + 1)).getBytes().length < 2) {
-						System.out.println(record.getUser_id().substring(i, i + 1) + ":半:" + Integer.toHexString(code[i]));
-					} else {
-						System.out.println(record.getUser_id().substring(i, i + 1) + ":全:" + Integer.toHexString(code[i]));
-					}
-				}
-				
+			} else {				
 				// 「ログインID」の重複チェック
 				CustomerDAO customerDAO = null;
 				try {
@@ -101,7 +91,7 @@ public class CreateAdd extends AbstractModel {
 			// 入力値エラーチェック
 			if(message == "") {
 				// 入力値エラー無し
-				return "/customer/check.jsp";
+				return "/customer/signup_check.jsp";
 			} else {
 				// 入力値エラー有り
 				request.setAttribute("message", message);
@@ -138,5 +128,44 @@ public class CreateAdd extends AbstractModel {
 				return "<p>" + word + "の文字数は" + maxlength + "文字以内にしてください。";
 			}
 		}
+	}
+	
+	/**
+	 * 
+	 * @param checkValue
+	 * チェックする文字列
+	 * @param checktype
+	 * 1:小文字のみの文字列か確認する<br />
+	 * 2:大文字のみの文字列か確認する
+	 * @return
+	 * 
+	 * @throws Exception
+	 */
+	private String checkPatternInputString(String checkValue, byte checktype) throws Exception {
+		byte[] code = null;
+		if(checkValue != null) {
+			code = checkValue.getBytes("UTF-8");
+		} else {
+			System.out.println("ERROR:文字列チェック処理に問題が発生しました。");
+			System.out.println("checkValueがnullなので文字列チェックが出来ません。");
+			return "checkValueがnullなので文字列チェックが出来ません。";
+		}
+
+		String message = null;
+		switch (checktype) {
+		case 1:
+			for(int i = 0; i < code.length; i++) {
+				if(code[i] < 2) {
+					System.out.println(code[i] + ":半:" + Integer.toHexString(code[i]));
+				} else {
+					System.out.println(code[i] + ":全:" + Integer.toHexString(code[i]));
+				}
+			}
+			break;
+		case 2:
+		default:
+			break;
+		}
+		return "";
 	}
 }

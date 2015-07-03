@@ -3,9 +3,9 @@ package jp.ac.hal.skymoons.daoes.customer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import jp.ac.hal.skymoons.beans.customer.CustomerUsersBean;
@@ -110,36 +110,36 @@ public class CustomerDAO {
 	 * @param customer_id
 	 * 顧客ユーザID
 	 * @return
+	 * 顧客ユーザレコード。指定のユーザIDのデータが見つからない場合、nullが返されます。
 	 * @throws SQLException
 	 */
 	public CustomerUsersBean getCustomerUsersDetail(String customer_id) throws SQLException {
-		CustomerUsersBean record = new CustomerUsersBean();
-		return record;
-	}
-	
-	/**
-	 * データベースから顧客詳細情報を取得する。
-	 * @return
-	 * 顧客詳細情報
-	 * @throws SQLException 
-	 */
-	public HashMap<String, String> getCustomerDetail(String id) throws SQLException {
-		String sql	=	"SELECT cus.customer_company, users.last_name, users.first_name,  users.user_id, users.password "
-					+	"FROM Customers AS cus "
-					+	"JOIN users "
-					+	"ON cus.customer_id = users.user_id "
-					+	"WHERE users.user_id = ?";
+		String sql	=	"SELECT user_id, password, last_name, first_name, Class_flag,"
+					+		" delete_flag, lapse_flag, customer_id, customer_company"
+					+	" FROM users"
+					+	" JOIN customers AS cus"
+					+	" ON users.user_id = cus.customer_id" 
+					+	" WHERE users.delete_flag = 0 AND BINARY users.user_id = ?";
 		PreparedStatement preparedStatement = this.con.prepareStatement(sql);
-		preparedStatement.setString(1, id);
-		ResultSet result = preparedStatement.executeQuery();
-		HashMap<String, String> value = new HashMap<String, String>();
-		result.next();
-		value.put("company", result.getString(1));
-		value.put("lastname", result.getString(2));
-		value.put("firstname", result.getString(3));
-		value.put("id", result.getString(4));
-		value.put("password", result.getString(5));
-		return value;
+		preparedStatement.setString(1, customer_id);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		CustomerUsersBean record = new CustomerUsersBean();
+		ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+		if(resultSetMetaData.getColumnCount() != 0) {
+			resultSet.next();
+			record.setUser_id(resultSet.getString("user_id"));
+			record.setPassword(resultSet.getString("password"));
+			record.setLast_name(resultSet.getString("last_name"));
+			record.setFirst_name(resultSet.getString("first_name"));
+			record.setClass_flag(resultSet.getInt("Class_flag"));
+			record.setDelete_flag(resultSet.getInt("delete_flag"));
+			record.setLapse_flag(resultSet.getInt("lapse_flag"));
+			record.setCustomer_id(resultSet.getString("customer_id"));
+			record.setCustomer_company(resultSet.getString("customer_company"));
+			return record;
+		} else {
+			return null;
+		}
 	}
 	
 	/**
@@ -189,7 +189,6 @@ public class CustomerDAO {
 			preparedStatement.setString(3, record.getLast_name());
 			preparedStatement.setString(4, record.getFirst_name());
 			preparedStatement.executeUpdate();
-		
 			preparedStatement = con.prepareStatement(customersSQL);
 			preparedStatement.setString(1, record.getUser_id());
 			preparedStatement.setString(2, record.getCustomer_company());
@@ -208,29 +207,72 @@ public class CustomerDAO {
 // ==========================================================================================
 //  UPDATE
 // ==========================================================================================
-
-// ==========================================================================================
-//  DELETE
-// ==========================================================================================
 	
 	/**
-	 * データベースの顧客テーブルとユーザテーブルから、顧客ユーザIDで指定した顧客ユーザ情報を削除する。
+	 * 指定の顧客ユーザIDの姓と名を更新する。
+	 * @param id
+	 * 顧客ユーザID
+	 * @param lastName
+	 * 姓
+	 * @param firstName
+	 * 名
+	 * @throws SQLException
+	 */
+	public void updateCustomerName(String id, String lastName, String firstName) throws SQLException {
+		String sql = "UPDATE users SET last_name = ?, first_name = ? WHERE BINARY user_id = ?";
+		PreparedStatement preparedStatement = this.con.prepareStatement(sql);
+		preparedStatement.setString(1, lastName);
+		preparedStatement.setString(2, firstName);
+		preparedStatement.setString(3, id);
+		preparedStatement.executeUpdate();
+		con.commit();
+	}
+	
+	/**
+	 * 指定の顧客ユーザIDの企業名を更新する。
+	 * @param id
+	 * 顧客ユーザID
+	 * @param company
+	 * 企業名
+	 * @throws SQLException
+	 */
+	public void updateCustomerCompany(String id, String company) throws SQLException {
+		String sql = "UPDATE customers SET customer_company = ? WHERE BINARY customer_id = ?";
+		PreparedStatement preparedStatement = this.con.prepareStatement(sql);
+		preparedStatement.setString(1, company);
+		preparedStatement.setString(2, id);
+		preparedStatement.executeUpdate();
+		con.commit();
+	}
+	
+	/**
+	 * 指定の顧客ユーザIDのパスワードを変更する。
+	 * @param id
+	 * 顧客ユーザID
+	 * @param password
+	 * パスワード
+	 * @throws SQLException
+	 */
+	public void updateCustomerPassword(String id, String password) throws SQLException {
+		String sql = "UPDATE users SET password = ? WHERE BINARY user_id = ?";
+		PreparedStatement preparedStatement = this.con.prepareStatement(sql);
+		preparedStatement.setString(1, password);
+		preparedStatement.setString(2, id);
+		preparedStatement.executeUpdate();
+		con.commit();
+	}
+	
+	/**
+	 * 指定の顧客ユーザを論理削除する。
 	 * @param customerId
 	 * 顧客ユーザのID
 	 * @throws SQLException
 	 */
-	public void deleteCustomer(String customerId) throws SQLException {
-		// 顧客テーブルのレコード削除
-		String sql1 = "DELETE FROM customers WHERE customer_id = ?";
-		PreparedStatement preparedStatement = this.con.prepareStatement(sql1);
+	public void updateCustomer(String customerId) throws SQLException {
+		String sql = "UPDATE users SET delete_flag = 1 WHERE BINARY user_id = ?";
+		PreparedStatement preparedStatement = this.con.prepareStatement(sql);
 		preparedStatement.setString(1, customerId);
 		preparedStatement.executeUpdate();
-		// ユーザテーブルのレコード削除
-		String sql2 = "DELETE FROM users WHERE user_id = ?";
-		preparedStatement = this.con.prepareStatement(sql2);
-		preparedStatement.setString(1, customerId);
-		preparedStatement.executeUpdate();
-		
-		this.con.commit();
+		con.commit();
 	}
 }

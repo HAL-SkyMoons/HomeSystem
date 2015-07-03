@@ -25,7 +25,7 @@ public class SessionController {
 	 */
 	public SessionController(HttpServletRequest request) {
 		this.session = request.getSession();
-		this.session.setMaxInactiveInterval(60 * 10);
+		this.session.setMaxInactiveInterval(60 * 30);
 	}
 
 // ==========================================================================================
