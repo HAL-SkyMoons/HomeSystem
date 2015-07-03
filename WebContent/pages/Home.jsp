@@ -5,54 +5,47 @@
 <%@page import="jp.ac.hal.skymoons.beans.PlanBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE htm>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
 <title>ホメ</title>
 
 <link rel="stylesheet" type="text/css" href="../css/reset.css">
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
-<link rel="stylesheet" type="text/css"
-	href="../css/bootstrap-theme.min.css">
-<link rel="stylesheet" type="text/css"
-	href="../js/image-picker/image-picker.css">
+<link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css" href="../js/image-picker/image-picker.css">
 <link rel="stylesheet" type="text/css" href="../css/Home.css">
 <script src="../js/jquery-2.1.4.min.js" type="text/javascript"></script>
 <script src="../js/image-picker/image-picker.js" type="text/javascript"></script>
-<script src="../js/image-picker/image-picker.min.js"
-	type="text/javascript"></script>
+<script src="../js/image-picker/image-picker.min.js" type="text/javascript"></script>
 </head>
 <body>
 	<form action="/HomeSystem/fc/Home" method="post">
 		<div id="wrapper">
 			<div id="touser">
 				<div id="face">
-					<img src="../images/employees/E0001.jpg">
+					<img src="../images/employees/${toUser.userId}.jpg">
 				</div>
 				<div id="name">
 					<h3>
-						<%
-						UserBean fromUser = (UserBean)request.getAttribute("fromUser");
-						out.println("<input type=\"hidden\" name=\"fromId\" value=\""+ fromUser.getUserId() +"\">");
-							UserBean toUser = (UserBean)request.getAttribute("toUser");
-										out.print(toUser.getLastName() + toUser.getFirstName());
-										out.print("<input type=\"hidden\" name=\"toId\" value=\""+ toUser.getUserId() +"\">");
-						%>
+						<input type="hidden" name="fromId" value="${fromUser.userId}">
+						<p>${toUser.lastName}${toUser.firstName}</p>
+						<input type="hidden" name="toId" value="${toUser.userId}">
 					</h3>
 					<div id="content">
-						関連コンテンツ：
-						<%
-						if(request.getParameter("contentsId") == null){
-										out.println("なし");
-										out.println("<input type=\"hidden\" name=\"contentsId\" value=\"0\">" );
-									}else{
-										out.println(request.getAttribute("contentTitle"));
-										out.println("<input type=\"hidden\" name=\"contentsId\" value=\""+request.getParameter("contentsId")+"\">" );
-									}
-					%>
+						【関連コンテンツ】<br>
+						<c:if test="${contentTitle == null}">
+							<p>なし</p>
+							<input type="hidden" name="contentsId" value="0">
+						</c:if>
+
+						<c:if test="${contentTitle != null}">
+							<p>${contentTitle}</p>
+							<input type="hidden" name="contentsId" value="${contentsId}">
+						</c:if>
 					</div>
 					<div id="point">
 						評価ポイント：
@@ -64,20 +57,16 @@
 
 			<div id="batch">
 				<select class='image-picker show-html' name="batchId">
-					<%
-						ArrayList<BatchBean> batchList = (ArrayList<BatchBean>) request.getAttribute("batchList");
-												for (BatchBean batch : batchList) {
-													out.print("<option data-img-src='../images/batch/" + batch.getBatchId() + ".png' value='" + batch.getBatchId() + "'>" + batch.getBatchName() + "</option>");
-												}
-					%>
+					<c:forEach var="batch" items="${batchList}">
+						<option data-img-src='../images/batch/${batch.batchId}.png' value='${batch.batchId}'>${batch.batchName}</option>
+					</c:forEach>
 				</select>
 			</div>
 			<div id="comment">
 				コメント：<br>
 				<textarea name="comment" maxlength="1000"></textarea>
 			</div>
-			<input type="submit" name="submit" class="btn btn-2 btn-2c submit"
-				value="送信">
+			<input type="submit" name="submit" class="btn btn-2 btn-2c submit" value="送信">
 		</div>
 
 	</form>
