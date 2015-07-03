@@ -334,5 +334,9 @@
 			}
 		%>
 	</form>
+	<form action="/HomeSystem/fc/PlanDetail" method="post">
+	   <input type="submit" name="planEnd" value="企画終了">
+	   <input type="hidden" name="planId" value=<%out.println(plan.getPlanId());%>>
+	</form>
 </body>
 </html>

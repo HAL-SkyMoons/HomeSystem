@@ -23,7 +23,7 @@ public class PlanCalendar extends AbstractModel{
 		// TODO Auto-generated method stub
 
 		SampleDao dao = new SampleDao();
-		List<PlanBean> planList = dao.planList();
+		List<PlanBean> planList = dao.planListNoEnd(null);
 		dao.close();
 
 		request.setAttribute("planList", planList);

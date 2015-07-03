@@ -1,62 +1,71 @@
 @CHARSET "UTF-8";
 
 body {
-	overflow: hidden;
-	text-align: center;
-	padding-top: 10px;
-}
-
-#wrapper {
-	width: 500px;
-	max-width: 500px;
-	margin: 0 auto;
 	font-family: 'Lucida Grande', 'Hiragino Kaku Gothic ProN',
 		'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, sans-serif;
+}
+
+.wrapper {
+	width: 800px;
 	margin: 0 auto;
+	margin-top: 20px;
 }
 
-#toUser {
-	overflow: hidden;
-	width: 400px;
-	display: inline-block;
+th, td {
+	padding: 20px;
 }
 
-p {
-	display:inline-block;
-	text-align: left;
-	word-break: keep-all;
+table {
+	table-layout: fixed
 }
 
-#face {
-	width: 45%;
-	margin: 0 auto;
-	display: inline-block;
-}
 
-#name {
-	width: 45%;
-	vertical-align: middle;
-	display: inline-block;
-}
-
-#batch {
-	margin: 0 auto;
-	width: 400px;
-}
-
-.image-picker {
-	width: 60%;
-	margin: 5px;
-}
-
-#comment>textarea {
-	width: 400px;
-	max-width: 400px;
-	height: 100px;
-}
-
-#point {
+.search {
 	width: 100%;
+	overflow: hidden;
+	border: 1px solid #666;
+}
+
+.searchTitle {
+	background-color: #F29900;
+	width: 15%;
+	text-align: center;
+	vertical-align: middle;
+	border-bottom: 1px solid #666;
+	text-align: center
+}
+
+.searchForm {
+	width: 60%;
+	vertical-align: middle;
+	border-bottom: 1px solid #666;
+}
+
+.help {
+	text-align: center;
+	background-color: #FFFFB3;
+	width: 25%;
+	min-width: 25%;
+	border-bottom: 1px solid #666;
+	vertical-align: middle;
+}
+
+.keyword {
+	width: 98%;
+}
+
+.trigger {
+	display: inline-block;
+	width: 100%;
+	background-color: #F29900;
+	font-size: 18px;
+	margin-top: 10px;
+}
+
+.toggle_container {
+	display: inline-block;
+	width: 100%;
+	border: 1px solid #F29900;
 }
 
 /*ボタン*/
@@ -90,7 +99,7 @@ p {
 }
 
 .btn-2 {
-	/* 	background: #cb4e4e; */
+	/*  background: #cb4e4e; */
 	background: #e6002d;
 	color: #fff;
 	box-shadow: 0 3px #CD0014;
@@ -124,7 +133,13 @@ p {
 	top: 6px;
 }
 
-.submit {
-	margin-top:10px;
-	width: 400px;
+.btnZone{
+	text-align: center;
+}
+
+.searchBtn{
+	margin-top:20px;
+	width: 50%;
+	height: 50px;
+	font-size: 25px;
 }
