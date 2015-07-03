@@ -45,15 +45,17 @@
 	border: 1px solid black;
 	padding: 10px;
 	width: 500px;
-    max-width: 500px;
-    margin-bottom: 5px;
-    -webkit-border-radius: 10px;
-    /*  height: 50px; */
+	max-width: 500px;
+	margin-bottom: 5px;
+	-webkit-border-radius: 10px;
+	/*  height: 50px; */
 }
 
-#comment{
-/* 	padding: 60px; */
+#comment {
+	/* 	padding: 60px; */
+
 }
+
 #genre {
 	overflow: hidden;
 }
@@ -63,9 +65,8 @@
 	margin: 5px;
 }
 
-#files {
-	/* 	overflow: hidden; */
-
+#file {
+	display: none;
 }
 
 .file {
@@ -103,10 +104,8 @@
 	margin-bottom: 5px;
 	-webkit-border-radius: 10px;
 	/* 	height: 50px; */
-	padding:5px 60px;
+	padding: 5px 60px;
 }
-
-
 
 .fileImage>img {
 	width: 60px;
@@ -241,8 +240,22 @@
 	padding: 10px;
 }
 
+#planner {
+	float: right;
+}
+
 .planner {
 	float: right;
+}
+
+#img {
+	width: 100px;
+	height: 100px;
+}
+
+#img>img {
+	max-width: 100px;
+	max-height: 100px;
 }
 
 .gest {
@@ -250,8 +263,8 @@
 }
 
 .face>img {
-	width: 80px;
-	height: 80px;
+	max-width: 80px;
+	max-height: 80px;
 }
 
 .name {

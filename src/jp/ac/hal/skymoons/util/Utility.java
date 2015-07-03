@@ -61,6 +61,45 @@ public class Utility {
 		}
 	}
 
+	public void download_v2(HttpServletRequest request,
+		HttpServletResponse response) throws ServletException, IOException {
+	OutputStream out = null;
+	InputStream in = null;
+
+	String path = request.getParameter("path");
+	String fileName = request.getParameter("fileName");
+
+	File file = new File(path);
+	System.out.println(file.getName());
+	try {
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-disposition", "attachment; filename=\""
+				+ URLEncoder.encode(fileName, "UTF-8") + "\"");
+
+		in = new FileInputStream(request.getServletContext().getRealPath(path));
+		out = response.getOutputStream();
+		byte[] buff = new byte[1024];
+		int len = 0;
+		while ((len = in.read(buff, 0, buff.length)) != -1) {
+			out.write(buff, 0, len);
+		}
+	} finally {
+		if (in != null) {
+			try {
+				in.close();
+			} catch (IOException e) {
+			}
+		}
+		if (out != null) {
+			try {
+				out.close();
+			} catch (IOException e) {
+			}
+		}
+	}
+}
+
 	public static String getFileImage(String fileName) {
 		String image = "../images/icon/";
 		String[] extension = fileName.split("\\.");

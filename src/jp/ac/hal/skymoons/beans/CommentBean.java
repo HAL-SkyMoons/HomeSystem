@@ -9,7 +9,7 @@ public class CommentBean {
 	private String commentUser;
 	private String commentName;;
 	private Date commentDatetime;
-	private int deleteFrag;
+	private int deleteFlag;
 	private String comment;
 
 	public int getPlanID() {
@@ -52,12 +52,12 @@ public class CommentBean {
 		this.commentDatetime = commentDatetime;
 	}
 
-	public int getDeleteFrag() {
-		return deleteFrag;
+	public int getDeleteFlag() {
+		return deleteFlag;
 	}
 
-	public void setDeleteFrag(int deleteFrag) {
-		this.deleteFrag = deleteFrag;
+	public void setDeleteFlag(int deleteFlag) {
+		this.deleteFlag = deleteFlag;
 	}
 
 	public String getComment() {

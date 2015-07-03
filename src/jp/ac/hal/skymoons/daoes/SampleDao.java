@@ -1062,7 +1062,7 @@ public class SampleDao {
 	    record.setCommentUser(result.getString("comment_user"));
 	    record.setCommentName(result.getString("u.last_name")
 		    + result.getString("u.first_name"));
-	    record.setDeleteFrag(result.getInt("delete_flag"));
+	    record.setDeleteFlag(result.getInt("delete_flag"));
 	    record.setCommentDatetime(result.getDate("comment_datetime"));
 	    record.setComment(result.getString("comment"));
 
