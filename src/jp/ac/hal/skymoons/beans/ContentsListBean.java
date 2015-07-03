@@ -9,6 +9,7 @@ public class ContentsListBean implements Serializable {
 	private String homeContentTitle;
 	private String homeContentComment;
 	private String startDatetime;
+	private String endDatetime;
 	private String employeeId;
 	private String firstName;
 	private String lastName;
@@ -42,6 +43,12 @@ public class ContentsListBean implements Serializable {
 	}
 	public void setStartDatetime(String startDatetime) {
 		this.startDatetime = startDatetime;
+	}
+	public String getEndDatetime() {
+		return endDatetime;
+	}
+	public void setEndDatetime(String endDatetime) {
+		this.endDatetime = endDatetime;
 	}
 	public String getEmployeeId() {
 		return employeeId;
