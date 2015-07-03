@@ -1,23 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page import="jp.ac.hal.skymoons.security.session.SessionController"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	SessionController sessionController = new SessionController(request);
+	String url = sessionController.checkUserSession();
+	if(url != null) {
+		response.sendRedirect(url);
+	}
+%>
 <!DOCTYPE html>
+<c:if test="${scriptMessage != null}" >${scriptMessage}</c:if>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>コンテンツ編集</title>
 	</head>
-	<c:if test="${scriptMessage != null}" >${scriptMessage}</c:if>
 	<body>
 		<c:set var="i" value="${editData}"/>
 		<form action="delete" method="post">
 			<input type="hidden" name="homeContentId" value="${i.homeContentId}">
+			<input type="hidden" name="employeeId" value="${i.employeeId}">
 			<input type="submit" value="削除する"/>
 		</form>
 		<form action="update" method="post">
 			<table border="1">
 				<tr>
 					<td>コンテンツ名：<input type="text" name="homeContentTitle" value="${i.homeContentTitle}"></td>
-					<td>実施日時：${i.homeContentDatetime}<br/>
+					<td>実施日時：${i.startDatetime}<br/>
 						<select name="startYear">
 							<c:forEach begin="1950" end="2020" step="1" varStatus="status">
 								<option value="${status.index}">${status.index}</option>
@@ -49,7 +58,11 @@
 						</select>
 						分
 					</td>
-					<td>終了日：${i.homeContentDatetime}<br/>
+					<td>終了日：
+						<c:if test="${i.endDatetime != null}" >${i.endDatetime}<br/></c:if>
+						<c:if test="${i.endDatetime == null}" >未定<br/></c:if>
+						<input type="checkbox" name="addEndDate" value="true"/>終了日を確定する
+						<br/>
 						<select name="endYear">
 							<c:forEach begin="1950" end="2020" step="1" varStatus="status">
 								<option value="${status.index}">${status.index}</option>
@@ -105,7 +118,7 @@
 					<td><img src="${j.fileImagePath}" width="50" height="50"></td>
 					<td>${j.homeDataName}</td>
 					<td>
-						<form action="/HomeSystem/fc/contents/edit?homeContentId=${i.homeContentId}" method="post">
+						<form action="/HomeSystem/fc/contents/edit" method="post">
 							<input type="hidden" name="homeContentId" value="${j.homeContentId}">
 							<input type="hidden" name="path" value="../files/contents/master/${j.homeContentId}/${j.homeDataNo}/${j.homeDataName}" />
 							<input type="hidden" name="fileName" value="${j.homeDataName}"/>
@@ -113,7 +126,7 @@
 						</form>
 					</td>
 					<td>
-						<form action="/HomeSystem/fc/contents/edit?homeContentId=${i.homeContentId}" method="post">
+						<form action="/HomeSystem/fc/contents/edit" method="post">
 							<input type="image" src="../../images/icon/del.png" width="15" name="fileDelete" value="削除">
 							<input type="hidden" name="homeContentId" value="${j.homeContentId}">
 							<input type="hidden" name="homeDataNo" value="${j.homeDataNo}">

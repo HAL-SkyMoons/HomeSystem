@@ -18,7 +18,7 @@ public class ContentsUpdateModel extends AbstractModel{
 		
 		//ログインユーザーが社員であるかを確認する
 		SessionController sc = new SessionController(request);
-		//if(sc.getUserClass_flag() != null && sc.getUserClass_flag() == "1"){
+		if(sc.checkUserSession2() == true && sc.getUserClass_flag() != null && sc.getUserClass_flag().equals("1") && sc.getUserId() != null){
 			//updateBeanに入力値を保存
 			ContentsUpdateBean updateBean = new ContentsUpdateBean();
 			
@@ -32,14 +32,17 @@ public class ContentsUpdateModel extends AbstractModel{
 			String startHour = request.getParameter("startHour");
 			String startMinute = request.getParameter("startMinute");
 			String startDatetime = startYear + "-" + startMonth + "-" + startDay + " " + startHour + ":" + startMinute + ":00";		
-			updateBean.setHomeContentDatetime(startDatetime);
+			updateBean.setStartDatetime(startDatetime);
+
+			//終了日の設定
+			if(request.getParameter("addEndDate") != null){
+				String endYear = request.getParameter("endYear");
+				String endMonth = request.getParameter("endMonth");
+				String endDay = request.getParameter("endDay");
+				String endDatetime = endYear + "-" + endMonth + "-" + endDay;		
+				updateBean.setEndDatetime(endDatetime);
+			}
 			
-			String endYear = request.getParameter("endYear");
-			String endMonth = request.getParameter("endMonth");
-			String endDay = request.getParameter("endDay");
-			String endDatetime = endYear + "-" + endMonth + "-" + endDay;		
-			updateBean.setEndDate(endDatetime);
-	
 			//コンテンツタイトル
 			updateBean.setHomeContentTitle(request.getParameter("homeContentTitle"));
 			
@@ -65,6 +68,11 @@ public class ContentsUpdateModel extends AbstractModel{
 			dao.updateContent(updateBean);
 			dao.changeGenre(updateBean);
 			
+			//終了日の設定
+			if(request.getParameter("addEndDate") != null){
+				dao.updateEndDate(updateBean);
+			}
+			
 			//結果をリクエストに保存
 			//request.setAttribute("detailList",detailData);
 			//request.setAttribute("homeLogList",homeLogData);
@@ -73,9 +81,11 @@ public class ContentsUpdateModel extends AbstractModel{
 			dao.commit();
 			dao.close();
 			request.setAttribute("scriptMessage","<script>alert('更新が完了しました。')</script>");
-		//}
-		//遷移先を指定
-		return "/fc/contents/detail?homeContentId=" + updateBean.getHomeContentId();
+			return "/fc/contents/detail?homeContentId=" + updateBean.getHomeContentId();
+		}
+		//遷移先を指定	
+		request.setAttribute("scriptMessage","<script>alert('更新に失敗しました。')</script>");
+		return "/fc/contents/edit?homeContentId=" + request.getParameter("homeContentId");
 	}
 
 }

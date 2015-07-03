@@ -41,7 +41,6 @@ public class ContentsEditModel extends AbstractModel{
 
 		//添付資料削除処理
 		if (request.getParameter("fileDelete") != null) {
-			System.out.println("aaaaaaaa");
 			int dataNo = Integer.valueOf(request.getParameter("homeDataNo"));
 			String fileName = request.getParameter("fileName");
 
@@ -141,7 +140,7 @@ public class ContentsEditModel extends AbstractModel{
 		//ジャンル検索
 		ContentsGenreDao genreDao = new ContentsGenreDao();
 		ArrayList<ContentsGenreBean> genreData = null;
-		genreData = genreDao.findAll();
+		genreData = genreDao.findGenre();
 		genreDao.close();
 		
 		ArrayList<ContentsDataBean> homeData = null;

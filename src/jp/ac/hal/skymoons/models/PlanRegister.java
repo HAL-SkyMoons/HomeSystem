@@ -32,9 +32,14 @@ public class PlanRegister extends AbstractModel{
 			plan.setPlanComment(request.getParameter("planComment"));
 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			String implementationDateStr = request.getParameter("year")+"-"+request.getParameter("month")+"-"+request.getParameter("day")+" "+request.getParameter("hour")+":"+request.getParameter("minutes")+":00";
+			String startDateStr = request.getParameter("startYear")+"-"+request.getParameter("startMonth")+"-"+request.getParameter("startDay")+" "+request.getParameter("startHour")+":"+request.getParameter("startMinutes")+":00";
 
-			plan.setImplementationDate(sdf.parse(implementationDateStr));
+			plan.setStartDate(sdf.parse(startDateStr));
+
+
+			String endDateStr = request.getParameter("endYear")+"-"+request.getParameter("endMonth")+"-"+request.getParameter("endDay")+" "+request.getParameter("endHour")+":"+request.getParameter("endMinutes")+":00";
+
+			plan.setEndDate(sdf.parse(endDateStr));
 
 			//[id]:[genreName]
 			String[] genres = request.getParameterValues("genre");

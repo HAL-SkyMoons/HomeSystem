@@ -13,13 +13,25 @@ public class ContentsDeleteModel extends AbstractModel{
 	public String doService(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
+
+		SessionController sc = new SessionController(request);
+		/*
+		System.out.println(request.getParameter("employeeId"));
+		System.out.println(request.getParameter("homeContentId"));
+		System.out.println(sc.checkUserSession2());
+		System.out.println(sc.getUserClass_flag() );
+		*/
 		
 		//ログインユーザーが社員であるかを確認する
-		//SessionController sc = new SessionController(request);
-		//if(sc.getUserClass_flag() != null && sc.getUserClass_flag() == "1"){
-			//コンテンツIDの取得
-			int homeContentId = Integer.parseInt((String) request.getParameter("homeContentId"));
+		if(request.getParameter("homeContentId") != null 
+				&& request.getParameter("employeeId") != null 
+				&& sc.checkUserSession2() == true 
+				&& sc.getUserId().equals(request.getParameter("employeeId")) 
+				&& sc.getUserClass_flag().equals("1")){
 
+			//コンテンツIDの取得
+			int homeContentId = Integer.parseInt((String)request.getParameter("homeContentId"));
+			
 			//DAOのインスタンス化
 			ContentsDeleteDao deleteDao = new ContentsDeleteDao();
 			deleteDao.deleteDetail(homeContentId);
@@ -32,9 +44,11 @@ public class ContentsDeleteModel extends AbstractModel{
 			deleteDao.commit();
 			deleteDao.close();
 			request.setAttribute("scriptMessage","<script>alert('削除が完了しました。')</script>");
-		//}
+			return "/fc/contents/list";
+		}
 		//遷移先を指定
-		return "/fc/contents/list";
+		request.setAttribute("scriptMessage","<script>alert('削除に失敗しました。')</script>");
+		return "/fc/contents/detail";
 	}
 
 }

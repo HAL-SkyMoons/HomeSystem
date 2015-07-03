@@ -18,7 +18,7 @@ public class ContentsAdditionModel extends AbstractModel{
 		
 		//ログインユーザーが社員であるかを確認する
 		SessionController sc = new SessionController(request);
-		//if(sc.getUserClass_flag() != null && sc.getUserClass_flag() == "1"){
+		if(sc.checkUserSession2() == true && sc.getUserClass_flag() != null && sc.getUserClass_flag().equals("1") && sc.getUserId() != null){
 			//updateBeanに入力値を保存
 			ContentsAdditionBean additionBean = new ContentsAdditionBean();
 						
@@ -28,8 +28,8 @@ public class ContentsAdditionModel extends AbstractModel{
 			String day = request.getParameter("contentsDay");
 			String hour = request.getParameter("contentsHour");
 			String minute = request.getParameter("contentsMinute");
-			String contentsDatetime = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":00";		
-			additionBean.setHomeContentDatetime(contentsDatetime);
+			String startDatetime = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":00";		
+			additionBean.setStartDatetime(startDatetime);
 	
 			//コンテンツタイトル
 			additionBean.setHomeContentTitle(request.getParameter("homeContentTitle"));
@@ -38,8 +38,8 @@ public class ContentsAdditionModel extends AbstractModel{
 			additionBean.setHomeContentComment(request.getParameter("homeContentComment"));
 			
 			//社員ID
-			//updateBean.setEmployeeId(sc.getUserId());
-			additionBean.setEmployeeId("E0001");
+			//additionBean.setEmployeeId("E0001");
+			additionBean.setEmployeeId(sc.getUserId());
 			
 			//添付資料
 			
@@ -66,8 +66,11 @@ public class ContentsAdditionModel extends AbstractModel{
 			dao.commit();
 			dao.close();
 			request.setAttribute("scriptMessage","<script>alert('投稿が完了しました。')</script>");
-		//}
+			return "/fc/contents/detail?homeContentId=" + additionBean.getHomeContentId();
+		}
+		//エラーメッセージ
+		request.setAttribute("scriptMessage","<script>alert('ログイン情報の取得に失敗しました。\nログイン後にお試しください。')</script>");
 		//遷移先を指定
-		return "/fc/contents/detail?homeContentId=" + additionBean.getHomeContentId();
+		return "/fc/contents/regist";
 	}
 }

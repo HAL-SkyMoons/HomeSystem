@@ -1,0 +1,131 @@
+@CHARSET "UTF-8";
+div.contents{
+	width:1165px;
+	margin-top:30px;
+	margin-bottom:30px;
+}
+h1.employeePageTitle{
+	font-size:60px;
+	margin-left:45px;
+	margin-top:10px;
+}
+div.leftContents{
+	float:left;
+	width:400px;
+	margin-top:20px;
+	margin-left: 15px;
+	margin-right:15px;
+	margin-bottom:20px;
+}
+div.employeeStatus{
+	width:350px;
+	margin-bottom:10px;
+	padding-top:10px;
+	padding-bottom:10px;
+	background-color:#ffdddd;
+	text-align:center;
+}
+ul.employeeData{
+	margin-top:5px;
+}
+li.employeeComment{
+	font-size:20px;
+}
+li.employeeName{
+	font-size: 40px;
+}
+li.departmentName{
+	font-size: 30px;
+}
+li.employeeLevel{
+	font-size:30px;
+}
+li.employeeExperience{
+	font-size: 25px;
+}
+input.homeButton{
+	width:200px;
+	height:50px;
+	margin-top:5px;
+	font-size:25px;
+}
+div.genreExperience{
+	width:330px;
+	padding-top:10px;
+	padding-left:25px;
+	background-color:#fed2ab;
+}
+h4.experienceTitle{
+	font-size:30px;
+}
+div.experienceList{
+	width:330px;
+	height:500px;
+	overflow: auto;
+}
+div.rightContents{
+	float:right;
+	width: 700px;
+	margin-top:20px;
+	margin-left: 15px;
+	margin-right:15px;
+	margin-bottom:20px;
+}
+div.radarChart{
+	margin-bottom:20px;
+	background-color:#ffee99;
+}
+div.activities{
+	width:700px;
+	height:440px;
+	background-color:red;
+}
+div.tabs{
+	width:100%;
+	height:50px;
+	text-align: center;
+}
+a.homeTab{
+	float:left;
+	width:33.5%;
+	height:50px;
+	background-color: #ffc8e7;
+}
+a.planTab{
+	float:left;
+	width:33%;
+		height:50px;
+	background-color: #fefe72;
+}
+a.planCommentTab{
+	float:left;
+	width:33.5%;
+	height:50px;
+	background-color: #ddddff;
+}
+div.activityTab{
+	height:100%;
+	overflow: auto;
+}
+h4.notActivity{
+	font-size:40px;
+}
+li.days{
+	font-size:20px;
+	text-align: left;
+	margin-left: 10px;
+}
+li.activity{
+	font-size:20px;
+	text-align:left;
+	margin-left:40px;
+}
+#homeTab{
+	background-color:#ffc8e7;
+}
+#planTab{
+	background-color: #fefe72;
+}
+#planCommentTab{
+	background-color: #ddddff;
+}

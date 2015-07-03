@@ -21,5 +21,10 @@
 		<a href="/HomeSystem/fc/PlanList">企画一覧</a>
 		<a href="/HomeSystem/fc/PlanRegister">企画登録</a>
 		<a href="/HomeSystem/fc/PlanCalendar">企画カレンダー</a>
+		<a href="/HomeSystem/fc/contents/list">ホメホメコンテンツ（過去事例）一覧・検索</a>
+		<a href="/HomeSystem/fc/contents/search">ホメホメコンテンツ（過去事例）詳細検索</a>
+		<a href="/HomeSystem/fc/contents/regist">ホメホメコンテンツ（過去事例）登録</a>
+		<a href="/HomeSystem/fc/contents/detail?homeContentId=1">ホメホメコンテンツ（過去事例）詳細</a>
+		<a href="/HomeSystem/fc/contents/edit?homeContentId=1">ホメホメコンテンツ（過去事例）編集</a>
 	</body>
 </html>

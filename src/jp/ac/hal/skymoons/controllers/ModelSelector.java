@@ -19,6 +19,7 @@ import jp.ac.hal.skymoons.models.PlanDetail;
 import jp.ac.hal.skymoons.models.PlanEdit;
 import jp.ac.hal.skymoons.models.PlanList;
 import jp.ac.hal.skymoons.models.PlanRegister;
+import jp.ac.hal.skymoons.models.PlanSearch;
 import jp.ac.hal.skymoons.models.TestModel;
 import jp.ac.hal.skymoons.models.customer.CreateAdd;
 import jp.ac.hal.skymoons.models.customer.CreateEdit;
@@ -61,6 +62,7 @@ public class ModelSelector {
 
 		mapping.put("/homesystem/fc/test", new TestModel());
 		mapping.put("/HomeSystem/fc/PlanList", new PlanList());
+		mapping.put("/HomeSystem/fc/PlanSearch", new PlanSearch());
 		mapping.put("/HomeSystem/fc/PlanRegister", new PlanRegister());
 		mapping.put("/HomeSystem/fc/PlanConfirmation", new PlanConfirmation());
 		mapping.put("/HomeSystem/fc/PlanDetail", new PlanDetail());

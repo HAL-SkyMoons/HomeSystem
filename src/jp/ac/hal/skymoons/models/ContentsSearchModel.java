@@ -25,11 +25,13 @@ public class ContentsSearchModel extends AbstractModel{
 		ArrayList<ContentsEmployeeBean> employeeList = dao.findEmployee();
 		
 		ContentsGenreDao genreDao = new ContentsGenreDao();
-		ArrayList<ContentsGenreBean> genreList = genreDao.findAll();
+		ArrayList<ContentsGenreBean> genreList = genreDao.findGenre();
+		ArrayList<ContentsGenreBean> bigGenreList = genreDao.findBigGenre();
 		
 		//結果をリクエストに保存
 		request.setAttribute("employeeList",employeeList);
 		request.setAttribute("genreList",genreList);
+		request.setAttribute("bigGenreList",bigGenreList);
 		
 		//コミットと終了処理
 		genreDao.close();

@@ -26,7 +26,8 @@ public class PlanConfirmation extends AbstractModel {
 			plan.setPlanTitle(request.getParameter("planTitle"));
 			plan.setPlanComment(request.getParameter("planComment"));
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			plan.setImplementationDate(sdf.parse(request.getParameter("implementationDate")));
+			plan.setStartDate(sdf.parse(request.getParameter("startDate")));
+			plan.setEndDate(sdf.parse(request.getParameter("endDate")));
 
 			String[] genreIds = request.getParameterValues("id");
 

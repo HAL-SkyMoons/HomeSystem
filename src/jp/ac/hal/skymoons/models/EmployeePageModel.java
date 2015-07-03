@@ -36,6 +36,9 @@ public class EmployeePageModel extends AbstractModel{
 		ArrayList<EmployeePlanBean> employeePlanReturn = new ArrayList<EmployeePlanBean>();
 		ArrayList<EmployeePlanCommentBean> employeePlanCommentReturn = new ArrayList<EmployeePlanCommentBean>();
 		ArrayList<EmployeeHomeLogBean> employeeHomeLogReturn = new ArrayList<EmployeeHomeLogBean>();
+		//チャート描画用変数
+		String[] employeeChartBadgeName = {};
+		int[] employeeChartBadgeCount = {};
 		//引数取得
 		String employeeId = request.getParameter("employeeId");
 
@@ -49,6 +52,10 @@ public class EmployeePageModel extends AbstractModel{
 		employeePlanReturn = (ArrayList<EmployeePlanBean>)dao.getEmployeeDetailOfPlan(employeeId);
 		employeePlanCommentReturn = (ArrayList<EmployeePlanCommentBean>)dao.getEmployeeDetailOfPlanComment(employeeId);
 		employeeHomeLogReturn = (ArrayList<EmployeeHomeLogBean>)dao.getEmployeeDetailOfHomeLog(employeeId);
+		//チャート描画用情報取得処理
+		employeeChartBadgeName = (String[])dao.getEmployeeDetailOfBadgeNameForChart(employeeId);
+		employeeChartBadgeCount = (int[])dao.getEmployeeDetailOfBadgeCountForChart(employeeId);
+		dao.close();
 
 		//出力ページ用の引数をsetAtribute
 		request.setAttribute("employeeDetail", employeePageReturn);
@@ -58,6 +65,9 @@ public class EmployeePageModel extends AbstractModel{
 		request.setAttribute("employeePlanCommentDetail", employeePlanCommentReturn);
 		request.setAttribute("employeeHomeLogDetail",employeeHomeLogReturn);
 		request.setAttribute("sessionId", (String)sessionController.getUserId());
+		//チャート用の引数をsetAttribute
+		request.setAttribute("chartName", employeeChartBadgeName);
+		request.setAttribute("chartCount", employeeChartBadgeCount);
 		//参照ファイルパスの指定
 		return "/Employee/EmployeePage.jsp";
 	}

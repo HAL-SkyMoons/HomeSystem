@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page import="jp.ac.hal.skymoons.security.session.SessionController"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%
+	SessionController sessionController = new SessionController(request);
+	String url = sessionController.checkUserSession();
+	if(url != null) {
+		response.sendRedirect(url);
+	}
+%>
 <!DOCTYPE html>
+<c:if test="${scriptMessage != null}" >${scriptMessage}</c:if>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">

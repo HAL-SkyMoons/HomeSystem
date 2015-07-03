@@ -35,15 +35,16 @@ public class ContentsListDao {
 		this.con = con;
 	}
 
-	public ArrayList<ContentsListBean> selectContents(String titleKeyword, String commentKeyword, String employeeId, ArrayList<Integer> genreId, String orderColumn, String orderMode) throws SQLException {
+	public ArrayList<ContentsListBean> selectContents(String keyword, String employeeId, ArrayList<Integer> genreId, ArrayList<Integer> bigGenreId, String orderColumn, String orderMode) throws SQLException {
 		//SQLの生成
-		String contentsSql = "select * from home_contents hc, home_genre hg where hc.home_content_id = hg.home_content_id ";
+		String contentsSql = "select * from home_contents hc, home_genre hg, genre g, users u "
+				+ "where hc.delete_flag != '1' "
+				+ "and hc.home_content_id = hg.home_content_id "
+				+ "and hg.genre_id = g.genre_id "
+				+ "and u.user_id = hc.employee_id ";
 		String sqlword = "and ";
-		if(titleKeyword != null && titleKeyword.length() > 0){
-			contentsSql += sqlword + "hc.home_content_title like ? ";
-		}
-		if(commentKeyword != null && commentKeyword.length() > 0){
-			contentsSql += sqlword + "hc.home_content_comment like ? ";
+		if(keyword != null && keyword.length() > 0){
+			contentsSql += sqlword + "hc.home_content_title like ? or hc.home_content_comment like ? ";
 		}
 		if(employeeId != null && employeeId.length() > 0){
 			contentsSql += sqlword + "hc.employee_id = ? ";
@@ -55,6 +56,13 @@ public class ContentsListDao {
 			}
 			contentsSql += sqlword + "hg.genre_id in(" + genre + ") ";
 		}
+		if(bigGenreId != null && bigGenreId.size() > 0){
+			String bigGenre = "?";
+			for(int i = 1;i < genreId.size();i++){
+				bigGenre += ",?";
+			}
+			contentsSql += sqlword + "g.big_genre_id in(" + bigGenre + ") ";
+		}
 		contentsSql += "group by hc.home_content_id ";
 		if(genreId != null){
 			contentsSql += "having count(*) >= " + genreId.size() + " ";
@@ -62,23 +70,17 @@ public class ContentsListDao {
 		
 		//並び替え
 		if(orderColumn == null || orderColumn.length() <= 0){
-			orderColumn = "home_content_id";
+			orderColumn = "hc.home_content_id";
 		}
-		if(orderMode == null || orderMode.length() <= 0){
-			orderMode = "ASC";
-		}
-		contentsSql += "order by hc." + orderColumn + " " + orderMode + ";";
+		contentsSql += "order by " + orderColumn + ";";
 		
 		PreparedStatement contentsPst = con.prepareStatement(contentsSql);
 		int setCnt = 1;
-		System.out.println(contentsSql);
-		if(titleKeyword != null && titleKeyword.length() > 0){
-			contentsPst.setString(setCnt, "%" + titleKeyword + "%");
-			setCnt++;
-		}
-		if(commentKeyword != null && commentKeyword.length() > 0){
-			contentsPst.setString(setCnt, "%" + commentKeyword + "%");
-			setCnt++;
+		System.out.println("生成SQL[" + contentsSql + "]");
+		if(keyword != null && keyword.length() > 0){
+			contentsPst.setString(setCnt, "%" + keyword + "%");
+			contentsPst.setString(setCnt + 1, "%" + keyword + "%");
+			setCnt += 2;
 		}
 		if(employeeId != null && employeeId.length() > 0){
 			contentsPst.setString(setCnt, employeeId);
@@ -87,6 +89,12 @@ public class ContentsListDao {
 		if(genreId != null && genreId.size() > 0){
 			for(int genre : genreId){
 				contentsPst.setInt(setCnt, genre);
+				setCnt++;
+			}
+		}
+		if(bigGenreId != null && bigGenreId.size() > 0){
+			for(int bigGenre : bigGenreId){
+				contentsPst.setInt(setCnt, bigGenre);
 				setCnt++;
 			}
 		}
@@ -103,8 +111,9 @@ public class ContentsListDao {
 			listBean.setHomeContentId(homeContentId);
 			listBean.setHomeContentTitle(contentsResult.getString("home_content_title"));
 			listBean.setHomeContentComment(contentsResult.getString("home_content_comment"));
-			listBean.setHomeContentDatetime(contentsResult.getString("home_content_datetime"));
+			listBean.setStartDatetime(contentsResult.getString("start_datetime"));
 			listBean.setEmployeeId(contentsResult.getString("employee_id"));
+			//listBean.setDeleteFlag(contentsResult.getInt("delete_flag"));
 			
 			//名前の取得
 			PreparedStatement namePst = con.prepareStatement("select * from users where user_id = ? ;");
@@ -151,16 +160,16 @@ public class ContentsListDao {
 			bigGenrePst.setInt(1, homeContentId);
 			ResultSet bigGenreResult = bigGenrePst.executeQuery();
 			
-			ArrayList<Integer> bigGenreId = new ArrayList<>();
-			ArrayList<String> bigGenreName = new ArrayList<>();
+			ArrayList<Integer> bigGenreIdList = new ArrayList<>();
+			ArrayList<String> bigGenreNameList = new ArrayList<>();
 			
 			while(bigGenreResult.next()){
-				bigGenreId.add(bigGenreResult.getInt("big_genre_id"));
-				bigGenreName.add(bigGenreResult.getString("big_genre_name"));
+				bigGenreIdList.add(bigGenreResult.getInt("big_genre_id"));
+				bigGenreNameList.add(bigGenreResult.getString("big_genre_name"));
 			}
 			
-			listBean.setBigGenreId(bigGenreId);
-			listBean.setBigGenreName(bigGenreName);
+			listBean.setBigGenreId(bigGenreIdList);
+			listBean.setBigGenreName(bigGenreNameList);
 			
 			bigGenrePst.close();
 						
