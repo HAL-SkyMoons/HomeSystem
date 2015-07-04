@@ -725,6 +725,8 @@ public class SampleDao {
 		break;
 
 	    }
+	}else{
+	    sql += " order by p.plan_datetime desc";
 	}
 
 	PreparedStatement select = con.prepareStatement(sql);
@@ -808,6 +810,8 @@ public class SampleDao {
 		break;
 
 	    }
+	}else{
+	    sql += " order by p.plan_datetime desc";
 	}
 
 	PreparedStatement select = con.prepareStatement(sql);
@@ -982,6 +986,24 @@ public class SampleDao {
 	    table.add(record);
 	}
 	return table;
+    }
+
+    public String[] planGenreArray(int planId) throws SQLException {
+
+	PreparedStatement select = con
+		.prepareStatement("select p.genre_id ,g.genre_name from plan_genre p, genre g where p.plan_id = ? and p.genre_id = g.genre_id;");
+
+	select.setInt(1, planId);
+	ResultSet result = select.executeQuery();
+
+	ArrayList<String> table = new ArrayList<String>();
+	while (result.next()) {
+
+	    table.add(String.valueOf(result.getInt("p.genre_id")));
+	}
+
+	String[] output = (String[])table.toArray(new String[0]);
+	return output;
     }
 
     /**

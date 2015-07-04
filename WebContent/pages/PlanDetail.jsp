@@ -12,10 +12,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE htm>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
 <title>企画詳細</title>
 <link rel="stylesheet" type="text/css" href="../css/reset.css">
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
@@ -38,23 +38,6 @@
 	});
 </script>
 </head>
-<%
-    Utility util = new Utility();
-	PlanBean plan = (PlanBean) request.getAttribute("planDetail");
-	ArrayList<GenreBean> genres = (ArrayList<GenreBean>) request.getAttribute("genre");
-	ArrayList<CommentBean> commentList = (ArrayList<CommentBean>) request
-	.getAttribute("commentList");
-	PlanPointBean planPoint = (PlanPointBean) request
-	.getAttribute("planPoint");
-	UserBean user = (UserBean) request.getAttribute("user");
-
-	ArrayList<FileBean> fileList = (ArrayList<FileBean>) request
-	.getAttribute("fileList");
-
-	   ArrayList<FileBean> commentFileList = (ArrayList<FileBean>) request
-		    .getAttribute("commentFileList");
-%>
-
 <body>
 	<div id="wrapper">
 		<div id="plan">
@@ -66,7 +49,7 @@
 
 				</div>
 			</div>
-			<div id="title">${planDetail.planTitle}</div>
+			<div id="title"><span id="titleValue">${planDetail.planTitle}</span></div>
 			<div id="planDetail">
 				<div id="startEnd">
 					実施予定日：<br>
@@ -227,7 +210,7 @@
 						<div class="name">${comment.commentName}</div>
 						<div class="home">
 							<c:if test="${user.userId != comment.commentUser }">
-								<a href="/HomeSystem/fc/Home?touser=${comment.commentUser}" class="iframe"> <input type="button" name="submit" class="btn btn-2 btn-2c" value="褒める" />
+								<a href="/HomeSystem/fc/Home?toUser=${comment.commentUser}" class="iframe"> <input type="button" name="submit" class="btn btn-2 btn-2c" value="褒める" />
 								</a>
 							</c:if>
 						</div>
