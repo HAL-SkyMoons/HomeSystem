@@ -1,26 +1,26 @@
 package jp.ac.hal.skymoons.beans;
 
-public class EmployeeBadgeBean {
-	private String badgeName;
-	private String badgeImgPath;
-	private int badgeCount;
+public class EmployeeBatchBean {
+	private String batchName;
+	private String batchImgPath;
+	private int batchCount;
 
 	public String getBadgeName() {
-		return badgeName;
+		return batchName;
 	}
 	public void setBadgeName(String badgename) {
-		this.badgeName = badgename;
+		this.batchName = badgename;
 	}
 	public String getBadgeImgPath() {
-		return badgeImgPath;
+		return batchImgPath;
 	}
 	public void setBadgeImgPath(String badgeImgPath) {
-		this.badgeImgPath = badgeImgPath;
+		this.batchImgPath = badgeImgPath;
 	}
 	public int getBadgeCount() {
-		return badgeCount;
+		return batchCount;
 	}
 	public void setBadgeCount(int badgeCount) {
-		this.badgeCount = badgeCount;
+		this.batchCount = badgeCount;
 	}
 }

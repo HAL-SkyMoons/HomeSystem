@@ -82,9 +82,123 @@ div.radarChart{
 	margin-bottom:20px;
 	background-color:#ffee99;
 }
+div.capacityAndTrophyView{
+	width:540px;
+	height:330px;
+	margin-bottom: 20px;
+	background-color: red;
+	text-align: center;
+}
+div.capacityAndTrophyTabs{
+	width:100%;
+	height:30px;
+	margin:0px;
+	background-color:cyan;
+	text-align:center;
+}
+a.capacityTab{
+	float:left;
+	width:33.5%;
+	height:100%;
+	background-color:#ffc8e7;
+}
+a.companyCapacityTab{
+	float:left;
+	width:33%;
+	height:100%;
+	background-color: #fefe72;
+}
+a.trophyTab{
+	float:left;
+	width:33.5%;
+	height:100%;
+	background-color: #ddddff;
+}
+#capacityTab{
+	background-color:#ffc8e7;
+}
+#companyCapacityTab{
+	background-color: #fefe72;
+}
+#trophyTab{
+	background-color: #ddddff;
+}
+div.capacityDetail{
+	height:100%;
+	overflow: auto;
+}
+li.capacity{
+	font-size:20px;
+	text-align: left;
+	margin-left: 30px;
+}
+div.companyCapacityDetail{
+	height:100%;
+	overflow: auto;
+}
+table.capacityList{
+	width:100%;
+}
+td.companyCapacityName{
+	width:70%;
+	font-size:25px;
+	padding-left:30px;
+	text-align:left;
+}
+td.companyCapacityDate{
+	width:30%;
+	font-size: 15px;
+	padding-right:30px;
+	text-align: right;
+}
+div.trophyDetail{
+	height:100%;
+	overflow: auto;
+}
+div.flame{
+	width:540px;
+	height:100px;
+	background:red;
+}
+div.leftFlame{
+	float: left;
+	width:100px;
+	height:100px;
+	background:blue;
+}
+div.rightFlame{
+	float: right;
+	width:440px;
+	height:100px;
+	background:green;
+}
+div.trophyName{
+	clear: both;
+	width:440px;
+	height:65px;
+	background:yellow;
+	line-height:65px;
+	text-align:center;
+}
+div.trophyCount{
+	width:440px;
+	height:35px;
+	background:white;
+	line-height:35px;
+	text-align:right;
+}
+h4.trophyCount{
+	padding-right:30px;
+}
+img.trophyImage{
+	width: 100px;
+	height:100px;
+}
+
 div.badgeView{
 	width:540px;
 	height:150px;
+	margin-top:40px;
 	margin-bottom: 20px;
 	background-color: red;
 	text-align: center;
@@ -123,6 +237,18 @@ a.yearTab{
 #yearTab{
 	background-color: #ddddff;
 }
+div.badgeTotal{
+	height:100%;
+	overflow: auto;
+}
+div.badgeMonth{
+	height:100%;
+	overflow: auto;
+}
+div.badgeYear{
+	height:100%;
+	overflow: auto;
+}
 table.badgeTable{
 	height:120px;
 	text-align:center;
@@ -134,10 +260,15 @@ td.badgeTab{
 img.badgeImg{
 	width:50px;
 	height:50px;
+	margin-top:0px;
+	margin-left:0px;
+	margin-right:0px;
+	margin-bottom:0px;
 }
 div.activities{
 	width:540px;
 	height:440px;
+	margin-top:40px;
 	margin-right:0px;
 	background-color:red;
 }
@@ -169,7 +300,7 @@ div.activityTab{
 	overflow: auto;
 }
 h4.notActivity{
-	font-size:40px;
+	font-size:25px;
 }
 li.days{
 	font-size:20px;

@@ -10,7 +10,9 @@ import jp.ac.hal.skymoons.models.ContentsListModel;
 import jp.ac.hal.skymoons.models.ContentsRegistModel;
 import jp.ac.hal.skymoons.models.ContentsSearchModel;
 import jp.ac.hal.skymoons.models.ContentsUpdateModel;
+import jp.ac.hal.skymoons.models.EmployeeMyPageModel;
 import jp.ac.hal.skymoons.models.EmployeePageModel;
+import jp.ac.hal.skymoons.models.EmployeePlofileEditModel;
 import jp.ac.hal.skymoons.models.EmployeeSearchModel;
 import jp.ac.hal.skymoons.models.Home;
 import jp.ac.hal.skymoons.models.PlanCalendar;
@@ -45,6 +47,9 @@ public class ModelSelector {
 		//社員出力機能
 		mapping.put("/HomeSystem/fc/EmployeeList", new EmployeeSearchModel());
 		mapping.put("/HomeSystem/fc/EmployeePage", new EmployeePageModel());
+		mapping.put("/HomeSystem/fc/EmployeeMyPage", new EmployeeMyPageModel());
+		//社員プロフィール編集機能
+		mapping.put("/HomeSystem/fc/EmployeeProfileEdit", new EmployeePlofileEditModel());
 
 		mapping.put("/homesystem/fcon/test", new TestModel());
 		mapping.put("/HomeSystem/fc/test", new TestModel());

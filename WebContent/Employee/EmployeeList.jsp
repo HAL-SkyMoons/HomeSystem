@@ -87,9 +87,18 @@
 					<c:forEach var="employee" items="${employees}" varStatus="status">
 						<td class="employeeColumn">
 							<div class="employeeImage">
-								<a href="./EmployeePage?employeeId=${employee.employeeId}"><img
-									src="../images/employees/${employee.employeeId}.jpg"></a>
+							<c:choose>
+							<c:when test="${sessionId == employee.employeeId}">
+								<a href="./EmployeeMyPage">
+								<img src="../images/employees/${employee.employeeId}.jpg"></a>
+							</div> <a href="./EmployeeMyPage">${employee.employeeName}</a>
+							</c:when>
+							<c:when test="${sessionId != employee.employeeId }">
+								<a href="./EmployeePage?employeeId=${employee.employeeId}">
+								<img src="../images/employees/${employee.employeeId}.jpg"></a>
 							</div> <a href="./EmployeePage?employeeId=${employee.employeeId}">${employee.employeeName}</a>
+							</c:when>
+							</c:choose>
 							<br> ${employee.departmentName} <br>
 							<c:if test="${sessionId != employee.employeeId}">
 								<a class="iframe"
