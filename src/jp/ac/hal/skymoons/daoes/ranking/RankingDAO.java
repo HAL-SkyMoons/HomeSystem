@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.ac.hal.skymoons.beans.ranking.BatchBean;
 import jp.ac.hal.skymoons.beans.ranking.TopNumRankingBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
 
@@ -44,6 +45,27 @@ public class RankingDAO {
 			e.printStackTrace();
 			System.out.println("ERROR:コネクションのクローズ処理中に問題が発生しました。");
 		}
+	}
+	
+	/**
+	 * バッチリストを取得する。
+	 * @return
+	 * バッチリスト
+	 * @throws SQLException
+	 */
+	public List<BatchBean> getBatchList() throws SQLException {
+		String sql = "SELECT * FROM batch";
+		PreparedStatement preparedStatement = con.prepareStatement(sql);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		List<BatchBean> batchList = new ArrayList<BatchBean>();
+		while(resultSet.next()) {
+			BatchBean record = new BatchBean();
+			record.setBatch_id(resultSet.getInt("batch_id"));
+			record.setBatch_name(resultSet.getString("batch_name"));
+			record.setBatch_comment(resultSet.getString("batch_comment"));
+			batchList.add(record);
+		}
+		return batchList;
 	}
 	
 	/**
