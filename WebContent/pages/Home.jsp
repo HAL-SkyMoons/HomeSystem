@@ -21,10 +21,12 @@
 <script src="../js/jquery-2.1.4.min.js" type="text/javascript"></script>
 <script src="../js/image-picker/image-picker.js" type="text/javascript"></script>
 <script src="../js/image-picker/image-picker.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="../js/autosize/autosize.js"></script>
 </head>
 <body>
-	<form action="/HomeSystem/fc/Home" method="post">
-		<div id="wrapper">
+	<div id="wrapper">
+		<form action="/HomeSystem/fc/Home" method="post">
+
 			<div id="touser">
 				<div id="face">
 					<img src="../images/employees/${toUser.userId}.jpg">
@@ -64,12 +66,13 @@
 			</div>
 			<div id="comment">
 				コメント：<br>
-				<textarea name="comment" maxlength="1000"></textarea>
+				<textarea name="comment" maxlength="500"></textarea>
 			</div>
 			<input type="submit" name="submit" class="btn btn-2 btn-2c submit" value="送信">
-		</div>
 
-	</form>
+
+		</form>
+	</div>
 	<script type="text/javascript">
 		jQuery("select.image-picker").imagepicker({
 			hide_select : false,
@@ -87,6 +90,9 @@
 				itemSelector : "li",
 			});
 		});
+	</script>
+	<script>
+		autosize(document.querySelectorAll('textarea'));
 	</script>
 </body>
 </html>

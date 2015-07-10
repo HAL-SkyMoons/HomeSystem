@@ -725,6 +725,8 @@ public class SampleDao {
 		break;
 
 	    }
+	}else{
+	    sql += " order by p.plan_datetime desc";
 	}
 
 	PreparedStatement select = con.prepareStatement(sql);
@@ -808,6 +810,8 @@ public class SampleDao {
 		break;
 
 	    }
+	}else{
+	    sql += " order by p.plan_datetime desc";
 	}
 
 	PreparedStatement select = con.prepareStatement(sql);
@@ -984,6 +988,24 @@ public class SampleDao {
 	return table;
     }
 
+    public String[] planGenreArray(int planId) throws SQLException {
+
+	PreparedStatement select = con
+		.prepareStatement("select p.genre_id ,g.genre_name from plan_genre p, genre g where p.plan_id = ? and p.genre_id = g.genre_id;");
+
+	select.setInt(1, planId);
+	ResultSet result = select.executeQuery();
+
+	ArrayList<String> table = new ArrayList<String>();
+	while (result.next()) {
+
+	    table.add(String.valueOf(result.getInt("p.genre_id")));
+	}
+
+	String[] output = (String[])table.toArray(new String[0]);
+	return output;
+    }
+
     /**
      * コメント登録
      *
@@ -1062,7 +1084,7 @@ public class SampleDao {
 	    record.setCommentUser(result.getString("comment_user"));
 	    record.setCommentName(result.getString("u.last_name")
 		    + result.getString("u.first_name"));
-	    record.setDeleteFrag(result.getInt("delete_flag"));
+	    record.setDeleteFlag(result.getInt("delete_flag"));
 	    record.setCommentDatetime(result.getDate("comment_datetime"));
 	    record.setComment(result.getString("comment"));
 
