@@ -1,16 +1,7 @@
-<%@page import="java.util.HashMap"%>
+<%@page import="jp.ac.hal.skymoons.beans.customer.CustomerUsersBean"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%!
-	@SuppressWarnings("unchecked")
-	HashMap<String, String> getValue(HttpSession session) {
-		return (HashMap<String, String>)session.getAttribute("CustomerAddValue");
-	}
-%>
 <%
-	HashMap<String, String> value = null;
-	if(session.getAttribute("CustomerAddValue") != null) {
-		value = getValue(session);
-	}
+	CustomerUsersBean record = (CustomerUsersBean)session.getAttribute("CustomerAddValue");
 %>
 <!DOCTYPE html>
 <html>
@@ -38,9 +29,9 @@
 					<td>
 						<input type="text" name="company" maxlength="20"
 <%
-	if(value != null) {
-		if(value.get("company").equals("") == false) {
-			out.print("value='" + value.get("company").toString() + "'");
+	if(record != null) {
+		if(record.getCustomer_company().equals("") == false) {
+			out.print("value='" + record.getCustomer_company() + "'");
 		}
 	}
 %>
@@ -58,9 +49,9 @@
 					<td>
 						<input type="text" name="lastname" maxlength="6"
 <%
-	if(value != null) {
-		if(value.get("lastname").equals("") == false) {
-			out.print("value='" + value.get("lastname").toString() + "'");
+	if(record != null) {
+		if(record.getLast_name().equals("") == false) {
+			out.print("value='" + record.getLast_name() + "'");
 		}
 	}
 %>
@@ -78,9 +69,9 @@
 					<td>
 						<input type="text" name="firstname" maxlength="6"
 <%
-	if(value != null) {
-		if(value.get("firstname").equals("") == false) {
-			out.print("value='" + value.get("firstname").toString() + "'");
+	if(record != null) {
+		if(record.getFirst_name().equals("") == false) {
+			out.print("value='" + record.getFirst_name() + "'");
 		}
 	}
 %>
@@ -98,9 +89,9 @@
 					<td>
 						<input type="text" name="id" maxlength="24"
 <%
-	if(value != null) {
-		if(value.get("id").equals("") == false) {
-			out.print("value='" + value.get("id").toString() + "'");
+	if(record != null) {
+		if(record.getUser_id().equals("") == false) {
+			out.print("value='" + record.getUser_id() + "'");
 		}
 	}
 %>

@@ -16,9 +16,9 @@ body {
 }
 
 #toUser {
-	overflow: hidden;
 	width: 400px;
 	display: inline-block;
+	height: auto;
 }
 
 p {
@@ -41,7 +41,6 @@ p {
 
 #batch {
 	margin: 0 auto;
-	width: 400px;
 }
 
 .image-picker {

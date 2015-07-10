@@ -21,11 +21,11 @@ import jp.ac.hal.skymoons.models.PlanList;
 import jp.ac.hal.skymoons.models.PlanRegister;
 import jp.ac.hal.skymoons.models.PlanSearch;
 import jp.ac.hal.skymoons.models.TestModel;
-import jp.ac.hal.skymoons.models.customer.AddCustomer;
+import jp.ac.hal.skymoons.models.customer.CreateAdd;
 import jp.ac.hal.skymoons.models.customer.CreateEdit;
 import jp.ac.hal.skymoons.models.customer.CreateList;
 import jp.ac.hal.skymoons.models.customer.DeleteCustomer;
-import jp.ac.hal.skymoons.models.customer.DetailCustomer;
+import jp.ac.hal.skymoons.models.customer.CreateDetail;
 import jp.ac.hal.skymoons.models.login.LoginAdministrator;
 import jp.ac.hal.skymoons.models.login.LoginUser;
 import jp.ac.hal.skymoons.models.ranking.CreateRankingList;
@@ -78,8 +78,8 @@ public class ModelSelector {
 		mapping.put("/HomeSystem/fc/ranking/topnum", new CreateRankingList());
 		// 顧客情報関連機能
 		mapping.put("/HomeSystem/fc/customer/list", new CreateList());
-		mapping.put("/HomeSystem/fc/customer/add", new AddCustomer());
-		mapping.put("/HomeSystem/fc/customer/detail", new DetailCustomer());
+		mapping.put("/HomeSystem/fc/customer/add", new CreateAdd());
+		mapping.put("/HomeSystem/fc/customer/detail", new CreateDetail());
 		mapping.put("/HomeSystem/fc/customer/edit", new CreateEdit());
 		mapping.put("/HomeSystem/fc/customer/deletecustomer", new DeleteCustomer());
 	}

@@ -15,7 +15,7 @@ import jp.ac.hal.skymoons.models.PlanDetail;
 import jp.ac.hal.skymoons.models.PlanList;
 import jp.ac.hal.skymoons.models.PlanRegister;
 import jp.ac.hal.skymoons.models.TestModel;
-import jp.ac.hal.skymoons.models.customer.AddCustomer;
+import jp.ac.hal.skymoons.models.customer.CreateAdd;
 import jp.ac.hal.skymoons.models.customer.CreateList;
 import jp.ac.hal.skymoons.models.customer.InsertCustomer;
 import jp.ac.hal.skymoons.models.login.LoginAdministrator;
@@ -59,7 +59,7 @@ public class ModelSelectorGet {
 		mapping.put("/HomeSystem/fc/ranking/topnum", new CreateRankingList());
 		// 顧客情報関連機能
 		mapping.put("/HomeSystem/fc/customer/list", new CreateList());
-		mapping.put("/HomeSystem/fc/customer/add", new AddCustomer());
+		mapping.put("/HomeSystem/fc/customer/add", new CreateAdd());
 		mapping.put("/HomeSystem/fc/customer/insert", new InsertCustomer());
 	}
 

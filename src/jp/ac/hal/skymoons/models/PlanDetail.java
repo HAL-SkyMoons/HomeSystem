@@ -40,12 +40,11 @@ public class PlanDetail extends AbstractModel {
 	if (request.getParameter("download") != null) {
 	    System.out.println("download");
 	    Utility utility = new Utility();
-	    utility.download(request, response);
+	    utility.download_v2(request, response);
 	    return null;
 	}
 
 	int planId = 0;
-
 
 	SessionController sessionController = new SessionController(request);
 
@@ -89,8 +88,12 @@ public class PlanDetail extends AbstractModel {
 			    String newPath = null;
 
 			    // コメント送信時
-			    if (comment.getCommentNo() != 0) {
-
+			    if (comment.getCommentNo() != 0 && comment.getComment() == null) {
+				int nextUploadNo = dao.commentFileUpload(
+					planId, commentNo, fileName);
+				dao.commit();
+				newPath = path + "/comment/" + planId + "/"
+					+ commentNo + "/" + nextUploadNo;
 				System.out.println("指定コメントファイルアップロード");
 
 			    } else if (comment.getCommentNo() == 0
@@ -127,10 +130,12 @@ public class PlanDetail extends AbstractModel {
 			if (fItem.getFieldName().equals("commentNo")) {
 			    comment.setCommentNo(Integer.valueOf(fItem
 				    .getString()));
+			    commentNo = Integer.valueOf(fItem.getString());
 			}
 
 			if (fItem.getFieldName().equals("comment")) {
-			    byte[] bytes= fItem.getString().getBytes("iso-8859-1");
+			    byte[] bytes = fItem.getString().getBytes(
+				    "iso-8859-1");
 			    comment.setComment(new String(bytes, "UTF-8"));
 			    System.out.println(fItem.getString());
 			}
@@ -148,7 +153,6 @@ public class PlanDetail extends AbstractModel {
 			commentNo = dao.commentInsert(comment);
 			dao.commit();
 			System.out.println("コメント投稿");
-
 		    }
 
 		}
@@ -177,7 +181,7 @@ public class PlanDetail extends AbstractModel {
 		&& sessionController.checkUserSession() == null) {
 	    SampleDao dao = new SampleDao();
 	    if (planId == 0) {
-		planId = Integer.valueOf(request.getParameter("planId"));
+		planId = Integer.parseInt(request.getParameter("planId"));
 	    }
 	    String employeeId = sessionController.getUserId();
 	    UserBean user = dao.getUser(employeeId);
@@ -269,7 +273,8 @@ public class PlanDetail extends AbstractModel {
 	    } else if (request.getParameter("commentFileDelete") != null) {
 		int delPlanId = Integer.valueOf(request.getParameter("planId"));
 		int dataNo = Integer.valueOf(request.getParameter("dataNo"));
-		int commentNo = Integer.valueOf(request.getParameter("commentNo"));
+		int commentNo = Integer.valueOf(request
+			.getParameter("commentNo"));
 
 		FileBean fileBean = new FileBean();
 		fileBean.setPlanId(delPlanId);
@@ -286,9 +291,9 @@ public class PlanDetail extends AbstractModel {
 
 	    }
 
-	    //test
-//	    dao.commentFileDeleteComplete(request);
-//	    dao.planFileDeleteComplete(request);
+	    // test
+	    // dao.commentFileDeleteComplete(request);
+	    // dao.planFileDeleteComplete(request);
 
 	    // 企画詳細情報の取得
 	    PlanBean planDetail = dao.planDetail(planId);

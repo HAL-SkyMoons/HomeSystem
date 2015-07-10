@@ -21,19 +21,17 @@ public class DeleteCustomer extends AbstractModel {
 
 		// セッションチェック
 		SessionController sessionController = new SessionController(request);
-		if(sessionController.checkAdministratorSession() != null) {
-			// セッションが無い　エラーページへ遷移
-			return "/HomeSystem/Error/SessionErrorPage";
+		if(sessionController.checkAdministratorSession2() == false) {
+			// セッションが無効
+			return sessionController.getForwardSessionErrorPageUrl();
 		}
-		// セッションがある　処理を続行
 		
 		// データベースから指定の顧客ユーザ情報を削除
 		CustomerDAO customerDAO = null;
 		try {
 			customerDAO = new CustomerDAO();
-			customerDAO.deleteCustomer(request.getParameter("id").toString());
-			System.out.println(request.getParameter("id").toString());
-			System.out.println("MESSAGE:削除処理終了");
+			customerDAO.updateCustomer(request.getParameter("id").toString());
+			System.out.println("削除完了");
 		} catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("ERROR:顧客ユーザ情報の削除処理中に問題が発生しました。");
