@@ -3,44 +3,82 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	@SuppressWarnings("unchecked") List<TopNumRankingBean> list = (List<TopNumRankingBean>)request.getAttribute("list");
+	@SuppressWarnings("unchecked") List<String> year_list = (List<String>)request.getAttribute("year_list");
+	@SuppressWarnings("unchecked") List<String> badgeList = (List<String>)request.getAttribute("badgeList");
+	String year = (String)request.getAttribute("year");
+	String month = (String)request.getAttribute("month");
 %>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>総獲得数ランキング</title>
+		<title>バッジ獲得数ランキング</title>
 	</head>
 	<body>
-		<h1>総獲得数ランキング</h1>
-		<h1><a href="/HomeSystem/fc/ranking/badge">バッジ毎獲得数ランキング</a></h1>
+		<h1>バッジ獲得数ランキング</h1>
 		
-		<form action="/HomeSystem/fc/ranking/topnum">
-			<p>日付指定</p>
-			<select name="year">
-				<option>指定無し</option>
-				<option value="2016">2016</option>
-				<option value="2015">2015</option>
-				<option value="2014">2014</option>
-				<option value="2013">2013</option>
-			</select>年
-			<select name="month">
-				<option>指定無し</option>
-				<option value="1">1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5">5</option>
-				<option value="6">6</option>
-				<option value="7">7</option>
-				<option value="8">8</option>
-				<option value="9">9</option>
-				<option value="10">10</option>
-				<option value="11">11</option>
-				<option value="12">12</option>
-			</select>月
-			<input type="submit" name="submit" value="表示">
-		</form>
 <%
+// ==========================================================================================
+//  絞り込みフォームの生成
+// ==========================================================================================
+	
+	if(year_list.size() != 0) {
+		out.println("<form action='/HomeSystem/fc/ranking/topnum' method='get'>");
+		out.println("<p>日付指定</p>");
+		
+		
+		
+		out.println("<select name='badge'");
+		out.println("<option value='0'>全て</option>");
+		for(String value : badgeList) {
+			
+		}
+		out.println("</select>");
+		
+		
+		
+		out.println("<select name='year'>");
+		out.println("<option value='0'>指定無し</option>");
+		for(String value : year_list) {
+			out.print("<option value='" + value + "'");
+			if(year != null) {
+				if(year.equals(value)) {
+					out.print(" selected");
+				}
+			}
+			out.println(">" + value + "</option>");
+		}
+		out.println("</select>年");
+		
+		
+		
+		out.println("<select name='month'>");
+		out.println("<option value='0'>指定無し</option>");
+		for(int i = 1; i <= 12; i++) {
+			out.print("<option value='" + i + "'");
+			System.out.println("A");
+			if(month != null) {
+				System.out.println("B");
+				if(month.equals(i)) {
+					out.print(" selected");
+				}
+			}
+			out.println(">" + i + "</option>");
+		}
+		out.println("</select>月");
+		
+		
+		
+		out.println("<input type='submit' name='submit' value='表示'>");
+		out.println("</form>");
+	}
+
+
+
+// ==========================================================================================
+//  ランキングリスト出力
+// ==========================================================================================
+
 	if(list != null) {
 		out.print("<table border='1'>"
 			+ "<tr>"

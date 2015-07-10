@@ -4,7 +4,7 @@
 	SessionController sessionController = new SessionController(request);
 	String url = sessionController.checkAdministratorSession();
 	if(url != null) {
-		response.sendRedirect(url);
+		response.sendRedirect("/HomeSystem" + url);
 	}
 %>
 <!DOCTYPE html>
