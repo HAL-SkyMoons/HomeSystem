@@ -57,14 +57,21 @@ public class ContentsDetailDao {
 		contentsPst.setInt(1, homeContentId);
 		ResultSet contentsResult = contentsPst.executeQuery();
 		if (contentsResult.next()) {
+			//直接nullが入らない為企画IDをnullかどうか判定する
+			String planId = contentsResult.getString("plan_id");
+			if(planId != null){
+				detailBean.setPlanId(Integer.parseInt(planId));
+			}else{
+				detailBean.setPlanId(null);
+			}
 			detailBean.setHomeContentId(contentsResult.getInt("home_content_id"));
 			detailBean.setHomeContentTitle(contentsResult.getString("home_content_title"));
 			detailBean.setHomeContentComment(Utility.nlToBR(contentsResult.getString("home_content_comment")));
 			//detailBean.setHomeContentComment(contentsResult.getString("home_content_comment"));
-			detailBean.setStartDatetime(new SimpleDateFormat("yyyy年MM月dd日").format(contentsResult.getDate("start_datetime")));
+			detailBean.setStartDatetime(new SimpleDateFormat("yyyy年MM月dd日hh時MM分").format(contentsResult.getDate("start_datetime")));
 			detailBean.setEmployeeId(contentsResult.getString("employee_id"));
 			if(contentsResult.getDate("end_datetime") != null){
-				detailBean.setEndDatetime(new SimpleDateFormat("yyyy年MM月dd日").format(contentsResult.getDate("end_datetime")));
+				detailBean.setEndDatetime(new SimpleDateFormat("yyyy年MM月dd日hh時MM分").format(contentsResult.getDate("end_datetime")));
 			}else{
 				detailBean.setEndDatetime("未完了");
 			}
@@ -122,7 +129,21 @@ public class ContentsDetailDao {
 			detailBean.setBigGenreId(bigGenreId);
 			detailBean.setBigGenreName(bigGenreName);
 			bigGenrePst.close();
-			
+
+			//企画日の取得
+			detailBean.setPlanDatetime("関連企画無し");
+			if(detailBean.getPlanId() != null){
+				PreparedStatement planDatetimePst = con.prepareStatement(
+						"select plan_datetime from plan where plan_id = ?;");
+				planDatetimePst.setInt(1, detailBean.getPlanId());
+				ResultSet planDatetimeResult = planDatetimePst.executeQuery();
+				if(planDatetimeResult.next()){
+					if(planDatetimeResult.getDate("plan_datetime") != null){
+						detailBean.setPlanDatetime(new SimpleDateFormat("yyyy年MM月dd日hh時MM分").format(planDatetimeResult.getDate("plan_datetime")));
+					}
+				}
+				planDatetimePst.close();
+			}
 			//添付資料の取得
 			/*
 			ArrayList<Integer> homeDataNo = new ArrayList<>();

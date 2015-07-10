@@ -12,10 +12,14 @@
 <c:if test="${scriptMessage != null}" >${scriptMessage}</c:if>
 <script type="text/javascript" src="../../js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
-	function Post(planId) {
-		form1.detail.value = "detail";
-		form1.planId.value = planId;
+	function PostContentsDetail(homeContentId) {
+		form1.homeContentId.value = homeContentId;
 		form1.submit();
+	}
+	function PostPlanDetail(planId) {
+		form2.detail.value = "detail";
+		form2.planId.value = planId;
+		form2.submit();
 	}
 
 	$(document).ready(function() {
@@ -64,12 +68,20 @@
 									<span class="detailTitle">企画者:</span> <span class="detailInside">${searchPlannerName}</span>
 									<input type="hidden" name="searchPlanner" value="${searchPlanner}" />
 								</div>
-							</c:if> <c:if test="${endPlan != null}">
+							</c:if> 
+							<c:if test="${endContent != null}">
 								<div class="detailData">
-									<span class="detailTitle">オプション:</span> <span class="detailInside">終了済企画を含む</span>
-									<input type="hidden" name="endPlan" value="${endPlan}" />
+									<span class="detailTitle">オプション:</span> <span class="detailInside">終了していないコンテンツ</span>
+									<input type="hidden" name="endContent" value="${endContent}" />
 								</div>
-							</c:if> <c:if test="${order != null}">
+							</c:if> 
+							<c:if test="${existPlan != null}">
+								<div class="detailData">
+									<span class="detailTitle">オプション:</span> <span class="detailInside">企画が存在する物</span>
+									<input type="hidden" name="existPlan" value="${existPlan}" />
+								</div>
+							</c:if>
+							<c:if test="${order != null}">
 								<div class="detailData">
 									<span class="detailTitle">順序:</span> <span class="detailInside"> <c:choose>
 											<c:when test="${order == 'dateDesc'}">投稿日時が新しい順</c:when>
@@ -111,26 +123,22 @@
 				<c:forEach items="${contentsList}" var="i">
 					<div class="data">
 						<div class="title">
-							<a href="javascript:Post(${i.homeContentId})">${i.homeContentTitle}</a>
+							<a href="javascript:PostContentsDetail(${i.homeContentId})">タイトル:${i.homeContentTitle}</a>
 						</div>
 						<hr>
 						<div class="left">
 							<table>
 								<tr>
 									<th class="name">企画者</th>
-									<td>${i.lastName} ${i.firstName}</td>
+									<td><a href="./list?employeeId=${i.employeeId}">${i.lastName} ${i.firstName}</a></td>
 								</tr>
 								<tr>
 									<th class="period">期間</th>
 									<td>${i.startDatetime} &nbsp;&sim;&nbsp; ${i.endDatetime}</td>
 								</tr>
 								<tr>
-									<th class="comments">コメント数</th>
-									<td>*</td>
-								</tr>
-								<tr>
-									<th class="evaluations">総評価数</th>
-									<td>*</td>
+									<th class="comments">関連ホメ数</th>
+									<td>${i.homeCount}</td>
 								</tr>
 								<tr>
 									<th class="genre">ジャンル</th>
@@ -151,13 +159,18 @@
 						</div>
 						<div class="right">
 							<div class="evaluation">
-								*
+								<c:if test="${i.planId != null}">
+									<a href="javascript:PostPlanDetail(${i.planId})">このコンテンツの元になった関連企画</a>
+								</c:if>
 							</div>
 						</div>
 					</div>
 				</c:forEach>
 			</div>
 			<form name="form1" method="post" action="detail">
+				<input type="hidden" name="homeContentId">
+			</form>
+			<form name="form2" method="post" action="/HomeSystem/fc/PlanDetail">
 				<input type="hidden" name="detail">
 				<input type="hidden" name="planId">
 			</form>

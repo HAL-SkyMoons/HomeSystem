@@ -6,9 +6,11 @@ import java.util.ArrayList;
 
 public class ContentsDetailBean implements Serializable {
 	private String userId;
+	private Integer planId;
 	private int homeContentId;
 	private String homeContentTitle;
 	private String homeContentComment;
+	private String planDatetime;
 	private String startDatetime;
 	private String endDatetime;
 	private String employeeId;
@@ -27,6 +29,12 @@ public class ContentsDetailBean implements Serializable {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+	public Integer getPlanId() {
+		return planId;
+	}
+	public void setPlanId(Integer planId) {
+		this.planId = planId;
+	}
 	public int getHomeContentId() {
 		return homeContentId;
 	}
@@ -44,6 +52,12 @@ public class ContentsDetailBean implements Serializable {
 	}
 	public void setHomeContentComment(String homeContentComment) {
 		this.homeContentComment = homeContentComment;
+	}
+	public String getPlanDatetime() {
+		return planDatetime;
+	}
+	public void setPlanDatetime(String planDatetime) {
+		this.planDatetime = planDatetime;
 	}
 	public String getStartDatetime() {
 		return startDatetime;

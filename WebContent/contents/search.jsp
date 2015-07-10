@@ -55,10 +55,10 @@
 								<option value="">---指定なし---</option>
 								<c:forEach items="${employeeList}" var="j">
 									
-									<c:if test="${searchPlanner != null && searchPlanner == j.userId}">
+									<c:if test="${searchPlanner != null && searchPlanner == j.employeeId}">
 										<option value="${j.employeeId}" selected="selected">${j.lastName}&nbsp;${j.firstName}</option>
 									</c:if>
-									<c:if test="${searchPlanner != null && searchPlanner == j.userId}">
+									<c:if test="${searchPlanner == null || searchPlanner != j.employeeId}">
 										<option value="${j.employeeId}">${j.lastName}&nbsp;${j.firstName}</option>
 									</c:if>
 								</c:forEach>
@@ -94,7 +94,7 @@
 									<c:if test="${searchOrder != null && order.key == searchOrder}">
 										<option value="${order.key}" selected="selected">${order.value}</option>
 									</c:if>
-									<c:if test="${searchOrder  == null || order.key != searchOrder}">
+									<c:if test="${searchOrder == null || order.key != searchOrder}">
 										<option value="${order.key}">${order.value}</option>
 									</c:if>
 								</c:forEach>
@@ -105,7 +105,7 @@
 				</table>
 	
 				<c:forEach var="bigGenre" items="${bigGenreList}">
-					<span class="trigger">&#9661;${bigGenre.bigGenreName }</span>
+					<span class="trigger">&#9661;${bigGenre.bigGenreName}</span>
 					<div class="toggle_container">
 						<table>
 							<tr>
@@ -129,74 +129,11 @@
 						</table>
 					</div>
 					<br>
-	
 				</c:forEach>
-	
 				<div class="btnZone">
 					<input type="submit" name="search" class="btn btn-2 btn-2c searchBtn" value="検索">
 				</div>
-	
 			</form>
 		</div>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		<!-- 
-		<h1>検索条件の指定</h1>
-			<table border="1">
-				<tr>
-					<td>検索ワード</td>
-					<td>ジャンル選択</td>
-					<td>投稿社員</td>
-				</tr>
-				<tr>
-					<td>キーワード：<input type="text" name="keyword"/></td>
-					<td>ジャンル<br/>
-						<c:forEach items="${genreList}" var="j">
-							<input type="checkbox" name="genreId" value="${j.genreId}">${j.bigGenreName}-${j.genreName}<br/>
-						</c:forEach>
-					</td>
-					<td>大ジャンル<br/>
-						<c:forEach items="${bigGenreList}" var="j">
-							<input type="checkbox" name="bigGenreId" value="${j.bigGenreId}">${j.bigGenreName}<br/>
-						</c:forEach>
-					</td>
-					<td>社員
-					</td>
-				</tr>
-				<tr>
-					<td>並び替え
-						<select name="orderColumn">
-							<option value="dateDesc" selected>投稿日時が新しい順</option>
-							<option value="dateAsc">投稿日時が古い順</option>
-							<option value="startDesc">企画開始日時が新しい順</option>
-							<option value="startAsc">企画開始日時が古い順</option>
-							<option value="endDesc">企画終了日時が新しい順</option>
-							<option value="endAsc">企画終了日時が古い順</option>
-							<option value="titleDesc">タイトル名昇順</option>
-							<option value="titleAsc">タイトル名降順</option>
-							<option value="nameDesc">社員名昇順</option>
-							<option value="nameAsc">社員名降順</option>
-						</select>
-					</td>
-					<td>
-					</td>
-					<td><input type="submit" value="検索"></td>
-				</tr>
-			</table>
-		</form>
-		-->
 	</body>
 </html>

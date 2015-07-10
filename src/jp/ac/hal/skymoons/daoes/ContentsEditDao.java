@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.naming.NamingException;
 
@@ -47,13 +48,40 @@ public class ContentsEditDao {
 		contentsPst.setInt(1, homeContentId);
 		ResultSet contentsResult = contentsPst.executeQuery();
 		if (contentsResult.next()) {
+			//直接nullが入らない為企画IDをnullかどうか判定する
+			String planId = contentsResult.getString("plan_id");
+			if(planId != null){
+				editBean.setPlanId(Integer.parseInt(planId));
+			}else{
+				editBean.setPlanId(null);
+			}
+			//コンテンツ各種データの取得
 			editBean.setHomeContentId(contentsResult.getInt("home_content_id"));
 			editBean.setHomeContentTitle(contentsResult.getString("home_content_title"));
 			//editBean.setHomeContentComment(Utility.nlToBR(contentsResult.getString("home_content_comment")));
 			editBean.setHomeContentComment(contentsResult.getString("home_content_comment"));
-			editBean.setStartDatetime(new SimpleDateFormat("yyyy年MM月dd日").format(contentsResult.getDate("start_datetime")));
 			editBean.setEmployeeId(contentsResult.getString("employee_id"));
-			editBean.setEndDatetime(new SimpleDateFormat("yyyy年MM月dd日").format(contentsResult.getDate("end_datetime")));
+			
+			//日付の取得
+			Date startDatetime = contentsResult.getDate("start_datetime");
+			editBean.setStartDatetime(new SimpleDateFormat("yyyy年MM月dd日hh時MM分").format(startDatetime));
+			editBean.setStartYear(new SimpleDateFormat("yyyy").format(startDatetime));
+			editBean.setStartMonth(new SimpleDateFormat("MM").format(startDatetime));
+			editBean.setStartDay(new SimpleDateFormat("dd").format(startDatetime));
+			editBean.setStartHour(new SimpleDateFormat("hh").format(startDatetime));
+			editBean.setStartMinute(new SimpleDateFormat("MM").format(startDatetime));
+			
+			Date endDatetime = contentsResult.getDate("end_datetime");
+			//値が無ければ現在時刻を入れる
+			if(contentsResult.getDate("end_datetime") == null){
+				endDatetime = (Date)new java.util.Date();
+			}
+			editBean.setEndDatetime(new SimpleDateFormat("yyyy年MM月dd日").format(endDatetime));
+			editBean.setEndYear(new SimpleDateFormat("yyyy").format(endDatetime));
+			editBean.setEndMonth(new SimpleDateFormat("MM").format(endDatetime));
+			editBean.setEndDay(new SimpleDateFormat("dd").format(endDatetime));
+			editBean.setEndHour(new SimpleDateFormat("hh").format(endDatetime));
+			editBean.setEndMinute(new SimpleDateFormat("MM").format(endDatetime));
 			
 			//名前の取得
 			PreparedStatement namePst = con.prepareStatement("select * from users where user_id = ? ;");
@@ -107,7 +135,21 @@ public class ContentsEditDao {
 			editBean.setBigGenreId(bigGenreId);
 			editBean.setBigGenreName(bigGenreName);
 			bigGenrePst.close();
-			
+
+			//企画日の取得
+			editBean.setPlanDatetime("関連企画無し");
+			if(editBean.getPlanId() != null){
+				PreparedStatement planDatetimePst = con.prepareStatement(
+						"select plan_datetime from plan where plan_id = ?;");
+				planDatetimePst.setInt(1, editBean.getPlanId());
+				ResultSet planDatetimeResult = planDatetimePst.executeQuery();
+				if(planDatetimeResult.next()){
+					if(planDatetimeResult.getDate("plan_datetime") != null){
+						editBean.setPlanDatetime(new SimpleDateFormat("yyyy年MM月dd日hh時MM分").format(planDatetimeResult.getDate("plan_datetime")));
+					}
+				}
+				planDatetimePst.close();
+			}
 			//添付資料の取得
 			/*
 			ArrayList<Integer> homeDataNo = new ArrayList<>();

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class ContentsListBean implements Serializable {
 	private int homeContentId;
+	private Integer planId;
 	private String homeContentTitle;
 	private String homeContentComment;
 	private String startDatetime;
@@ -19,12 +20,19 @@ public class ContentsListBean implements Serializable {
 	private ArrayList<String> genreName;
 	private ArrayList<Integer> homeDataNo;
 	private ArrayList<String> homeDataName;
+	private int homeCount;
 	private int deleteFlag;
 	public int getHomeContentId() {
 		return homeContentId;
 	}
 	public void setHomeContentId(int homeContentId) {
 		this.homeContentId = homeContentId;
+	}
+	public Integer getPlanId() {
+		return planId;
+	}
+	public void setPlanId(Integer planId) {
+		this.planId = planId;
 	}
 	public String getHomeContentTitle() {
 		return homeContentTitle;
@@ -103,6 +111,12 @@ public class ContentsListBean implements Serializable {
 	}
 	public void setHomeDataName(ArrayList<String> homeDataName) {
 		this.homeDataName = homeDataName;
+	}
+	public int getHomeCount() {
+		return homeCount;
+	}
+	public void setHomeCount(int homeCount) {
+		this.homeCount = homeCount;
 	}
 	public int getDeleteFlag() {
 		return deleteFlag;

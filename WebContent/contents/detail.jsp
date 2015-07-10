@@ -44,7 +44,7 @@
 						No.${i.homeContentId}
 					</div>
 					<div id="planDate">
-						開始日時：${i.startDatetime}
+						企画日時：${i.planDatetime}
 					</div>
 				</div>
 				<div id="title">
@@ -54,16 +54,16 @@
 					<div id="startEnd">
 						実施期間：<br>
 						${i.startDatetime}～${i.endDatetime}
-						<c:if test="${i.employeeId != i.userId}">
-							<a class="iframe" href="/HomeSystem/fc/Home?toUser=${i.employeeId}&contentsId=${i.homeContentId}" ><input type="button" value="ホメる" class="btn btn-2 btn-2c"></a>
-						</c:if>
 					</div>
 					<div id="planner">
 						企画者
 						<div id="img">
 							<img src="../../images/employees/${i.employeeId}.jpg" width="100" height="100">
 						</div>
-						${i.lastName}${i.firstName}
+						${i.lastName}${i.firstName}<br/>
+						<c:if test="${i.employeeId != i.userId}">
+							<a class="iframe" href="/HomeSystem/fc/Home?toUser=${i.employeeId}&contentsId=${i.homeContentId}" ><input type="button" value="ホメる" class="btn btn-2 btn-2c"></a>
+						</c:if>
 					</div>
 				</div>
 				<div id="planComment">
