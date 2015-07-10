@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jp.ac.hal.skymoons.beans.ranking.BatchBean;
 import jp.ac.hal.skymoons.beans.ranking.TopNumRankingBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.ranking.RankingDAO;
@@ -30,9 +31,14 @@ public class CreateRankingList extends AbstractModel {
 		}
 		
 		// 条件指定
+		String whereBatch = null;
 		String whereYear = null;
 		String whereMonth = null;
 		if(request.getParameter("submit") != null) {
+			if(request.getParameter("batch").equals("0") == false) {
+				whereBatch = request.getParameter("batch");
+				request.setAttribute("batch", whereBatch);
+			}
 			if(request.getParameter("year").equals("0") == false) {
 				whereYear = request.getParameter("year");
 				request.setAttribute("year", whereYear);
@@ -46,16 +52,19 @@ public class CreateRankingList extends AbstractModel {
 		RankingDAO rankingDAO = null;
 		try{
 			rankingDAO = new RankingDAO();
+			// バッチリストの取得
+			List<BatchBean> batchList = rankingDAO.getBatchList();
 			// ランキングリストの取得
 			List<TopNumRankingBean> list = rankingDAO.getTopNumRanking2(whereYear, whereMonth);
 			// 年リストの取得
 			List<String> year_list = rankingDAO.getYearList();
-			rankingDAO.close();
+			request.setAttribute("batchList", batchList);
 			request.setAttribute("list", list);
 			request.setAttribute("year_list", year_list);
 		} catch (Exception e){
 			e.printStackTrace();
 			System.out.println("獲得数ランキングリスト作成処理中に問題が発生。");
+		} finally {
 			rankingDAO.close();
 		}
 		
