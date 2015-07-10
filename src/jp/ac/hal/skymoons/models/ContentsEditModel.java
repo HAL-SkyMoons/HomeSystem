@@ -2,6 +2,7 @@ package jp.ac.hal.skymoons.models;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -139,8 +140,8 @@ public class ContentsEditModel extends AbstractModel{
 		
 		//ジャンル検索
 		ContentsGenreDao genreDao = new ContentsGenreDao();
-		ArrayList<ContentsGenreBean> genreData = null;
-		genreData = genreDao.findGenre();
+		ArrayList<ContentsGenreBean> genreList = genreDao.findGenre();
+		ArrayList<ContentsGenreBean> bigGenreList = genreDao.findBigGenre();
 		genreDao.close();
 		
 		ArrayList<ContentsDataBean> homeData = null;
@@ -148,9 +149,18 @@ public class ContentsEditModel extends AbstractModel{
 		
 		//結果をリクエストに保存
 		request.setAttribute("editData",editData);
-		request.setAttribute("genreList",genreData);
+		request.setAttribute("genreList",genreList);
+		request.setAttribute("bigGenreList",bigGenreList);
 		request.setAttribute("dataList",homeData);
-		
+
+	    if(editData.getGenreId() != null){
+			HashMap<Integer, Integer> searchGenre = new HashMap<Integer, Integer>();
+			for (Integer genre : editData.getGenreId()) {
+			    searchGenre.put(genre, genre);
+			}
+		    request.setAttribute("searchGenre", searchGenre);
+	    }
+	    
 		//コミットと終了処理
 		dao.commit();
 		dao.close();

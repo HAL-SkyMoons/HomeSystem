@@ -87,37 +87,5 @@
 			</div>
 		</form>
 	</div>
-	<form action="/HomeSystem/fc/PlanConfirmation" method="post">
-		<%
-		    out.println("<input type=\"hidden\" name=\"planner\" value=\""
-				    + planner + "\">");
-		    out.println("<input type=\"hidden\" name=\"planTitle\" value=\""
-				    + planTitle + "\">");
-		    out.println("<input type=\"hidden\" name=\"planComment\" value=\""
-				    + planComment + "\">");
-		    out.println("<input type=\"hidden\" name=\"startDate\" value=\""
-				    + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(plan
-					    .getStartDate()) + "\">");
-		    out.println("<input type=\"hidden\" name=\"endDate\" value=\""
-				    + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(plan
-					    .getEndDate()) + "\">");
-		%>
-
-		<h3>登録ジャンル</h3>
-		<%
-		    // 		    ArrayList<Integer> genreIds = (ArrayList<Integer>) request
-		    // 				    .getAttribute("genreIds");
-		    // 		    ArrayList<String> genreNames = (ArrayList<String>) request
-		    // 				    .getAttribute("genreNames");
-
-		    // 		    for (int i = 0; i < genreIds.size(); i++) {
-		    // 				out.println(genreNames.get(i));
-		    // 				out.println("<input type=\"hidden\" name=\"id\" value=\""
-		    // 					+ genreIds.get(i) + "\">");
-		    // 		    }
-		%>
-
-		<input type="submit" name="submit" value="登録">
-	</form>
 </body>
 </html>

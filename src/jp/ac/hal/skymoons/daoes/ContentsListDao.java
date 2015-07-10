@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+
 import javax.naming.NamingException;
 
 import jp.ac.hal.skymoons.beans.ContentsListBean;
@@ -35,7 +38,7 @@ public class ContentsListDao {
 		this.con = con;
 	}
 
-	public ArrayList<ContentsListBean> selectContents(String keyword, String employeeId, ArrayList<Integer> genreId, ArrayList<Integer> bigGenreId, String orderColumn, String orderMode) throws SQLException {
+	public ArrayList<ContentsListBean> selectContents(String keyword, String employeeId, ArrayList<Integer> genreId, ArrayList<Integer> bigGenreId, String endContent, String existPlan, String order) throws SQLException {
 		//SQLの生成
 		String contentsSql = "select * from home_contents hc, home_genre hg, genre g, users u "
 				+ "where hc.delete_flag != '1' "
@@ -63,20 +66,61 @@ public class ContentsListDao {
 			}
 			contentsSql += sqlword + "g.big_genre_id in(" + bigGenre + ") ";
 		}
+		if(endContent != null && endContent.length() > 0){
+			contentsSql += sqlword + "hc.end_datetime is null ";
+		}
+		if(existPlan != null && existPlan.length() > 0){
+			contentsSql += sqlword + "hc.plan_id is not null ";
+		}
 		contentsSql += "group by hc.home_content_id ";
 		if(genreId != null){
 			contentsSql += "having count(*) >= " + genreId.size() + " ";
 		}
 		
 		//並び替え
-		if(orderColumn == null || orderColumn.length() <= 0){
-			orderColumn = "hc.home_content_id";
+		//if(orderColumn == null || orderColumn.length() <= 0){
+		//	orderColumn = "hc.home_content_id";
+		//}	if (order != null) {
+		String orderColumn = "hc.home_content_id desc";
+		if(order != null && order.length() > 0){
+		    switch (order) {
+			    case "dateDesc":
+			    	orderColumn = "hc.home_content_id desc";
+			    	break;
+			    case "dateAsc":
+			    	orderColumn = "hc.home_content_id asc";
+			    	break;
+			    case "startDesc":
+			    	orderColumn = "hc.start_datetime desc";
+			    	break;
+			    case "startAsc":
+			    	orderColumn = "hc.start_datetime asc";
+			    	break;
+			    case "endDesc":
+			    	orderColumn = "hc.end_datetime desc";
+			    	break;
+			    case "endAsc":
+			    	orderColumn = "hc.end_datetime asc";
+			    	break;
+			    case "titleDesc":
+			    	orderColumn = "hc.home_content_title desc";
+			    	break;
+			    case "titleAsc":
+			    	orderColumn = "hc.home_content_title asc";
+			    	break;
+			    case "nameDesc":
+			    	orderColumn = "u.last_name, u.first_name desc";
+			    	break;
+			    case "nameAsc":
+			    	orderColumn = "u.last_name, u.first_name asc";
+			    	break;
+			}
 		}
 		contentsSql += "order by " + orderColumn + ";";
+		System.out.println("生成SQL[" + contentsSql + "]");
 		
 		PreparedStatement contentsPst = con.prepareStatement(contentsSql);
 		int setCnt = 1;
-		System.out.println("生成SQL[" + contentsSql + "]");
 		if(keyword != null && keyword.length() > 0){
 			contentsPst.setString(setCnt, "%" + keyword + "%");
 			contentsPst.setString(setCnt + 1, "%" + keyword + "%");
@@ -107,11 +151,25 @@ public class ContentsListDao {
 			ContentsListBean listBean = new ContentsListBean();
 			//検索条件となる値の取得
 			int homeContentId = contentsResult.getInt("home_content_id");
+			//直接nullが入らない為企画IDをnullかどうか判定する
+			String planId = contentsResult.getString("plan_id");
+			if(planId != null){
+				listBean.setPlanId(Integer.parseInt(planId));
+			}else{
+				listBean.setPlanId(null);
+			}
 			//beanに値を追加
 			listBean.setHomeContentId(homeContentId);
 			listBean.setHomeContentTitle(contentsResult.getString("home_content_title"));
 			listBean.setHomeContentComment(contentsResult.getString("home_content_comment"));
-			listBean.setStartDatetime(contentsResult.getString("start_datetime"));
+			listBean.setStartDatetime(new SimpleDateFormat("yyyy年MM月dd日hh時MM分").format(contentsResult.getDate("start_datetime")));
+			Date endDatetime = contentsResult.getDate("end_datetime");
+			//値が無ければ現在時刻を入れる
+			if(contentsResult.getDate("end_datetime") == null){
+				listBean.setEndDatetime("未完了");
+			}else{
+				listBean.setEndDatetime(new SimpleDateFormat("yyyy年MM月dd日hh時MM分").format(endDatetime));
+			}
 			listBean.setEmployeeId(contentsResult.getString("employee_id"));
 			//listBean.setDeleteFlag(contentsResult.getInt("delete_flag"));
 			
@@ -172,7 +230,20 @@ public class ContentsListDao {
 			listBean.setBigGenreName(bigGenreNameList);
 			
 			bigGenrePst.close();
-						
+			
+			//ホメ数の取得
+			PreparedStatement homeLogPst = con.prepareStatement(
+					"select sum(home_point) from home_log group by home_content_id having home_content_id = ?;");
+
+			homeLogPst.setInt(1, homeContentId);
+			ResultSet homeLogResult = homeLogPst.executeQuery();
+			
+			if(homeLogResult.next()){
+				listBean.setHomeCount(homeLogResult.getInt("sum(home_point)"));
+			}
+			
+			homeLogPst.close();
+			
 			contentsList.add(listBean);
 		}
 		contentsResult.close();
@@ -180,6 +251,19 @@ public class ContentsListDao {
 		return contentsList;
 	}
 	
+	
+	public String findEmployeeName(String employeeId) throws SQLException{
+		PreparedStatement employeePst = con.prepareStatement("select last_name, first_name from users where users.user_id = ?;");
+		employeePst.setString(1, employeeId);
+		ResultSet employeeResult = employeePst.executeQuery();
+		String employeeName = null;
+		if(employeeResult.next()){
+			employeeName = employeeResult.getString("last_name") + employeeResult.getString("first_name");
+		}
+		employeeResult.close();
+		employeePst.close();
+		return employeeName;
+	}
 	
 	/**
 	 * 接続を閉じる

@@ -37,19 +37,17 @@ public class ContentsUpdateDao {
 	public void updateContent(ContentsUpdateBean updateBean) throws SQLException{
 		PreparedStatement updateContentsPst = con.prepareStatement(
 				"update home_contents set home_content_id = ?, "
-				+ "employee_id = ?, "
 				+ "home_content_title = ?, "
 				+ "start_datetime = ?, "
 				+ "home_content_comment = ? "
 				//+ "end_datetime = ? "
 				+ "where home_content_id = ?");
 		updateContentsPst.setInt(1, updateBean.getHomeContentId());
-		updateContentsPst.setString(2, updateBean.getEmployeeId());
-		updateContentsPst.setString(3, updateBean.getHomeContentTitle());
-		updateContentsPst.setString(4, updateBean.getStartDatetime());
-		updateContentsPst.setString(5, updateBean.getHomeContentComment());
-		//updateContentsPst.setString(6, updateBean.getEndDatetime());
-		updateContentsPst.setInt(6, updateBean.getHomeContentId());
+		updateContentsPst.setString(2, updateBean.getHomeContentTitle());
+		updateContentsPst.setString(3, updateBean.getStartDatetime());
+		updateContentsPst.setString(4, updateBean.getHomeContentComment());
+		//updateContentsPst.setString(5, updateBean.getEndDatetime());
+		updateContentsPst.setInt(5, updateBean.getHomeContentId());
 		updateContentsPst.executeUpdate();
 		updateContentsPst.close();
 		return;
