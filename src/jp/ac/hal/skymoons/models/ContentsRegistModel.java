@@ -18,14 +18,13 @@ public class ContentsRegistModel extends AbstractModel{
 
 		//ジャンル検索
 		ContentsGenreDao genreDao = new ContentsGenreDao();
-		ArrayList<ContentsGenreBean> genreData = null;
-		genreData = genreDao.findGenre();
+		ArrayList<ContentsGenreBean> genreList = genreDao.findGenre();
+		ArrayList<ContentsGenreBean> bigGenreList = genreDao.findBigGenre();
+		genreDao.close();
 
 		//結果をリクエストに保存
-		request.setAttribute("genreList",genreData);
-		
-		genreDao.commit();
-		genreDao.close();
+		request.setAttribute("genreList",genreList);
+		request.setAttribute("bigGenreList",bigGenreList);
 		
 		//遷移先を指定
 		return "/contents/regist.jsp";

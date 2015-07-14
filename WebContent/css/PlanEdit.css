@@ -1,0 +1,204 @@
+@CHARSET "UTF-8";
+
+#wrapper {
+	width: 500px;
+	margin: 0 auto;
+	font-family: 'Lucida Grande', 'Hiragino Kaku Gothic ProN',
+		'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, sans-serif;
+}
+
+#plan {
+	width: 500px;
+}
+
+#planHeader {
+	overflow: hidden;
+}
+
+#id {
+	float: left;
+}
+
+#planDate {
+	float: right;
+}
+
+#title {
+	width: 100%;
+	text-align: center;
+}
+
+#titleValue {
+	padding:0.5em;
+	width: 100%;
+	max-width: 100%;
+	font-size: 20px;
+	text-align: left;
+	word-break: break-all;
+	word-wrap: break-word;
+	display: inline-block;
+}
+
+#planDetail {
+	overflow: hidden;
+}
+
+#startEnd {
+	float: left;
+	text-align: center;
+	margin-top: 20px;
+	padding: 5px;
+}
+
+#dateInfo{
+	color: red;
+	margin-top: 5px;
+	font-size: 18px;
+}
+
+.center {
+	width: 100%;
+	display: inline-block;
+}
+
+#planner {
+	float: right;
+	text-align: center;
+}
+
+#planComment {
+	border: 1px solid black;
+	padding: 10px;
+	width: 500px;
+	max-width: 500px;
+	margin-bottom: 5px;
+	-webkit-border-radius: 10px;
+	/*  height: 50px; */
+}
+
+#planCommentValue {
+	width: 100%;
+	max-width: 100%;
+	padding:0.4em;
+}
+
+ｃ {
+	border: 1px solid black;
+	padding: 10px;
+	width: 500px;
+	max-width: 500px;
+	margin-bottom: 5px;
+	-webkit-border-radius: 10px;
+	/*  height: 50px; */
+}
+
+#img {
+	width: 100px;
+	height: 100px;
+}
+
+#img>img {
+	max-width: 100px;
+	max-height: 100px;
+}
+
+.trigger {
+	display: inline-block;
+	width: 100%;
+	background-color: #F29900;
+	font-size: 18px;
+	margin-top: 10px;
+}
+
+.toggle_container {
+	display: inline-block;
+	width: 100%;
+	border: 1px solid #F29900;
+}
+
+
+
+/*ボタン*/
+.btn {
+	border: none;
+	font-family: inherit;
+	font-size: inherit;
+	color: inherit;
+	background: none;
+	cursor: pointer;
+	display: inline-block;
+	margin-bottom: 10px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 700;
+	outline: none;
+	position: relative;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+	background: #e6002d;
+}
+
+.btn:after {
+	content: '';
+	position: absolute;
+	z-index: -1;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.btn-2 {
+	/*  background: #cb4e4e; */
+	background: #e6002d;
+	color: #fff;
+	box-shadow: 0 3px #CD0014;
+	-webkit-transition: none;
+	-moz-transition: none;
+	transition: none;
+}
+
+.btn-2[disabled] {
+	background: #e6002d;
+	color: #fff;
+	box-shadow: 0 3px #CD0014;
+	-webkit-transition: none;
+	-moz-transition: none;
+	transition: none;
+}
+
+.btn-2c {
+	border-radius: 5px;
+}
+
+.btn-2c:hover {
+	background: #e6002d;
+	color: #fff;
+	box-shadow: 0 1.5px #CD0014;
+	top: 2px;
+}
+
+.btn-2c:active {
+	box-shadow: 0 0 #CD0014;
+	top: 6px;
+}
+
+.btnZone {
+	width: 500px;
+	text-align: center;
+}
+
+.submit {
+	margin-top: 20px;
+	width: 50%;
+	height: 50px;
+	font-size: 25px;
+}
+
+.planEnd {
+	margin-top: 20px;
+	width: 50%;
+	height: 50px;
+	font-size: 25px;
+}
+

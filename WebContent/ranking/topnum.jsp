@@ -1,10 +1,12 @@
+<%@page import="jp.ac.hal.skymoons.beans.ranking.BatchBean"%>
 <%@page import="jp.ac.hal.skymoons.beans.ranking.TopNumRankingBean"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	@SuppressWarnings("unchecked") List<TopNumRankingBean> list = (List<TopNumRankingBean>)request.getAttribute("list");
 	@SuppressWarnings("unchecked") List<String> year_list = (List<String>)request.getAttribute("year_list");
-	@SuppressWarnings("unchecked") List<String> badgeList = (List<String>)request.getAttribute("badgeList");
+	@SuppressWarnings("unchecked") List<BatchBean> batchList = (List<BatchBean>)request.getAttribute("batchList");
+	String batch = (String)request.getAttribute("batch");
 	String year = (String)request.getAttribute("year");
 	String month = (String)request.getAttribute("month");
 %>
@@ -24,14 +26,20 @@
 	
 	if(year_list.size() != 0) {
 		out.println("<form action='/HomeSystem/fc/ranking/topnum' method='get'>");
-		out.println("<p>日付指定</p>");
+		out.println("<p>絞り込み</p>");
 		
 		
 		
-		out.println("<select name='badge'");
+		out.println("<select name='batch'>");
 		out.println("<option value='0'>全て</option>");
-		for(String value : badgeList) {
-			
+		for(int i = 0; i < batchList.size(); i++) {
+			out.print("<option value='" + batchList.get(i).getBatch_id() + "'");
+			if(batch != null) {
+				if(batch.equals(String.valueOf(batchList.get(i).getBatch_id()))) {
+					out.print(" selected");
+				}
+			}
+			out.println(">" + batchList.get(i).getBatch_name() + "</option>");
 		}
 		out.println("</select>");
 		
@@ -59,7 +67,7 @@
 			System.out.println("A");
 			if(month != null) {
 				System.out.println("B");
-				if(month.equals(i)) {
+				if(month.equals(String.valueOf(i))) {
 					out.print(" selected");
 				}
 			}
@@ -95,7 +103,7 @@
 				outnum = num;
 				value = list.get(i).getValue();
 			}
-			out.print("<tr><td>" + outnum + "</td>"
+			out.println("<tr><td>" + outnum + "</td>"
 				+ "<td>" + list.get(i).getValue() + "</td>"
 				+ "<td>" + list.get(i).getName() + "</td></tr>");
 		}

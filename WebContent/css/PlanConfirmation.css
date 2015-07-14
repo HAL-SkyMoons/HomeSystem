@@ -1,62 +1,116 @@
 @CHARSET "UTF-8";
 
-body {
-	overflow: hidden;
-	text-align: center;
-	padding-top: 10px;
-}
-
 #wrapper {
 	width: 500px;
-	max-width: 500px;
 	margin: 0 auto;
 	font-family: 'Lucida Grande', 'Hiragino Kaku Gothic ProN',
 		'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, sans-serif;
-	margin: 0 auto;
 }
 
-#toUser {
-	width: 400px;
-	display: inline-block;
-	height: auto;
+#plan {
+	width: 500px;
 }
 
-p {
-	display:inline-block;
+#planHeader {
+	overflow: hidden;
+}
+
+#planDate {
+	float: right;
+}
+
+#title {
+	width: 100%;
+	text-align: center;
+}
+
+#titleValue {
+	padding:0.6em;
+	width: 100%;
+	max-width: 100%;
+	font-size: 20px;
 	text-align: left;
-	word-break: keep-all;
-}
-
-#face {
-	width: 45%;
-	margin: 0 auto;
+	word-break: break-all;
+	word-wrap: break-word;
 	display: inline-block;
 }
 
-#name {
-	width: 45%;
-	vertical-align: middle;
+#planDetail {
+	overflow: hidden;
+}
+
+#startEnd {
+	float: left;
+	text-align: center;
+}
+
+#dateInfo{
+	color: red;
+	margin-top: 5px;
+	font-size: 18px;
+}
+
+.center {
+	width: 100%;
 	display: inline-block;
 }
 
-#batch {
-	margin: 0 auto;
+#planner {
+	float: right;
+	text-align: center;
 }
 
-.image-picker {
-	width: 60%;
-	margin: 5px;
+#planComment {
+	border: 1px solid black;
+	padding: 10px;
+	width: 500px;
+	max-width: 500px;
+	margin-bottom: 5px;
+	-webkit-border-radius: 10px;
+	/*  height: 50px; */
 }
 
-#comment>textarea {
-	width: 400px;
-	max-width: 400px;
+#planCommentValue {
+	width: 100%;
+	max-width: 100%;
+	padding:0.4em;
+}
+
+ｃ {
+	border: 1px solid black;
+	padding: 10px;
+	width: 500px;
+	max-width: 500px;
+	margin-bottom: 5px;
+	-webkit-border-radius: 10px;
+	/*  height: 50px; */
+}
+
+#img {
+	width: 100px;
 	height: 100px;
 }
 
-#point {
-	width: 100%;
+#img>img {
+	max-width: 100px;
+	max-height: 100px;
 }
+
+.trigger {
+	display: inline-block;
+	width: 100%;
+	background-color: #F29900;
+	font-size: 18px;
+	margin-top: 10px;
+}
+
+.toggle_container {
+	display: inline-block;
+	width: 100%;
+	border: 1px solid #F29900;
+}
+
+
 
 /*ボタン*/
 .btn {
@@ -89,7 +143,7 @@ p {
 }
 
 .btn-2 {
-	/* 	background: #cb4e4e; */
+	/*  background: #cb4e4e; */
 	background: #e6002d;
 	color: #fff;
 	box-shadow: 0 3px #CD0014;
@@ -123,7 +177,14 @@ p {
 	top: 6px;
 }
 
+.btnZone {
+	width: 500px;
+	text-align: center;
+}
+
 .submit {
-	margin-top:10px;
-	width: 400px;
+	margin-top: 20px;
+	width: 50%;
+	height: 50px;
+	font-size: 25px;
 }
