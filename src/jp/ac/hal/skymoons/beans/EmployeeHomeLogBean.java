@@ -6,7 +6,15 @@ import java.util.Date;
 public class EmployeeHomeLogBean implements Serializable{
 	private String targetName;
 	private Date days;
+	private String employeeId;
 
+
+	public String getEmployeeId() {
+		return employeeId;
+	}
+	public void setEmployeeId(String employeeId) {
+		this.employeeId = employeeId;
+	}
 	public String getTargetName() {
 		return targetName;
 	}

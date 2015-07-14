@@ -1,11 +1,15 @@
 package jp.ac.hal.skymoons.models;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jp.ac.hal.skymoons.beans.EmployeeBadgeBean;
+import jp.ac.hal.skymoons.beans.EmployeeBatchBean;
 import jp.ac.hal.skymoons.beans.EmployeeGenreBean;
 import jp.ac.hal.skymoons.beans.EmployeeHomeLogBean;
 import jp.ac.hal.skymoons.beans.EmployeePageBean;
@@ -31,43 +35,57 @@ public class EmployeePageModel extends AbstractModel{
 		SessionController sessionController = new SessionController(request);
 		//返り値設定
 		ArrayList<EmployeePageBean> employeePageReturn = new ArrayList<EmployeePageBean>();
-		ArrayList<EmployeeBadgeBean> employeeBadgeReturn = new ArrayList<EmployeeBadgeBean>();
+		ArrayList<EmployeeBatchBean> employeeBatchReturn = new ArrayList<EmployeeBatchBean>();
 		ArrayList<EmployeeGenreBean> employeeGenreReturn = new ArrayList<EmployeeGenreBean>();
 		ArrayList<EmployeePlanBean> employeePlanReturn = new ArrayList<EmployeePlanBean>();
 		ArrayList<EmployeePlanCommentBean> employeePlanCommentReturn = new ArrayList<EmployeePlanCommentBean>();
 		ArrayList<EmployeeHomeLogBean> employeeHomeLogReturn = new ArrayList<EmployeeHomeLogBean>();
+		ArrayList<EmployeeBatchBean> employeeBatchMonthReturn = new ArrayList<EmployeeBatchBean>();
+		ArrayList<EmployeeBatchBean> employeeBatchYearReturn = new ArrayList<EmployeeBatchBean>();
 		//チャート描画用変数
-		String[] employeeChartBadgeName = {};
-		int[] employeeChartBadgeCount = {};
+		String[] employeeChartBatchName = {};
+		int[] employeeChartBatchCount = {};
 		//引数取得
 		String employeeId = request.getParameter("employeeId");
-
+		DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+		Calendar cal = Calendar.getInstance();
+		Date nowDate = new Date();
+		cal.setTime(nowDate);
+		cal.add(Calendar.MONTH, -1);
+		String monthDate = df.format(cal.getTime());
+		cal.setTime(nowDate);
+		cal.add(Calendar.YEAR, -1);
+		String yearDate = df.format(cal.getTime());
 		//DBコネクション取得
 		SampleDao dao = new SampleDao();
 
 		//情報取得処理
 		employeePageReturn = (ArrayList<EmployeePageBean>)dao.getEmployeeDetail(employeeId);
-		employeeBadgeReturn = (ArrayList<EmployeeBadgeBean>)dao.getEmployeeDetailOfBadge(employeeId);
+		employeeBatchReturn = (ArrayList<EmployeeBatchBean>)dao.getEmployeeDetailOfBatch(employeeId);
 		employeeGenreReturn = (ArrayList<EmployeeGenreBean>)dao.getEmployeeDetailOfGenre(employeeId);
 		employeePlanReturn = (ArrayList<EmployeePlanBean>)dao.getEmployeeDetailOfPlan(employeeId);
 		employeePlanCommentReturn = (ArrayList<EmployeePlanCommentBean>)dao.getEmployeeDetailOfPlanComment(employeeId);
 		employeeHomeLogReturn = (ArrayList<EmployeeHomeLogBean>)dao.getEmployeeDetailOfHomeLog(employeeId);
+		employeeBatchMonthReturn = (ArrayList<EmployeeBatchBean>)dao.getEmployeeDetailOfBatchInLimited(employeeId,monthDate);
+		employeeBatchYearReturn = (ArrayList<EmployeeBatchBean>)dao.getEmployeeDetailOfBatchInLimited(employeeId,yearDate);
 		//チャート描画用情報取得処理
-		employeeChartBadgeName = (String[])dao.getEmployeeDetailOfBadgeNameForChart(employeeId);
-		employeeChartBadgeCount = (int[])dao.getEmployeeDetailOfBadgeCountForChart(employeeId);
+		employeeChartBatchName = (String[])dao.getEmployeeDetailOfBadgeNameForChart(employeeId);
+		employeeChartBatchCount = (int[])dao.getEmployeeDetailOfBadgeCountForChart(employeeId);
 		dao.close();
 
 		//出力ページ用の引数をsetAtribute
 		request.setAttribute("employeeDetail", employeePageReturn);
 		request.setAttribute("employeeGenreDetail",employeeGenreReturn);
-		request.setAttribute("employeeBadgeDetail", employeeBadgeReturn);
+		request.setAttribute("employeeBadgeDetail", employeeBatchReturn);
 		request.setAttribute("employeePlanDetail", employeePlanReturn);
 		request.setAttribute("employeePlanCommentDetail", employeePlanCommentReturn);
 		request.setAttribute("employeeHomeLogDetail",employeeHomeLogReturn);
 		request.setAttribute("sessionId", (String)sessionController.getUserId());
+		request.setAttribute("employeeBadgeMonth", employeeBatchMonthReturn);
+		request.setAttribute("employeeBadgeYear", employeeBatchYearReturn);
 		//チャート用の引数をsetAttribute
-		request.setAttribute("chartName", employeeChartBadgeName);
-		request.setAttribute("chartCount", employeeChartBadgeCount);
+		request.setAttribute("chartName", employeeChartBatchName);
+		request.setAttribute("chartCount", employeeChartBatchCount);
 		//参照ファイルパスの指定
 		return "/Employee/EmployeePage.jsp";
 	}
