@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page import="java.util.*" %>
+<%@page import="java.text.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -39,6 +41,11 @@
 		document.getElementById(tabName).style.display = state;
 	}
 </script>
+	<%
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("S");
+		String milliSec =  sdf.format(date);
+	%>
 </head>
 <body>
 	<div class="contents">
@@ -76,8 +83,8 @@
 							</c:forEach>
 						</div>
 					</div>
-					<input type="submit" name="submit" value="検索" class="genreButton">
 				</div>
+					<input type="submit" name="submit" value="検索" class="genreButton">
 			</form>
 		</div>
 		<div class="employeeListPart">
@@ -87,11 +94,20 @@
 					<c:forEach var="employee" items="${employees}" varStatus="status">
 						<td class="employeeColumn">
 							<div class="employeeImage">
-								<a href="./EmployeePage?employeeId=${employee.employeeId}"><img
-									src="../images/employees/${employee.employeeId}.jpg"></a>
+							<c:choose>
+							<c:when test="${sessionId == employee.employeeId}">
+								<a href="./EmployeeMyPage">
+								<img src="../images/employees/${employee.employeeId}.jpg?"></a>
+							</div> <a href="./EmployeeMyPage">${employee.employeeName}</a>
+							</c:when>
+							<c:when test="${sessionId != employee.employeeId }">
+								<a href="./EmployeePage?employeeId=${employee.employeeId}">
+								<img src="../images/employees/${employee.employeeId}.jpg?<%=milliSec %>"></a>
 							</div> <a href="./EmployeePage?employeeId=${employee.employeeId}">${employee.employeeName}</a>
-							<br> ${employee.departmentName} <br> <c:if
-								test="${sessionId != employee.employeeId}">
+							</c:when>
+							</c:choose>
+							<br> ${employee.departmentName} <br>
+							<c:if test="${sessionId != employee.employeeId}">
 								<a class="iframe"
 									href="/HomeSystem/fc/Home?toUser=${employee.employeeId}"><input
 									type="button" value="この人を褒める"></a>
@@ -104,9 +120,9 @@
 							</ul>
 						</td>
 						<c:if test="${status.count%5 ==0}">
-				</tr>
-				<tr>
-					</c:if>
+							</tr>
+							<tr>
+						</c:if>
 					</c:forEach>
 			</table>
 		</div>

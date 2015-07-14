@@ -3,17 +3,15 @@ div.contents{
 	width:900px;
 	margin-top:30px;
 	margin-bottom:30px;
-	background-color: red;
 }
 div.searchPart{
 	width:870px;
-	height:300px;
 	margin-left:15px;
 	margin-right:15px;
 	background-color: #ffcccc;
 }
 h2.searchTitle{
-	width:280px;
+	width:270px;
 	margin-top:5px;
 	margin-left:5px;
 	margin-right:5px;
@@ -23,7 +21,7 @@ h2.searchTitle{
 }
 div.departmentSearch{
 	float:left;
-	width:225px;
+	width:215px;
 	height:50px;
 	margin-top:5px;
 	margin-left:5px;
@@ -34,8 +32,8 @@ div.departmentSearch{
 }
 select.departmentSelect{
 	width:200px;
+	margin-top:10px;
 	height:50px;
-	margin:0px;
 	font-size: 100%;
 }
 input.departmentButton{
@@ -46,7 +44,7 @@ input.departmentButton{
 }
 div.genreList{
 	float:left;
-	width:450px;
+	width:440px;
 	margin-top:5px;
 	margin-left: 5px;
 	margin-right: 5px;
@@ -54,6 +52,7 @@ div.genreList{
 }
 h4.genreTitle{
 	font-size:25px;
+	text-align:center;
 }
 h5.bigGenreTitle{
 	text-align: center;
@@ -61,7 +60,7 @@ h5.bigGenreTitle{
 }
 div.bigGenre1{
 	float:left;
-	width:225px;
+	width:200px;
 	margin-top:10px;
 	margin-left:5px;
 	margin-right:5px;
@@ -69,8 +68,8 @@ div.bigGenre1{
 	font-size:20px;
 }
 div.bigGenre2{
-	float:left;
-	width:225px;
+	float:right;
+	width:200px;
 	margin-top:10px;
 	margin-left:5px;
 	margin-left:5px;
@@ -80,8 +79,9 @@ div.bigGenre2{
 }
 input.genreButton{
 	float:left;
-	width:225px;
+	width:175px;
 	height:50px;
+	margin-top:10px;
 	margin-left:5px;
 	margin-right:5px;
 	font-size:40px;

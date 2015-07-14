@@ -8,7 +8,15 @@ public class EmployeePlanCommentBean implements Serializable{
 	private String planName;
 	private String plannerName;
 	private Date days;
+	private String planId;
 
+
+	public String getPlanId() {
+		return planId;
+	}
+	public void setPlanId(String planId) {
+		this.planId = planId;
+	}
 	public String getPlanName() {
 		return planName;
 	}
