@@ -25,7 +25,11 @@
 			>
 			<input type="submit" name="submmit" value="検索">
 		</form>
+		
+		
+		
 <%
+	// 顧客リストの生成
 	if(list != null) {
 		if(list.size() != 0) {
 			out.println("<table border='1'>" + "<tr><th>企業名</th>"
