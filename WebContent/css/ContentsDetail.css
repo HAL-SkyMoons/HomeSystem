@@ -1,0 +1,315 @@
+@CHARSET "UTF-8";
+
+#title {
+	width: 99%;
+	text-align: center;
+}
+
+#titleValue {
+	font-size: 20px;
+	padding:0.5em;
+	text-align: left;
+	word-break: break-all;
+	word-wrap: break-word;
+	display: inline-block;
+}
+
+#planDate {
+	float: right;
+}
+
+#contentsDetail {
+	overflow: hidden;
+}
+
+#startEnd {
+	float: left;
+}
+
+#planner {
+	float: right;
+	text-align: center;
+}
+
+#contentsComment {
+	border: 1px solid black;
+	padding: 1em;
+	width: 99%;
+	max-width: 99%;
+	margin-bottom: 5px;
+	-webkit-border-radius: 10px;
+	/*  height: 50px; */
+}
+
+#comment {
+	/* 	padding: 60px; */
+
+}
+
+#genre {
+	overflow: hidden;
+}
+
+.genres {
+	float: left;
+	margin: 5px;
+}
+
+#file {
+	display: none;
+}
+
+.file {
+	position: relative;
+	width: 80px;
+	margin: 8px;
+	/* 	float: left; */
+	display: inline-block;
+	text-align: center;
+}
+
+.del {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+
+.fileName {
+	width: 80px;
+	font-size: 11px;
+	white-space: pre; /* CSS 2.0 */
+	white-space: pre-wrap; /* CSS 2.1 */
+	white-space: pre-line; /* CSS 3.0 */
+	white-space: -pre-wrap; /* Opera 4-6 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	white-space: -moz-pre-wrap; /* Mozilla */
+	white-space: -hp-pre-wrap; /* HP Printers */
+	word-wrap: break-word;
+	white-space: pre; /* IE 5+ */
+}
+
+#comment {
+	width: 500px;
+	max-width: 500px;
+	margin-bottom: 5px;
+	-webkit-border-radius: 10px;
+	/* 	height: 50px; */
+	padding: 5px 60px;
+}
+
+.fileImage>img {
+	width: 60px;
+	height: 60px;
+}
+
+#fake_input_file {
+	width: auto;
+}
+
+.point {
+	text-align: center;
+	width: 80px;
+}
+
+.commentSubmit {
+	display: block;
+	margin: 0 auto;
+	width: 500px;
+}
+
+.uploadBtn {
+	width: 120px;
+}
+
+.download {
+	margin: 10px auto;
+/* 	width: 100%; */
+	font-size: 10px;
+	padding: 8px;
+	text-align: center;
+}
+
+.edit {
+	display: block;
+	width: 120px;
+	margin: 10px auto;
+}
+
+#upload {
+	margin-top: 20px;
+}
+
+/*コメント*/
+#comments {
+	width: 500px;
+}
+
+.commentData {
+	width: 500px;
+	overflow: hidden;
+}
+
+.plannerComment {
+	width: 400px;
+	float: left;
+	border: 1px solid black;
+	-webkit-border-radius: 10px;
+	padding: 10px;
+}
+
+.gestComment {
+	width: 400px;
+	float: right;
+	border: 1px solid black;
+	-webkit-border-radius: 10px;
+	padding: 10px;
+}
+
+#planner {
+	float: right;
+}
+
+.planner {
+	float: right;
+}
+
+#img {
+	width: 100px;
+	height: 100px;
+}
+
+#img>img {
+	max-width: 100px;
+	max-height: 100px;
+}
+
+.gest {
+	float: left;
+}
+
+.face>img {
+	max-width: 80px;
+	max-height: 80px;
+}
+
+.name {
+	text-align: center;
+}
+
+.home {
+	text-align: center;
+}
+
+.home>a>input {
+	width: 80px;
+}
+
+.commnetHeader {
+	width: 400px;
+}
+
+.commentNo {
+	text-align: left;
+}
+
+.commentData {
+	margin: 10px 0px;
+}
+
+.commentBody {
+	text-align: left;
+}
+
+.commentDate {
+	text-align: right;
+}
+
+.commentFooter {
+	width: 380px;
+	margin: 0 auto;
+}
+
+.commentFile {
+	/* 	width: 80px; */
+	/* 	display: inline-block; */
+	/* 	text-align: center; */
+
+}
+
+.commentFile>.file {
+	/*     float: left; */
+	width: 74px;
+}
+
+.commentDelete {
+	font-size: 12px;
+	float: right;
+}
+
+.commentDel {
+	width: 15px;
+	height: 15px;
+}
+
+/*******************************
+* 右からの吹き出し
+********************************/
+.plannerComment {
+	position: relative;
+	max-width: 400px;
+}
+
+.plannerComment:after, .plannerComment:before {
+	left: 100%;
+	top: 30px;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.plannerComment:after {
+	border-left-color: #fff;
+	border-width: 7px;
+	margin-top: -7px;
+}
+
+.plannerComment:before {
+	border-left-color: #000;
+	border-width: 8px;
+	margin-top: -8px;
+}
+
+/*******************************
+* 左からの吹き出し
+********************************/
+.gestComment {
+	position: relative;
+}
+
+.gestComment:after, .gestComment:before {
+	right: 100%;
+	top: 30px;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.gestComment:after {
+	border-color: rgba(255, 255, 255, 0);
+	border-right-color: #fff;
+	border-width: 7px;
+	margin-top: -7px;
+}
+
+.gestComment:before {
+	border-color: rgba(0, 0, 0, 0);
+	border-right-color: #000;
+	border-width: 8px;
+	margin-top: -8px;
+}
