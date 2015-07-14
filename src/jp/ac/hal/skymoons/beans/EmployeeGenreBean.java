@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class EmployeeGenreBean implements Serializable{
 	private String genreName;
 	private int genreCount;
+	private String bigGenreId;
 
 	public String getGenreName() {
 		return genreName;
@@ -18,4 +19,11 @@ public class EmployeeGenreBean implements Serializable{
 	public void setGenreCount(int genreCount) {
 		this.genreCount = genreCount;
 	}
+	public String getBigGenreId() {
+		return bigGenreId;
+	}
+	public void setBigGenreId(String bigGenreId) {
+		this.bigGenreId = bigGenreId;
+	}
+
 }
