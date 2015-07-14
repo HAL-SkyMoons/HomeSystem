@@ -1,7 +1,6 @@
 package jp.ac.hal.skymoons.models;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,14 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.util.*;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-
 import org.apache.commons.fileupload.*;
 import org.apache.commons.fileupload.disk.*;
 import org.apache.commons.fileupload.servlet.*;
-
-import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
 
 import jp.ac.hal.skymoons.beans.CommentBean;
 import jp.ac.hal.skymoons.beans.FileBean;
@@ -330,6 +324,7 @@ public class PlanDetail extends AbstractModel {
 	    dao.close();
 
 	    return "/pages/PlanDetail.jsp";
+
 	} else if (sessionController.checkUserSession() != null) {
 	    return sessionController.checkUserSession();
 	}

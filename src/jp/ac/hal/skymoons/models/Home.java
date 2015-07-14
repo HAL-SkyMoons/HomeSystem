@@ -1,13 +1,11 @@
 package jp.ac.hal.skymoons.models;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import jp.ac.hal.skymoons.beans.BatchBean;
-import jp.ac.hal.skymoons.beans.GenreBean;
 import jp.ac.hal.skymoons.beans.HomeBean;
 import jp.ac.hal.skymoons.beans.UserBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
@@ -79,6 +77,7 @@ public class Home extends AbstractModel {
 
 				if (sessionController.checkUserSession() != null) {
 					System.out.println("Sessionなし");
+					return sessionController.checkUserSession();
 				}
 
 				return "/pages/error.html";
