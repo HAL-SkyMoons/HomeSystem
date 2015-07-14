@@ -63,7 +63,7 @@ public class ContentsEditDao {
 			
 			//日付の取得
 			Date startDatetime = contentsResult.getDate("start_datetime");
-			editBean.setStartDatetime(new SimpleDateFormat("yyyy年MM月dd日hh時MM分").format(startDatetime));
+			editBean.setStartDatetime(new SimpleDateFormat("yyyy年MM月dd日 hh時MM分").format(startDatetime));
 			editBean.setStartYear(new SimpleDateFormat("yyyy").format(startDatetime));
 			editBean.setStartMonth(new SimpleDateFormat("MM").format(startDatetime));
 			editBean.setStartDay(new SimpleDateFormat("dd").format(startDatetime));
@@ -75,7 +75,7 @@ public class ContentsEditDao {
 			if(contentsResult.getDate("end_datetime") == null){
 				endDatetime = (Date)new java.util.Date();
 			}
-			editBean.setEndDatetime(new SimpleDateFormat("yyyy年MM月dd日").format(endDatetime));
+			editBean.setEndDatetime(new SimpleDateFormat("yyyy年MM月dd日 hh時MM分").format(endDatetime));
 			editBean.setEndYear(new SimpleDateFormat("yyyy").format(endDatetime));
 			editBean.setEndMonth(new SimpleDateFormat("MM").format(endDatetime));
 			editBean.setEndDay(new SimpleDateFormat("dd").format(endDatetime));
@@ -144,7 +144,7 @@ public class ContentsEditDao {
 				ResultSet planDatetimeResult = planDatetimePst.executeQuery();
 				if(planDatetimeResult.next()){
 					if(planDatetimeResult.getDate("plan_datetime") != null){
-						editBean.setPlanDatetime(new SimpleDateFormat("yyyy年MM月dd日hh時MM分").format(planDatetimeResult.getDate("plan_datetime")));
+						editBean.setPlanDatetime(new SimpleDateFormat("yyyy年MM月dd日 hh時MM分").format(planDatetimeResult.getDate("plan_datetime")));
 					}
 				}
 				planDatetimePst.close();

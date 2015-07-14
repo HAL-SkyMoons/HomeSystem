@@ -40,6 +40,12 @@
 		<c:set var="i" value="${detailList}"/>
 		<div id="wrapper">
 			<div id="contents">
+				<c:if test="${i.endDatetime == '未完了' && i.employeeId == i.userId}" >
+					<form action="./edit" method="post">
+						<input type="hidden" name="homeContentId" value="${i.homeContentId}"/>
+						<input type="submit" value="編集" class="btn btn-2 btn-2c edit"/>
+					</form>
+				</c:if>
 				<div id="contentsHeader">
 					<div id="id">
 						No.${i.homeContentId}
@@ -49,17 +55,17 @@
 					</div>
 				</div>
 				<div id="title">
-					${i.homeContentTitle}
+					<span id="titleValue"><c:out value="${i.homeContentTitle}"/></span>
 				</div>
 				<div id="contentsDetail">
 					<div id="startEnd">
 						実施期間：<br>
-						${i.startDatetime}～${i.endDatetime}
+						${i.startDatetime}&nbsp;&nbsp;&sim;&nbsp;&nbsp;${i.endDatetime}
 					</div>
 					<div id="planner">
-						企画者
+						投稿者
 						<div id="img">
-							<img src="../../images/employees/${i.employeeId}.jpg" width="100" height="100">
+							<img src="../../images/employees/${i.employeeId}.jpg" alt="投稿者">
 						</div>
 						${i.lastName}${i.firstName}<br/>
 						<c:if test="${i.employeeId != i.userId}">
@@ -68,7 +74,7 @@
 					</div>
 				</div>
 				<div id="contentsComment">
-					${i.homeContentComment}
+					<c:out value="${i.homeContentComment}"/>
 				</div>
 				<div id="genre">
 					登録ジャンル<br>
@@ -78,38 +84,27 @@
 						<c:set var="cnt" value="${cnt + 1}"/>
 					</c:forEach>
 				</div>
-				<c:if test="${i.endDatetime == null && i.employeeId == i.userId}" >
-					<form action="./edit" method="post">
-						<input type="hidden" name="homeContentId" value="${i.homeContentId}"/>
-						<input type="submit" value="編集" class="btn btn-2 btn-2c edit"/>
-					</form>
-				</c:if>
-	
-	
 	
 				<hr>
-				<h3>添付ファイル</h3>
-				<div id="files">
-					<c:forEach items="${dataList}" var="j">
-						<div class="file">
-							<div vlass="fileImage">
-								<img src="${j.fileImagePath}" width="50" height="50">
+				<c:if test="${dataList != null}">
+					<h3>添付ファイル</h3>
+					<div id="files">
+						<c:forEach items="${dataList}" var="j">
+							<div class="file">
+								<div vlass="fileImage">
+									<img src="${j.fileImagePath}" width="50" height="50">
+								</div>
+								<div class="fileName">${j.homeDataName}</div>
+								<form action="/HomeSystem/fc/contents/detail" method="post">
+									<input type="hidden" name="homeContentId" value="${j.homeContentId}">
+									<input type="hidden" name="path" value="../files/contents/master/${j.homeContentId}/${j.homeDataNo}/${j.homeDataName}" />
+									<input type="hidden" name="fileName" value="${j.homeDataName}"/>
+									<input type="submit" name="download" value="ダウンロード" class="btn btn-2 btn-2c download">
+								</form>
 							</div>
-							<div class="fileName">${j.homeDataName}</div>
-							<form action="/HomeSystem/fc/contents/detail" method="post">
-								<input type="hidden" name="homeContentId" value="${j.homeContentId}">
-								<input type="hidden" name="path" value="../files/contents/master/${j.homeContentId}/${j.homeDataNo}/${j.homeDataName}" />
-								<input type="hidden" name="fileName" value="${j.homeDataName}"/>
-								<input type="submit" name="download" value="ダウンロード" class="btn btn-2 btn-2c download">
-							</form>
-						</div>
-					</c:forEach>
-				</div>
-				<div id="upload">
-				</div>
-				
-				<c:if test="${i.employeeId != i.userId}">
-					<a class="iframe" href="/HomeSystem/fc/Home?toUser=${i.employeeId}&contentsId=${i.homeContentId}" ><input type="button" value="ホメる" class="btn btn-2 btn-2c"></a>
+						</c:forEach>
+					</div>
+					<hr>
 				</c:if>
 				
 				<div class="commentData">
@@ -146,7 +141,6 @@
 					</c:forEach>
 				</div>
 			</div>
-		<hr>
 		</div>
 	</body>
 </html>

@@ -68,10 +68,10 @@ public class ContentsDetailDao {
 			detailBean.setHomeContentTitle(contentsResult.getString("home_content_title"));
 			detailBean.setHomeContentComment(Utility.nlToBR(contentsResult.getString("home_content_comment")));
 			//detailBean.setHomeContentComment(contentsResult.getString("home_content_comment"));
-			detailBean.setStartDatetime(new SimpleDateFormat("yyyy年MM月dd日hh時MM分").format(contentsResult.getDate("start_datetime")));
+			detailBean.setStartDatetime(new SimpleDateFormat("yyyy年MM月dd日 hh時MM分").format(contentsResult.getDate("start_datetime")));
 			detailBean.setEmployeeId(contentsResult.getString("employee_id"));
 			if(contentsResult.getDate("end_datetime") != null){
-				detailBean.setEndDatetime(new SimpleDateFormat("yyyy年MM月dd日hh時MM分").format(contentsResult.getDate("end_datetime")));
+				detailBean.setEndDatetime(new SimpleDateFormat("yyyy年MM月dd日 hh時MM分").format(contentsResult.getDate("end_datetime")));
 			}else{
 				detailBean.setEndDatetime("未完了");
 			}
@@ -139,7 +139,7 @@ public class ContentsDetailDao {
 				ResultSet planDatetimeResult = planDatetimePst.executeQuery();
 				if(planDatetimeResult.next()){
 					if(planDatetimeResult.getDate("plan_datetime") != null){
-						detailBean.setPlanDatetime(new SimpleDateFormat("yyyy年MM月dd日hh時MM分").format(planDatetimeResult.getDate("plan_datetime")));
+						detailBean.setPlanDatetime(new SimpleDateFormat("yyyy年MM月dd日 hh時MM分").format(planDatetimeResult.getDate("plan_datetime")));
 					}
 				}
 				planDatetimePst.close();
@@ -182,7 +182,7 @@ public class ContentsDetailDao {
 			homeLogBean.setHomeUser(homeLogResult.getString("home_user"));
 			homeLogBean.setHomeUserFirstName(homeLogResult.getString("u2.first_name"));
 			homeLogBean.setHomeUserLastName(homeLogResult.getString("u2.last_name"));
-			homeLogBean.setHomeDatetime(homeLogResult.getString("home_datetime"));
+			homeLogBean.setHomeDatetime(new SimpleDateFormat("yyyy年MM月dd日 hh時MM分").format(homeLogResult.getDate("home_datetime")));
 			homeLogBean.setBatchId(homeLogResult.getInt("batch_id"));
 			homeLogBean.setBatchName(homeLogResult.getString("batch_name"));
 			homeLogBean.setBatchComment(homeLogResult.getString("batch_comment"));
@@ -211,7 +211,11 @@ public class ContentsDetailDao {
 			homeDataList.add(homeDataBean);
 		}
 		homeDataPst.close();
-		return homeDataList;
+		if(homeDataList.size() > 0){
+			return homeDataList;
+		}else{
+			return null;
+		}
 	}
 	
 	/**

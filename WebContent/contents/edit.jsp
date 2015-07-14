@@ -168,9 +168,9 @@ $(document).ready(function() {
 							<input type="checkbox" name="addEndDatetime" value="true"/>終了日を登録する
 						</div>
 						<div id="planner">
-							企画者
+							投稿者
 							<div id="img">
-								<img src="../../images/employees/${i.employeeId}.jpg" width="100" height="100">
+								<img src="../../images/employees/${i.employeeId}.jpg" alt="投稿者">
 							</div>
 							${i.lastName}&nbsp;${i.firstName}
 						</div>
@@ -229,20 +229,24 @@ $(document).ready(function() {
 							<input type="hidden" name="fileName" value="${j.homeDataName}"/>
 							<input type="submit" name="download" value="ダウンロード" class="btn btn-2 btn-2c download"/>
 						</form>
-						<form action="/HomeSystem/fc/contents/edit" method="post">
-							<input type="image" src="../../images/icon/del.png" width="15" name="fileDelete" value="削除"/>
-							<input type="hidden" name="homeContentId" value="${j.homeContentId}"/>
-							<input type="hidden" name="homeDataNo" value="${j.homeDataNo}"/>
-							<input type="hidden" name="fileName" value="${j.homeDataName}"/>
-							<input type="hidden" name="fileDelete" value="削除" class="btn btn-2 btn-2c"/>
-						</form>
+						<div class="del">
+							<form action="/HomeSystem/fc/contents/edit" method="post">
+								<input type="image" src="../../images/icon/del.png" width="15" name="fileDelete" value="削除"/>
+								<input type="hidden" name="homeContentId" value="${j.homeContentId}"/>
+								<input type="hidden" name="homeDataNo" value="${j.homeDataNo}"/>
+								<input type="hidden" name="fileName" value="${j.homeDataName}"/>
+								<input type="hidden" name="fileDelete" value="削除" class="btn btn-2 btn-2c"/>
+							</form>
+						</div>
 					</div>
 				</c:forEach>
 				<div id="upload">
 					<form method="POST" enctype="multipart/form-data" action="/HomeSystem/fc/contents/edit?homeContentId=${i.homeContentId}">
 						<input type="hidden" name="homeContentId" value="${i.homeContentId}" />
-						<input type="file" name="file" />
-						<input type="submit" name="upload" value="送信" class="btn btn-2 btn-2c"/>
+						<input type="file" name="file" id="file" onchange="$('#fake_input_file').text($(this)[0].files[0].name)" />
+						<input type="button" class="btn btn-2 btn-2c uploadBtn" value="ファイル選択" onclick="$('#file').click();" />
+						<span id="fake_input_file"></span> <br>
+						<input type="submit" name="upload" value="送信" class="btn btn-2 btn-2c uploadBtn">
 					</form>
 				</div>
 			</div>

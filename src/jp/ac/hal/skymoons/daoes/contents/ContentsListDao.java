@@ -109,10 +109,10 @@ public class ContentsListDao {
 			    	orderColumn = "hc.home_content_title asc";
 			    	break;
 			    case "nameDesc":
-			    	orderColumn = "u.last_name, u.first_name desc";
+			    	orderColumn = "u.last_name_kana, u.first_name_kana desc";
 			    	break;
 			    case "nameAsc":
-			    	orderColumn = "u.last_name, u.first_name asc";
+			    	orderColumn = "u.last_name_kana, u.first_name_kana asc";
 			    	break;
 			}
 		}
@@ -162,19 +162,19 @@ public class ContentsListDao {
 			listBean.setHomeContentId(homeContentId);
 			listBean.setHomeContentTitle(contentsResult.getString("home_content_title"));
 			listBean.setHomeContentComment(contentsResult.getString("home_content_comment"));
-			listBean.setStartDatetime(new SimpleDateFormat("yyyy年MM月dd日hh時MM分").format(contentsResult.getDate("start_datetime")));
+			listBean.setStartDatetime(new SimpleDateFormat("yyyy年MM月dd日 hh時MM分").format(contentsResult.getDate("start_datetime")));
 			Date endDatetime = contentsResult.getDate("end_datetime");
 			//値が無ければ現在時刻を入れる
 			if(contentsResult.getDate("end_datetime") == null){
 				listBean.setEndDatetime("未完了");
 			}else{
-				listBean.setEndDatetime(new SimpleDateFormat("yyyy年MM月dd日hh時MM分").format(endDatetime));
+				listBean.setEndDatetime(new SimpleDateFormat("yyyy年MM月dd日 hh時MM分").format(endDatetime));
 			}
 			listBean.setEmployeeId(contentsResult.getString("employee_id"));
 			//listBean.setDeleteFlag(contentsResult.getInt("delete_flag"));
 			
 			//名前の取得
-			PreparedStatement namePst = con.prepareStatement("select * from users where user_id = ? ;");
+			PreparedStatement namePst = con.prepareStatement("select * from users where user_id = ?;");
 			namePst.setString(1, contentsResult.getString("employee_id"));
 			ResultSet nameResult = namePst.executeQuery();
 			if(nameResult.next()){

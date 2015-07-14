@@ -165,7 +165,7 @@
 						</div>
 						<div id="planner">投稿者
 							<div id="img">
-								<img src="../../images/employees/${i.employeeId}.jpg">
+								<img src="../../images/employees/${i.employeeId}.jpg" alt="投稿者">
 							</div>
 							${i.lastName}${i.firstName}
 						</div>
@@ -183,7 +183,7 @@
 									<c:forEach var="genre" items="${genreList}" varStatus="status">
 										<c:if test="${genre.bigGenreId == bigGenre.bigGenreId}">
 											<td><label>
-												<input type="checkbox" name="genre" value="${genre.genreId }:${genre.genreName }">${genre.genreName }
+												<input type="checkbox" name="genreId" value="${genre.genreId}">${genre.genreName }
 											</label></td>
 											<c:set var="count" value="${count+1}" />
 										</c:if>
