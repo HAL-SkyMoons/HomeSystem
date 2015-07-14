@@ -5,6 +5,14 @@ body {
 		'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, sans-serif;
 }
 
+header {
+	width: 1000px;
+	margin: 0 auto;
+}
+
+#logo{
+	float:left;
+}
 #logo img {
 	width: 250px;
 }
@@ -80,16 +88,35 @@ body {
 }
 
 /* メニューバー */
+ul{
+	clear:both;
+	width:900px;
+	height:60px;
+	margin:0 auto;
+	background:#e6002d;
+}
+
 li {
 	display: block;;
 	background: #e6002d;
 	float: left;
 	width: 200px;
-	height: 70px;
+	height: 60px;
 	text-align: center;
 	float: left;
 }
 
 li a {
-	display:block
+	color: white;
+	display: block;
+	height: 60px;
+	line-height: 60px;
+}
+
+li a:hover {
+	background: blue;
+}
+
+.space{
+	width:50px;
 }

@@ -33,14 +33,15 @@
 				<input type="submit" class="btn btn-2 btn-2c submit" value="ログアウト">
 			</form>
 		</div>
+		<ul>
+			<li class="space">
+			<li class="menu1"><a href="/HomeSystem/fc/EmployeeList">社員</a></li>
+			<li class="menu2"><a href="/HomeSystem/fc/PlanList">企画</a></li>
+			<li class="menu2"><a href="/HomeSystem/fc/contents/list">ホメホメコンテンツ</a></li>
+			<li class="menu2"><a href="/HomeSystem/fc/ranking/topnum">ランキング</a></li>
+			<li class="space">
+		</ul>
 	</header>
-
-	<ul>
-		<li class="menu1"><a href="/HomeSystem/fc/EmployeeList">社員</a></li>
-		<li class="menu2"><a href="/HomeSystem/fc/PlanList">企画</a></li>
-		<li class="menu2"><a href="/HomeSystem/fc/contents/list">ホメホメコンテンツ</a></li>
-		<li class="menu2"><a href="/HomeSystem/fc/ranking/topnum">ランキング</a></li>
-	</ul>
 </body>
 </html>
 
