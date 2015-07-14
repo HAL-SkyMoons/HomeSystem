@@ -50,11 +50,12 @@ public class ModelSelectorGet {
 		mapping.put("/HomeSystem/fc/contents/edit", new ContentsEditModel());
 
 
+		//
 		mapping.put("/HomeSystem/fc/PlanList", new PlanList());
 		mapping.put("/HomeSystem/fc/PlanRegister", new PlanRegister());
 		mapping.put("/HomeSystem/fc/PlanDetail", new PlanDetail());
 		mapping.put("/HomeSystem/fc/Home", new Home());
-		mapping.put("/HomeSystem/fc/PlanCalendar", new PlanCalendar());
+		mapping.put("/HomeSystem/fc/PlanCalendar", new PlanCalendar());	
 
 		// ログイン認証機能
 		mapping.put("/HomeSystem/fc/login/administrator", new LoginAdministrator());
@@ -67,6 +68,8 @@ public class ModelSelectorGet {
 		mapping.put("/HomeSystem/fc/customer/list", new CreateList());
 		mapping.put("/HomeSystem/fc/customer/add", new CreateAdd());
 		mapping.put("/HomeSystem/fc/customer/insert", new InsertCustomer());
+		// 社員情報管理機能
+		mapping.put("/HomeSystem/fc/staff/list", new jp.ac.hal.skymoons.models.staff.CreateList());
 	}
 
 /**

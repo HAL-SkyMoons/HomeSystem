@@ -24,6 +24,8 @@ public class SessionController {
 	// 社員・顧客ユーザのフォワード用セッションエラーページURL
 	private String administratorUserforwardSessionErrorPageUrl =
 		"/login/a.jsp";
+	// セッションタイム
+	private int sessionTime = 60 * 30; // 30分
 	
 	/**
 	 * セッションを取得し、操作する為の準備を行う。
@@ -31,7 +33,7 @@ public class SessionController {
 	 */
 	public SessionController(HttpServletRequest request) {
 		this.session = request.getSession();
-		this.session.setMaxInactiveInterval(60 * 30);
+		this.session.setMaxInactiveInterval(sessionTime);
 	}
 
 // ==========================================================================================

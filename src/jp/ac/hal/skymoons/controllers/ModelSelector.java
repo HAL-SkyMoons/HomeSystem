@@ -87,6 +87,8 @@ public class ModelSelector {
 		mapping.put("/HomeSystem/fc/customer/detail", new CreateDetail());
 		mapping.put("/HomeSystem/fc/customer/edit", new CreateEdit());
 		mapping.put("/HomeSystem/fc/customer/deletecustomer", new DeleteCustomer());
+		// 社員情報管理機能
+		mapping.put("/HomeSystem/fc/staff/list", new jp.ac.hal.skymoons.models.staff.CreateList());
 	}
 
 /**
