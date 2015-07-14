@@ -177,4 +177,67 @@ public class RankingDAO {
 			return null;
 		}
 	}
+	
+	/**
+	 * 獲得数ランキングリストの取得。<br />
+	 * オプション:バッチ・年・月の絞り込み
+	 * @param whereBatch
+	 * バッチID
+	 * @param whereYear
+	 * 年
+	 * @param whereMonth
+	 * 月
+	 * @return
+	 * 獲得数ランキングリスト
+	 * @throws SQLException
+	 */
+	public List<TopNumRankingBean> getRankingList(String whereBatch, String whereYear, String whereMonth) throws SQLException {
+		String sql	=	"SELECT COUNT(*) AS value, users.last_name || users.first_name AS name, hom.home_target"
+					+	" FROM home_log AS hom"
+					+	" JOIN employees AS emp ON hom.home_target = emp.employee_id"
+					+	" JOIN users ON emp.employee_id = users.user_id";
+		
+		// 条件式の生成
+		String whereSQL = null;
+		if(whereBatch != null) {
+			whereSQL = " hom.batch_id = " + whereBatch;
+		}
+		if(whereYear != null) {
+			if(whereSQL == null) {
+				whereSQL = " DATE_FORMAT(home_datetime, '%Y') = " + whereYear;
+			} else {
+				whereSQL += " AND DATE_FORMAT(home_datetime, '%Y') = " + whereYear;
+			}
+		}
+		if(whereMonth != null) {
+			if(whereSQL == null) {
+				whereSQL = " DATE_FORMAT(home_datetime, '%m') = " + whereMonth;
+			} else {
+				whereSQL += " AND DATE_FORMAT(home_datetime, '%m') = " + whereMonth;
+			}
+		}
+		// 条件式結合
+		if(whereSQL != null) {
+			sql += " WHERE" + whereSQL;
+		}
+		
+		sql	+=	" GROUP BY hom.home_target"
+			+	" ORDER BY value desc";
+				
+		/*System.out.println("SQL:" + sql);*/
+		
+		PreparedStatement statement = con.prepareStatement(sql);
+		ResultSet resultSet = statement.executeQuery();
+		
+		List<TopNumRankingBean> result = new ArrayList<TopNumRankingBean>();
+		
+		while(resultSet.next()) {
+			TopNumRankingBean record = new TopNumRankingBean();
+			record.setValue(resultSet.getLong(1));
+			record.setName(resultSet.getString(2));
+			record.setId(resultSet.getString(3));
+			result.add(record);
+		}
+		return result;
+	}
 }
