@@ -8,7 +8,7 @@
 		response.sendRedirect(url);
 	}
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <script type="text/javascript" src="../../js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="../../js/autosize/autosize.js"></script>
 <script>
@@ -31,8 +31,7 @@ $(document).ready(function() {
 		<link rel="stylesheet" type="text/css" href="../../css/reset.css">
 		<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
-		<link rel="stylesheet" type="text/css" href="../../css/ContentsCommon.css">
-		<link rel="stylesheet" type="text/css" href="../../css/ContentsEdit.css">
+		<link rel="stylesheet" type="text/css" href="../../css/PlanRegister.css">
 		<link rel="stylesheet" type="text/css" href="../../js/Magnific-Popup/magnific-popup.css">
 		<link rel="stylesheet" type="text/css" href="../../js/colorbox/colorbox.css">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -43,15 +42,15 @@ $(document).ready(function() {
 		<div id="wrapper">
 			<form action="update" method="post">
 				<input type="hidden" name="homeContentId" value="${i.homeContentId}">
-				<div id="contents">
-					<div id="contentsHeader">
+				<div id="plan">
+					<div id="planHeader">
 						<div id="id">No.&nbsp;${i.homeContentId}</div>
 						<div id="planDate">企画日時：${i.planDatetime}</div>
 					</div>
 					<div id="title">
 						<textarea id="titleValue" rows="1" name="homeContentTitle" maxlength="100">${i.homeContentTitle}</textarea>
 					</div>
-					<div id="contentsDetail">
+					<div id="planDetail">
 						<div id="startEnd">
 							実施期間：<br/>
 							<select name="startYear">
@@ -108,8 +107,7 @@ $(document).ready(function() {
 									</c:if>
 								</c:forEach>
 							</select>
-							分
-							<div class="centre">&#x7C;</div>
+							分～<br/>
 							<select name="endYear">
 								<c:forEach begin="1950" end="2020" step="1" varStatus="status">
 									<c:if test="${i.endYear == status.index}">
@@ -175,8 +173,9 @@ $(document).ready(function() {
 							${i.lastName}&nbsp;${i.firstName}
 						</div>
 					</div>
-					<div id="contentsComment">
-						<textarea id="contentsCommentValue" rows="1" placeholder="コンテンツ内容" name="homeContentComment">${i.homeContentComment}</textarea>
+					<div id="planComment">
+						コンテンツ内容：<br/>
+						<textarea name="homeContentComment"></textarea>
 					</div>
 					<c:forEach var="bigGenre" items="${bigGenreList}">
 						<span class="trigger">&#9661;${bigGenre.bigGenreName }</span>
@@ -206,7 +205,6 @@ $(document).ready(function() {
 						</div>
 						<br>
 					</c:forEach>
-					<br/>
 					<input type="submit" value="コンテンツを更新する" class="btn btn-2 btn-2c">
 				</div>
 			</form>

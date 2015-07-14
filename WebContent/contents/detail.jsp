@@ -8,7 +8,7 @@
 		response.sendRedirect(url);
 	}
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <c:if test="${scriptMessage != null}" >${scriptMessage}</c:if>
 <html>
 	<script type="text/javascript" src="../../js/autosize/autosize.js"></script>
@@ -29,8 +29,7 @@
 		<link rel="stylesheet" type="text/css" href="../../css/reset.css">
 		<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
-		<link rel="stylesheet" type="text/css" href="../../css/ContentsCommon.css">
-		<link rel="stylesheet" type="text/css" href="../../css/ContentsDetail.css">
+		<link rel="stylesheet" type="text/css" href="../../css/PlanDetail.css">
 		<link rel="stylesheet" type="text/css" href="../../js/Magnific-Popup/magnific-popup.css">
 		<link rel="stylesheet" type="text/css" href="../../js/colorbox/colorbox.css">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -39,8 +38,8 @@
 	<body>
 		<c:set var="i" value="${detailList}"/>
 		<div id="wrapper">
-			<div id="contents">
-				<div id="contentsHeader">
+			<div id="plan">
+				<div id="planHeader">
 					<div id="id">
 						No.${i.homeContentId}
 					</div>
@@ -51,7 +50,7 @@
 				<div id="title">
 					${i.homeContentTitle}
 				</div>
-				<div id="contentsDetail">
+				<div id="planDetail">
 					<div id="startEnd">
 						実施期間：<br>
 						${i.startDatetime}～${i.endDatetime}
@@ -67,7 +66,7 @@
 						</c:if>
 					</div>
 				</div>
-				<div id="contentsComment">
+				<div id="planComment">
 					${i.homeContentComment}
 				</div>
 				<div id="genre">
@@ -113,7 +112,6 @@
 				</c:if>
 				
 				<div class="commentData">
-					<c:set var="homeLogCount" value="1"/>
 					<c:forEach items="${homeLogList}" var="homeLog">
 						<div class="commentData">
 							<c:if test="${i.employeeId == homeLog.homeUser}"><c:set var="fromUser" value="true"/></c:if>
@@ -132,9 +130,9 @@
 							<c:if test="${fromUser}"><div class="plannerComment"></c:if>
 							<c:if test="${!fromUser}"><div class="gestComment"></c:if>
 							<div class="commentHeader">
-								<div class="commentNo">No.${homeLogCount}</div>
+								<div class="commentNo"></div>
 								<div id="comments"></div>
-								<div class="commentBody">${homeLog.homeComment}</div>
+								<div class="commentBody"></div>
 								<div class="commentDate">${homeLog.homeDatetime}</div>
 							</div>
 							<div class="commenFootert">
@@ -142,7 +140,6 @@
 								</div>
 							</div>
 						</div>
-						<c:set var="homeLogCount" value="${homeLogCount + 1}"/>
 					</c:forEach>
 				</div>
 			</div>

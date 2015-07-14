@@ -1,15 +1,9 @@
 package jp.ac.hal.skymoons.daoes;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-
 import javax.naming.NamingException;
 
-import jp.ac.hal.skymoons.beans.ContentsGenreBean;
-import jp.ac.hal.skymoons.beans.ContentsRegistBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
 
 
@@ -36,22 +30,7 @@ public class ContentsRegistDao {
 	public ContentsRegistDao(Connection con){
 		this.con = con;
 	}
-
-	public ContentsRegistBean findEmployee(String userId) throws SQLException{
-		//コンテンツの取得
-		ContentsRegistBean registBean = new ContentsRegistBean();
-		PreparedStatement employeePst = con.prepareStatement("select last_name, first_name from users where user_id = ?");
-		employeePst.setString(1, userId);
-		ResultSet employeeResult = employeePst.executeQuery();
-		registBean.setEmployeeId(userId);
-		if (employeeResult.next()) {
-			registBean.setLastName(employeeResult.getString("last_name"));
-			registBean.setFirstName(employeeResult.getString("first_name"));
-		}
-		employeeResult.close();
-		employeePst.close();
-		return registBean;
-	}
+	
 	/**
 	 * 接続を閉じる
 	 *

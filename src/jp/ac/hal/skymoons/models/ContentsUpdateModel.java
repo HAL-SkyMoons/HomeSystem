@@ -59,10 +59,8 @@ public class ContentsUpdateModel extends AbstractModel{
 			//ジャンル
 			String[] genreArray = request.getParameterValues("genreId");
 			ArrayList<Integer> genreId = new ArrayList<>();
-			if(genreArray != null){
-				for(String genreString : genreArray){
-					genreId.add(Integer.parseInt(genreString));
-				}
+			for(String genreString : genreArray){
+				genreId.add(Integer.parseInt(genreString));
 			}
 			updateBean.setGenreId(genreId);
 	

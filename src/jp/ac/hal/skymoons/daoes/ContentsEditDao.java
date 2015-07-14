@@ -57,8 +57,9 @@ public class ContentsEditDao {
 			}
 			//コンテンツ各種データの取得
 			editBean.setHomeContentId(contentsResult.getInt("home_content_id"));
-			editBean.setHomeContentTitle(Utility.nlToBR(contentsResult.getString("home_content_title")));
-			editBean.setHomeContentComment(Utility.nlToBR(contentsResult.getString("home_content_comment")));
+			editBean.setHomeContentTitle(contentsResult.getString("home_content_title"));
+			//editBean.setHomeContentComment(Utility.nlToBR(contentsResult.getString("home_content_comment")));
+			editBean.setHomeContentComment(contentsResult.getString("home_content_comment"));
 			editBean.setEmployeeId(contentsResult.getString("employee_id"));
 			
 			//日付の取得
