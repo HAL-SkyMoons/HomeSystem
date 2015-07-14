@@ -7,11 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import jp.ac.hal.skymoons.beans.BigGenreBean;
-import jp.ac.hal.skymoons.beans.CommentBean;
 import jp.ac.hal.skymoons.beans.GenreBean;
 import jp.ac.hal.skymoons.beans.PlanBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.SampleDao;
+import jp.ac.hal.skymoons.security.session.SessionController;
 
 public class PlanEdit extends AbstractModel {
 
@@ -19,6 +19,11 @@ public class PlanEdit extends AbstractModel {
     public String doService(HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	// TODO Auto-generated method stub
+
+	SessionController sessionController = new SessionController(request);
+	if (sessionController.checkUserSession() != null) {
+	    return sessionController.checkUserSession();
+	}
 
 	if (request.getParameter("editSubmit") != null) {
 

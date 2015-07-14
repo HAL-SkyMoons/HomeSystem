@@ -324,6 +324,7 @@ public class PlanDetail extends AbstractModel {
 	    dao.close();
 
 	    return "/pages/PlanDetail.jsp";
+
 	} else if (sessionController.checkUserSession() != null) {
 	    return sessionController.checkUserSession();
 	}
