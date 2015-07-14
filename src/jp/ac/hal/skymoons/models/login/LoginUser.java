@@ -18,7 +18,7 @@ public class LoginUser extends AbstractModel {
 	@Override
 	public String doService(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		
+
 		if(request.getParameter("submit") == null) {
 			// ログインボタンが押されていない
 			return "/login/cs.jsp";
@@ -31,7 +31,7 @@ public class LoginUser extends AbstractModel {
 			return "/login/cs.jsp";
 		}
 		// 未入力項目なし
-		
+
 		// DB問合せ
 		LoginDAO loginDAO = null;
 		String class_flag = null;
@@ -47,7 +47,7 @@ public class LoginUser extends AbstractModel {
 		} finally {
 			loginDAO.close();
 		}
-		
+
 		if(class_flag != null) {
 			// 認証成功
 			// セッション開始
@@ -55,7 +55,7 @@ public class LoginUser extends AbstractModel {
 			sessionController.setUserIdAndGroup(
 					request.getParameter("id").toString(),
 					class_flag);
-			return "/login/topcs.jsp";
+			return "/index.jsp";
 		} else {
 			// 認証失敗
 			request.setAttribute("message", "認証に失敗しました。");
