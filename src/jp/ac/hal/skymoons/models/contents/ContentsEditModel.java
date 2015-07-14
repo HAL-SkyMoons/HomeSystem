@@ -1,4 +1,4 @@
-package jp.ac.hal.skymoons.models;
+package jp.ac.hal.skymoons.models.contents;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,13 +14,13 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
-import jp.ac.hal.skymoons.beans.ContentsDataBean;
-import jp.ac.hal.skymoons.beans.ContentsEditBean;
-import jp.ac.hal.skymoons.beans.ContentsGenreBean;
+import jp.ac.hal.skymoons.beans.contents.ContentsDataBean;
+import jp.ac.hal.skymoons.beans.contents.ContentsEditBean;
+import jp.ac.hal.skymoons.beans.contents.ContentsGenreBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
-import jp.ac.hal.skymoons.daoes.ContentsDetailDao;
-import jp.ac.hal.skymoons.daoes.ContentsEditDao;
-import jp.ac.hal.skymoons.daoes.ContentsGenreDao;
+import jp.ac.hal.skymoons.daoes.contents.ContentsDetailDao;
+import jp.ac.hal.skymoons.daoes.contents.ContentsEditDao;
+import jp.ac.hal.skymoons.daoes.contents.ContentsGenreDao;
 import jp.ac.hal.skymoons.util.Utility;
 
 public class ContentsEditModel extends AbstractModel{

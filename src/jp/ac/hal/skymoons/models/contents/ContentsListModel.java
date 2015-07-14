@@ -1,15 +1,15 @@
-package jp.ac.hal.skymoons.models;
+package jp.ac.hal.skymoons.models.contents;
 
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jp.ac.hal.skymoons.beans.ContentsGenreBean;
-import jp.ac.hal.skymoons.beans.ContentsListBean;
+import jp.ac.hal.skymoons.beans.contents.ContentsGenreBean;
+import jp.ac.hal.skymoons.beans.contents.ContentsListBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
-import jp.ac.hal.skymoons.daoes.ContentsGenreDao;
-import jp.ac.hal.skymoons.daoes.ContentsListDao;
+import jp.ac.hal.skymoons.daoes.contents.ContentsGenreDao;
+import jp.ac.hal.skymoons.daoes.contents.ContentsListDao;
 
 public class ContentsListModel extends AbstractModel{
 

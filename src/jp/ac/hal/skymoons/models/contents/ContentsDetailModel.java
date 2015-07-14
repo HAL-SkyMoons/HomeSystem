@@ -1,4 +1,4 @@
-package jp.ac.hal.skymoons.models;
+package jp.ac.hal.skymoons.models.contents;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,13 +14,13 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 import jp.ac.hal.skymoons.beans.CommentBean;
-import jp.ac.hal.skymoons.beans.ContentsDataBean;
-import jp.ac.hal.skymoons.beans.ContentsDetailBean;
-import jp.ac.hal.skymoons.beans.ContentsDetailHomeLogBean;
 import jp.ac.hal.skymoons.beans.FileBean;
+import jp.ac.hal.skymoons.beans.contents.ContentsDataBean;
+import jp.ac.hal.skymoons.beans.contents.ContentsDetailBean;
+import jp.ac.hal.skymoons.beans.contents.ContentsDetailHomeLogBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
-import jp.ac.hal.skymoons.daoes.ContentsDetailDao;
 import jp.ac.hal.skymoons.daoes.SampleDao;
+import jp.ac.hal.skymoons.daoes.contents.ContentsDetailDao;
 import jp.ac.hal.skymoons.security.session.SessionController;
 import jp.ac.hal.skymoons.util.Utility;
 

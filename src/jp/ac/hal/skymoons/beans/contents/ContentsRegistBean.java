@@ -1,14 +1,23 @@
-package jp.ac.hal.skymoons.beans;
+package jp.ac.hal.skymoons.beans.contents;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ContentsAdditionBean implements Serializable {
+
+public class ContentsRegistBean implements Serializable {
 	private int homeContentId;
 	private String homeContentTitle;
 	private String homeContentComment;
-	private String startDatetime;
-	private String endDatetime;
+	private String startYear;
+	private String startMonth;
+	private String startDay;
+	private String startHour;
+	private String startMinute;
+	private String endYear;
+	private String endMonth;
+	private String endDay;
+	private String endHour;
+	private String endMinute;
 	private String employeeId;
 	private String firstName;
 	private String lastName;
@@ -36,17 +45,65 @@ public class ContentsAdditionBean implements Serializable {
 	public void setHomeContentComment(String homeContentComment) {
 		this.homeContentComment = homeContentComment;
 	}
-	public String getStartDatetime() {
-		return startDatetime;
+	public String getStartYear() {
+		return startYear;
 	}
-	public void setStartDatetime(String startDatetime) {
-		this.startDatetime = startDatetime;
+	public void setStartYear(String startYear) {
+		this.startYear = startYear;
 	}
-	public String getEndDatetime() {
-		return endDatetime;
+	public String getStartMonth() {
+		return startMonth;
 	}
-	public void setEndDatetime(String endDatetime) {
-		this.endDatetime = endDatetime;
+	public void setStartMonth(String startMonth) {
+		this.startMonth = startMonth;
+	}
+	public String getStartDay() {
+		return startDay;
+	}
+	public void setStartDay(String startDay) {
+		this.startDay = startDay;
+	}
+	public String getStartHour() {
+		return startHour;
+	}
+	public void setStartHour(String startHour) {
+		this.startHour = startHour;
+	}
+	public String getStartMinute() {
+		return startMinute;
+	}
+	public void setStartMinute(String startMinute) {
+		this.startMinute = startMinute;
+	}
+	public String getEndYear() {
+		return endYear;
+	}
+	public void setEndYear(String endYear) {
+		this.endYear = endYear;
+	}
+	public String getEndMonth() {
+		return endMonth;
+	}
+	public void setEndMonth(String endMonth) {
+		this.endMonth = endMonth;
+	}
+	public String getEndDay() {
+		return endDay;
+	}
+	public void setEndDay(String endDay) {
+		this.endDay = endDay;
+	}
+	public String getEndHour() {
+		return endHour;
+	}
+	public void setEndHour(String endHour) {
+		this.endHour = endHour;
+	}
+	public String getEndMinute() {
+		return endMinute;
+	}
+	public void setEndMinute(String endMinute) {
+		this.endMinute = endMinute;
 	}
 	public String getEmployeeId() {
 		return employeeId;

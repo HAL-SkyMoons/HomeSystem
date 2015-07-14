@@ -1,12 +1,13 @@
-package jp.ac.hal.skymoons.models;
+package jp.ac.hal.skymoons.models.contents;
 
 import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jp.ac.hal.skymoons.beans.ContentsUpdateBean;
+import jp.ac.hal.skymoons.beans.contents.ContentsUpdateBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
-import jp.ac.hal.skymoons.daoes.ContentsUpdateDao;
+import jp.ac.hal.skymoons.daoes.contents.ContentsUpdateDao;
 import jp.ac.hal.skymoons.security.session.SessionController;
 
 public class ContentsUpdateModel extends AbstractModel{

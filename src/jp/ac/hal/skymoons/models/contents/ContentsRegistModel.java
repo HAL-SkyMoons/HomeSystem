@@ -1,4 +1,4 @@
-package jp.ac.hal.skymoons.models;
+package jp.ac.hal.skymoons.models.contents;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -7,11 +7,11 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jp.ac.hal.skymoons.beans.ContentsGenreBean;
-import jp.ac.hal.skymoons.beans.ContentsRegistBean;
+import jp.ac.hal.skymoons.beans.contents.ContentsGenreBean;
+import jp.ac.hal.skymoons.beans.contents.ContentsRegistBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
-import jp.ac.hal.skymoons.daoes.ContentsGenreDao;
-import jp.ac.hal.skymoons.daoes.ContentsRegistDao;
+import jp.ac.hal.skymoons.daoes.contents.ContentsGenreDao;
+import jp.ac.hal.skymoons.daoes.contents.ContentsRegistDao;
 import jp.ac.hal.skymoons.security.session.SessionController;
 
 public class ContentsRegistModel extends AbstractModel{

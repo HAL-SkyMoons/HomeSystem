@@ -1,4 +1,4 @@
-package jp.ac.hal.skymoons.daoes;
+package jp.ac.hal.skymoons.daoes.contents;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +10,7 @@ import java.util.Date;
 
 import javax.naming.NamingException;
 
-import jp.ac.hal.skymoons.beans.ContentsListBean;
+import jp.ac.hal.skymoons.beans.contents.ContentsListBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
 
 

@@ -1,4 +1,4 @@
-package jp.ac.hal.skymoons.models;
+package jp.ac.hal.skymoons.models.contents;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,11 +7,11 @@ import java.util.LinkedHashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jp.ac.hal.skymoons.beans.ContentsEmployeeBean;
-import jp.ac.hal.skymoons.beans.ContentsGenreBean;
+import jp.ac.hal.skymoons.beans.contents.ContentsEmployeeBean;
+import jp.ac.hal.skymoons.beans.contents.ContentsGenreBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
-import jp.ac.hal.skymoons.daoes.ContentsGenreDao;
-import jp.ac.hal.skymoons.daoes.ContentsSearchDao;
+import jp.ac.hal.skymoons.daoes.contents.ContentsGenreDao;
+import jp.ac.hal.skymoons.daoes.contents.ContentsSearchDao;
 
 public class ContentsSearchModel extends AbstractModel{
 

@@ -2,11 +2,6 @@ package jp.ac.hal.skymoons.controllers;
 
 import java.util.HashMap;
 
-import jp.ac.hal.skymoons.models.ContentsDetailModel;
-import jp.ac.hal.skymoons.models.ContentsEditModel;
-import jp.ac.hal.skymoons.models.ContentsListModel;
-import jp.ac.hal.skymoons.models.ContentsRegistModel;
-import jp.ac.hal.skymoons.models.ContentsSearchModel;
 import jp.ac.hal.skymoons.models.EmployeePageModel;
 import jp.ac.hal.skymoons.models.EmployeeSearchModel;
 import jp.ac.hal.skymoons.models.Home;
@@ -15,6 +10,11 @@ import jp.ac.hal.skymoons.models.PlanDetail;
 import jp.ac.hal.skymoons.models.PlanList;
 import jp.ac.hal.skymoons.models.PlanRegister;
 import jp.ac.hal.skymoons.models.TestModel;
+import jp.ac.hal.skymoons.models.contents.ContentsDetailModel;
+import jp.ac.hal.skymoons.models.contents.ContentsEditModel;
+import jp.ac.hal.skymoons.models.contents.ContentsListModel;
+import jp.ac.hal.skymoons.models.contents.ContentsRegistModel;
+import jp.ac.hal.skymoons.models.contents.ContentsSearchModel;
 import jp.ac.hal.skymoons.models.customer.CreateAdd;
 import jp.ac.hal.skymoons.models.customer.CreateList;
 import jp.ac.hal.skymoons.models.customer.InsertCustomer;

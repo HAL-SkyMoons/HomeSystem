@@ -1,13 +1,13 @@
-package jp.ac.hal.skymoons.models;
+package jp.ac.hal.skymoons.models.contents;
 
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jp.ac.hal.skymoons.beans.ContentsAdditionBean;
+import jp.ac.hal.skymoons.beans.contents.ContentsAdditionBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
-import jp.ac.hal.skymoons.daoes.ContentsAdditionDao;
+import jp.ac.hal.skymoons.daoes.contents.ContentsAdditionDao;
 import jp.ac.hal.skymoons.security.session.SessionController;
 
 public class ContentsAdditionModel extends AbstractModel{

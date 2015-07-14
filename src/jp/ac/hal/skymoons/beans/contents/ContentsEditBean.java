@@ -1,18 +1,27 @@
-package jp.ac.hal.skymoons.beans;
+package jp.ac.hal.skymoons.beans.contents;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class ContentsDetailBean implements Serializable {
-	private String userId;
-	private Integer planId;
+public class ContentsEditBean implements Serializable {
 	private int homeContentId;
+	private Integer planId;
 	private String homeContentTitle;
 	private String homeContentComment;
 	private String planDatetime;
 	private String startDatetime;
+	private String startYear;
+	private String startMonth;
+	private String startDay;
+	private String startHour;
+	private String startMinute;
 	private String endDatetime;
+	private String endYear;
+	private String endMonth;
+	private String endDay;
+	private String endHour;
+	private String endMinute;
 	private String employeeId;
 	private String firstName;
 	private String lastName;
@@ -22,24 +31,17 @@ public class ContentsDetailBean implements Serializable {
 	private ArrayList<String> genreName;
 	//private ArrayList<Integer> homeDataNo;
 	//private ArrayList<String> homeDataName;
-	private int deleteFlag;
-	public String getUserId() {
-		return userId;
+	public int getHomeContentId() {
+		return homeContentId;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setHomeContentId(int homeContentId) {
+		this.homeContentId = homeContentId;
 	}
 	public Integer getPlanId() {
 		return planId;
 	}
 	public void setPlanId(Integer planId) {
 		this.planId = planId;
-	}
-	public int getHomeContentId() {
-		return homeContentId;
-	}
-	public void setHomeContentId(int homeContentId) {
-		this.homeContentId = homeContentId;
 	}
 	public String getHomeContentTitle() {
 		return homeContentTitle;
@@ -65,11 +67,71 @@ public class ContentsDetailBean implements Serializable {
 	public void setStartDatetime(String startDatetime) {
 		this.startDatetime = startDatetime;
 	}
+	public String getStartYear() {
+		return startYear;
+	}
+	public void setStartYear(String startYear) {
+		this.startYear = startYear;
+	}
+	public String getStartMonth() {
+		return startMonth;
+	}
+	public void setStartMonth(String startMonth) {
+		this.startMonth = startMonth;
+	}
+	public String getStartDay() {
+		return startDay;
+	}
+	public void setStartDay(String startDay) {
+		this.startDay = startDay;
+	}
+	public String getStartHour() {
+		return startHour;
+	}
+	public void setStartHour(String startHour) {
+		this.startHour = startHour;
+	}
+	public String getStartMinute() {
+		return startMinute;
+	}
+	public void setStartMinute(String startMinute) {
+		this.startMinute = startMinute;
+	}
 	public String getEndDatetime() {
 		return endDatetime;
 	}
 	public void setEndDatetime(String endDatetime) {
 		this.endDatetime = endDatetime;
+	}
+	public String getEndYear() {
+		return endYear;
+	}
+	public void setEndYear(String endYear) {
+		this.endYear = endYear;
+	}
+	public String getEndMonth() {
+		return endMonth;
+	}
+	public void setEndMonth(String endMonth) {
+		this.endMonth = endMonth;
+	}
+	public String getEndDay() {
+		return endDay;
+	}
+	public void setEndDay(String endDay) {
+		this.endDay = endDay;
+	}
+	public String getEndHour() {
+		return endHour;
+	}
+	public void setEndHour(String endHour) {
+		this.endHour = endHour;
+	}
+	public String getEndMinute() {
+		return endMinute;
+	}
+	public void setEndMinute(String endMinute) {
+		this.endMinute = endMinute;
 	}
 	public String getEmployeeId() {
 		return employeeId;
@@ -112,12 +174,6 @@ public class ContentsDetailBean implements Serializable {
 	}
 	public void setGenreName(ArrayList<String> genreName) {
 		this.genreName = genreName;
-	}
-	public int getDeleteFlag() {
-		return deleteFlag;
-	}
-	public void setDeleteFlag(int deleteFlag) {
-		this.deleteFlag = deleteFlag;
 	}
 	
 }

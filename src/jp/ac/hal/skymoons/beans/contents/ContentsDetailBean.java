@@ -1,14 +1,18 @@
-package jp.ac.hal.skymoons.beans;
+package jp.ac.hal.skymoons.beans.contents;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class ContentsSearchBean implements Serializable {
+public class ContentsDetailBean implements Serializable {
+	private String userId;
+	private Integer planId;
 	private int homeContentId;
 	private String homeContentTitle;
 	private String homeContentComment;
+	private String planDatetime;
 	private String startDatetime;
+	private String endDatetime;
 	private String employeeId;
 	private String firstName;
 	private String lastName;
@@ -16,8 +20,21 @@ public class ContentsSearchBean implements Serializable {
 	private ArrayList<String> bigGenreName;
 	private ArrayList<Integer> genreId;
 	private ArrayList<String> genreName;
-	private ArrayList<Integer> homeDataNo;
-	private ArrayList<String> homeDataName;
+	//private ArrayList<Integer> homeDataNo;
+	//private ArrayList<String> homeDataName;
+	private int deleteFlag;
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	public Integer getPlanId() {
+		return planId;
+	}
+	public void setPlanId(Integer planId) {
+		this.planId = planId;
+	}
 	public int getHomeContentId() {
 		return homeContentId;
 	}
@@ -36,11 +53,23 @@ public class ContentsSearchBean implements Serializable {
 	public void setHomeContentComment(String homeContentComment) {
 		this.homeContentComment = homeContentComment;
 	}
+	public String getPlanDatetime() {
+		return planDatetime;
+	}
+	public void setPlanDatetime(String planDatetime) {
+		this.planDatetime = planDatetime;
+	}
 	public String getStartDatetime() {
 		return startDatetime;
 	}
 	public void setStartDatetime(String startDatetime) {
 		this.startDatetime = startDatetime;
+	}
+	public String getEndDatetime() {
+		return endDatetime;
+	}
+	public void setEndDatetime(String endDatetime) {
+		this.endDatetime = endDatetime;
 	}
 	public String getEmployeeId() {
 		return employeeId;
@@ -84,17 +113,11 @@ public class ContentsSearchBean implements Serializable {
 	public void setGenreName(ArrayList<String> genreName) {
 		this.genreName = genreName;
 	}
-	public ArrayList<Integer> getHomeDataNo() {
-		return homeDataNo;
+	public int getDeleteFlag() {
+		return deleteFlag;
 	}
-	public void setHomeDataNo(ArrayList<Integer> homeDataNo) {
-		this.homeDataNo = homeDataNo;
-	}
-	public ArrayList<String> getHomeDataName() {
-		return homeDataName;
-	}
-	public void setHomeDataName(ArrayList<String> homeDataName) {
-		this.homeDataName = homeDataName;
+	public void setDeleteFlag(int deleteFlag) {
+		this.deleteFlag = deleteFlag;
 	}
 	
 }

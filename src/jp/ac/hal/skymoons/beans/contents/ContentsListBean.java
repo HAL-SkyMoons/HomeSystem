@@ -1,23 +1,16 @@
-package jp.ac.hal.skymoons.beans;
+package jp.ac.hal.skymoons.beans.contents;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class ContentsRegistBean implements Serializable {
+public class ContentsListBean implements Serializable {
 	private int homeContentId;
+	private Integer planId;
 	private String homeContentTitle;
 	private String homeContentComment;
-	private String startYear;
-	private String startMonth;
-	private String startDay;
-	private String startHour;
-	private String startMinute;
-	private String endYear;
-	private String endMonth;
-	private String endDay;
-	private String endHour;
-	private String endMinute;
+	private String startDatetime;
+	private String endDatetime;
 	private String employeeId;
 	private String firstName;
 	private String lastName;
@@ -27,11 +20,19 @@ public class ContentsRegistBean implements Serializable {
 	private ArrayList<String> genreName;
 	private ArrayList<Integer> homeDataNo;
 	private ArrayList<String> homeDataName;
+	private int homeCount;
+	private int deleteFlag;
 	public int getHomeContentId() {
 		return homeContentId;
 	}
 	public void setHomeContentId(int homeContentId) {
 		this.homeContentId = homeContentId;
+	}
+	public Integer getPlanId() {
+		return planId;
+	}
+	public void setPlanId(Integer planId) {
+		this.planId = planId;
 	}
 	public String getHomeContentTitle() {
 		return homeContentTitle;
@@ -45,65 +46,17 @@ public class ContentsRegistBean implements Serializable {
 	public void setHomeContentComment(String homeContentComment) {
 		this.homeContentComment = homeContentComment;
 	}
-	public String getStartYear() {
-		return startYear;
+	public String getStartDatetime() {
+		return startDatetime;
 	}
-	public void setStartYear(String startYear) {
-		this.startYear = startYear;
+	public void setStartDatetime(String startDatetime) {
+		this.startDatetime = startDatetime;
 	}
-	public String getStartMonth() {
-		return startMonth;
+	public String getEndDatetime() {
+		return endDatetime;
 	}
-	public void setStartMonth(String startMonth) {
-		this.startMonth = startMonth;
-	}
-	public String getStartDay() {
-		return startDay;
-	}
-	public void setStartDay(String startDay) {
-		this.startDay = startDay;
-	}
-	public String getStartHour() {
-		return startHour;
-	}
-	public void setStartHour(String startHour) {
-		this.startHour = startHour;
-	}
-	public String getStartMinute() {
-		return startMinute;
-	}
-	public void setStartMinute(String startMinute) {
-		this.startMinute = startMinute;
-	}
-	public String getEndYear() {
-		return endYear;
-	}
-	public void setEndYear(String endYear) {
-		this.endYear = endYear;
-	}
-	public String getEndMonth() {
-		return endMonth;
-	}
-	public void setEndMonth(String endMonth) {
-		this.endMonth = endMonth;
-	}
-	public String getEndDay() {
-		return endDay;
-	}
-	public void setEndDay(String endDay) {
-		this.endDay = endDay;
-	}
-	public String getEndHour() {
-		return endHour;
-	}
-	public void setEndHour(String endHour) {
-		this.endHour = endHour;
-	}
-	public String getEndMinute() {
-		return endMinute;
-	}
-	public void setEndMinute(String endMinute) {
-		this.endMinute = endMinute;
+	public void setEndDatetime(String endDatetime) {
+		this.endDatetime = endDatetime;
 	}
 	public String getEmployeeId() {
 		return employeeId;
@@ -158,6 +111,18 @@ public class ContentsRegistBean implements Serializable {
 	}
 	public void setHomeDataName(ArrayList<String> homeDataName) {
 		this.homeDataName = homeDataName;
+	}
+	public int getHomeCount() {
+		return homeCount;
+	}
+	public void setHomeCount(int homeCount) {
+		this.homeCount = homeCount;
+	}
+	public int getDeleteFlag() {
+		return deleteFlag;
+	}
+	public void setDeleteFlag(int deleteFlag) {
+		this.deleteFlag = deleteFlag;
 	}
 	
 }

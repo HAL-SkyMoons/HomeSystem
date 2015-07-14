@@ -1,12 +1,13 @@
-package jp.ac.hal.skymoons.daoes;
+package jp.ac.hal.skymoons.daoes.contents;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import javax.naming.NamingException;
 
-import jp.ac.hal.skymoons.beans.ContentsAdditionBean;
+import jp.ac.hal.skymoons.beans.contents.ContentsAdditionBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
 
 

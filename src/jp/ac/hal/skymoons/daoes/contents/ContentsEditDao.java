@@ -1,4 +1,4 @@
-package jp.ac.hal.skymoons.daoes;
+package jp.ac.hal.skymoons.daoes.contents;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,18 +6,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.naming.NamingException;
 
-import jp.ac.hal.skymoons.beans.ContentsDataBean;
-import jp.ac.hal.skymoons.beans.ContentsDetailBean;
-import jp.ac.hal.skymoons.beans.ContentsDetailHomeLogBean;
-import jp.ac.hal.skymoons.beans.FileBean;
+import jp.ac.hal.skymoons.beans.contents.ContentsDataBean;
+import jp.ac.hal.skymoons.beans.contents.ContentsEditBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
 import jp.ac.hal.skymoons.util.Utility;
 
 
-public class ContentsDetailDao {
+public class ContentsEditDao {
 
 	/** Connection */
 	private Connection con;
@@ -28,7 +27,7 @@ public class ContentsDetailDao {
 	 * @throws NamingException
 	 * @throws SQLException
 	 */
-	public ContentsDetailDao() throws NamingException, SQLException {
+	public ContentsEditDao() throws NamingException, SQLException {
 		ConnectionGet get = new ConnectionGet();
 		con = get.getCon();
 		}
@@ -37,53 +36,59 @@ public class ContentsDetailDao {
 	 *コンストラクタ
 	 * @param con
 	 */
-	public ContentsDetailDao(Connection con){
+	public ContentsEditDao(Connection con){
 		this.con = con;
 	}
 
-	/**
-	 * 主キーで検索
-	 *
-	 * @param homeContentId
-	 * @return
-	 * @throws SQLException
-	 * 追記分　Aを追加
-	 */
-	public ContentsDetailBean findDetail(int homeContentId) throws SQLException {
+	public ContentsEditBean findDetail(int homeContentId) throws SQLException {
 		//戻り値のbeanを生成
-		ContentsDetailBean detailBean = new ContentsDetailBean();
+		ContentsEditBean editBean = new ContentsEditBean();
 		//コンテンツの取得
-		PreparedStatement contentsPst = con.prepareStatement("select * from home_contents hc where hc.home_content_id = ? ;");
+		PreparedStatement contentsPst = con.prepareStatement("select * from home_contents where home_contents.home_content_id = ? ;");
 		contentsPst.setInt(1, homeContentId);
 		ResultSet contentsResult = contentsPst.executeQuery();
 		if (contentsResult.next()) {
 			//直接nullが入らない為企画IDをnullかどうか判定する
 			String planId = contentsResult.getString("plan_id");
 			if(planId != null){
-				detailBean.setPlanId(Integer.parseInt(planId));
+				editBean.setPlanId(Integer.parseInt(planId));
 			}else{
-				detailBean.setPlanId(null);
+				editBean.setPlanId(null);
 			}
-			detailBean.setHomeContentId(contentsResult.getInt("home_content_id"));
-			detailBean.setHomeContentTitle(contentsResult.getString("home_content_title"));
-			detailBean.setHomeContentComment(Utility.nlToBR(contentsResult.getString("home_content_comment")));
-			//detailBean.setHomeContentComment(contentsResult.getString("home_content_comment"));
-			detailBean.setStartDatetime(new SimpleDateFormat("yyyy年MM月dd日hh時MM分").format(contentsResult.getDate("start_datetime")));
-			detailBean.setEmployeeId(contentsResult.getString("employee_id"));
-			if(contentsResult.getDate("end_datetime") != null){
-				detailBean.setEndDatetime(new SimpleDateFormat("yyyy年MM月dd日hh時MM分").format(contentsResult.getDate("end_datetime")));
-			}else{
-				detailBean.setEndDatetime("未完了");
+			//コンテンツ各種データの取得
+			editBean.setHomeContentId(contentsResult.getInt("home_content_id"));
+			editBean.setHomeContentTitle(Utility.nlToBR(contentsResult.getString("home_content_title")));
+			editBean.setHomeContentComment(Utility.nlToBR(contentsResult.getString("home_content_comment")));
+			editBean.setEmployeeId(contentsResult.getString("employee_id"));
+			
+			//日付の取得
+			Date startDatetime = contentsResult.getDate("start_datetime");
+			editBean.setStartDatetime(new SimpleDateFormat("yyyy年MM月dd日hh時MM分").format(startDatetime));
+			editBean.setStartYear(new SimpleDateFormat("yyyy").format(startDatetime));
+			editBean.setStartMonth(new SimpleDateFormat("MM").format(startDatetime));
+			editBean.setStartDay(new SimpleDateFormat("dd").format(startDatetime));
+			editBean.setStartHour(new SimpleDateFormat("hh").format(startDatetime));
+			editBean.setStartMinute(new SimpleDateFormat("MM").format(startDatetime));
+			
+			Date endDatetime = contentsResult.getDate("end_datetime");
+			//値が無ければ現在時刻を入れる
+			if(contentsResult.getDate("end_datetime") == null){
+				endDatetime = (Date)new java.util.Date();
 			}
-			detailBean.setDeleteFlag(contentsResult.getInt("delete_flag"));
+			editBean.setEndDatetime(new SimpleDateFormat("yyyy年MM月dd日").format(endDatetime));
+			editBean.setEndYear(new SimpleDateFormat("yyyy").format(endDatetime));
+			editBean.setEndMonth(new SimpleDateFormat("MM").format(endDatetime));
+			editBean.setEndDay(new SimpleDateFormat("dd").format(endDatetime));
+			editBean.setEndHour(new SimpleDateFormat("hh").format(endDatetime));
+			editBean.setEndMinute(new SimpleDateFormat("MM").format(endDatetime));
 			
 			//名前の取得
 			PreparedStatement namePst = con.prepareStatement("select * from users where user_id = ? ;");
 			namePst.setString(1, contentsResult.getString("employee_id"));
 			ResultSet nameResult = namePst.executeQuery();
 			if(nameResult.next()){
-				detailBean.setFirstName(nameResult.getString("first_name"));
-				detailBean.setLastName(nameResult.getString("last_name"));
+				editBean.setFirstName(nameResult.getString("first_name"));
+				editBean.setLastName(nameResult.getString("last_name"));
 			}else{
 				//取得失敗時の処理
 			}
@@ -106,8 +111,8 @@ public class ContentsDetailDao {
 				genreName.add(genreResult.getString("genre_name"));
 			}
 			
-			detailBean.setGenreId(genreId);
-			detailBean.setGenreName(genreName);
+			editBean.setGenreId(genreId);
+			editBean.setGenreName(genreName);
 			genrePst.close();
 
 			//大ジャンルの取得			
@@ -126,20 +131,20 @@ public class ContentsDetailDao {
 				bigGenreId.add(bigGenreResult.getInt("big_genre_id"));
 				bigGenreName.add(bigGenreResult.getString("big_genre_name"));
 			}
-			detailBean.setBigGenreId(bigGenreId);
-			detailBean.setBigGenreName(bigGenreName);
+			editBean.setBigGenreId(bigGenreId);
+			editBean.setBigGenreName(bigGenreName);
 			bigGenrePst.close();
 
 			//企画日の取得
-			detailBean.setPlanDatetime("関連企画無し");
-			if(detailBean.getPlanId() != null){
+			editBean.setPlanDatetime("関連企画無し");
+			if(editBean.getPlanId() != null){
 				PreparedStatement planDatetimePst = con.prepareStatement(
 						"select plan_datetime from plan where plan_id = ?;");
-				planDatetimePst.setInt(1, detailBean.getPlanId());
+				planDatetimePst.setInt(1, editBean.getPlanId());
 				ResultSet planDatetimeResult = planDatetimePst.executeQuery();
 				if(planDatetimeResult.next()){
 					if(planDatetimeResult.getDate("plan_datetime") != null){
-						detailBean.setPlanDatetime(new SimpleDateFormat("yyyy年MM月dd日hh時MM分").format(planDatetimeResult.getDate("plan_datetime")));
+						editBean.setPlanDatetime(new SimpleDateFormat("yyyy年MM月dd日hh時MM分").format(planDatetimeResult.getDate("plan_datetime")));
 					}
 				}
 				planDatetimePst.close();
@@ -155,8 +160,8 @@ public class ContentsDetailDao {
 				homeDataNo.add(dataResult.getInt("home_data_no"));
 				homeDataName.add(dataResult.getString("home_data_name"));
 			}
-			detailBean.setHomeDataNo(homeDataNo);
-			detailBean.setHomeDataName(homeDataName);
+			editBean.setHomeDataNo(homeDataNo);
+			editBean.setHomeDataName(homeDataName);
 			dataPst.close();
 			*/
 			
@@ -164,36 +169,9 @@ public class ContentsDetailDao {
 			//取得失敗処理をここに記述
 		}
 		contentsPst.close();
-		return detailBean;
+		return editBean;
 	}
-	public ArrayList<ContentsDetailHomeLogBean> findHomeLog(int homeContentId) throws SQLException {
-		//戻り値のListを生成
-		ArrayList<ContentsDetailHomeLogBean> homeLogList = new ArrayList<>();
-		//コンテンツの取得
-		PreparedStatement homeLogPst = con.prepareStatement("select * from home_log hl, batch b, users u1, users u2 where hl.home_content_id = ? and hl.home_target = u1.user_id and hl.home_user = u2.user_id and hl.batch_id = b.batch_id");
-		homeLogPst.setInt(1, homeContentId);
-		ResultSet homeLogResult = homeLogPst.executeQuery();
-		while(homeLogResult.next()){
-			ContentsDetailHomeLogBean homeLogBean = new ContentsDetailHomeLogBean();
-			homeLogBean.setHomeContentId(homeContentId);
-			homeLogBean.setHomeTarget(homeLogResult.getString("home_target"));
-			homeLogBean.setHomeTargetFirstName(homeLogResult.getString("u1.first_name"));
-			homeLogBean.setHomeTargetLastName(homeLogResult.getString("u1.last_name"));
-			homeLogBean.setHomeUser(homeLogResult.getString("home_user"));
-			homeLogBean.setHomeUserFirstName(homeLogResult.getString("u2.first_name"));
-			homeLogBean.setHomeUserLastName(homeLogResult.getString("u2.last_name"));
-			homeLogBean.setHomeDatetime(homeLogResult.getString("home_datetime"));
-			homeLogBean.setBatchId(homeLogResult.getInt("batch_id"));
-			homeLogBean.setBatchName(homeLogResult.getString("batch_name"));
-			homeLogBean.setBatchComment(homeLogResult.getString("batch_comment"));
-			homeLogBean.setHomePoint(homeLogResult.getInt("home_point"));
-			homeLogBean.setHomeComment(homeLogResult.getString("home_comment"));
-			homeLogList.add(homeLogBean);
-		}
-		homeLogPst.close();
-		return homeLogList;
-	}
-
+	
 	public ArrayList<ContentsDataBean> findData(int homeContentId) throws SQLException {
 		//戻り値のListを生成
 		ArrayList<ContentsDataBean> homeDataList = new ArrayList<>();
@@ -212,6 +190,41 @@ public class ContentsDetailDao {
 		}
 		homeDataPst.close();
 		return homeDataList;
+	}
+	
+	public int homeDataUpload(int homeContentId, String fileName) throws SQLException {
+		// 重複確認
+		int nextFileNo = getHomeDataUploadNo(homeContentId);
+
+		// 新規作成
+		PreparedStatement insertDataPst = con.prepareStatement("insert into home_data (home_content_id,home_data_no,home_data_name) values (?,?,?);");
+		insertDataPst.setInt(1, homeContentId);
+		insertDataPst.setInt(2, nextFileNo);
+		insertDataPst.setString(3, fileName);
+		insertDataPst.executeUpdate();
+		return nextFileNo;
+	}
+	
+	public int getHomeDataUploadNo(int homeContentId) throws SQLException {
+		PreparedStatement dataNoPst = con.prepareStatement("select max(home_data_no) from home_data where home_content_id = ? group by home_content_id;");
+		dataNoPst.setInt(1, homeContentId);
+		ResultSet result = dataNoPst.executeQuery();
+		int ret = 1;
+		if (result.next()) {
+			ret = result.getInt("max(home_data_no)") + 1;
+		}
+		dataNoPst.close();
+		return ret;
+	}
+	
+	
+	public int homeDataDelete(ContentsDataBean dataBean) throws SQLException {
+
+		PreparedStatement deleteDataPst = con
+				.prepareStatement("update home_data set delete_flag = '1' where home_content_id = ? and home_data_no = ?; ");
+		deleteDataPst.setInt(1, dataBean.getHomeContentId());
+		deleteDataPst.setInt(2, dataBean.getHomeDataNo());
+		return deleteDataPst.executeUpdate();
 	}
 	
 	/**
@@ -240,6 +253,5 @@ public class ContentsDetailDao {
 	public void rollback() throws SQLException {
 		con.rollback();
 	}
-
 }
 

@@ -1,10 +1,10 @@
-package jp.ac.hal.skymoons.models;
+package jp.ac.hal.skymoons.models.contents;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import jp.ac.hal.skymoons.controllers.AbstractModel;
-import jp.ac.hal.skymoons.daoes.ContentsDeleteDao;
+import jp.ac.hal.skymoons.daoes.contents.ContentsDeleteDao;
 import jp.ac.hal.skymoons.security.session.SessionController;
 
 public class ContentsDeleteModel extends AbstractModel{

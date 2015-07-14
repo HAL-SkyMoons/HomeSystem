@@ -1,4 +1,4 @@
-package jp.ac.hal.skymoons.beans;
+package jp.ac.hal.skymoons.beans.contents;
 
 import java.io.Serializable;
 import java.util.ArrayList;
