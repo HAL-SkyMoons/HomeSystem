@@ -4,6 +4,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page import="jp.ac.hal.skymoons.beans.EmployeeBatchBean" %>
+<%@page import="java.util.*" %>
+<%@page import="java.text.*" %>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -73,7 +75,11 @@
 
 	});
 </script>
-
+<%
+	Date date = new Date();
+	SimpleDateFormat sdf = new SimpleDateFormat("S");
+	String milliSec =  sdf.format(date);
+%>
 </head>
 <body>
 <%
@@ -91,7 +97,7 @@
 		<div class="employeeStatus">
 				<c:forEach var="employeeDetail" items="${employeeDetail}">
 					<ul class="employeeData">
-						<li class="employeeImage"><img src="../images/employees/${employeeDetail.employeeId}.jpg"></li>
+						<li class="employeeImage"><img src="../images/employees/${employeeDetail.employeeId}.jpg?<%=milliSec %>"></li>
 						<li class="employeeComment">${employeeDetail.employeeComment}</li>
 						<li class="employeeName">${employeeDetail.employeeName}</li>
 						<li class="departmentName">${employeeDetail.departmentName}</li>

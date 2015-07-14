@@ -17,6 +17,8 @@ public class EmployeeSearchModel extends AbstractModel {
 	public String doService(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		// TODO 自動生成されたメソッド・スタブ
+		System.out.println("employee search model in");
+
 		//返り値設定
 		ArrayList<GenreBean> genreReturn = new ArrayList<GenreBean>();
 		ArrayList<DepartmentBean> departmentReturn = new ArrayList<DepartmentBean>();

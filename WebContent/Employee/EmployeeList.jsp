@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page import="java.util.*" %>
+<%@page import="java.text.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -39,6 +41,11 @@
 		document.getElementById(tabName).style.display = state;
 	}
 </script>
+	<%
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("S");
+		String milliSec =  sdf.format(date);
+	%>
 </head>
 <body>
 	<div class="contents">
@@ -90,12 +97,12 @@
 							<c:choose>
 							<c:when test="${sessionId == employee.employeeId}">
 								<a href="./EmployeeMyPage">
-								<img src="../images/employees/${employee.employeeId}.jpg"></a>
+								<img src="../images/employees/${employee.employeeId}.jpg?"></a>
 							</div> <a href="./EmployeeMyPage">${employee.employeeName}</a>
 							</c:when>
 							<c:when test="${sessionId != employee.employeeId }">
 								<a href="./EmployeePage?employeeId=${employee.employeeId}">
-								<img src="../images/employees/${employee.employeeId}.jpg"></a>
+								<img src="../images/employees/${employee.employeeId}.jpg?<%=milliSec %>"></a>
 							</div> <a href="./EmployeePage?employeeId=${employee.employeeId}">${employee.employeeName}</a>
 							</c:when>
 							</c:choose>

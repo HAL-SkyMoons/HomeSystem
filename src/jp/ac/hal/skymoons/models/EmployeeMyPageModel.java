@@ -26,6 +26,7 @@ public class EmployeeMyPageModel extends AbstractModel{
 	@Override
 	public String doService(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
+		System.out.println("employeeMyPageModel in");
 		// TODO 自動生成されたメソッド・スタブ
 		SessionController sessionController = new SessionController(request);
 		//返り値準備

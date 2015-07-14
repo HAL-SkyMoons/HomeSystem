@@ -10,7 +10,7 @@
 	<h1>編集ページ</h1>
 	<form action="/HomeSystem/fc/EmployeeProfileEdit" method="POST" enctype="multipart/form-data">
 		画像ファイル：<input type="file" name="employeeImage" /><br>
-		一言コメント<input type="text" name="comment" /><br>
+		一言コメント<input type="text" name="comment" value="${comment}"/><br>
 		<input type="submit" name="button" value="更新"/>
 	</form>
 </body>
