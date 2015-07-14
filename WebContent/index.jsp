@@ -12,25 +12,35 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" type="text/css" href="./css/reset.css">
-<link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="./css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css" href="/HomeSystem/css/reset.css">
+<link rel="stylesheet" type="text/css" href="/HomeSystem/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="/HomeSystem/css/bootstrap-theme.min.css">
 <link rel="stylesheet" type="text/css" href="/HomeSystem/css/style.css">
 <title>トップ</title>
 </head>
-
 <body>
+	<header>
+		<div id="logo">
+			<a href="/HomeSystem/index.jsp"><img src="/HomeSystem/images/logo.png" /></a>
+		</div>
+		<div id="mypage">
+			<form action="/HomeSystem/fc/EmployeeList">
+				<input type="submit" class="btn btn-2 btn-2c submit" value="マイページ">
+			</form>
+		</div>
+		<div id="logout">
+			<form action="/HomeSystem/fc/logout/user">
+				<input type="submit" class="btn btn-2 btn-2c submit" value="ログアウト">
+			</form>
+		</div>
+	</header>
 
-	<img src="/HomeSystem/images/logo.png" />
-
-	<a href="/HomeSystem/fc/EmployeeList">マイページ</a>
-	<a href="/HomeSystem/fc/logout/user">ログアウト</a>
-
-
-	<a href="/HomeSystem/fc/EmployeeList"">社員一覧</a>
-	<a href="/HomeSystem/fc/PlanList">企画一覧</a>
-	<a href="/HomeSystem/fc/contents/list">ホメホメコンテンツ（過去事例）一覧・検索</a>
-	<a href="/HomeSystem/fc/ranking/topnum">バッジ獲得数ランキング(顧客・社員・管理者)</a>
+	<ul>
+		<li class="menu1"><a href="/HomeSystem/fc/EmployeeList">社員</a></li>
+		<li class="menu2"><a href="/HomeSystem/fc/PlanList">企画</a></li>
+		<li class="menu2"><a href="/HomeSystem/fc/contents/list">ホメホメコンテンツ</a></li>
+		<li class="menu2"><a href="/HomeSystem/fc/ranking/topnum">ランキング</a></li>
+	</ul>
 </body>
 </html>
 
