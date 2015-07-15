@@ -34,6 +34,7 @@ public class CreateRankingList extends AbstractModel {
 		String whereBatch = null;
 		String whereYear = null;
 		String whereMonth = null;
+		// フォーム送信確認
 		if(request.getParameter("submit") != null) {
 			if(request.getParameter("batch").equals("0") == false) {
 				whereBatch = request.getParameter("batch");
@@ -49,25 +50,25 @@ public class CreateRankingList extends AbstractModel {
 			}
 		}
 		
+		// Database
 		RankingDAO rankingDAO = null;
 		try{
 			rankingDAO = new RankingDAO();
 			// バッチリストの取得
 			List<BatchBean> batchList = rankingDAO.getBatchList();
 			// ランキングリストの取得
-			List<TopNumRankingBean> list = rankingDAO.getTopNumRanking2(whereYear, whereMonth);
+			List<TopNumRankingBean> list = rankingDAO.getRankingList(whereBatch, whereYear, whereMonth);
 			// 年リストの取得
 			List<String> year_list = rankingDAO.getYearList();
 			request.setAttribute("batchList", batchList);
 			request.setAttribute("list", list);
-			request.setAttribute("year_list", year_list);
+			request.setAttribute("yearList", year_list);
 		} catch (Exception e){
 			e.printStackTrace();
 			System.out.println("獲得数ランキングリスト作成処理中に問題が発生。");
 		} finally {
 			rankingDAO.close();
 		}
-		
 		
 		return "/ranking/topnum.jsp";
 	}

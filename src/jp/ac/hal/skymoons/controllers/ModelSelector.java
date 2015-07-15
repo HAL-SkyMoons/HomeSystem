@@ -2,14 +2,6 @@ package jp.ac.hal.skymoons.controllers;
 
 import java.util.HashMap;
 
-import jp.ac.hal.skymoons.models.ContentsAdditionModel;
-import jp.ac.hal.skymoons.models.ContentsDeleteModel;
-import jp.ac.hal.skymoons.models.ContentsDetailModel;
-import jp.ac.hal.skymoons.models.ContentsEditModel;
-import jp.ac.hal.skymoons.models.ContentsListModel;
-import jp.ac.hal.skymoons.models.ContentsRegistModel;
-import jp.ac.hal.skymoons.models.ContentsSearchModel;
-import jp.ac.hal.skymoons.models.ContentsUpdateModel;
 import jp.ac.hal.skymoons.models.EmployeeMyPageModel;
 import jp.ac.hal.skymoons.models.EmployeePageModel;
 import jp.ac.hal.skymoons.models.EmployeePlofileEditModel;
@@ -23,6 +15,14 @@ import jp.ac.hal.skymoons.models.PlanList;
 import jp.ac.hal.skymoons.models.PlanRegister;
 import jp.ac.hal.skymoons.models.PlanSearch;
 import jp.ac.hal.skymoons.models.TestModel;
+import jp.ac.hal.skymoons.models.contents.ContentsAdditionModel;
+import jp.ac.hal.skymoons.models.contents.ContentsDeleteModel;
+import jp.ac.hal.skymoons.models.contents.ContentsDetailModel;
+import jp.ac.hal.skymoons.models.contents.ContentsEditModel;
+import jp.ac.hal.skymoons.models.contents.ContentsListModel;
+import jp.ac.hal.skymoons.models.contents.ContentsRegistModel;
+import jp.ac.hal.skymoons.models.contents.ContentsSearchModel;
+import jp.ac.hal.skymoons.models.contents.ContentsUpdateModel;
 import jp.ac.hal.skymoons.models.customer.CreateAdd;
 import jp.ac.hal.skymoons.models.customer.CreateEdit;
 import jp.ac.hal.skymoons.models.customer.CreateList;
@@ -87,6 +87,8 @@ public class ModelSelector {
 		mapping.put("/HomeSystem/fc/customer/detail", new CreateDetail());
 		mapping.put("/HomeSystem/fc/customer/edit", new CreateEdit());
 		mapping.put("/HomeSystem/fc/customer/deletecustomer", new DeleteCustomer());
+		// 社員情報管理機能
+		mapping.put("/HomeSystem/fc/staff/list", new jp.ac.hal.skymoons.models.staff.CreateList());
 	}
 
 /**

@@ -8,7 +8,7 @@
 		response.sendRedirect(url);
 	}
 %>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <script type="text/javascript" src="../../js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="../../js/autosize/autosize.js"></script>
 <script>
@@ -31,7 +31,8 @@ $(document).ready(function() {
 		<link rel="stylesheet" type="text/css" href="../../css/reset.css">
 		<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
-		<link rel="stylesheet" type="text/css" href="../../css/PlanRegister.css">
+		<link rel="stylesheet" type="text/css" href="../../css/ContentsCommon.css">
+		<link rel="stylesheet" type="text/css" href="../../css/ContentsEdit.css">
 		<link rel="stylesheet" type="text/css" href="../../js/Magnific-Popup/magnific-popup.css">
 		<link rel="stylesheet" type="text/css" href="../../js/colorbox/colorbox.css">
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -42,15 +43,15 @@ $(document).ready(function() {
 		<div id="wrapper">
 			<form action="update" method="post">
 				<input type="hidden" name="homeContentId" value="${i.homeContentId}">
-				<div id="plan">
-					<div id="planHeader">
+				<div id="contents">
+					<div id="contentsHeader">
 						<div id="id">No.&nbsp;${i.homeContentId}</div>
 						<div id="planDate">企画日時：${i.planDatetime}</div>
 					</div>
 					<div id="title">
 						<textarea id="titleValue" rows="1" name="homeContentTitle" maxlength="100">${i.homeContentTitle}</textarea>
 					</div>
-					<div id="planDetail">
+					<div id="contentsDetail">
 						<div id="startEnd">
 							実施期間：<br/>
 							<select name="startYear">
@@ -107,7 +108,8 @@ $(document).ready(function() {
 									</c:if>
 								</c:forEach>
 							</select>
-							分～<br/>
+							分
+							<div class="centre">&#x7C;</div>
 							<select name="endYear">
 								<c:forEach begin="1950" end="2020" step="1" varStatus="status">
 									<c:if test="${i.endYear == status.index}">
@@ -166,16 +168,15 @@ $(document).ready(function() {
 							<input type="checkbox" name="addEndDatetime" value="true"/>終了日を登録する
 						</div>
 						<div id="planner">
-							企画者
+							投稿者
 							<div id="img">
-								<img src="../../images/employees/${i.employeeId}.jpg" width="100" height="100">
+								<img src="../../images/employees/${i.employeeId}.jpg" alt="投稿者">
 							</div>
 							${i.lastName}&nbsp;${i.firstName}
 						</div>
 					</div>
-					<div id="planComment">
-						コンテンツ内容：<br/>
-						<textarea name="homeContentComment"></textarea>
+					<div id="contentsComment">
+						<textarea id="contentsCommentValue" rows="1" placeholder="コンテンツ内容" name="homeContentComment">${i.homeContentComment}</textarea>
 					</div>
 					<c:forEach var="bigGenre" items="${bigGenreList}">
 						<span class="trigger">&#9661;${bigGenre.bigGenreName }</span>
@@ -205,6 +206,7 @@ $(document).ready(function() {
 						</div>
 						<br>
 					</c:forEach>
+					<br/>
 					<input type="submit" value="コンテンツを更新する" class="btn btn-2 btn-2c">
 				</div>
 			</form>
@@ -227,20 +229,24 @@ $(document).ready(function() {
 							<input type="hidden" name="fileName" value="${j.homeDataName}"/>
 							<input type="submit" name="download" value="ダウンロード" class="btn btn-2 btn-2c download"/>
 						</form>
-						<form action="/HomeSystem/fc/contents/edit" method="post">
-							<input type="image" src="../../images/icon/del.png" width="15" name="fileDelete" value="削除"/>
-							<input type="hidden" name="homeContentId" value="${j.homeContentId}"/>
-							<input type="hidden" name="homeDataNo" value="${j.homeDataNo}"/>
-							<input type="hidden" name="fileName" value="${j.homeDataName}"/>
-							<input type="hidden" name="fileDelete" value="削除" class="btn btn-2 btn-2c"/>
-						</form>
+						<div class="del">
+							<form action="/HomeSystem/fc/contents/edit" method="post">
+								<input type="image" src="../../images/icon/del.png" width="15" name="fileDelete" value="削除"/>
+								<input type="hidden" name="homeContentId" value="${j.homeContentId}"/>
+								<input type="hidden" name="homeDataNo" value="${j.homeDataNo}"/>
+								<input type="hidden" name="fileName" value="${j.homeDataName}"/>
+								<input type="hidden" name="fileDelete" value="削除" class="btn btn-2 btn-2c"/>
+							</form>
+						</div>
 					</div>
 				</c:forEach>
 				<div id="upload">
 					<form method="POST" enctype="multipart/form-data" action="/HomeSystem/fc/contents/edit?homeContentId=${i.homeContentId}">
 						<input type="hidden" name="homeContentId" value="${i.homeContentId}" />
-						<input type="file" name="file" />
-						<input type="submit" name="upload" value="送信" class="btn btn-2 btn-2c"/>
+						<input type="file" name="file" id="file" onchange="$('#fake_input_file').text($(this)[0].files[0].name)" />
+						<input type="button" class="btn btn-2 btn-2c uploadBtn" value="ファイル選択" onclick="$('#file').click();" />
+						<span id="fake_input_file"></span> <br>
+						<input type="submit" name="upload" value="送信" class="btn btn-2 btn-2c uploadBtn">
 					</form>
 				</div>
 			</div>
