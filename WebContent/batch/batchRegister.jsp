@@ -13,7 +13,7 @@
 	<form action="/HomeSystem/fc/batchRegister" method="post" enctype="multipart/form-data">
 		<label>バッチ名：<input type="text" name="batchName"></label><br>
 		<label>バッチ説明：<textarea name="batchComment"></textarea></label><br>
-		<input type="file" name="image" id="image" accept="image/png" />
+		<input type="file" name="image" id="image" accept="image/*" />
 		<input type="submit" name="batchRegister" value="登録">
 	</form>
 </body>

@@ -82,6 +82,12 @@ public class ModelSelectorGet {
 		//バッチ管理機能
 		mapping.put("/HomeSystem/fc/batch", new jp.ac.hal.skymoons.models.batch.BatchList());
 		mapping.put("/HomeSystem/fc/batchRegister", new jp.ac.hal.skymoons.models.batch.BatchRegister());
+
+		//トロフィー管理機能
+		mapping.put("/HomeSystem/fc/trophy", new jp.ac.hal.skymoons.models.trophy.TrophyList());
+		mapping.put("/HomeSystem/fc/trophyRegister", new jp.ac.hal.skymoons.models.trophy.TrophyRegister());
+		mapping.put("/HomeSystem/fc/trophyDetail", new jp.ac.hal.skymoons.models.trophy.TrophyDetail());
+
 	}
 
 /**
