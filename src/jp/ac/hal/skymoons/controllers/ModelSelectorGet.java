@@ -25,6 +25,7 @@ import jp.ac.hal.skymoons.models.login.LoginUser;
 import jp.ac.hal.skymoons.models.login.LogoutAdministrator;
 import jp.ac.hal.skymoons.models.login.LogoutUser;
 import jp.ac.hal.skymoons.models.ranking.CreateRankingList;
+import jp.ac.hal.skymoons.models.genre.GenreTop;
 
 public class ModelSelectorGet {
 	private static final HashMap<String, AbstractModel> mapping;
@@ -55,7 +56,7 @@ public class ModelSelectorGet {
 		mapping.put("/HomeSystem/fc/PlanRegister", new PlanRegister());
 		mapping.put("/HomeSystem/fc/PlanDetail", new PlanDetail());
 		mapping.put("/HomeSystem/fc/Home", new Home());
-		mapping.put("/HomeSystem/fc/PlanCalendar", new PlanCalendar());	
+		mapping.put("/HomeSystem/fc/PlanCalendar", new PlanCalendar());
 
 		// ログイン認証機能
 		mapping.put("/HomeSystem/fc/login/administrator", new LoginAdministrator());
@@ -70,6 +71,13 @@ public class ModelSelectorGet {
 		mapping.put("/HomeSystem/fc/customer/insert", new InsertCustomer());
 		// 社員情報管理機能
 		mapping.put("/HomeSystem/fc/staff/list", new jp.ac.hal.skymoons.models.staff.CreateList());
+
+		// ジャンル管理機能
+		mapping.put("/HomeSystem/fc/genre", new jp.ac.hal.skymoons.models.genre.GenreTop());
+		mapping.put("/HomeSystem/fc/genreList", new jp.ac.hal.skymoons.models.genre.GenreList());
+		mapping.put("/HomeSystem/fc/genreRegister", new jp.ac.hal.skymoons.models.genre.GenreRegister());
+		mapping.put("/HomeSystem/fc/bigGenreList", new jp.ac.hal.skymoons.models.genre.BigGenreList());
+		mapping.put("/HomeSystem/fc/bigGenreRegister", new jp.ac.hal.skymoons.models.genre.BigGenreRegister());
 	}
 
 /**
