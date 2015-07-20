@@ -24,6 +24,6 @@
 		<a href="/HomeSystem/fc/genre"><p>ジャンル管理</p></a>
 		<a href="/HomeSystem/fc/batch"><p>バッチ管理</p></a>
 		<a href="/HomeSystem/fc/trophy"><p>トロフィー管理</p></a>
-		<a href="/HomeSystem/fc/capacity"><p>社内資格管理</p></a>
+		<a href="/HomeSystem/fc/companyCapacity"><p>社内資格管理</p></a>
 	</body>
 </html>

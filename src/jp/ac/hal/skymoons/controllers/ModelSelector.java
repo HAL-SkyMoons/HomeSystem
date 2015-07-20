@@ -105,6 +105,11 @@ public class ModelSelector {
 		mapping.put("/HomeSystem/fc/trophy", new jp.ac.hal.skymoons.models.trophy.TrophyList());
 		mapping.put("/HomeSystem/fc/trophyRegister", new jp.ac.hal.skymoons.models.trophy.TrophyRegister());
 		mapping.put("/HomeSystem/fc/trophyDetail", new jp.ac.hal.skymoons.models.trophy.TrophyDetail());
+
+		//社内資格管理機能
+		mapping.put("/HomeSystem/fc/companyCapacity", new jp.ac.hal.skymoons.models.companycapacity.CompanyCapacityList());
+		mapping.put("/HomeSystem/fc/companyCapacityRegister", new jp.ac.hal.skymoons.models.companycapacity.CompanyCapacityRegister());
+		mapping.put("/HomeSystem/fc/companyCapacityDetail", new jp.ac.hal.skymoons.models.companycapacity.CompanyCapacityDetail());
 	}
 
 /**
