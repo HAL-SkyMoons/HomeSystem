@@ -78,6 +78,10 @@ public class ModelSelectorGet {
 		mapping.put("/HomeSystem/fc/genreRegister", new jp.ac.hal.skymoons.models.genre.GenreRegister());
 		mapping.put("/HomeSystem/fc/bigGenreList", new jp.ac.hal.skymoons.models.genre.BigGenreList());
 		mapping.put("/HomeSystem/fc/bigGenreRegister", new jp.ac.hal.skymoons.models.genre.BigGenreRegister());
+
+		//バッチ管理機能
+		mapping.put("/HomeSystem/fc/batch", new jp.ac.hal.skymoons.models.batch.BatchList());
+		mapping.put("/HomeSystem/fc/batchRegister", new jp.ac.hal.skymoons.models.batch.BatchRegister());
 	}
 
 /**
