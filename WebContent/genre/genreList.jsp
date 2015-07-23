@@ -9,7 +9,14 @@
 <body>
 	<table>
 		<c:forEach var="genre" items="${genreList}">
-			<tr><td>${genre.genreName}</td></tr>
+			<tr>
+				<td>${genre.genreName}</td>
+				<td>${genre.bigGenreName}</td>
+				<td><form action="/HomeSystem/fc/genreChange" method="post">
+						<input type="submit" name="change" value="編集">
+						<input type="hidden" name="genreId" value="${genre.genreId}">
+					</form></td>
+			</tr>
 		</c:forEach>
 	</table>
 </body>

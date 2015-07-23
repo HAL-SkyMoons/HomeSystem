@@ -67,8 +67,7 @@ public class BatchDao {
 
     public List<BatchBean> getBatchList() throws SQLException {
 
-	PreparedStatement select = con
-		.prepareStatement("select * from batch;");
+	PreparedStatement select = con.prepareStatement("select * from batch;");
 
 	ResultSet result = select.executeQuery();
 
@@ -86,7 +85,6 @@ public class BatchDao {
 	return table;
     }
 
-
     public int batchRegister(BatchBean newRecord) throws SQLException {
 
 	PreparedStatement insert = con
@@ -103,14 +101,45 @@ public class BatchDao {
 
 	int id = 0;
 
-	if(result.next()){
-	  id  = result.getInt(1);
+	if (result.next()) {
+	    id = result.getInt(1);
 	}
 
 	return id;
 
     }
 
+    public BatchBean getBatchDetail(int batchId) throws SQLException {
 
+	PreparedStatement select = con
+		.prepareStatement("select * from batch where batch_id = ?;");
+
+	select.setInt(1, batchId);
+
+	ResultSet result = select.executeQuery();
+
+	BatchBean record = new BatchBean();
+	if (result.next()) {
+
+	    record.setBatchId(result.getInt("batch_id"));
+	    record.setBatchName(result.getString("batch_name"));
+	    record.setBatchComment(result.getString("batch_comment"));
+
+	}
+	return record;
+    }
+
+    public int batchChange(BatchBean updateRecord) throws SQLException {
+
+	PreparedStatement update = con
+		.prepareStatement("update batch set batch_name = ?,batch_comment = ? where batch_id = ? ;");
+
+	update.setString(1, updateRecord.getBatchName());
+	update.setString(2, updateRecord.getBatchComment());
+	update.setInt(3, updateRecord.getBatchId());
+
+	return update.executeUpdate();
+
+    }
 
 }

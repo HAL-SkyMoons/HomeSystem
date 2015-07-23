@@ -13,6 +13,7 @@ import javax.naming.NamingException;
 import jp.ac.hal.skymoons.beans.BatchBean;
 import jp.ac.hal.skymoons.beans.genre.GenreBean;
 import jp.ac.hal.skymoons.beans.trophy.TrophyBean;
+import jp.ac.hal.skymoons.beans.trophy.TrophyDetailBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
 
 public class TrophyDao {
@@ -146,6 +147,74 @@ public class TrophyDao {
 	    insert.executeUpdate();
 
 	}
+
+    }
+
+    public TrophyBean getTrophy(int trophyId) throws SQLException {
+
+	PreparedStatement select = con
+		.prepareStatement("select * from trophy where trophy_id = ?;");
+
+	select.setInt(1, trophyId);
+
+	ResultSet result = select.executeQuery();
+
+	TrophyBean record = new TrophyBean();
+	if (result.next()) {
+
+	    record.setTrophyId(result.getInt("trophy_id"));
+	    record.setTrophyName(result.getString("trophy_name"));
+	    record.setTrophyComment(result.getString("trophy_comment"));
+	    record.setDeleteFlag(result.getInt("delete_flag"));
+
+	}
+	return record;
+    }
+
+    public List<TrophyDetailBean>  getTrophyDetail(int trophyId) throws SQLException {
+
+	PreparedStatement select = con
+		.prepareStatement("select t.trophy_id,t.batch_id,b.batch_name,t.type_count from trophy_detail t,batch b where t.batch_id = b.batch_id and trophy_id = ?;");
+
+	select.setInt(1, trophyId);
+
+	ResultSet result = select.executeQuery();
+
+	ArrayList<TrophyDetailBean> table = new ArrayList<TrophyDetailBean>();
+
+	while (result.next()) {
+
+	    TrophyDetailBean record = new TrophyDetailBean();
+
+	    record.setTrophyId(result.getInt("t.trophy_id"));
+	    record.setBatchId(result.getInt("t.batch_id"));
+	    record.setBatchName(result.getString("b.batch_name"));
+	    record.setTypeCount(result.getInt("t.type_count"));
+
+	    table.add(record);
+
+	}
+	return table;
+    }
+
+    public int trophyDetailDelete(int trophyId) throws SQLException {
+
+	PreparedStatement delete = con
+		.prepareStatement("delete from trophy_detail where trophy_id = ?; ");
+	delete.setInt(1, trophyId);
+	return delete.executeUpdate();
+    }
+
+    public int trophyChange(TrophyBean updateRecord) throws SQLException {
+
+	PreparedStatement update = con
+		.prepareStatement("update trophy set trophy_name = ?,trophy_comment = ? where trophy_id = ? ;");
+
+	update.setString(1, updateRecord.getTrophyName());
+	update.setString(2, updateRecord.getTrophyComment());
+	update.setInt(3, updateRecord.getTrophyId());
+
+	return update.executeUpdate();
 
     }
 

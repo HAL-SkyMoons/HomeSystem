@@ -10,16 +10,10 @@
 <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
 </head>
 <body>
-	<table>
-		<c:forEach var="bigGenre" items="${bigGenreList}">
-			<tr>
-				<td>${bigGenre.bigGenreName}</td>
-				<td><form action="/HomeSystem/fc/bigGenreChange" method="post">
-					<input type="submit" name="change" value="編集">
-					<input type="hidden" name="bigGenreId" value="${bigGenre.bigGenreId}">
-				</form></td>
-			</tr>
-		</c:forEach>
-	</table>
+	<form action="/HomeSystem/fc/bigGenreChange" method="post">
+		<label>大ジャンル名：<input type="text" name="bigGenreName" value="${detail.bigGenreName}"></label>
+		<input type="hidden" name="bigGenreId" value="${detail.bigGenreId}">
+		<input type="submit" name="bigGenreChange" value="変更">
+	</form>
 </body>
 </html>

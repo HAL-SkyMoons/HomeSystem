@@ -12,6 +12,7 @@ import javax.naming.NamingException;
 
 import jp.ac.hal.skymoons.beans.BatchBean;
 import jp.ac.hal.skymoons.beans.companycapacity.CompanyCapacityBean;
+import jp.ac.hal.skymoons.beans.companycapacity.CompanyCapacityDetailBean;
 import jp.ac.hal.skymoons.beans.genre.GenreBean;
 import jp.ac.hal.skymoons.beans.trophy.TrophyBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
@@ -68,7 +69,8 @@ public class CompanyCapacityDao {
 	con.rollback();
     }
 
-    public List<CompanyCapacityBean> getCompanyCapacityList() throws SQLException {
+    public List<CompanyCapacityBean> getCompanyCapacityList()
+	    throws SQLException {
 
 	PreparedStatement select = con
 		.prepareStatement("select * from company_capacity;");
@@ -110,7 +112,8 @@ public class CompanyCapacityDao {
 	return table;
     }
 
-    public int CompanyCapacityRegister(CompanyCapacityBean newRecord) throws SQLException {
+    public int CompanyCapacityRegister(CompanyCapacityBean newRecord)
+	    throws SQLException {
 
 	PreparedStatement insert = con
 		.prepareStatement("insert into company_capacity(capacity_name,capacity_comment) values (?,?);");
@@ -148,6 +151,75 @@ public class CompanyCapacityDao {
 
 	}
 
+    }
+
+    public CompanyCapacityBean getCompanyCapacity(int capacityId)
+	    throws SQLException {
+
+	PreparedStatement select = con
+		.prepareStatement("select * from company_capacity where capacity_id = ?;");
+
+	select.setInt(1, capacityId);
+
+	ResultSet result = select.executeQuery();
+
+	CompanyCapacityBean record = new CompanyCapacityBean();
+	if (result.next()) {
+
+	    record.setCapacityId(result.getInt("capacity_id"));
+	    record.setCapacityName(result.getString("capacity_name"));
+	    record.setCapacityComment(result.getString("capacity_comment"));
+	    record.setDeleteFlag(result.getInt("delete_flag"));
+
+	}
+	return record;
+    }
+
+    public List<CompanyCapacityDetailBean> getCompanyCapacityDetail(
+	    int capacityId) throws SQLException {
+
+	PreparedStatement select = con
+		.prepareStatement("select c.capacity_id,c.batch_id,b.batch_name,c.type_count from capacity_detail c, batch b where c.batch_id = b.batch_id and capacity_id = ?;");
+
+	select.setInt(1, capacityId);
+
+	ResultSet result = select.executeQuery();
+
+	ArrayList<CompanyCapacityDetailBean> table = new ArrayList<CompanyCapacityDetailBean>();
+
+	while (result.next()) {
+
+	    CompanyCapacityDetailBean record = new CompanyCapacityDetailBean();
+
+	    record.setCapacityId(result.getInt("c.capacity_id"));
+	    record.setBatchId(result.getInt("c.batch_id"));
+	    record.setTypeCount(result.getInt("c.type_count"));
+	    record.setBatchName(result.getString("b.batch_name"));
+
+	    table.add(record);
+	}
+	return table;
+    }
+
+    public int CompanyCapacityDetailDelete(int capacityId) throws SQLException {
+
+	PreparedStatement delete = con
+		.prepareStatement("delete from capacity_detail where capacity_id = ?; ");
+	delete.setInt(1, capacityId);
+	return delete.executeUpdate();
+    }
+
+    public int CompanyCapacityChange(CompanyCapacityBean updateRecord)
+	    throws SQLException {
+
+	PreparedStatement update = con
+		.prepareStatement("update company_capacity set capacity_name = ?,capacity_comment = ? where capacity_id = ? ;");
+
+	update.setString(1, updateRecord.getCapacityName());
+	update.setString(2, updateRecord.getCapacityComment());
+	update.setInt(3, updateRecord.getCapacityId());
+
+	return update.executeUpdate();
     }
 
 }

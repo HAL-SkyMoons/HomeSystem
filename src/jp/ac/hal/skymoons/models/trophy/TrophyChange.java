@@ -22,7 +22,7 @@ import jp.ac.hal.skymoons.daoes.SampleDao;
 import jp.ac.hal.skymoons.daoes.batch.BatchDao;
 import jp.ac.hal.skymoons.daoes.trophy.TrophyDao;
 
-public class TrophyRegister extends AbstractModel {
+public class TrophyChange extends AbstractModel {
     @Override
     public String doService(HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
@@ -31,6 +31,7 @@ public class TrophyRegister extends AbstractModel {
 
 	if (ServletFileUpload.isMultipartContent(request)) {
 	    TrophyBean trophyBean = new TrophyBean();
+	    int updateFlag = 0;
 	    HashMap<Integer, Integer> batchIds = new HashMap<Integer, Integer>();
 	    HashMap<Integer, Integer> counts = new HashMap<Integer, Integer>();
 	    HashMap<Integer, Integer> trophyDetailData = new HashMap<Integer, Integer>();
@@ -88,20 +89,26 @@ public class TrophyRegister extends AbstractModel {
 			    String[] splits = fItem.getFieldName().split("_");
 			    counts.put(Integer.valueOf(splits[1]),
 				    Integer.valueOf(fItem.getString()));
+			} else if (fItem.getFieldName().startsWith("trophyId")) {
+			    trophyBean.setTrophyId(Integer.valueOf(fItem
+				    .getString()));
 			}
 
 		    }
 
-		    // トロフィー情報登録
-		    if (trophyBean.getTrophyName() != null
-			    && trophyBean.getTrophyComment() != null
-			    && trophyBean.getTrophyId() == 0) {
-
-			trophyBean.setTrophyId(dao.trophyRegister(trophyBean));
-			dao.commit();
-		    }
-
 		}
+
+		// トロフィー情報登録
+		if (trophyBean.getTrophyName() != null
+			&& trophyBean.getTrophyComment() != null
+			&& updateFlag == 0) {
+
+		    dao.trophyChange(trophyBean);
+		    dao.commit();
+
+		    updateFlag = 1;
+		}
+
 		// トロフィー条件登録
 		for (HashMap.Entry<Integer, Integer> entry : batchIds
 			.entrySet()) {
@@ -109,9 +116,8 @@ public class TrophyRegister extends AbstractModel {
 		    int nowKey = entry.getKey();
 		    trophyDetailData.put(entry.getValue(), counts.get(nowKey));
 		}
-
-		dao.trophyDetailRegister(trophyBean.getTrophyId(),
-			trophyDetailData);
+		dao.trophyDetailDelete(trophyBean.getTrophyId());
+		dao.trophyDetailRegister(trophyBean.getTrophyId(),trophyDetailData);
 		dao.commit();
 
 	    } catch (FileUploadException e) {
@@ -127,8 +133,10 @@ public class TrophyRegister extends AbstractModel {
 	}
 
 	request.setAttribute("batchList", dao.getBatchList());
+	request.setAttribute("trophy", dao.getTrophy(Integer.valueOf(request.getParameter("trophyId"))));
+	request.setAttribute("detail", dao.getTrophyDetail(Integer.valueOf(request.getParameter("trophyId"))));
 	dao.close();
 
-	return "/trophy/trophyRegister.jsp";
+	return "/trophy/trophyChange.jsp";
     }
 }

@@ -10,6 +10,7 @@
 <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
 <script src="../js/jquery-2.1.4.min.js" type="text/javascript"></script>
 <script src="../js/addForm.js" type="text/javascript"></script>
+<script src="../js/uploadThumbnail.js" type="text/javascript"></script>
 </head>
 <body>
 	<form action="/HomeSystem/fc/trophyRegister" method="post" enctype="multipart/form-data">

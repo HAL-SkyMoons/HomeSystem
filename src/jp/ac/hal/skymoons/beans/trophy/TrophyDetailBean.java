@@ -3,6 +3,7 @@ package jp.ac.hal.skymoons.beans.trophy;
 public class TrophyDetailBean {
     private int trophyId;
     private int batchId;
+    private String batchName;
     private int typeCount;
 
     public int getTrophyId() {
@@ -27,6 +28,14 @@ public class TrophyDetailBean {
 
     public void setTypeCount(int typeCount) {
 	this.typeCount = typeCount;
+    }
+
+    public String getBatchName() {
+	return batchName;
+    }
+
+    public void setBatchName(String batchName) {
+	this.batchName = batchName;
     }
 
 }

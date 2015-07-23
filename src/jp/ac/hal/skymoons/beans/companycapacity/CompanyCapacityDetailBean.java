@@ -2,6 +2,7 @@ package jp.ac.hal.skymoons.beans.companycapacity;
 
 public class CompanyCapacityDetailBean {
     private int capacityId;
+    private String batchName;
     private int batchId;
     private int typeCount;
 
@@ -27,6 +28,14 @@ public class CompanyCapacityDetailBean {
 
     public void setTypeCount(int typeCount) {
 	this.typeCount = typeCount;
+    }
+
+    public String getBatchName() {
+	return batchName;
+    }
+
+    public void setBatchName(String batchName) {
+	this.batchName = batchName;
     }
 
 }
