@@ -21,5 +21,9 @@
 		<a href="/HomeSystem/fc/staff/list"><p>社員ユーザ管理</p></a>
 		<a href="/HomeSystem/fc/customer/list"><p>顧客ユーザ管理</p></a>
 		<a href="/HomeSystem/fc/administrator"><p>管理者ユーザ管理</p></a>
+		<a href="/HomeSystem/fc/genre"><p>ジャンル管理</p></a>
+		<a href="/HomeSystem/fc/batch"><p>バッチ管理</p></a>
+		<a href="/HomeSystem/fc/trophy"><p>トロフィー管理</p></a>
+		<a href="/HomeSystem/fc/companyCapacity"><p>社内資格管理</p></a>
 	</body>
 </html>

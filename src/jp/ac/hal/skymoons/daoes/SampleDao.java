@@ -1711,7 +1711,7 @@ public List<EmployeeBatchBean> getEmployeeDetailOfBadge(String employeeId){
     }
 
     /**
-     * トロフィーの新規登録
+     * トロフィーの取得
      *
      * @param employeeId
      * @throws SQLException
@@ -1728,7 +1728,7 @@ public List<EmployeeBatchBean> getEmployeeDetailOfBadge(String employeeId){
 
 	// トロフィー全件取得
 	PreparedStatement trophySelect = con
-		.prepareStatement("select * from trophy;");
+		.prepareStatement("select * from trophy where delete_flag = 0;");
 
 	ResultSet trophyResult = trophySelect.executeQuery();
 	// 1トロフィー毎の処理
@@ -1874,7 +1874,7 @@ public List<EmployeeBatchBean> getEmployeeDetailOfBadge(String employeeId){
     }
 
     /**
-     * 社内資格取得登録
+     * 社内資格取得
      *
      * @param employeeId
      * @throws SQLException
@@ -1891,7 +1891,7 @@ public List<EmployeeBatchBean> getEmployeeDetailOfBadge(String employeeId){
 
 	// 社内資格全件取得
 	PreparedStatement capacitySelect = con
-		.prepareStatement("select * from company_capacity;");
+		.prepareStatement("select * from company_capacity delete_flag = 0;");
 
 	ResultSet capacityResult = capacitySelect.executeQuery();
 	// 社内資格毎の処理
