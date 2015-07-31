@@ -17,16 +17,23 @@
 <script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="../js/colorbox/jquery.colorbox.js"></script>
 <title>Employee Page</title>
+<%
+	//チャート出力用配列の準備
+	String[] chartName = (String[])request.getAttribute("chartName");
+	int[] chartCount = (int[])request.getAttribute("chartCount");
+	//月間
+	String[] chartNameMonth = (String[])request.getAttribute("chartNameMonth");
+	int[] chartCountMonth = (int[])request.getAttribute("chartCountMonth");
+	//年間
+	String[] chartNameYear = (String[])request.getAttribute("chartNameYear");
+	int[] chartCountYear = (int[])request.getAttribute("chartCountYear");
+	//通算
+	String[] chartNameTotal = (String[])request.getAttribute("chartNameTotal");
+	int[] chartCountTotal = (int[])request.getAttribute("chartCountTotal");
+%>
 <script type="text/javascript" src="../js/Chart.js-master/Chart.js"></script>
 <script>
-	//ホメボタン
-// 	function ImageUp(employeeId) {
-// 		window.open("/HomeSystem/fc/Home?toUser="+employeeId,"window2","width=1000,height=500");
-// 	}
 
-	//今後追加するもの
-	//社員プロフィール変更(顔写真)
-	//
 	$(function() {
 		$(".iframe").colorbox({
 			iframe : true,
@@ -35,6 +42,115 @@
 			opacity : 0.7
 		});
 	});
+	//グラフ切り替え(月間)
+	function graphChangeMonth(){
+		var radarChartData = {
+				labels : [<% if(chartNameMonth.length !=0 && chartCountMonth.length !=0){
+					for (int i = 0; i < chartNameMonth.length;) {
+						out.print("\""+chartNameMonth[i]+"\"");
+						i++;
+						if(i==chartCountMonth.length){
+							break;
+						}
+							out.print(",");
+					}
+					}%>],
+				datasets : [
+					{
+					fillColor : "rgba(200,50,50,0.8)",
+					strokeColor : "rgba(255,0,0,1)",
+					pointColor : "rgba(255,0,0,1)",
+					pointStrokeColor : "#fff",
+					data : [<% if(chartNameMonth.length !=0 && chartCountMonth.length !=0){
+						for (int i = 0; i < chartCountMonth.length;) {
+							out.print(chartCountMonth[i]);
+							i++;
+							if(i==chartCountMonth.length){
+								break;
+							}
+							out.print(",");
+						}
+						}%>]
+					}
+				]
+			}
+			var myRadar = new Chart(document.getElementById("radar").getContext("2d"))
+				.Radar(radarChartData,{
+					scaleShowLabels : true, scaleFontSize : 15, scaleLineColor: "rgba(0,0,0,0.9)", pointLabelFontSize : 20, });
+	}
+	//グラフ切り替え(年間)
+	function graphChangeYear(){
+		var radarChartData = {
+				labels : [<% if(chartNameYear.length !=0 && chartCountYear.length !=0){
+					for (int i = 0; i < chartNameYear.length;) {
+						out.print("\""+chartNameYear[i]+"\"");
+						i++;
+						if(i==chartCountYear.length){
+							break;
+						}
+							out.print(",");
+					}
+					}%>],
+				datasets : [
+					{
+					fillColor : "rgba(200,50,50,0.8)",
+					strokeColor : "rgba(255,0,0,1)",
+					pointColor : "rgba(255,0,0,1)",
+					pointStrokeColor : "#fff",
+					data : [<% if(chartNameYear.length !=0 && chartCountYear.length !=0){
+						for (int i = 0; i < chartCountYear.length;) {
+							out.print(chartCountYear[i]);
+							i++;
+							if(i==chartCountYear.length){
+								break;
+							}
+							out.print(",");
+						}
+						}%>]
+					}
+				]
+			}
+			var myRadar = new Chart(document.getElementById("radar").getContext("2d"))
+				.Radar(radarChartData,{
+					scaleShowLabels : true, scaleFontSize : 15, scaleLineColor: "rgba(0,0,0,0.9)", pointLabelFontSize : 20, });
+	}
+	//グラフ切り替え(通算)
+	function graphChangeTotal(){
+		var radarChartData = {
+				labels : [<% if(chartNameTotal.length !=0 && chartCountTotal.length !=0){
+					for (int i = 0; i < chartNameTotal.length;) {
+						out.print("\""+chartNameTotal[i]+"\"");
+						i++;
+						if(i==chartCountTotal.length){
+							break;
+						}
+							out.print(",");
+					}
+					}%>],
+				datasets : [
+					{
+					fillColor : "rgba(200,50,50,0.8)",
+					strokeColor : "rgba(255,0,0,1)",
+					pointColor : "rgba(255,0,0,1)",
+					pointStrokeColor : "#fff",
+					data : [<% if(chartNameTotal.length !=0 && chartCountTotal.length !=0){
+						for (int i = 0; i < chartCountTotal.length;) {
+							out.print(chartCountTotal[i]);
+							i++;
+							if(i==chartCountTotal.length){
+								break;
+							}
+							out.print(",");
+						}
+						}%>]
+					}
+				]
+			}
+			var myRadar = new Chart(document.getElementById("radar").getContext("2d"))
+				.Radar(radarChartData,{
+					scaleShowLabels : true, scaleFontSize : 15, scaleLineColor: "rgba(0,0,0,0.9)", pointLabelFontSize : 20, });
+	}
+
 	//履歴タブ切り替え
 	function activityChange(tabName){
 		document.getElementById("homeTab").style.display = 'none';
@@ -82,22 +198,14 @@
 %>
 </head>
 <body>
-<%
-	//チャート出力用配列の準備
-	String[] chartName = (String[])request.getAttribute("chartName");
-	int[] chartCount = (int[])request.getAttribute("chartCount");
-	if(chartName==null && chartCount==null){
-		 System.out.println("配列取得失敗");
-	}
 
-%>
 <div class="contents">
 	<h1 class="employeePageTitle">社員ページ</h1>
 	<div class="leftContents">
 		<div class="employeeStatus">
 				<c:forEach var="employeeDetail" items="${employeeDetail}">
 					<ul class="employeeData">
-						<li class="employeeImage"><img src="../images/employees/${employeeDetail.employeeId}.jpg?<%=milliSec %>"></li>
+						<li class="employeeImage"><div class="imageDiv"><img src="../images/employees/${employeeDetail.employeeId}.jpg?<%=milliSec %>"></div></li>
 						<li class="employeeComment">${employeeDetail.employeeComment}</li>
 						<li class="employeeName">${employeeDetail.employeeName}</li>
 						<li class="departmentName">${employeeDetail.departmentName}</li>
@@ -194,9 +302,9 @@
 				</script>
 		<div class="badgeView">
 			<div class="badgeTabs">
-				<a href="javascript:badgeChange('totalTab')" class="totalTab"><h4>入社以来</h4></a>
-				<a href="javascript:badgeChange('monthTab')" class="monthTab"><h4>1ケ月間</h4></a>
-				<a href="javascript:badgeChange('yearTab')" class="yearTab"><h4>1年間</h4></a>
+				<a href="javascript:badgeChange('totalTab');graphChangeTotal();" class="totalTab"><h4>入社以来</h4></a>
+				<a href="javascript:badgeChange('monthTab');graphChangeMonth();" class="monthTab"><h4>1ケ月間</h4></a>
+				<a href="javascript:badgeChange('yearTab');graphChangeYear();" class="yearTab"><h4>1年間</h4></a>
 			</div>
 			<div class="badgeTotal" id="totalTab">
 			<table class="badgeTable">
