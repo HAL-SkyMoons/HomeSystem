@@ -25,6 +25,16 @@ div.employeeStatus{
 	background-color:#ffdddd;
 	text-align:center;
 }
+div.imageDiv{
+	width:200px;
+	height:200px;
+	margin-right:25px;
+	margin-left:25px;
+}
+img.employeeImage{
+	width:200px;
+	height:200px;
+}
 ul.employeeData{
 	margin-top:5px;
 }

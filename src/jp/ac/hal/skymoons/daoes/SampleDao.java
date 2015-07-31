@@ -480,34 +480,6 @@ public class SampleDao {
 	return resultTable;
     }
 
-    /*
-     * 2015/6/19 中野 裕史郎 社員一人が持つジャンル情報の取得
-     */
-    public List<EmployeeGenreBean> getEmployeeDetailOfGenre(String employeeId) {
-	ArrayList<EmployeeGenreBean> resultTable = new ArrayList<EmployeeGenreBean>();
-	System.out.println("getEmployeeDetailOfGenre entered");
-	try {
-	    PreparedStatement select = con
-		    .prepareStatement("SELECT hg.genre_id , g.genre_name , COUNT(*) FROM home_contents AS hc "
-			    + "JOIN home_genre AS hg ON hc.home_content_ID = hg.home_content_id JOIN genre AS g ON hg.genre_id = g.genre_id "
-			    + "WHERE hc.employee_id LIKE ? GROUP BY hg.genre_id ORDER BY COUNT(*) DESC");
-	    select.setString(1, employeeId);
-	    ResultSet result = select.executeQuery();
-	    while (result.next()) {
-		EmployeeGenreBean recode = new EmployeeGenreBean();
-		System.out.println(result.getString("g.genre_name"));
-		recode.setGenreName(result.getString("g.genre_name"));
-		recode.setGenreCount(result.getInt("COUNT(*)"));
-		resultTable.add(recode);
-	    }
-	} catch (SQLException e) {
-	    // TODO 自動生成された catch ブロック
-	    e.printStackTrace();
-	}
-
-	return resultTable;
-    }
-
 
 
     /**
@@ -1029,13 +1001,24 @@ public List<EmployeeBatchBean> getEmployeeDetailOfBadge(String employeeId){
 	 * 中野 裕史郎
 	 * チャート描画用配列の取得
 	 */
-	public String[] getEmployeeDetailOfBadgeNameForChart(String employeeId){
+	public String[] getEmployeeDetailOfBadgeNameForChart(String employeeId,String limit,String outPutDate){
 		int max =0;
+		String sql="";
+		if(limit.equals("month")||limit.equals("year")){
+			sql = "SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
+					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
+					+"AND home_datetime >= ? GROUP BY hl.batch_id ORDER BY b.batch_id";
+		}else if(limit.equals("total")){
+			sql = "SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
+					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
+					+"GROUP BY hl.batch_id ORDER BY b.batch_id";
+		}
 		try {
-			PreparedStatement select = con.prepareStatement("SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
-					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? GROUP BY hl.batch_id "
-					+"ORDER BY b.batch_id");
+			PreparedStatement select = con.prepareStatement(sql);
 			select.setString(1, employeeId);
+			if(limit.equals("month")||limit.equals("year")){
+				select.setString(2, outPutDate);
+			}
 			ResultSet result = select.executeQuery();
 			while(result.next()){
 				max++;
@@ -1048,10 +1031,11 @@ public List<EmployeeBatchBean> getEmployeeDetailOfBadge(String employeeId){
 		String[] resultTable = new String[max];
 		int count =0;
 		try {
-			PreparedStatement select = con.prepareStatement("SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
-					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
-					+"GROUP BY hl.batch_id ORDER BY hl.batch_id");
+			PreparedStatement select = con.prepareStatement(sql);
 			select.setString(1, employeeId);
+			if(limit.equals("month")||limit.equals("year")){
+				select.setString(2, outPutDate);
+			}
 			ResultSet result = select.executeQuery();
 			while(result.next()){
 				System.out.println("Name for Chart is" +result.getString("b.batch_name"));
@@ -1064,6 +1048,84 @@ public List<EmployeeBatchBean> getEmployeeDetailOfBadge(String employeeId){
 		}
 		return resultTable;
 	}
+	/*
+	 * 2015/6/23
+	 * 中野 裕史郎
+	 * チャート描画用配列の取得
+	 */
+	public int[] getEmployeeDetailOfBadgeCountForChart(String employeeId, String limit, String outPutDate){
+		int max =0;
+		String sql="";
+		if(limit.equals("month")||limit.equals("year")){
+			sql = "SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
+					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
+					+"AND home_datetime >= ? GROUP BY hl.batch_id ORDER BY b.batch_id";
+		}else if(limit.equals("total")){
+			sql = "SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
+					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
+					+"GROUP BY hl.batch_id ORDER BY b.batch_id";
+		}
+		try {
+			PreparedStatement select = con.prepareStatement(sql);
+			select.setString(1, employeeId);
+			if(limit.equals("month")||limit.equals("year")){
+				select.setString(2, outPutDate);
+			}
+			ResultSet result = select.executeQuery();
+			while(result.next()){
+				max++;
+			}
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		int[] resultTable = new int[max];
+		int count =0;
+		try {
+			PreparedStatement select = con.prepareStatement(sql);
+			select.setString(1, employeeId);
+			if(limit.equals("month")||limit.equals("year")){
+				select.setString(2, outPutDate);
+			}
+			ResultSet result = select.executeQuery();
+			while(result.next()){
+				resultTable[count]=result.getInt("COUNT(*)");
+				count++;
+			}
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+
+		return resultTable;
+	}
+	/*
+	 * 2015/6/19
+	 * 中野 裕史郎
+	 * 社員一人が持つジャンル情報の取得
+	 */
+	public List<EmployeeGenreBean> getEmployeeDetailOfGenre(String employeeId){
+		ArrayList<EmployeeGenreBean> resultTable = new ArrayList<EmployeeGenreBean>();
+		try {
+			PreparedStatement select = con.prepareStatement("SELECT hg.genre_id , g.genre_name , COUNT(*)  , bg.big_genre_id FROM home_contents AS hc "
+					+"JOIN home_genre AS hg ON hc.home_content_ID = hg.home_content_id JOIN genre AS g ON hg.genre_id = g.genre_id "
+					+"JOIN big_genre AS bg ON g.big_genre_id = bg.big_genre_id WHERE hc.employee_id LIKE ? GROUP BY hg.genre_id ORDER BY COUNT(*) DESC");
+			select.setString(1, employeeId);
+			ResultSet result = select.executeQuery();
+			while(result.next()){
+				EmployeeGenreBean recode = new EmployeeGenreBean();
+				recode.setGenreName(result.getString("g.genre_name"));
+				recode.setGenreCount(result.getInt("COUNT(*)"));
+				recode.setBigGenreId(result.getString("bg.big_genre_id"));
+				resultTable.add(recode);
+			}
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		return resultTable;
+	}
+
 	/*
 	 * 2015/6/19
 	 * 中野 裕史郎
