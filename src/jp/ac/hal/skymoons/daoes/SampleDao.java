@@ -438,8 +438,6 @@ public class SampleDao {
 	return resultTable;
     }
 
-
-
     /*
      * 2015/6/23 中野 裕史郎 チャート描画用配列の取得
      */
@@ -479,8 +477,6 @@ public class SampleDao {
 
 	return resultTable;
     }
-
-
 
     /**
      * 接続を閉じる
@@ -558,7 +554,7 @@ public class SampleDao {
 		break;
 
 	    }
-	}else{
+	} else {
 	    sql += " order by p.plan_datetime desc";
 	}
 
@@ -643,7 +639,7 @@ public class SampleDao {
 		break;
 
 	    }
-	}else{
+	} else {
 	    sql += " order by p.plan_datetime desc";
 	}
 
@@ -835,7 +831,7 @@ public class SampleDao {
 	    table.add(String.valueOf(result.getInt("p.genre_id")));
 	}
 
-	String[] output = (String[])table.toArray(new String[0]);
+	String[] output = (String[]) table.toArray(new String[0]);
 	return output;
     }
 
@@ -942,445 +938,453 @@ public class SampleDao {
 	update.setInt(3, deleteRecord.getCommentNo());
 	return update.executeUpdate();
     }
-/*
- * 2015/06/17
- * 中野 裕史郎
- * 社員一人が持つバッジ情報の取得
- */
-public List<EmployeeBatchBean> getEmployeeDetailOfBadge(String employeeId){
-	ArrayList<EmployeeBatchBean> resultTable = new ArrayList<EmployeeBatchBean>();
-	try {
-		PreparedStatement select = con.prepareStatement("SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
-				+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
-				+"GROUP BY hl.batch_id ORDER BY hl.batch_id");
-		select.setString(1, employeeId);
-		ResultSet result = select.executeQuery();
-		while(result.next()){
-			EmployeeBatchBean recode = new EmployeeBatchBean();
-			recode.setBadgeName(result.getString("b.batch_name"));
-			recode.setBadgeCount(result.getInt("COUNT(*)"));
-			recode.setBadgeImgPath(result.getString("hl.batch_id"));
-			resultTable.add(recode);
-		}
-	} catch (SQLException e) {
-		// TODO 自動生成された catch ブロック
-		e.printStackTrace();
-	}
-	return resultTable;
-}
-	/*
-	 * 2015/06/30
-	 * 中野 裕史郎
-	 * 社員の取得バッジの期間絞りアリ取得
-	 */
-	public List<EmployeeBatchBean>getEmployeeDetailOfBadgeInLimited(String employeeId ,String outPutDate){
-		ArrayList<EmployeeBatchBean> resultTable = new ArrayList<EmployeeBatchBean>();
-		try {
-			PreparedStatement select = con.prepareStatement("SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
-					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? AND hl.home_datetime >= ? "
-					+"GROUP BY hl.batch_id ORDER BY hl.batch_id");
-			select.setString(1, employeeId);
-			select.setString(2, outPutDate);
-			ResultSet result = select.executeQuery();
-			while(result.next()){
-				EmployeeBatchBean recode = new EmployeeBatchBean();
-				recode.setBadgeName(result.getString("b.batch_name"));
-				recode.setBadgeCount(result.getInt("COUNT(*)"));
-				recode.setBadgeImgPath(result.getString("hl.batch_id"));
-				resultTable.add(recode);
-			}
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-
-		return resultTable;
-	}
-	/*
-	 * 2015/6/23
-	 * 中野 裕史郎
-	 * チャート描画用配列の取得
-	 */
-	public String[] getEmployeeDetailOfBadgeNameForChart(String employeeId,String limit,String outPutDate){
-		int max =0;
-		String sql="";
-		if(limit.equals("month")||limit.equals("year")){
-			sql = "SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
-					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
-					+"AND home_datetime >= ? GROUP BY hl.batch_id ORDER BY b.batch_id";
-		}else if(limit.equals("total")){
-			sql = "SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
-					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
-					+"GROUP BY hl.batch_id ORDER BY b.batch_id";
-		}
-		try {
-			PreparedStatement select = con.prepareStatement(sql);
-			select.setString(1, employeeId);
-			if(limit.equals("month")||limit.equals("year")){
-				select.setString(2, outPutDate);
-			}
-			ResultSet result = select.executeQuery();
-			while(result.next()){
-				max++;
-			}
-			System.out.println("Name for Chart Max is" +max);
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-		String[] resultTable = new String[max];
-		int count =0;
-		try {
-			PreparedStatement select = con.prepareStatement(sql);
-			select.setString(1, employeeId);
-			if(limit.equals("month")||limit.equals("year")){
-				select.setString(2, outPutDate);
-			}
-			ResultSet result = select.executeQuery();
-			while(result.next()){
-				System.out.println("Name for Chart is" +result.getString("b.batch_name"));
-				resultTable[count] = result.getString("b.batch_name");
-				count++;
-			}
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-		return resultTable;
-	}
-	/*
-	 * 2015/6/23
-	 * 中野 裕史郎
-	 * チャート描画用配列の取得
-	 */
-	public int[] getEmployeeDetailOfBadgeCountForChart(String employeeId, String limit, String outPutDate){
-		int max =0;
-		String sql="";
-		if(limit.equals("month")||limit.equals("year")){
-			sql = "SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
-					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
-					+"AND home_datetime >= ? GROUP BY hl.batch_id ORDER BY b.batch_id";
-		}else if(limit.equals("total")){
-			sql = "SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
-					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
-					+"GROUP BY hl.batch_id ORDER BY b.batch_id";
-		}
-		try {
-			PreparedStatement select = con.prepareStatement(sql);
-			select.setString(1, employeeId);
-			if(limit.equals("month")||limit.equals("year")){
-				select.setString(2, outPutDate);
-			}
-			ResultSet result = select.executeQuery();
-			while(result.next()){
-				max++;
-			}
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-		int[] resultTable = new int[max];
-		int count =0;
-		try {
-			PreparedStatement select = con.prepareStatement(sql);
-			select.setString(1, employeeId);
-			if(limit.equals("month")||limit.equals("year")){
-				select.setString(2, outPutDate);
-			}
-			ResultSet result = select.executeQuery();
-			while(result.next()){
-				resultTable[count]=result.getInt("COUNT(*)");
-				count++;
-			}
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-
-		return resultTable;
-	}
-	/*
-	 * 2015/6/19
-	 * 中野 裕史郎
-	 * 社員一人が持つジャンル情報の取得
-	 */
-	public List<EmployeeGenreBean> getEmployeeDetailOfGenre(String employeeId){
-		ArrayList<EmployeeGenreBean> resultTable = new ArrayList<EmployeeGenreBean>();
-		try {
-			PreparedStatement select = con.prepareStatement("SELECT hg.genre_id , g.genre_name , COUNT(*)  , bg.big_genre_id FROM home_contents AS hc "
-					+"JOIN home_genre AS hg ON hc.home_content_ID = hg.home_content_id JOIN genre AS g ON hg.genre_id = g.genre_id "
-					+"JOIN big_genre AS bg ON g.big_genre_id = bg.big_genre_id WHERE hc.employee_id LIKE ? GROUP BY hg.genre_id ORDER BY COUNT(*) DESC");
-			select.setString(1, employeeId);
-			ResultSet result = select.executeQuery();
-			while(result.next()){
-				EmployeeGenreBean recode = new EmployeeGenreBean();
-				recode.setGenreName(result.getString("g.genre_name"));
-				recode.setGenreCount(result.getInt("COUNT(*)"));
-				recode.setBigGenreId(result.getString("bg.big_genre_id"));
-				resultTable.add(recode);
-			}
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-		return resultTable;
-	}
-
-	/*
-	 * 2015/6/19
-	 * 中野 裕史郎
-	 * 社員一人の立案企画情報取得
-	 */
-	public List<EmployeePlanBean> getEmployeeDetailOfPlan(String employeeId){
-		ArrayList<EmployeePlanBean> resultTable = new ArrayList<EmployeePlanBean>();
-		try {
-			PreparedStatement select = con.prepareStatement("SELECT plan_title , plan_datetime , plan_id FROM `plan` WHERE planner LIKE ? ORDER BY plan_datetime DESC");
-			select.setString(1, employeeId);
-			ResultSet result = select.executeQuery();
-			while(result.next()){
-				EmployeePlanBean recode = new EmployeePlanBean();
-				recode.setPlanTitle(result.getString("plan_title"));
-				recode.setDays(result.getDate("plan_datetime"));
-				recode.setPlanId(result.getString("plan_id"));
-				resultTable.add(recode);
-			}
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-		return resultTable;
-	}
-//------------------------------------------------------------------------------------------------------------------------------
-	/*
-	 * 2015/06/17
-	 * 中野 裕史郎
-	 * 社員一人が持つバッジ情報の取得
-	 */
-	public List<EmployeeBatchBean> getEmployeeDetailOfBatch(String employeeId){
-		ArrayList<EmployeeBatchBean> resultTable = new ArrayList<EmployeeBatchBean>();
-		try {
-			PreparedStatement select = con.prepareStatement("SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
-					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
-					+"GROUP BY hl.batch_id ORDER BY hl.batch_id");
-			select.setString(1, employeeId);
-			ResultSet result = select.executeQuery();
-			while(result.next()){
-				EmployeeBatchBean recode = new EmployeeBatchBean();
-				recode.setBadgeName(result.getString("b.batch_name"));
-				recode.setBadgeCount(result.getInt("COUNT(*)"));
-				recode.setBadgeImgPath(result.getString("hl.batch_id"));
-				resultTable.add(recode);
-			}
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-		return resultTable;
-
-	}
 
     /*
-	 * 2015/06/30
-	 * 中野 裕史郎
-	 * 社員の取得バッジの期間絞りアリ取得
-	 */
-	public List<EmployeeBatchBean>getEmployeeDetailOfBatchInLimited(String employeeId ,String outPutDate){
-		ArrayList<EmployeeBatchBean> resultTable = new ArrayList<EmployeeBatchBean>();
-		try {
-			PreparedStatement select = con.prepareStatement("SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
-					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? AND hl.home_datetime >= ? "
-					+"GROUP BY hl.batch_id ORDER BY hl.batch_id");
-			select.setString(1, employeeId);
-			select.setString(2, outPutDate);
-			ResultSet result = select.executeQuery();
-			while(result.next()){
-				EmployeeBatchBean recode = new EmployeeBatchBean();
-				recode.setBadgeName(result.getString("b.batch_name"));
-				recode.setBadgeCount(result.getInt("COUNT(*)"));
-				recode.setBadgeImgPath(result.getString("hl.batch_id"));
-				resultTable.add(recode);
-			}
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-
-		return resultTable;
+     * 2015/06/17 中野 裕史郎 社員一人が持つバッジ情報の取得
+     */
+    public List<EmployeeBatchBean> getEmployeeDetailOfBadge(String employeeId) {
+	ArrayList<EmployeeBatchBean> resultTable = new ArrayList<EmployeeBatchBean>();
+	try {
+	    PreparedStatement select = con
+		    .prepareStatement("SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
+			    + "JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
+			    + "GROUP BY hl.batch_id ORDER BY hl.batch_id");
+	    select.setString(1, employeeId);
+	    ResultSet result = select.executeQuery();
+	    while (result.next()) {
+		EmployeeBatchBean recode = new EmployeeBatchBean();
+		recode.setBadgeName(result.getString("b.batch_name"));
+		recode.setBadgeCount(result.getInt("COUNT(*)"));
+		recode.setBadgeImgPath(result.getString("hl.batch_id"));
+		resultTable.add(recode);
+	    }
+	} catch (SQLException e) {
+	    // TODO 自動生成された catch ブロック
+	    e.printStackTrace();
 	}
+	return resultTable;
+    }
 
-	/*
-	 * 2015/07/03
-	 * 中野 裕史郎
-	 * 社員一人の資格情報取得
-	 */
-	public List<EmployeeCapacityBean> getMyEmployeeDetailOfCapacity(String employeeId){
-		ArrayList<EmployeeCapacityBean> resultTable = new ArrayList<EmployeeCapacityBean>();
-		try {
-			PreparedStatement select = con.prepareStatement("SELECT c.capacity_name FROM employee_capacity AS ec "
-					+"JOIN capacity AS c ON ec.capacity_id = c.capacity_id "
-					+"WHERE employee_id = ? ORDER BY c.capacity_id");
-			select.setString(1, employeeId);
-			ResultSet result = select.executeQuery();
-			while(result.next()){
-				EmployeeCapacityBean recode = new EmployeeCapacityBean();
-				recode.setCapacityName(result.getString("c.capacity_name"));
-				resultTable.add(recode);
-			}
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-		return resultTable;
+    /*
+     * 2015/06/30 中野 裕史郎 社員の取得バッジの期間絞りアリ取得
+     */
+    public List<EmployeeBatchBean> getEmployeeDetailOfBadgeInLimited(
+	    String employeeId, String outPutDate) {
+	ArrayList<EmployeeBatchBean> resultTable = new ArrayList<EmployeeBatchBean>();
+	try {
+	    PreparedStatement select = con
+		    .prepareStatement("SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
+			    + "JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? AND hl.home_datetime >= ? "
+			    + "GROUP BY hl.batch_id ORDER BY hl.batch_id");
+	    select.setString(1, employeeId);
+	    select.setString(2, outPutDate);
+	    ResultSet result = select.executeQuery();
+	    while (result.next()) {
+		EmployeeBatchBean recode = new EmployeeBatchBean();
+		recode.setBadgeName(result.getString("b.batch_name"));
+		recode.setBadgeCount(result.getInt("COUNT(*)"));
+		recode.setBadgeImgPath(result.getString("hl.batch_id"));
+		resultTable.add(recode);
+	    }
+	} catch (SQLException e) {
+	    // TODO 自動生成された catch ブロック
+	    e.printStackTrace();
 	}
 
-	/*
-	 * 2015/07/03
-	 * 中野 裕史郎
-	 * 社員一人の社内資格情報取得
-	 */
-	public List<EmployeeCompanyCapacityBean> getMyEmployeeDetailOfCompanyCapacity(String employeeId){
-		ArrayList<EmployeeCompanyCapacityBean> resultTable = new ArrayList<EmployeeCompanyCapacityBean>();
-//		DateFormat df = new SimpleDateFormat();
+	return resultTable;
+    }
 
-		try {
-			PreparedStatement select = con.prepareStatement("SELECT cc.capacity_name , DATE_FORMAT(ecc.get_datetime, '%Y/%m/%d') "
-					+ "FROM employee_company_capacity AS ecc JOIN company_capacity AS cc ON ecc.capacity_ID = cc.capacity_id "
-					+"WHERE ecc.employee_id = ? ORDER BY cc.capacity_id");
-			select.setString(1, employeeId);
-			ResultSet result = select.executeQuery();
-			while(result.next()){
-				EmployeeCompanyCapacityBean recode = new EmployeeCompanyCapacityBean();
-				recode.setCapacityName(result.getString("cc.capacity_name"));
-				recode.setCapacityDate(result.getString("DATE_FORMAT(ecc.get_datetime, '%Y/%m/%d')"));
-				resultTable.add(recode);
-			}
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-		return resultTable;
+    /*
+     * 2015/6/23 中野 裕史郎 チャート描画用配列の取得
+     */
+    public String[] getEmployeeDetailOfBadgeNameForChart(String employeeId,
+	    String limit, String outPutDate) {
+	int max = 0;
+	String sql = "";
+	if (limit.equals("month") || limit.equals("year")) {
+	    sql = "SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
+		    + "JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
+		    + "AND home_datetime >= ? GROUP BY hl.batch_id ORDER BY b.batch_id";
+	} else if (limit.equals("total")) {
+	    sql = "SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
+		    + "JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
+		    + "GROUP BY hl.batch_id ORDER BY b.batch_id";
 	}
-	/*
-	 * 2015/07/03
-	 * 中野 裕史郎
-	 * 社員一人のトロフィー情報取得
-	 */
-	public List<EmployeeTrophyBean> getMyEmployeeDetailOfTrophy(String employeeId){
-		ArrayList<EmployeeTrophyBean> resultTable = new ArrayList<EmployeeTrophyBean>();
-		try {
-			PreparedStatement select = con.prepareStatement("SELECT t.trophy_id , t.trophy_name , COUNT(*) FROM employee_trophy AS et "
-					+"JOIN trophy AS t ON et.trophy_id = t.trophy_id "
-					+"WHERE et.employee_id = ? GROUP BY et.trophy_id ORDER BY t.trophy_id");
-			select.setString(1, employeeId);
-			ResultSet result = select.executeQuery();
-			while(result.next()){
-				EmployeeTrophyBean recode = new EmployeeTrophyBean();
-				recode.setTrophyName(result.getString("t.trophy_name"));
-				recode.setTrophyCount(result.getInt("COUNT(*)"));
-				recode.setTrophyImg(String.valueOf(result.getInt("t.trophy_id")));
-				resultTable.add(recode);
-			}
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-		return resultTable;
+	try {
+	    PreparedStatement select = con.prepareStatement(sql);
+	    select.setString(1, employeeId);
+	    if (limit.equals("month") || limit.equals("year")) {
+		select.setString(2, outPutDate);
+	    }
+	    ResultSet result = select.executeQuery();
+	    while (result.next()) {
+		max++;
+	    }
+	    System.out.println("Name for Chart Max is" + max);
+	} catch (SQLException e) {
+	    // TODO 自動生成された catch ブロック
+	    e.printStackTrace();
 	}
-	/*
-	 * 2015/6/19
-	 * 中野 裕史郎
-	 * 社員一人の企画コメント取得
-	 */
-	public List<EmployeePlanCommentBean> getEmployeeDetailOfPlanComment(String employeeId){
-		ArrayList<EmployeePlanCommentBean> resultTable = new ArrayList<EmployeePlanCommentBean>();
-		try {
-			PreparedStatement select = con.prepareStatement("SELECT p.plan_id , p.plan_title , pc.comment_datetime ,  u.last_name , u.first_name "
-					+"FROM plan_comment AS pc JOIN plan AS p ON pc.plan_id = p.plan_id JOIN users AS u ON p.planner = u.user_id "
-					+"WHERE comment_user LIKE ? ORDER BY pc.comment_datetime DESC");
-			select.setString(1, employeeId);
-			ResultSet result = select.executeQuery();
-			while(result.next()){
-				EmployeePlanCommentBean recode = new EmployeePlanCommentBean();
-				recode.setPlannerName(result.getString("u.last_name")+result.getString("u.first_name"));
-				recode.setPlanName(result.getString("p.plan_title"));
-				recode.setDays(result.getDate("pc.comment_datetime"));
-				recode.setPlanId(result.getString("p.plan_id"));
-				resultTable.add(recode);
-			}
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-		return resultTable;
+	String[] resultTable = new String[max];
+	int count = 0;
+	try {
+	    PreparedStatement select = con.prepareStatement(sql);
+	    select.setString(1, employeeId);
+	    if (limit.equals("month") || limit.equals("year")) {
+		select.setString(2, outPutDate);
+	    }
+	    ResultSet result = select.executeQuery();
+	    while (result.next()) {
+		System.out.println("Name for Chart is"
+			+ result.getString("b.batch_name"));
+		resultTable[count] = result.getString("b.batch_name");
+		count++;
+	    }
+	} catch (SQLException e) {
+	    // TODO 自動生成された catch ブロック
+	    e.printStackTrace();
 	}
-	/*
-	 * 2015/6/19
-	 * 中野 裕史郎
-	 * 社員一人のほめほめログ取得
-	 */
-	public List<EmployeeHomeLogBean> getEmployeeDetailOfHomeLog(String employeeId){
-		ArrayList<EmployeeHomeLogBean> resultTable = new ArrayList<EmployeeHomeLogBean>();
-		try {
-			PreparedStatement select = con.prepareStatement("SELECT hl.home_user , hl.home_target , hl.home_datetime , u.last_name ,u.first_name FROM home_log AS hl "
-					+"JOIN users AS u ON hl.home_target = u.user_id WHERE home_user LIKE ? ORDER BY home_datetime DESC");
-			select.setString(1, employeeId);
-			ResultSet result = select.executeQuery();
-			while(result.next()){
-				EmployeeHomeLogBean recode = new EmployeeHomeLogBean();
-				recode.setTargetName(result.getString("u.last_name")+result.getString("u.first_name"));
-				recode.setDays(result.getDate("hl.home_datetime"));
-				recode.setEmployeeId(result.getString("hl.home_target"));
-				resultTable.add(recode);
-			}
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-		return resultTable;
+	return resultTable;
+    }
+
+    /*
+     * 2015/6/23 中野 裕史郎 チャート描画用配列の取得
+     */
+    public int[] getEmployeeDetailOfBadgeCountForChart(String employeeId,
+	    String limit, String outPutDate) {
+	int max = 0;
+	String sql = "";
+	if (limit.equals("month") || limit.equals("year")) {
+	    sql = "SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
+		    + "JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
+		    + "AND home_datetime >= ? GROUP BY hl.batch_id ORDER BY b.batch_id";
+	} else if (limit.equals("total")) {
+	    sql = "SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
+		    + "JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
+		    + "GROUP BY hl.batch_id ORDER BY b.batch_id";
 	}
-	/*
-	 * 2015/07/14
-	 * 中野 裕史郎
-	 * 社員プロフィールの更新
-	 */
-	public boolean setEmployeeDetailCommentUpdate(String employeeId ,String comment){
-		int result = 0;
-		boolean jud = false;
-		try{
-			PreparedStatement update = con.prepareStatement("UPDATE employees SET comment = ? WHERE employee_id = ?");
-			update.setString(1, comment);
-			update.setString(2, employeeId);
-			result = update.executeUpdate();
-			if(result==1){
-				jud = true;
-			}else{
-				jud = false;
-			}
-		}catch (SQLException e){
-			jud = false;
-		}
-		return jud;
+	try {
+	    PreparedStatement select = con.prepareStatement(sql);
+	    select.setString(1, employeeId);
+	    if (limit.equals("month") || limit.equals("year")) {
+		select.setString(2, outPutDate);
+	    }
+	    ResultSet result = select.executeQuery();
+	    while (result.next()) {
+		max++;
+	    }
+	} catch (SQLException e) {
+	    // TODO 自動生成された catch ブロック
+	    e.printStackTrace();
 	}
-	/*
-	 * 2015/07/14
-	 * 中野 裕史郎
-	 * 社員コメントの取得
-	 */
-	public String getEmployeeDetailComment(String employeeId){
-		String resultStr = "";
-		try {
-			PreparedStatement select = con.prepareStatement("SELECT comment FROM employees WHERE employee_id = ?");
-			select.setString(1, employeeId);
-			ResultSet result = select.executeQuery();
-			while(result.next()){
-				resultStr = result.getString("comment");
-			}
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-		return resultStr;
+	int[] resultTable = new int[max];
+	int count = 0;
+	try {
+	    PreparedStatement select = con.prepareStatement(sql);
+	    select.setString(1, employeeId);
+	    if (limit.equals("month") || limit.equals("year")) {
+		select.setString(2, outPutDate);
+	    }
+	    ResultSet result = select.executeQuery();
+	    while (result.next()) {
+		resultTable[count] = result.getInt("COUNT(*)");
+		count++;
+	    }
+	} catch (SQLException e) {
+	    // TODO 自動生成された catch ブロック
+	    e.printStackTrace();
 	}
+
+	return resultTable;
+    }
+
+    /*
+     * 2015/6/19 中野 裕史郎 社員一人が持つジャンル情報の取得
+     */
+    public List<EmployeeGenreBean> getEmployeeDetailOfGenre(String employeeId) {
+	ArrayList<EmployeeGenreBean> resultTable = new ArrayList<EmployeeGenreBean>();
+	try {
+	    PreparedStatement select = con
+		    .prepareStatement("SELECT hg.genre_id , g.genre_name , COUNT(*)  , bg.big_genre_id FROM home_contents AS hc "
+			    + "JOIN home_genre AS hg ON hc.home_content_ID = hg.home_content_id JOIN genre AS g ON hg.genre_id = g.genre_id "
+			    + "JOIN big_genre AS bg ON g.big_genre_id = bg.big_genre_id WHERE hc.employee_id LIKE ? GROUP BY hg.genre_id ORDER BY COUNT(*) DESC");
+	    select.setString(1, employeeId);
+	    ResultSet result = select.executeQuery();
+	    while (result.next()) {
+		EmployeeGenreBean recode = new EmployeeGenreBean();
+		recode.setGenreName(result.getString("g.genre_name"));
+		recode.setGenreCount(result.getInt("COUNT(*)"));
+		recode.setBigGenreId(result.getString("bg.big_genre_id"));
+		resultTable.add(recode);
+	    }
+	} catch (SQLException e) {
+	    // TODO 自動生成された catch ブロック
+	    e.printStackTrace();
+	}
+	return resultTable;
+    }
+
+    /*
+     * 2015/6/19 中野 裕史郎 社員一人の立案企画情報取得
+     */
+    public List<EmployeePlanBean> getEmployeeDetailOfPlan(String employeeId) {
+	ArrayList<EmployeePlanBean> resultTable = new ArrayList<EmployeePlanBean>();
+	try {
+	    PreparedStatement select = con
+		    .prepareStatement("SELECT plan_title , plan_datetime , plan_id FROM `plan` WHERE planner LIKE ? ORDER BY plan_datetime DESC");
+	    select.setString(1, employeeId);
+	    ResultSet result = select.executeQuery();
+	    while (result.next()) {
+		EmployeePlanBean recode = new EmployeePlanBean();
+		recode.setPlanTitle(result.getString("plan_title"));
+		recode.setDays(result.getDate("plan_datetime"));
+		recode.setPlanId(result.getString("plan_id"));
+		resultTable.add(recode);
+	    }
+	} catch (SQLException e) {
+	    // TODO 自動生成された catch ブロック
+	    e.printStackTrace();
+	}
+	return resultTable;
+    }
+
+    // ------------------------------------------------------------------------------------------------------------------------------
+    /*
+     * 2015/06/17 中野 裕史郎 社員一人が持つバッジ情報の取得
+     */
+    public List<EmployeeBatchBean> getEmployeeDetailOfBatch(String employeeId) {
+	ArrayList<EmployeeBatchBean> resultTable = new ArrayList<EmployeeBatchBean>();
+	try {
+	    PreparedStatement select = con
+		    .prepareStatement("SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
+			    + "JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
+			    + "GROUP BY hl.batch_id ORDER BY hl.batch_id");
+	    select.setString(1, employeeId);
+	    ResultSet result = select.executeQuery();
+	    while (result.next()) {
+		EmployeeBatchBean recode = new EmployeeBatchBean();
+		recode.setBadgeName(result.getString("b.batch_name"));
+		recode.setBadgeCount(result.getInt("COUNT(*)"));
+		recode.setBadgeImgPath(result.getString("hl.batch_id"));
+		resultTable.add(recode);
+	    }
+	} catch (SQLException e) {
+	    // TODO 自動生成された catch ブロック
+	    e.printStackTrace();
+	}
+	return resultTable;
+
+    }
+
+    /*
+     * 2015/06/30 中野 裕史郎 社員の取得バッジの期間絞りアリ取得
+     */
+    public List<EmployeeBatchBean> getEmployeeDetailOfBatchInLimited(
+	    String employeeId, String outPutDate) {
+	ArrayList<EmployeeBatchBean> resultTable = new ArrayList<EmployeeBatchBean>();
+	try {
+	    PreparedStatement select = con
+		    .prepareStatement("SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
+			    + "JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? AND hl.home_datetime >= ? "
+			    + "GROUP BY hl.batch_id ORDER BY hl.batch_id");
+	    select.setString(1, employeeId);
+	    select.setString(2, outPutDate);
+	    ResultSet result = select.executeQuery();
+	    while (result.next()) {
+		EmployeeBatchBean recode = new EmployeeBatchBean();
+		recode.setBadgeName(result.getString("b.batch_name"));
+		recode.setBadgeCount(result.getInt("COUNT(*)"));
+		recode.setBadgeImgPath(result.getString("hl.batch_id"));
+		resultTable.add(recode);
+	    }
+	} catch (SQLException e) {
+	    // TODO 自動生成された catch ブロック
+	    e.printStackTrace();
+	}
+
+	return resultTable;
+    }
+
+    /*
+     * 2015/07/03 中野 裕史郎 社員一人の資格情報取得
+     */
+    public List<EmployeeCapacityBean> getMyEmployeeDetailOfCapacity(
+	    String employeeId) {
+	ArrayList<EmployeeCapacityBean> resultTable = new ArrayList<EmployeeCapacityBean>();
+	try {
+	    PreparedStatement select = con
+		    .prepareStatement("SELECT c.capacity_name FROM employee_capacity AS ec "
+			    + "JOIN capacity AS c ON ec.capacity_id = c.capacity_id "
+			    + "WHERE employee_id = ? ORDER BY c.capacity_id");
+	    select.setString(1, employeeId);
+	    ResultSet result = select.executeQuery();
+	    while (result.next()) {
+		EmployeeCapacityBean recode = new EmployeeCapacityBean();
+		recode.setCapacityName(result.getString("c.capacity_name"));
+		resultTable.add(recode);
+	    }
+	} catch (SQLException e) {
+	    // TODO 自動生成された catch ブロック
+	    e.printStackTrace();
+	}
+	return resultTable;
+    }
+
+    /*
+     * 2015/07/03 中野 裕史郎 社員一人の社内資格情報取得
+     */
+    public List<EmployeeCompanyCapacityBean> getMyEmployeeDetailOfCompanyCapacity(
+	    String employeeId) {
+	ArrayList<EmployeeCompanyCapacityBean> resultTable = new ArrayList<EmployeeCompanyCapacityBean>();
+	// DateFormat df = new SimpleDateFormat();
+
+	try {
+	    PreparedStatement select = con
+		    .prepareStatement("SELECT cc.capacity_name , DATE_FORMAT(ecc.get_datetime, '%Y/%m/%d') "
+			    + "FROM employee_company_capacity AS ecc JOIN company_capacity AS cc ON ecc.capacity_ID = cc.capacity_id "
+			    + "WHERE ecc.employee_id = ? ORDER BY cc.capacity_id");
+	    select.setString(1, employeeId);
+	    ResultSet result = select.executeQuery();
+	    while (result.next()) {
+		EmployeeCompanyCapacityBean recode = new EmployeeCompanyCapacityBean();
+		recode.setCapacityName(result.getString("cc.capacity_name"));
+		recode.setCapacityDate(result
+			.getString("DATE_FORMAT(ecc.get_datetime, '%Y/%m/%d')"));
+		resultTable.add(recode);
+	    }
+	} catch (SQLException e) {
+	    // TODO 自動生成された catch ブロック
+	    e.printStackTrace();
+	}
+	return resultTable;
+    }
+
+    /*
+     * 2015/07/03 中野 裕史郎 社員一人のトロフィー情報取得
+     */
+    public List<EmployeeTrophyBean> getMyEmployeeDetailOfTrophy(
+	    String employeeId) {
+	ArrayList<EmployeeTrophyBean> resultTable = new ArrayList<EmployeeTrophyBean>();
+	try {
+	    PreparedStatement select = con
+		    .prepareStatement("SELECT t.trophy_id , t.trophy_name , COUNT(*) FROM employee_trophy AS et "
+			    + "JOIN trophy AS t ON et.trophy_id = t.trophy_id "
+			    + "WHERE et.employee_id = ? GROUP BY et.trophy_id ORDER BY t.trophy_id");
+	    select.setString(1, employeeId);
+	    ResultSet result = select.executeQuery();
+	    while (result.next()) {
+		EmployeeTrophyBean recode = new EmployeeTrophyBean();
+		recode.setTrophyName(result.getString("t.trophy_name"));
+		recode.setTrophyCount(result.getInt("COUNT(*)"));
+		recode.setTrophyImg(String.valueOf(result.getInt("t.trophy_id")));
+		resultTable.add(recode);
+	    }
+	} catch (SQLException e) {
+	    // TODO 自動生成された catch ブロック
+	    e.printStackTrace();
+	}
+	return resultTable;
+    }
+
+    /*
+     * 2015/6/19 中野 裕史郎 社員一人の企画コメント取得
+     */
+    public List<EmployeePlanCommentBean> getEmployeeDetailOfPlanComment(
+	    String employeeId) {
+	ArrayList<EmployeePlanCommentBean> resultTable = new ArrayList<EmployeePlanCommentBean>();
+	try {
+	    PreparedStatement select = con
+		    .prepareStatement("SELECT p.plan_id , p.plan_title , pc.comment_datetime ,  u.last_name , u.first_name "
+			    + "FROM plan_comment AS pc JOIN plan AS p ON pc.plan_id = p.plan_id JOIN users AS u ON p.planner = u.user_id "
+			    + "WHERE comment_user LIKE ? ORDER BY pc.comment_datetime DESC");
+	    select.setString(1, employeeId);
+	    ResultSet result = select.executeQuery();
+	    while (result.next()) {
+		EmployeePlanCommentBean recode = new EmployeePlanCommentBean();
+		recode.setPlannerName(result.getString("u.last_name")
+			+ result.getString("u.first_name"));
+		recode.setPlanName(result.getString("p.plan_title"));
+		recode.setDays(result.getDate("pc.comment_datetime"));
+		recode.setPlanId(result.getString("p.plan_id"));
+		resultTable.add(recode);
+	    }
+	} catch (SQLException e) {
+	    // TODO 自動生成された catch ブロック
+	    e.printStackTrace();
+	}
+	return resultTable;
+    }
+
+    /*
+     * 2015/6/19 中野 裕史郎 社員一人のほめほめログ取得
+     */
+    public List<EmployeeHomeLogBean> getEmployeeDetailOfHomeLog(
+	    String employeeId) {
+	ArrayList<EmployeeHomeLogBean> resultTable = new ArrayList<EmployeeHomeLogBean>();
+	try {
+	    PreparedStatement select = con
+		    .prepareStatement("SELECT hl.home_user , hl.home_target , hl.home_datetime , u.last_name ,u.first_name FROM home_log AS hl "
+			    + "JOIN users AS u ON hl.home_target = u.user_id WHERE home_user LIKE ? ORDER BY home_datetime DESC");
+	    select.setString(1, employeeId);
+	    ResultSet result = select.executeQuery();
+	    while (result.next()) {
+		EmployeeHomeLogBean recode = new EmployeeHomeLogBean();
+		recode.setTargetName(result.getString("u.last_name")
+			+ result.getString("u.first_name"));
+		recode.setDays(result.getDate("hl.home_datetime"));
+		recode.setEmployeeId(result.getString("hl.home_target"));
+		resultTable.add(recode);
+	    }
+	} catch (SQLException e) {
+	    // TODO 自動生成された catch ブロック
+	    e.printStackTrace();
+	}
+	return resultTable;
+    }
+
+    /*
+     * 2015/07/14 中野 裕史郎 社員プロフィールの更新
+     */
+    public boolean setEmployeeDetailCommentUpdate(String employeeId,
+	    String comment) {
+	int result = 0;
+	boolean jud = false;
+	try {
+	    PreparedStatement update = con
+		    .prepareStatement("UPDATE employees SET comment = ? WHERE employee_id = ?");
+	    update.setString(1, comment);
+	    update.setString(2, employeeId);
+	    result = update.executeUpdate();
+	    if (result == 1) {
+		jud = true;
+	    } else {
+		jud = false;
+	    }
+	} catch (SQLException e) {
+	    jud = false;
+	}
+	return jud;
+    }
+
+    /*
+     * 2015/07/14 中野 裕史郎 社員コメントの取得
+     */
+    public String getEmployeeDetailComment(String employeeId) {
+	String resultStr = "";
+	try {
+	    PreparedStatement select = con
+		    .prepareStatement("SELECT comment FROM employees WHERE employee_id = ?");
+	    select.setString(1, employeeId);
+	    ResultSet result = select.executeQuery();
+	    while (result.next()) {
+		resultStr = result.getString("comment");
+	    }
+	} catch (SQLException e) {
+	    // TODO 自動生成された catch ブロック
+	    e.printStackTrace();
+	}
+	return resultStr;
+    }
 
     /**
      * ジャンル検索
@@ -1891,7 +1895,7 @@ public List<EmployeeBatchBean> getEmployeeDetailOfBadge(String employeeId){
 
 	// 社内資格全件取得
 	PreparedStatement capacitySelect = con
-		.prepareStatement("select * from company_capacity delete_flag = 0;");
+		.prepareStatement("select * from company_capacity where delete_flag = 0;");
 
 	ResultSet capacityResult = capacitySelect.executeQuery();
 	// 社内資格毎の処理
@@ -2386,7 +2390,34 @@ public List<EmployeeBatchBean> getEmployeeDetailOfBadge(String employeeId){
 	    insert.setTimestamp(5, plan.getTimestamp("end_date"));
 	    insert.setInt(6, plan.getInt("plan_id"));
 
-	    return insert.executeUpdate();
+	    if (insert.executeUpdate() == 1) {
+		PreparedStatement selectContentId = con
+			.prepareStatement("select LAST_INSERT_ID()");
+
+		ResultSet contentIdResult = selectContentId.executeQuery();
+		contentIdResult.next();
+		int contentId = contentIdResult.getInt(1);
+
+		PreparedStatement selectGenre = con
+			.prepareStatement("select * from plan_genre where plan_id = ?;");
+
+		selectGenre.setInt(1, planId);
+		ResultSet planGenre = selectGenre.executeQuery();
+
+		while (planGenre.next()) {
+
+		    PreparedStatement insertGenre = con
+			    .prepareStatement("insert into home_genre (home_content_id,genre_id) values (?,?);");
+		    insertGenre.setInt(1, contentId);
+		    insertGenre.setInt(2, planGenre.getInt("genre_id"));
+
+		    insertGenre.executeUpdate();
+		}
+
+		return 1;
+	    } else {
+		return 0;
+	    }
 	} else {
 	    return 0;
 	}
@@ -2467,6 +2498,31 @@ public List<EmployeeBatchBean> getEmployeeDetailOfBadge(String employeeId){
 	}
 
 	return table;
+    }
+
+    public int getNextExperience(String employeeId) throws SQLException {
+
+	PreparedStatement select = con
+		.prepareStatement("select level from employees where employee_id = ? ;");
+
+	select.setString(1, employeeId);
+	ResultSet result = select.executeQuery();
+
+	result.next();
+	int level = result.getInt("level");
+
+	PreparedStatement select2 = con
+		.prepareStatement("select * from level where level = ? ;");
+
+	select2.setInt(1, level + 1);
+	ResultSet result2 = select2.executeQuery();
+
+	result2.next();
+	int record = result2.getInt("experience");
+
+	System.out.println("e:" + record);
+
+	return record;
     }
 
 }

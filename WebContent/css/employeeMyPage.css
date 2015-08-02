@@ -1,333 +1,518 @@
 @CHARSET "UTF-8";
-div.contents{
-	width:900px;
-	margin-top:30px;
-	margin-bottom:30px;
+
+hr {
+	margin: 10px 0;
 }
-h1.employeePageTitle{
-	font-size:60px;
-	margin-left:45px;
-	margin-top:10px;
+
+table {
+	width: 100%;
+	table-layout: fixed;
 }
-div.leftContents{
-	float:left;
-	width:230px;
-	margin-top:20px;
+
+div.contents {
+	width: 900px;
+	margin: 0 auto;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+h1.employeePageTitle {
+	font-size: 60px;
+	margin-left: 45px;
+	margin-top: 10px;
+}
+
+div.leftContents {
+	float: left;
+	width: 230px;
+	margin-top: 20px;
 	margin-left: 15px;
-	margin-right:20px;
-	margin-bottom:20px;
+	margin-right: 20px;
+	margin-bottom: 20px;
 }
-div.employeeStatus{
-	width:250px;
-	margin-bottom:10px;
-	padding-top:10px;
-	padding-bottom:10px;
-	background-color:#ffdddd;
-	text-align:center;
+
+div.employeeStatus {
+	width: 250px;
+	margin-bottom: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	/* 	background-color: #ffdddd; */
+	text-align: center;
+	border: 1px solid #666;
+	border-radius: 10px; /* CSS3草案 */
+	-webkit-border-radius: 10px; /* Safari,Google Chrome用 */
+	-moz-border-radius: 10px; /* Firefox用 */
 }
-div.imageDiv{
-	width:200px;
-	height:200px;
-	margin-right:25px;
-	margin-left:25px;
+
+div.comment {
+	width: 250px;
+	margin-bottom: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	/* 	background-color: #ffdddd; */
+	border: 1px solid #666;
+	border-radius: 10px; /* CSS3草案 */
+	-webkit-border-radius: 10px; /* Safari,Google Chrome用 */
+	-moz-border-radius: 10px;
+	padding-bottom: 10px; /* Firefox用 */
 }
-img.employeeImage{
-	width:200px;
-	height:200px;
+
+div.title {
+	padding-left: 10px;
+	font-size: 18px;
 }
-ul.employeeData{
-	margin-top:5px;
+
+.icon {
+	width: 40px;
+	height: 40px;
+	margin-left: 10px;
+	margin-right: 10px;
 }
-li.employeeComment{
-	font-size:20px;
+
+.employeeComment {
+	padding-left: 10px;
+	padding-right: 10px;
 }
-li.employeeName{
-	font-size: 40px;
+
+div.imageDiv {
+	width: 200px;
+	height: 200px;
+	margin-right: 25px;
+	margin-left: 25px;
 }
-li.departmentName{
+
+img.employeeImage {
+	max-width: 200px;
+	max-height: 200px;
+}
+
+ul.employeeData {
+	margin-top: 5px;
+}
+
+li.employeeComment {
+	font-size: 20px;
+}
+
+li.employeeName {
 	font-size: 30px;
 }
-li.employeeLevel{
-	font-size:30px;
+
+li.departmentName {
+	font-size: 18px;
 }
-li.employeeExperience{
+
+li.employeeLevel {
+	font-size: 30px;
+}
+
+li.employeeExperience {
 	font-size: 25px;
 }
-input.homeButton{
-	width:200px;
-	height:50px;
-	margin-top:5px;
-	font-size:25px;
-}
-div.genreExperience{
-	width:250px;
-	background-color:#fed2ab;
+
+div.genreExperience {
+	width: 250px;
+	/* 	background-color: #fed2ab; */
 	text-align: center;
 }
-h4.experienceTitle{
-	font-size:30px;
+
+h4.experienceTitle {
+	font-size: 30px;
 }
-div.bigGenre1List{
-	width:250px;
-	height:250px;
+
+div.bigGenre1List {
+	width: 250px;
+	height: 250px;
 	overflow: auto;
-	background-color:blue;
+	background-color: blue;
 }
-div.bigGenre2List{
-	width:250px;
-	height:250px;
-	overflow:auto;
-	background-color:red;
-}
-div.rightContents{
-	float:left;
-	width: 540px;
-	margin-top:20px;
-	margin-left: 20px;
-	margin-right:15px;
-	margin-bottom:20px;
-}
-div.radarChart{
-	margin-left:0px;
-	margin-bottom:20px;
-	background-color:#ffee99;
-}
-div.capacityAndTrophyView{
-	width:540px;
-	height:330px;
-	margin-bottom: 20px;
+
+div.bigGenre2List {
+	width: 250px;
+	height: 250px;
+	overflow: auto;
 	background-color: red;
+}
+
+.trigger {
+	display: block;
+	width: 100%;
+/* 	background-color: #F29900; */
+	background-color: #ccc;
+	font-size: 18px;
+	margin-top: 10px;
+}
+
+.toggle_container {
+	display: block;
+	padding-top: 10px;
+	width: 100%;
+/* 	border: 1px solid #F29900; */
+	border: 1px solid #ccc;
+}
+
+div.rightContents {
+	float: left;
+	width: 540px;
+	margin-top: 20px;
+	margin-left: 20px;
+	margin-right: 15px;
+	margin-bottom: 20px;
+}
+
+div.radarChart {
+	margin-left: 0px;
+	margin-bottom: 20px;
+	/* 	background-color: #ffee99; */
+	border: 1px solid #666;
+	border-radius: 10px; /* CSS3草案 */
+	-webkit-border-radius: 10px; /* Safari,Google Chrome用 */
+	-moz-border-radius: 10px;
+	padding-bottom: 10px; /* Firefox用 */
+}
+
+#radar {
+	/* 	background-color: rgba(200, 50, 50, 0.3); */
+
+}
+
+div.capacityAndTrophyView {
+	width: 540px;
+	height: 330px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	/* 	background-color: red; */
+	text-align: center;
+	border: 1px solid #666;
+	overflow: hidden;
+}
+
+div.capacityAndTrophyTabs {
+	width: 100%;
+	height: 30px;
+	margin: 0px;
+	/* 	background-color: cyan; */
+	background-color: #d1d1d1;
 	text-align: center;
 }
-div.capacityAndTrophyTabs{
-	width:100%;
-	height:30px;
-	margin:0px;
-	background-color:cyan;
-	text-align:center;
+
+a.capacityTab {
+	float: left;
+	width: 33.5%;
+	height: 100%;
+	background-color: #ffc8e7;
 }
-a.capacityTab{
-	float:left;
-	width:33.5%;
-	height:100%;
-	background-color:#ffc8e7;
-}
-a.companyCapacityTab{
-	float:left;
-	width:33%;
-	height:100%;
+
+a.companyCapacityTab {
+	float: left;
+	width: 33%;
+	height: 100%;
 	background-color: #fefe72;
 }
-a.trophyTab{
-	float:left;
-	width:33.5%;
-	height:100%;
+
+a.trophyTab {
+	float: left;
+	width: 33.5%;
+	height: 100%;
 	background-color: #ddddff;
 }
-#capacityTab{
-	background-color:#ffc8e7;
+
+#capacityTab {
+	/* 	background-color: #ffc8e7; */
+	background-color: #fff;
 }
-#companyCapacityTab{
-	background-color: #fefe72;
+
+#companyCapacityTab {
+	/* 	background-color: #fefe72; */
+	background-color: #fff;
 }
-#trophyTab{
-	background-color: #ddddff;
+
+#trophyTab {
+	/* 	background-color: #ddddff; */
+	background-color: #fff;
 }
-div.capacityDetail{
-	height:100%;
+
+div.capacityDetail {
+	/* 	height: 100%; */
+	height: 300px;
 	overflow: auto;
 }
-li.capacity{
-	font-size:20px;
+
+li.capacity {
+	font-size: 20px;
 	text-align: left;
 	margin-left: 30px;
 }
-div.companyCapacityDetail{
-	height:100%;
+
+div.companyCapacityDetail {
+	/* 	height: 100%; */
+	height: 300px;
 	overflow: auto;
-}
-table.capacityList{
-	width:100%;
-}
-td.companyCapacityName{
-	width:70%;
-	font-size:25px;
-	padding-left:30px;
-	text-align:left;
-}
-td.companyCapacityDate{
-	width:30%;
-	font-size: 15px;
-	padding-right:30px;
-	text-align: right;
-}
-div.trophyDetail{
-	height:100%;
-	overflow: auto;
-}
-div.flame{
-	width:540px;
-	height:100px;
-	background:red;
-}
-div.leftFlame{
-	float: left;
-	width:100px;
-	height:100px;
-	background:blue;
-}
-div.rightFlame{
-	float: right;
-	width:440px;
-	height:100px;
-	background:green;
-}
-div.trophyName{
-	clear: both;
-	width:440px;
-	height:65px;
-	background:yellow;
-	line-height:65px;
-	text-align:center;
-}
-div.trophyCount{
-	width:440px;
-	height:35px;
-	background:white;
-	line-height:35px;
-	text-align:right;
-}
-h4.trophyCount{
-	padding-right:30px;
-}
-img.trophyImage{
-	width: 100px;
-	height:100px;
 }
 
-div.badgeView{
-	width:540px;
-	height:150px;
-	margin-top:40px;
+table.capacityList {
+	width: 100%;
+}
+
+td.companyCapacityName {
+	width: 70%;
+	font-size: 25px;
+	padding-left: 30px;
+	text-align: left;
+}
+
+td.companyCapacityDate {
+	width: 30%;
+	font-size: 15px;
+	padding-right: 30px;
+	text-align: right;
+}
+
+div.trophyDetail {
+	/* 	height: 100%; */
+	height: 300px;
+	overflow: auto;
+}
+
+div.flame {
+	width: 540px;
+	height: 100px;
+	background: red;
+}
+
+div.leftFlame {
+	float: left;
+	width: 100px;
+	height: 100px;
+	background: blue;
+}
+
+div.rightFlame {
+	float: right;
+	width: 440px;
+	height: 100px;
+	background: green;
+}
+
+div.trophyName {
+	clear: both;
+	width: 440px;
+	height: 65px;
+	background: yellow;
+	line-height: 65px;
+	text-align: center;
+}
+
+div.trophyCount {
+	width: 440px;
+	height: 35px;
+	background: white;
+	line-height: 35px;
+	text-align: right;
+}
+
+h4.trophyCount {
+	padding-right: 30px;
+}
+
+img.trophyImage {
+	width: 100px;
+	height: 100px;
+}
+
+div.badgeView {
+	width: 540px;
+/* 	min-height: 150px; */
 	margin-bottom: 20px;
-	background-color: red;
+	text-align: center;
+	border: 1px solid #666;
+	overflow: hidden;
+}
+
+div.badgeTabs {
+	width: 100%;
+	height: 30px;
+	margin: 0px;
+	background-color: #ccc;
 	text-align: center;
 }
-div.badgeTabs{
-	width:100%;
-	height:30px;
-	margin:0px;
-	background-color:cyan;
-	text-align:center;
+
+a.totalTab {
+	float: left;
+	width: 33.5%;
+	height: 100%;
+	/* 	background-color: #ffc8e7; */
 }
-a.totalTab{
-	float:left;
-	width:33.5%;
-	height:100%;
-	background-color:#ffc8e7;
+
+a.monthTab {
+	float: left;
+	width: 33%;
+	height: 100%;
+	/* 	background-color: #fefe72; */
 }
-a.monthTab{
-	float:left;
-	width:33%;
-	height:100%;
-	background-color: #fefe72;
+
+a.yearTab {
+	float: left;
+	width: 33.5%;
+	height: 100%;
+	/* 	background-color: #ddddff; */
 }
-a.yearTab{
-	float:left;
-	width:33.5%;
-	height:100%;
-	background-color: #ddddff;
+
+#totalTab {
+	/* 	background-color: #ffc8e7; */
+	background-color: #fff;
 }
-#totalTab{
-	background-color:#ffc8e7;
+
+#monthTab {
+	/* 	background-color: #fefe72; */
+	background-color: #fff;
 }
-#monthTab{
-	background-color: #fefe72;
+
+#yearTab {
+	/* 	background-color: #ddddff; */
+	background-color: #fff;
 }
-#yearTab{
-	background-color: #ddddff;
-}
-div.badgeTotal{
-	height:100%;
+
+div.badgeTotal {
+	/* 	height: 100%; */
+/* 	height: 120px; */
 	overflow: auto;
 }
-div.badgeMonth{
-	height:100%;
+
+div.badgeMonth {
+	/* 	height: 100%; */
+/* 	height: 120px; */
 	overflow: auto;
 }
-div.badgeYear{
-	height:100%;
+
+div.badgeYear {
+	/* 	height: 100%; */
+/* 	height: 120px; */
 	overflow: auto;
 }
-table.badgeTable{
-	height:120px;
-	text-align:center;
-	margin-left:3%;
+
+table.badgeTable {
+	height: 120px;
+	text-align: center;
+	margin-left: 3%;
 }
-td.badgeTab{
-	text-align:center;
-}
-img.badgeImg{
-	width:50px;
-	height:50px;
-	margin-top:0px;
-	margin-left:0px;
-	margin-right:0px;
-	margin-bottom:0px;
-}
-div.activities{
-	width:540px;
-	height:440px;
-	margin-top:40px;
-	margin-right:0px;
-	background-color:red;
-}
-div.tabs{
-	width:100%;
-	height:50px;
+
+td.badgeTab {
 	text-align: center;
 }
-a.homeTab{
-	float:left;
-	width:33.5%;
-	height:50px;
-	background-color: #ffc8e7;
+
+img.badgeImg {
+	width: 50px;
+	height: 50px;
+	margin-top: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
 }
-a.planTab{
-	float:left;
-	width:33%;
-	height:50px;
-	background-color: #fefe72;
+
+div.activities {
+	width: 540px;
+	height: 440px;
+	margin-top: 20px;
+	margin-right: 0px;
+	/* 	background-color: red; */
+	overflow: hidden;
+	border: 1px solid #666;
 }
-a.planCommentTab{
-	float:left;
-	width:33.5%;
-	height:50px;
-	background-color: #ddddff;
+
+div.tabs {
+	width: 100%;
+	height: 50px;
+	text-align: center;
+	background-color: #d1d1d1;
 }
-div.activityTab{
-	height:100%;
+
+a.homeTab {
+	float: left;
+	width: 33.5%;
+	height: 50px;
+	/* 	background-color: #ffc8e7; */
+	background-color: #fff;
+}
+
+a.planTab {
+	float: left;
+	width: 33%;
+	height: 50px;
+	/* 	background-color: #fefe72; */
+	background-color: #fff;
+}
+
+a.planCommentTab {
+	float: left;
+	width: 33.5%;
+	height: 50px;
+	/* 	background-color: #ddddff; */
+	background-color: #fff;
+}
+
+div.activityTab {
+	/* 	height: 100%; */
+	height: 390px;
 	overflow: auto;
 }
-h4.notActivity{
-	font-size:25px;
+
+h4.notActivity {
+	font-size: 25px;
 }
-li.days{
-	font-size:20px;
+
+li.days {
+	font-size: 20px;
 	text-align: left;
 	margin-left: 10px;
 }
-li.activity{
-	font-size:20px;
-	text-align:left;
-	margin-left:40px;
+
+li.activity {
+	font-size: 20px;
+	text-align: left;
+	margin-left: 40px;
 }
-#homeTab{
-	background-color:#ffc8e7;
+
+#homeTab {
+	/* 	background-color: #ffc8e7; */
+	background-color: #fff;
 }
-#planTab{
-	background-color: #fefe72;
+
+#planTab {
+	/* 	background-color: #fefe72; */
+	background-color: #fff;
 }
-#planCommentTab{
-	background-color: #ddddff;
+
+#planCommentTab {
+	/* 	background-color: #ddddff; */
+	background-color: #fff;
+}
+
+div.clear {
+	clear: both;
+}
+
+.editButton {
+	width: 100%;
+	height: 2em;
+	margin-top: 5px;
+}
+
+.planButton {
+	width: 100%;
+	height: 2em;
+	margin-top: 5px;
+}
+
+.contentButton {
+	width: 100%;
+	height: 2em;
+	margin-top: 5px;
+}
+
+input.homeButton {
+	width: 100%;
+	height: 2em;
+	margin-top: 5px;
+	font-size: 20px;
 }

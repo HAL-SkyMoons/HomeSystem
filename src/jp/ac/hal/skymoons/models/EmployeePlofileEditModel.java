@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jp.ac.hal.skymoons.beans.BigGenreBean;
 import jp.ac.hal.skymoons.beans.EmployeeBatchBean;
 import jp.ac.hal.skymoons.beans.EmployeeCapacityBean;
 import jp.ac.hal.skymoons.beans.EmployeeCompanyCapacityBean;
@@ -120,6 +121,8 @@ public class EmployeePlofileEditModel extends AbstractModel{
 				ArrayList<EmployeeHomeLogBean> employeeHomeLogReturn = new ArrayList<EmployeeHomeLogBean>();
 				ArrayList<EmployeeBatchBean> employeeBatchMonthReturn = new ArrayList<EmployeeBatchBean>();
 				ArrayList<EmployeeBatchBean> employeeBatchYearReturn = new ArrayList<EmployeeBatchBean>();
+				int experience = 0;
+				ArrayList<BigGenreBean>  bigGenreList = new ArrayList<BigGenreBean>();
 				//マイページ追加項目
 				ArrayList<EmployeeCapacityBean> employeeCapacityReturn = new ArrayList<EmployeeCapacityBean>();
 				ArrayList<EmployeeCompanyCapacityBean> employeeCompanyCapacityReturn = new ArrayList<EmployeeCompanyCapacityBean>();
@@ -158,6 +161,8 @@ public class EmployeePlofileEditModel extends AbstractModel{
 				employeeHomeLogReturn = (ArrayList<EmployeeHomeLogBean>)dao.getEmployeeDetailOfHomeLog(loginUserId);
 				employeeBatchMonthReturn = (ArrayList<EmployeeBatchBean>)dao.getEmployeeDetailOfBatchInLimited(loginUserId,monthDate);
 				employeeBatchYearReturn = (ArrayList<EmployeeBatchBean>)dao.getEmployeeDetailOfBatchInLimited(loginUserId,yearDate);
+				experience = dao.getNextExperience(loginUserId);
+				bigGenreList = (ArrayList<BigGenreBean>) dao.getAllBigGenre();
 				//チャート描画用情報取得処理
 				employeeChartBatchName = (String[])dao.getEmployeeDetailOfBadgeNameForChart(loginUserId,"total","total");
 				employeeChartBatchCount = (int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"total","total");
@@ -182,6 +187,8 @@ public class EmployeePlofileEditModel extends AbstractModel{
 				request.setAttribute("sessionId", (String)sessionController.getUserId());
 				request.setAttribute("employeeBadgeMonth", employeeBatchMonthReturn);
 				request.setAttribute("employeeBadgeYear", employeeBatchYearReturn);
+				request.setAttribute("experience", experience);
+				request.setAttribute("bigGenreList", bigGenreList);
 				//チャート用の引数をsetAttribute
 				request.setAttribute("chartName", employeeChartBatchName);
 				request.setAttribute("chartCount", employeeChartBatchCount);
