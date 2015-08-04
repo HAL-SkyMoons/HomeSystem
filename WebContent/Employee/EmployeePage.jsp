@@ -262,7 +262,7 @@
 						<li class="employeeLevel">レベル${employeeDetail.level}</li>
 					</ul>
 					<c:if test="${sessionId != employeeDetail.employeeId}">
-						<a class="iframe" href="/HomeSystem/fc/Home?toUser=${employeeDetail.employeeId}"><input type="submit" value="この人を褒める" class="homeButton"></a>
+						<a class="iframe" href="/HomeSystem/fc/Home?toUser=${employeeDetail.employeeId}"><input type="submit" value="この人を褒める" class="btn btn-2 btn-2c homeButton"></a>
 					</c:if>
 				</c:forEach>
 			</div>
@@ -270,7 +270,7 @@
 				<div class="title">一言コメント</div>
 				<hr>
 				<c:forEach var="employeeDetail" items="${employeeDetail}">
-					<div class="employeeComment">${employeeDetail.employeeComment}</div>
+					<div class="employeeComment">${Utility.nlToBR(employeeDetail.employeeComment)}</div>
 				</c:forEach>
 			</div>
 			<div class="genreExperience">

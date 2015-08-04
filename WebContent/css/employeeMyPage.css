@@ -79,11 +79,18 @@ div.imageDiv {
 	height: 200px;
 	margin-right: 25px;
 	margin-left: 25px;
+	position: relative;
 }
 
 img.employeeImage {
 	max-width: 200px;
 	max-height: 200px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: auto;
 }
 
 ul.employeeData {
@@ -137,8 +144,8 @@ div.bigGenre2List {
 .trigger {
 	display: block;
 	width: 100%;
-/* 	background-color: #F29900; */
-	background-color: #ccc;
+	/* 	background-color: #F29900; */
+	background-color: rgba(204, 204, 204, 0.8);
 	font-size: 18px;
 	margin-top: 10px;
 }
@@ -147,8 +154,8 @@ div.bigGenre2List {
 	display: block;
 	padding-top: 10px;
 	width: 100%;
-/* 	border: 1px solid #F29900; */
-	border: 1px solid #ccc;
+	/* 	border: 1px solid #F29900; */
+	border: 1px solid rgba(204, 204, 204, 0.8);
 }
 
 div.rightContents {
@@ -201,6 +208,7 @@ a.capacityTab {
 	width: 33.5%;
 	height: 100%;
 	background-color: #ffc8e7;
+	padding-top: 4px;
 }
 
 a.companyCapacityTab {
@@ -208,6 +216,7 @@ a.companyCapacityTab {
 	width: 33%;
 	height: 100%;
 	background-color: #fefe72;
+	padding-top: 4px;
 }
 
 a.trophyTab {
@@ -215,6 +224,7 @@ a.trophyTab {
 	width: 33.5%;
 	height: 100%;
 	background-color: #ddddff;
+	padding-top: 4px;
 }
 
 #capacityTab {
@@ -322,7 +332,7 @@ img.trophyImage {
 
 div.badgeView {
 	width: 540px;
-/* 	min-height: 150px; */
+	/* 	min-height: 150px; */
 	margin-bottom: 20px;
 	text-align: center;
 	border: 1px solid #666;
@@ -341,6 +351,7 @@ a.totalTab {
 	float: left;
 	width: 33.5%;
 	height: 100%;
+	padding-top: 4px;
 	/* 	background-color: #ffc8e7; */
 }
 
@@ -348,6 +359,7 @@ a.monthTab {
 	float: left;
 	width: 33%;
 	height: 100%;
+	padding-top: 4px;
 	/* 	background-color: #fefe72; */
 }
 
@@ -355,6 +367,7 @@ a.yearTab {
 	float: left;
 	width: 33.5%;
 	height: 100%;
+	padding-top: 4px;
 	/* 	background-color: #ddddff; */
 }
 
@@ -375,19 +388,19 @@ a.yearTab {
 
 div.badgeTotal {
 	/* 	height: 100%; */
-/* 	height: 120px; */
+	/* 	height: 120px; */
 	overflow: auto;
 }
 
 div.badgeMonth {
 	/* 	height: 100%; */
-/* 	height: 120px; */
+	/* 	height: 120px; */
 	overflow: auto;
 }
 
 div.badgeYear {
 	/* 	height: 100%; */
-/* 	height: 120px; */
+	/* 	height: 120px; */
 	overflow: auto;
 }
 
@@ -422,7 +435,7 @@ div.activities {
 
 div.tabs {
 	width: 100%;
-	height: 50px;
+	height: 30px;
 	text-align: center;
 	background-color: #d1d1d1;
 }
@@ -430,25 +443,28 @@ div.tabs {
 a.homeTab {
 	float: left;
 	width: 33.5%;
-	height: 50px;
+	height: 30px;
 	/* 	background-color: #ffc8e7; */
 	background-color: #fff;
+	padding-top: 4px;
 }
 
 a.planTab {
 	float: left;
 	width: 33%;
-	height: 50px;
+	height: 30px;
 	/* 	background-color: #fefe72; */
 	background-color: #fff;
+	padding-top: 4px;
 }
 
 a.planCommentTab {
 	float: left;
 	width: 33.5%;
-	height: 50px;
+	height: 30px;
 	/* 	background-color: #ddddff; */
 	background-color: #fff;
+	padding-top: 4px;
 }
 
 div.activityTab {
@@ -492,27 +508,16 @@ div.clear {
 	clear: both;
 }
 
-.editButton {
-	width: 100%;
-	height: 2em;
-	margin-top: 5px;
-}
-
-.planButton {
-	width: 100%;
-	height: 2em;
-	margin-top: 5px;
-}
-
-.contentButton {
-	width: 100%;
-	height: 2em;
-	margin-top: 5px;
-}
-
 input.homeButton {
-	width: 100%;
+	width: 90%;
 	height: 2em;
 	margin-top: 5px;
 	font-size: 20px;
+}
+
+.btn {
+	width: 90%;
+	height: 40px;
+	margin-top: 10px;
+	background-color: rgba(204, 204, 204, 0.8);
 }

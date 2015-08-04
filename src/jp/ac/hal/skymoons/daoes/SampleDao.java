@@ -2525,4 +2525,29 @@ public class SampleDao {
 	return record;
     }
 
+    public int getNowExperience(String employeeId) throws SQLException {
+
+	PreparedStatement select = con
+		.prepareStatement("select level from employees where employee_id = ? ;");
+
+	select.setString(1, employeeId);
+	ResultSet result = select.executeQuery();
+
+	result.next();
+	int level = result.getInt("level");
+
+	PreparedStatement select2 = con
+		.prepareStatement("select * from level where level = ? ;");
+
+	select2.setInt(1, level);
+	ResultSet result2 = select2.executeQuery();
+
+	result2.next();
+	int record = result2.getInt("experience");
+
+	System.out.println("e:" + record);
+
+	return record;
+    }
+
 }

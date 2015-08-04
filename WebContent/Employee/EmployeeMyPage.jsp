@@ -3,6 +3,7 @@
 <%@page import="jp.ac.hal.skymoons.beans.EmployeeBatchBean"%>
 <%@page import="java.util.*"%>
 <%@page import="java.text.*"%>
+<%@page import="jp.ac.hal.skymoons.util.Utility"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -188,9 +189,9 @@
 		//指定箇所の出力
 		document.getElementById(tabName).style.display = 'block';
 
-		document.getElementById("homeTabStyle").style.backgroundColor = "#ccc";
-		document.getElementById("planTabStyle").style.backgroundColor = "#ccc";
-		document.getElementById("planCommentTabStyle").style.backgroundColor = "#ccc";
+		document.getElementById("homeTabStyle").style.backgroundColor = "rgba(204, 204, 204, 0.3)";
+		document.getElementById("planTabStyle").style.backgroundColor = "rgba(204, 204, 204, 0.3)";
+		document.getElementById("planCommentTabStyle").style.backgroundColor = "rgba(204, 204, 204, 0.3)";
 		document.getElementById(tabName + "Style").style.backgroundColor = '#fff';
 
 	}
@@ -202,9 +203,9 @@
 		//指定箇所の出力
 		document.getElementById(tabName).style.display = 'block';
 
-		document.getElementById("totalTabStyle").style.backgroundColor = "#ccc";
-		document.getElementById("monthTabStyle").style.backgroundColor = "#ccc";
-		document.getElementById("yearTabStyle").style.backgroundColor = "#ccc";
+		document.getElementById("totalTabStyle").style.backgroundColor = "rgba(204, 204, 204, 0.3)";
+		document.getElementById("monthTabStyle").style.backgroundColor = "rgba(204, 204, 204, 0.3)";
+		document.getElementById("yearTabStyle").style.backgroundColor = "rgba(204, 204, 204, 0.3)";
 		document.getElementById(tabName + "Style").style.backgroundColor = '#fff';
 
 		var countTotal =
@@ -238,9 +239,9 @@
 		//指定箇所の出力
 		document.getElementById(tabName).style.display = 'block';
 
-		document.getElementById("capacityTabStyle").style.backgroundColor = "#ccc";
-		document.getElementById("companyCapacityTabStyle").style.backgroundColor = "#ccc";
-		document.getElementById("trophyTabStyle").style.backgroundColor = "#ccc";
+		document.getElementById("capacityTabStyle").style.backgroundColor = "rgba(204, 204, 204, 0.3)";
+		document.getElementById("companyCapacityTabStyle").style.backgroundColor = "rgba(204, 204, 204, 0.3)";
+		document.getElementById("trophyTabStyle").style.backgroundColor = "rgba(204, 204, 204, 0.3)";
 		document.getElementById(tabName + "Style").style.backgroundColor = '#fff';
 	}
 
@@ -278,16 +279,18 @@
 						<li class="employeeName">${employeeDetail.employeeName}</li>
 						<hr>
 						<li class="employeeLevel">レベル${employeeDetail.level}</li>
-						<li class="employeeExperience">${employeeDetail.experience}/${experience}XP</li>
-						<progress value="${employeeDetail.experience}" max="${experience}">
-							<span>0</span>%
+						<li class="employeeExperience">${employeeDetail.experience-nowExperience}/${nextExperience-nowExperience}XP</li>
+						<li>
+						<progress value="${employeeDetail.experience-nowExperience}" max="${nextExperience-nowExperience}">
+							<span>${(employeeDetail.experience-nowExperience) / (nextExperience-nowExperience) *100}</span>%
 						</progress>
+						</li>
 					</ul>
-					<a href="EmployeeProfileEdit"><input type="submit" value="プロフィール編集" class="editButton"></a>
+					<a href="EmployeeProfileEdit"><input type="submit" value="プロフィール編集" class="btn btn-2 btn-2c editButton"></a>
 					<br>
-					<a href="/HomeSystem/fc/PlanRegister"><input type="submit" value="企画投稿" class="planButton"></a>
+					<a href="/HomeSystem/fc/PlanRegister"><input type="submit" value="企画投稿" class="btn btn-2 btn-2c planButton"></a>
 					<br>
-					<a href="/HomeSystem/fc/"><input type="submit" value="コンテンツ投稿" class="contentButton"></a>
+					<a href="/HomeSystem/fc/"><input type="submit" value="コンテンツ投稿" class="btn btn-2 btn-2c contentButton"></a>
 				</c:forEach>
 			</div>
 
@@ -295,7 +298,7 @@
 				<div class="title">一言コメント</div>
 				<hr>
 				<c:forEach var="employeeDetail" items="${employeeDetail}">
-					<div class="employeeComment">${employeeDetail.employeeComment}</div>
+					<div class="employeeComment">${Utility.nlToBR(employeeDetail.employeeComment)}</div>
 				</c:forEach>
 			</div>
 			<!-- 経験ジャンル描画-------------------------------------------------------------------------------------------------- -->
@@ -471,7 +474,7 @@
 			<!-- 資格＆Trophy描画-------------------------------------------------------------------------------------------------- -->
 			<div class="capacityAndTrophyView">
 				<div class="capacityAndTrophyTabs">
-					<a href="javascript:capacityChange('capacityTab')" class="capacityTab" id="capacityTabStyle"><h4>公式資格情報</h4></a> <a href="javascript:capacityChange('companyCapacityTab')" class="companyCapacityTab" id="companyCapacityTabStyle"><h4>社内資格情報</h4></a> <a href="javascript:capacityChange('trophyTab')" class="trophyTab" id="trophyTabStyle"><h4>トロフィー取得情報</h4></a>
+					<a href="javascript:capacityChange('capacityTab')" class="capacityTab" id="capacityTabStyle">公式資格情報</a> <a href="javascript:capacityChange('companyCapacityTab')" class="companyCapacityTab" id="companyCapacityTabStyle">社内資格情報</a> <a href="javascript:capacityChange('trophyTab')" class="trophyTab" id="trophyTabStyle">トロフィー取得情報</a>
 				</div>
 				<div class="capacityDetail" id="capacityTab">
 					<ul>

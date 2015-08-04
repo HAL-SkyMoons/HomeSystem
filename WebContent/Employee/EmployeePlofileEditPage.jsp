@@ -1,17 +1,44 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<%@page import="jp.ac.hal.skymoons.util.Utility"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="../css/reset.css">
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css" href="../css/employeePlofileEditPage.css">
+<script src="../js/jquery-2.1.4.min.js" type="text/javascript"></script>
+<script src="../js/uploadThumbnail.js" type="text/javascript"></script>
+<script type="text/javascript" src="../js/autosize/autosize.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('.comment').bind('keyup', function() {
+			var thisValueLength = $(this).val().length;
+			$('.count').html(thisValueLength);
+		});
+	});
+</script>
 </head>
 <body>
-	<h1>編集ページ</h1>
-	<form action="/HomeSystem/fc/EmployeeProfileEdit" method="POST" enctype="multipart/form-data">
-		画像ファイル:<input type="file" name="employeeImage" /><br>
-		一言コメント：<input type="text" name="comment" value="${comment}"/><br>
-		<input type="submit" name="button" value="更新"/>
-	</form>
+	<div class="contents">
+		<form action="/HomeSystem/fc/EmployeeProfileEdit" method="POST" enctype="multipart/form-data">
+			<table class="editTable">
+				<tr>
+					<td>【 画像ファイル 】<br> <input type="file" name="employeeImage" id="file" onchange="$('#fake_input_file').text($(this)[0].files[0].name)" /> <input type="button" class="btn btn-2 btn-2c uploadBtn" value="ファイル選択" onclick="$('#file').click();" /></td>
+					<td class="help">推奨設定<br>サイズ：150*150以上<br>縦横比：1:1</td>
+				</tr>
+				<tr>
+					<td><br>【 一言コメント 】<br> <textarea name="comment" class="comment" maxlength="500">${comment}</textarea> <%-- 					<input type="text" name="comment" value="${comment}" /></td> --%>
+					<td class="help">最大500文字<br>※改行込<br>現在文字数：<span class="count">${comment.length()}</count></td>
+				</tr>
+			</table>
+			<input type="submit" name="button" value="更新" class="btn btn-2 btn-2c submitBtn">
+		</form>
+	</div>
 </body>
+<script>
+	autosize(document.querySelectorAll('textarea'));
+</script>
 </html>
