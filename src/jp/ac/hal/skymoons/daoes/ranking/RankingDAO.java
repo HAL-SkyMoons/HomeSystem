@@ -69,12 +69,13 @@ public class RankingDAO {
 	}
 	
 	/**
-	 * 年リストを取得する。
+	 * 年リストを取得する。<br />
+	 * データベースに登録されている日付から生成。
 	 * @return
 	 * 年リスト
 	 * @throws SQLException
 	 */
-	public List<String> getYearList() throws SQLException {
+	public List<String> getYearList1() throws SQLException {
 		String sql	= "SELECT DATE_FORMAT(home_datetime, '%Y') AS year_list"
 					+ " FROM home_log"
 					+ " GROUP BY DATE_FORMAT(home_datetime, '%Y')"
@@ -90,6 +91,21 @@ public class RankingDAO {
 			return yearList;
 		}
 		return null;
+	}
+	
+	/**
+	 * 年を取得する。<br />
+	 * データベースに登録されている一番古いデータから取り出す。
+	 * @return
+	 * 年
+	 * @throws SQLException
+	 */
+	public String getYearList2() throws SQLException {
+		String sql	= "SELECT DATE_FORMAT(MIN(home_datetime), '%Y') AS year FROM home_log";
+		PreparedStatement preparedStatement = this.con.prepareStatement(sql);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		resultSet.next();
+		return resultSet.getString("year");
 	}
 
 	/**

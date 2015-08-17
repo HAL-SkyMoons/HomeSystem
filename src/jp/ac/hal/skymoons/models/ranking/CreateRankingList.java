@@ -58,11 +58,12 @@ public class CreateRankingList extends AbstractModel {
 			List<BatchBean> batchList = rankingDAO.getBatchList();
 			// ランキングリストの取得
 			List<TopNumRankingBean> list = rankingDAO.getRankingList(whereBatch, whereYear, whereMonth);
-			// 年リストの取得
-			List<String> year_list = rankingDAO.getYearList();
+			// 最小値の年の取得
+			String year = rankingDAO.getYearList2();
+			
 			request.setAttribute("batchList", batchList);
 			request.setAttribute("list", list);
-			request.setAttribute("yearList", year_list);
+			request.setAttribute("year", year);
 		} catch (Exception e){
 			e.printStackTrace();
 			System.out.println("獲得数ランキングリスト作成処理中に問題が発生。");

@@ -1,10 +1,12 @@
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
 <%@page import="jp.ac.hal.skymoons.beans.ranking.BatchBean"%>
 <%@page import="jp.ac.hal.skymoons.beans.ranking.TopNumRankingBean"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
 	@SuppressWarnings("unchecked") List<TopNumRankingBean> list = (List<TopNumRankingBean>)request.getAttribute("list");
-	@SuppressWarnings("unchecked") List<String> yearList = (List<String>)request.getAttribute("yearList");
+	int minYear = Integer.parseInt((String)request.getAttribute("year"));
 	@SuppressWarnings("unchecked") List<BatchBean> batchList = (List<BatchBean>)request.getAttribute("batchList");
 	String batch = (String)request.getAttribute("batch");
 	String year = (String)request.getAttribute("year");
@@ -52,19 +54,22 @@
 	// 年指定
 	out.println("<select name='year'>");
 	out.println("<option value='0' selected>指定無し</option>");
+	SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+	int nowYear = Integer.parseInt(sdf.format(new Date()));
+	nowYear = 210;
 	if(year == null) {
 		// 前回年指定無し
-		for(String value : yearList) {
-			out.println("<option value='" + value + "'>" + value + "</option>");
+		for (int i = nowYear; i >= minYear; i--) {
+			out.println("<option value='" + i + "'>" + i + "</option>");
 		}
 	} else {
 		// 前回年指定有り
-		for(String value : yearList) {
-			out.print("<option value='" + value + "'");
-				if(year.equals(value)) {
-					out.print(" selected");
-				}
-			out.println(">" + value + "</option>");
+		for (int i = nowYear; i >= minYear; i--) {
+			out.print("<option value='" + i + "'");
+			if(Integer.parseInt(year) == i) {
+				out.print(" selected");
+			}
+		out.println(">" + i + "</option>");
 		}
 	}
 	out.println("</select>年");
