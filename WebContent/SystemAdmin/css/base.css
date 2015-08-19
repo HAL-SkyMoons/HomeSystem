@@ -1,0 +1,25 @@
+@CHARSET "UTF-8";
+
+* {
+	padding: 0px;
+	margin:	0px;
+}
+
+body {
+	color: #F0F0F0;
+	background: linear-gradient(#336666, #330066);
+	
+	width: 100%;
+	height: 100%;
+}
+
+.ErrorText {
+	color: #FF0000;
+	animation: ErrorText 0.5s linear infinite;
+}
+
+@keyframes ErrorText {
+	0% {color: #FF0000;}
+	50% {color: #A00000;}
+	100% {color: #FF0000;}
+}

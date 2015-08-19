@@ -19,10 +19,15 @@ public class LoginAdministrator extends AbstractModel {
 	public String doService(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		
+		
+		
 		if(request.getParameter("submit") == null) {
 			// ログインボタンが押されていない
 			return "/login/a.jsp";
 		}
+		
+		
+		
 		// ログインボタンが押された
 		if(	request.getParameter("id").equals("") ||
 			request.getParameter("pass").equals("")) {
@@ -30,8 +35,10 @@ public class LoginAdministrator extends AbstractModel {
 			request.setAttribute("message", "未入力項目があります。");
 			return "/login/a.jsp";
 		}
-		// 未入力項目なし
 		
+		
+		
+		// 未入力項目なし
 		// DB問合せ
 		LoginDAO loginDAO = null;
 		try{
@@ -51,6 +58,9 @@ public class LoginAdministrator extends AbstractModel {
 		} finally {
 			loginDAO.close();
 		}
+		
+		
+		
 		// 認証成功
 		// セッション開始
 		SessionController sessionController = new SessionController(request);
