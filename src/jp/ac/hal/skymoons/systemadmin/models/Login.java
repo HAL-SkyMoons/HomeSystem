@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.systemadmin.daoes.LoginDAO;
+import jp.ac.hal.skymoons.systemadmin.security.SessionController;
 
 /**
  * 管理システムログイン認証機能
@@ -53,6 +54,8 @@ public class Login extends AbstractModel {
 					if(flg) {
 						// 認証成功
 						// セッション開始
+						SessionController sessionController = new SessionController(request);
+						sessionController.setAdministratorId(request.getParameter("id"));
 						// メニュー画面へ遷移
 						return "menu";
 					} else {

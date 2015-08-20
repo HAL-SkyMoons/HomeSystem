@@ -7,27 +7,23 @@ import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.systemadmin.security.SessionController;
 
 /**
- * 管理システムメニュー画面アクセス
+ * 管理システムログアウト処理
  * @author YAMAZAKI GEN
- * @since 2015/08/20
+ * @since 2015/08/21
  * @version 1.0
  */
-public class Menu extends AbstractModel {
+public class Logout extends AbstractModel {
 
 	@Override
 	public String doService(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		
-		// セッション確認
+		// セッションを終了
 		SessionController sessionController = new SessionController(request);
-		if(sessionController.getSessionStatus() == false) {
-			// セッションが無い
-			
-			return "../../SystemAdmin/login.jsp";
-		}
+		sessionController.discardSession();
 		
-		// メニュー画面へ遷移
-		return "../../SystemAdmin/menu.jsp";
+		// ログイン画面へ遷移
+		return "../../SystemAdmin/login.jsp";
 	}
 
 }

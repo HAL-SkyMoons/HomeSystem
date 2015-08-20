@@ -98,8 +98,9 @@ public class ModelSelectorGet {
 		mapping.put("/HomeSystem/fc/companyCapacityChange", new jp.ac.hal.skymoons.models.companycapacity.CompanyCapacityChange());
 
 		// 管理システム
-		mapping.put("/HomeSystem/fc/SystemAdmin/login",	new jp.ac.hal.skymoons.systemadmin.models.Login());
-		mapping.put("/HomeSystem/fc/SystemAdmin/menu",	new jp.ac.hal.skymoons.systemadmin.models.Menu());
+		mapping.put("/HomeSystem/fc/SystemAdmin/login", new jp.ac.hal.skymoons.systemadmin.models.Login());
+		mapping.put("/HomeSystem/fc/SystemAdmin/logout", new jp.ac.hal.skymoons.systemadmin.models.Logout());
+		mapping.put("/HomeSystem/fc/SystemAdmin/menu", new jp.ac.hal.skymoons.systemadmin.models.Menu());
 	}
 
 /**
