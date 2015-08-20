@@ -1,7 +1,7 @@
 @CHARSET "UTF-8";
 
 #MainBox {
-	background: rgba(0, 0, 0, 0.4);
+	background: rgba(0, 0, 0, 0.5);
 	
 	width: 500px;
 	height: 250px;
@@ -34,7 +34,7 @@ h1 {
 
 .InputA {
 	color: #F0F0F0;
-	background: rgba(0, 0, 0, 0.4);
+	background: rgba(0, 0, 0, 0.5);
 	
 	width: 400px;
 	height: 40px;
@@ -46,7 +46,7 @@ h1 {
 	text-align: center;
 }
 .InputA:HOVER {
-	background: rgba(128, 128, 128, 0.4);
+	background: rgba(128, 128, 128, 0.5);
 }
 
 #LoginBoxA3 {
@@ -67,7 +67,7 @@ h1 {
 
 #SubmitBtn {
 	color: #F0F0F0;
-	background: rgba(0, 0, 0, 0.4);
+	background: rgba(0, 0, 0, 0.5);
 	
 	width: 120px;
 	height: 40px;
@@ -78,5 +78,5 @@ h1 {
 	text-align: center;
 }
 #SubmitBtn:HOVER {
-	background: rgba(128, 128, 128, 0.4);
+	background: rgba(128, 128, 128, 0.5);
 }

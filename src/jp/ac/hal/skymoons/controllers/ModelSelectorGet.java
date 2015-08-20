@@ -25,7 +25,6 @@ import jp.ac.hal.skymoons.models.login.LoginUser;
 import jp.ac.hal.skymoons.models.login.LogoutAdministrator;
 import jp.ac.hal.skymoons.models.login.LogoutUser;
 import jp.ac.hal.skymoons.models.ranking.CreateRankingList;
-import jp.ac.hal.skymoons.models.genre.GenreTop;
 
 public class ModelSelectorGet {
 	private static final HashMap<String, AbstractModel> mapping;
@@ -99,7 +98,8 @@ public class ModelSelectorGet {
 		mapping.put("/HomeSystem/fc/companyCapacityChange", new jp.ac.hal.skymoons.models.companycapacity.CompanyCapacityChange());
 
 		// 管理システム
-		mapping.put("/HomeSystem/fc/SystemAdmin/login", new jp.ac.hal.skymoons.systemadmin.models.Login());
+		mapping.put("/HomeSystem/fc/SystemAdmin/login",	new jp.ac.hal.skymoons.systemadmin.models.Login());
+		mapping.put("/HomeSystem/fc/SystemAdmin/menu",	new jp.ac.hal.skymoons.systemadmin.models.Menu());
 	}
 
 /**

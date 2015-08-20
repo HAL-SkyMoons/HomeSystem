@@ -5,9 +5,25 @@
 	margin:	0px;
 }
 
+input {
+	border: none;
+}
+
+a {
+	color: #F0F0F0;
+	text-decoration: none;
+}
+a:VISITED {
+	color: #F0F0F0;
+	text-decoration: none;
+}
+
 body {
 	color: #F0F0F0;
-	background: linear-gradient(#336666, #330066);
+	/* 共通背景色 */
+	/*background: linear-gradient(#336666, #333366, #336666);
+	background: linear-gradient(#669999, #666699, #669999);*/
+	background: #303030;
 	
 	width: 100%;
 	height: 100%;

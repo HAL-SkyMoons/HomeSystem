@@ -1,0 +1,32 @@
+@CHARSET "UTF-8";
+
+#box1 {
+	overflow: hidden;
+}
+
+.box1-1, .box1-2 {
+	width: 490px;
+	height: 150px;
+	border: #F0F0F0 solid 1px;
+	border-radius: 5px;
+	
+	font-size: 32px;
+	text-align: center;
+	line-height: 150px;
+	letter-spacing: 1px;
+	
+	float: left;
+}
+.box1-1:HOVER, .box1-2:HOVER {
+	background: #606060;
+}
+
+.box1-2 {
+	margin-left: 6px;
+}
+
+.box2 {
+	margin-top: 5px;
+
+	overflow: hidden;
+}
