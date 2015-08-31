@@ -2,7 +2,7 @@
 <!DOCTYPE>
 <html lang="ja">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<link rel="stylesheet" type="text/css" href="/HomeSystem/SystemAdmin/css/base.css">
 	<link rel="stylesheet" type="text/css" href="/HomeSystem/SystemAdmin/css/wrapper.css">
 	<title>テンプレート</title>
@@ -15,8 +15,8 @@
 			<div class="menuLeftBox">メニュー２</div>
 			<div class="menuLeftBox">メニュー３</div>
 			<div id="menuSearchBox">
-				<form action="#" method="get">
-					<input class="searchInput1" type="text" name="keyword" maxlength="50" placeholder="キーワード検索"><input class="searchInput2" type="submit" name="submit" value="検索">
+				<form action="" method="get">
+					<input id="searchInput1" type="text" name="keyword" maxlength="50" placeholder="キーワード検索"><input id="searchInput2" type="submit" name="submit" value="検索">
 				</form>
 			</div>
 			
@@ -28,10 +28,10 @@
 			<p>あいうえお<br />かきくけこ<br />さしすせそ<br />たちつてと<br />なにぬねの<br />はひふへほ</p>
 			<p>あいうえお<br />かきくけこ<br />さしすせそ<br />たちつてと<br />なにぬねの<br />はひふへほ</p>
 			<p>あいうえお<br />かきくけこ<br />さしすせそ<br />たちつてと<br />なにぬねの<br />はひふへほ</p>
+			<!--<p>あいうえお<br />かきくけこ<br />さしすせそ<br />たちつてと<br />なにぬねの<br />はひふへほ</p>
 			<p>あいうえお<br />かきくけこ<br />さしすせそ<br />たちつてと<br />なにぬねの<br />はひふへほ</p>
 			<p>あいうえお<br />かきくけこ<br />さしすせそ<br />たちつてと<br />なにぬねの<br />はひふへほ</p>
-			<p>あいうえお<br />かきくけこ<br />さしすせそ<br />たちつてと<br />なにぬねの<br />はひふへほ</p>
-			<p>あいうえお<br />かきくけこ<br />さしすせそ<br />たちつてと<br />なにぬねの<br />はひふへほ</p>
+			<p>あいうえお<br />かきくけこ<br />さしすせそ<br />たちつてと<br />なにぬねの<br />はひふへほ</p>-->
 		</div>
 	</div>
 </body>

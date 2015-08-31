@@ -34,10 +34,12 @@ public class Login extends AbstractModel {
 				} catch(Exception e) {
 					e.printStackTrace();
 					System.out.println("ERROR:データベースコネクションの取得が失敗しました。");
+					request.setAttribute("url", "/HomeSystem/fc/SystemAdmin/login");
 					return "../../SystemAdmin/error/error.jsp";
 				}
 				if(loginDAO.getConnectionStatus() == false) {
 					System.out.println("ERROR:データベースコネクションの取得が失敗しました。");
+					request.setAttribute("url", "/HomeSystem/fc/SystemAdmin/login");
 					return "../../SystemAdmin/error/error.jsp";
 				}
 				try {
@@ -47,6 +49,7 @@ public class Login extends AbstractModel {
 				} catch(Exception e) {
 					e.printStackTrace();
 					System.out.println("ERROR:認証処理中にエラーが発生しました。");
+					request.setAttribute("url", "/HomeSystem/fc/SystemAdmin/login");
 					return "../../SystemAdmin/error/error.jsp";
 				}
 				loginDAO.connectionClose();
@@ -60,9 +63,10 @@ public class Login extends AbstractModel {
 						return "menu";
 					} else {
 						// 認証失敗
-						request.setAttribute("message", "認証が失敗しました。");
+						request.setAttribute("message", "ログインID、又はパスワードが間違っています。");
 					}
 				} else {
+					request.setAttribute("url", "/HomeSystem/fc/SystemAdmin/login");
 					return "../../SystemAdmin/error/error";
 				}
 			} else {

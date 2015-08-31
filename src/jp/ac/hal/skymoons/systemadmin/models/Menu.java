@@ -22,7 +22,7 @@ public class Menu extends AbstractModel {
 		SessionController sessionController = new SessionController(request);
 		if(sessionController.getSessionStatus() == false) {
 			// セッションが無い
-			
+			// 画面遷移
 			return "../../SystemAdmin/login.jsp";
 		}
 		
