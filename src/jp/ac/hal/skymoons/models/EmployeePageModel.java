@@ -45,14 +45,12 @@ public class EmployeePageModel extends AbstractModel{
 		//チャート描画用変数
 		String[] employeeChartBatchName = {};
 		int[] employeeChartBatchCount = {};
+		int batchKindCount=0;
 		//月間
-		String[] employeeChartBatchNameMonth = {};
 		int[] employeeChartBatchCountMonth = {};
 		//年間
-		String[] employeeChartBatchNameYear = {};
 		int[] employeeChartBatchCountYear = {};
 		//通算
-		String[] employeeChartBatchNameTotal = {};
 		int[] employeeChartBatchCountTotal = {};
 
 		//引数取得
@@ -79,14 +77,12 @@ public class EmployeePageModel extends AbstractModel{
 		employeeBatchMonthReturn = (ArrayList<EmployeeBatchBean>)dao.getEmployeeDetailOfBatchInLimited(employeeId,monthDate);
 		employeeBatchYearReturn = (ArrayList<EmployeeBatchBean>)dao.getEmployeeDetailOfBatchInLimited(employeeId,yearDate);
 		//チャート描画用情報取得処理
-		employeeChartBatchName = (String[])dao.getEmployeeDetailOfBadgeNameForChart(employeeId,"total","total");
-		employeeChartBatchCount = (int[])dao.getEmployeeDetailOfBadgeCountForChart(employeeId,"total","total");
-		employeeChartBatchNameMonth = (String[])dao.getEmployeeDetailOfBadgeNameForChart(employeeId,"month",monthDate);
-		employeeChartBatchCountMonth =(int[])dao.getEmployeeDetailOfBadgeCountForChart(employeeId,"month",monthDate);
-		employeeChartBatchNameYear = (String[])dao.getEmployeeDetailOfBadgeNameForChart(employeeId,"year",yearDate);
-		employeeChartBatchCountYear =(int[])dao.getEmployeeDetailOfBadgeCountForChart(employeeId,"year",yearDate);
-		employeeChartBatchNameTotal = (String[])dao.getEmployeeDetailOfBadgeNameForChart(employeeId,"total","total");
-		employeeChartBatchCountTotal =(int[])dao.getEmployeeDetailOfBadgeCountForChart(employeeId,"total","total");
+		employeeChartBatchName = (String[])dao.getEmployeeDetailOfBadgeNameForChart(employeeId);
+		batchKindCount = employeeChartBatchName.length;
+		employeeChartBatchCount = (int[])dao.getEmployeeDetailOfBadgeCountForChart(employeeId,"total","total",batchKindCount);
+		employeeChartBatchCountMonth =(int[])dao.getEmployeeDetailOfBadgeCountForChart(employeeId,"month",monthDate,batchKindCount);
+		employeeChartBatchCountYear =(int[])dao.getEmployeeDetailOfBadgeCountForChart(employeeId,"year",yearDate,batchKindCount);
+		employeeChartBatchCountTotal =(int[])dao.getEmployeeDetailOfBadgeCountForChart(employeeId,"total","total",batchKindCount);
 		dao.close();
 
 		//出力ページ用の引数をsetAtribute
@@ -102,11 +98,8 @@ public class EmployeePageModel extends AbstractModel{
 		//チャート用の引数をsetAttribute
 		request.setAttribute("chartName", employeeChartBatchName);
 		request.setAttribute("chartCount", employeeChartBatchCount);
-		request.setAttribute("chartNameMonth", employeeChartBatchNameMonth);
 		request.setAttribute("chartCountMonth", employeeChartBatchCountMonth);
-		request.setAttribute("chartNameYear", employeeChartBatchNameYear);
 		request.setAttribute("chartCountYear", employeeChartBatchCountYear);
-		request.setAttribute("chartNameTotal", employeeChartBatchNameTotal);
 		request.setAttribute("chartCountTotal", employeeChartBatchCountTotal);
 		//参照ファイルパスの指定
 		return "/Employee/EmployeePage.jsp";

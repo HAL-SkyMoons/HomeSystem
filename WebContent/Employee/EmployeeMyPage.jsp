@@ -22,23 +22,15 @@
 	String[] chartName = (String[])request.getAttribute("chartName");
 	int[] chartCount = (int[])request.getAttribute("chartCount");
 	//月間
-	String[] chartNameMonth = (String[])request.getAttribute("chartNameMonth");
 	int[] chartCountMonth = (int[])request.getAttribute("chartCountMonth");
 	//年間
-	String[] chartNameYear = (String[])request.getAttribute("chartNameYear");
 	int[] chartCountYear = (int[])request.getAttribute("chartCountYear");
 	//通算
-	String[] chartNameTotal = (String[])request.getAttribute("chartNameTotal");
 	int[] chartCountTotal = (int[])request.getAttribute("chartCountTotal");
 
 %>
 <script type="text/javascript" src="../js/Chart.js-master/Chart.js"></script>
 <script>
-	//ホメボタン
-// 	function ImageUp(employeeId) {
-// 		window.open("/HomeSystem/fc/Home?toUser="+employeeId,"window2","width=1000,height=500");
-// 	}
-
 	$(function() {
 		$(".iframe").colorbox({
 			iframe : true,
@@ -50,9 +42,9 @@
 	//グラフ切り替え(月間)
 	function graphChangeMonth(){
 		var radarChartData = {
-				labels : [<% if(chartNameMonth.length !=0 && chartCountMonth.length !=0){
-					for (int i = 0; i < chartNameMonth.length;) {
-						out.print("\""+chartNameMonth[i]+"\"");
+				labels : [<% if(chartName.length !=0 && chartCountMonth.length !=0){
+					for (int i = 0; i < chartName.length;) {
+						out.print("\""+chartName[i]+"\"");
 						i++;
 						if(i==chartCountMonth.length){
 							break;
@@ -66,7 +58,7 @@
 					strokeColor : "rgba(255,0,0,1)",
 					pointColor : "rgba(255,0,0,1)",
 					pointStrokeColor : "#fff",
-					data : [<% if(chartNameMonth.length !=0 && chartCountMonth.length !=0){
+					data : [<% if(chartName.length !=0 && chartCountMonth.length !=0){
 						for (int i = 0; i < chartCountMonth.length;) {
 							out.print(chartCountMonth[i]);
 							i++;
@@ -86,9 +78,9 @@
 	//グラフ切り替え(年間)
 	function graphChangeYear(){
 		var radarChartData = {
-				labels : [<% if(chartNameYear.length !=0 && chartCountYear.length !=0){
-					for (int i = 0; i < chartNameYear.length;) {
-						out.print("\""+chartNameYear[i]+"\"");
+				labels : [<% if(chartName.length !=0 && chartCountYear.length !=0){
+					for (int i = 0; i < chartName.length;) {
+						out.print("\""+chartName[i]+"\"");
 						i++;
 						if(i==chartCountYear.length){
 							break;
@@ -102,7 +94,7 @@
 					strokeColor : "rgba(255,0,0,1)",
 					pointColor : "rgba(255,0,0,1)",
 					pointStrokeColor : "#fff",
-					data : [<% if(chartNameYear.length !=0 && chartCountYear.length !=0){
+					data : [<% if(chartName.length !=0 && chartCountYear.length !=0){
 						for (int i = 0; i < chartCountYear.length;) {
 							out.print(chartCountYear[i]);
 							i++;
@@ -122,9 +114,9 @@
 	//グラフ切り替え(通算)
 	function graphChangeTotal(){
 		var radarChartData = {
-				labels : [<% if(chartNameTotal.length !=0 && chartCountTotal.length !=0){
-					for (int i = 0; i < chartNameTotal.length;) {
-						out.print("\""+chartNameTotal[i]+"\"");
+				labels : [<% if(chartName.length !=0 && chartCountTotal.length !=0){
+					for (int i = 0; i < chartName.length;) {
+						out.print("\""+chartName[i]+"\"");
 						i++;
 						if(i==chartCountTotal.length){
 							break;
@@ -138,7 +130,7 @@
 					strokeColor : "rgba(255,0,0,1)",
 					pointColor : "rgba(255,0,0,1)",
 					pointStrokeColor : "#fff",
-					data : [<% if(chartNameTotal.length !=0 && chartCountTotal.length !=0){
+					data : [<% if(chartName.length !=0 && chartCountTotal.length !=0){
 						for (int i = 0; i < chartCountTotal.length;) {
 							out.print(chartCountTotal[i]);
 							i++;
@@ -280,41 +272,6 @@
 		<div class="radarChart">
 			<canvas id="radar" height="400" width="540"></canvas>
 		</div>
-			<script>
-				var radarChartData = {
-					labels : [<% if(chartName.length !=0 && chartCount.length !=0){
-						for (int i = 0; i < chartName.length;) {
-							out.print("\""+chartName[i]+"\"");
-							i++;
-							if(i==chartCount.length){
-								break;
-							}
-								out.print(",");
-						}
-						}%>],
-					datasets : [
-						{
-						fillColor : "rgba(200,50,50,0.8)",
-						strokeColor : "rgba(255,0,0,1)",
-						pointColor : "rgba(255,0,0,1)",
-						pointStrokeColor : "#fff",
-						data : [<% if(chartName.length !=0 && chartCount.length !=0){
-							for (int i = 0; i < chartCount.length;) {
-								out.print(chartCount[i]);
-								i++;
-								if(i==chartCount.length){
-									break;
-								}
-								out.print(",");
-							}
-							}%>]
-						}
-					]
-				}
-				var myRadar = new Chart(document.getElementById("radar").getContext("2d"))
-					.Radar(radarChartData,{
-						scaleShowLabels : true, scaleFontSize : 15, scaleLineColor: "rgba(0,0,0,0.9)", pointLabelFontSize : 20, });
-				</script>
 	<!-- 資格＆Trophy描画-------------------------------------------------------------------------------------------------- -->
 		<div class="capacityAndTrophyView">
 			<div class="capacityAndTrophyTabs">
@@ -496,6 +453,7 @@
 				activityChange('homeTab');
 				badgeChange('totalTab');
 				capacityChange('capacityTab');
+				graphChangeTotal();
 			</script>
 	</div>
 </div>

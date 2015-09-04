@@ -485,24 +485,11 @@ public class SampleDao {
 	 * 中野 裕史郎
 	 * チャート描画用配列の取得
 	 */
-	public String[] getEmployeeDetailOfBadgeNameForChart(String employeeId,String limit,String outPutDate){
+	public String[] getEmployeeDetailOfBadgeNameForChart(String employeeId){
 		int max =0;
-		String sql="";
-		if(limit.equals("month")||limit.equals("year")){
-			sql = "SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
-					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
-					+"AND home_datetime >= ? GROUP BY hl.batch_id ORDER BY b.batch_id";
-		}else if(limit.equals("total")){
-			sql = "SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
-					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
-					+"GROUP BY hl.batch_id ORDER BY b.batch_id";
-		}
+		String sql = "SELECT batch_name FROM batch ORDER BY batch_id";
 		try {
 			PreparedStatement select = con.prepareStatement(sql);
-			select.setString(1, employeeId);
-			if(limit.equals("month")||limit.equals("year")){
-				select.setString(2, outPutDate);
-			}
 			ResultSet result = select.executeQuery();
 			while(result.next()){
 				max++;
@@ -516,14 +503,10 @@ public class SampleDao {
 		int count =0;
 		try {
 			PreparedStatement select = con.prepareStatement(sql);
-			select.setString(1, employeeId);
-			if(limit.equals("month")||limit.equals("year")){
-				select.setString(2, outPutDate);
-			}
 			ResultSet result = select.executeQuery();
 			while(result.next()){
-				System.out.println("Name for Chart is" +result.getString("b.batch_name"));
-				resultTable[count] = result.getString("b.batch_name");
+				System.out.println("Name for Chart is" +result.getString("batch_name"));
+				resultTable[count] = result.getString("batch_name");
 				count++;
 			}
 		} catch (SQLException e) {
@@ -538,8 +521,11 @@ public class SampleDao {
 	 * 中野 裕史郎
 	 * チャート描画用配列の取得
 	 */
-	public int[] getEmployeeDetailOfBadgeCountForChart(String employeeId, String limit, String outPutDate){
-		int max =0;
+	public int[] getEmployeeDetailOfBadgeCountForChart(String employeeId, String limit, String outPutDate,int batchKindCount){
+		int[] batchCount = new int[batchKindCount];
+		for(int count=0;count<batchKindCount-1;count++){
+			batchCount[count]=0;
+		}
 		String sql="";
 		if(limit.equals("month")||limit.equals("year")){
 			sql = "SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
@@ -558,31 +544,15 @@ public class SampleDao {
 			}
 			ResultSet result = select.executeQuery();
 			while(result.next()){
-				max++;
-			}
-		} catch (SQLException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-		int[] resultTable = new int[max];
-		int count =0;
-		try {
-			PreparedStatement select = con.prepareStatement(sql);
-			select.setString(1, employeeId);
-			if(limit.equals("month")||limit.equals("year")){
-				select.setString(2, outPutDate);
-			}
-			ResultSet result = select.executeQuery();
-			while(result.next()){
-				resultTable[count]=result.getInt("COUNT(*)");
-				count++;
+				batchCount[result.getInt("hl.batch_id")-1]=result.getInt("COUNT(*)");
+				System.out.println("batchId= "+result.getInt("hl.batch_id")+" AND counts= "+result.getInt("COUNT(*)"));
 			}
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 
-		return resultTable;
+		return batchCount;
 	}
 	/*
 	 * 2015/6/19
