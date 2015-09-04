@@ -1,119 +1,201 @@
 @CHARSET "UTF-8";
-div.contents{
-	width:900px;
-	margin-top:30px;
-	margin-bottom:30px;
-	background-color: red;
+
+body {
+	font-family: 'Lucida Grande', 'Hiragino Kaku Gothic ProN',
+		'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, sans-serif;
 }
-div.searchPart{
-	width:870px;
-	height:300px;
-	margin-left:15px;
-	margin-right:15px;
-	background-color: #ffcccc;
+
+div.contents {
+	margin: 0 auto;
+	width: 1000px;
 }
-h2.searchTitle{
-	width:280px;
-	margin-top:5px;
-	margin-left:5px;
-	margin-right:5px;
-	margin-bottom:5px;
-	font-size:30px;
-	text-align: center;
+
+div.searchPart {
+	/* 	background-color: red; */
+	width: 200px;
+	display: table-cell;
+	border-right: 1px solid #ccc;
 }
-div.departmentSearch{
-	float:left;
-	width:225px;
-	height:50px;
-	margin-top:5px;
-	margin-left:5px;
-	margin-right:5px;
-	margin-bottom:5px;
-	text-align: center;
-	font-size: 25px;
+
+h2.searchTitle {
+
 }
-select.departmentSelect{
-	width:200px;
-	height:50px;
-	margin:0px;
-	font-size: 100%;
+
+div.departmentSearch {
+
 }
-input.departmentButton{
-	width:70px;
-	height: 50px;
-	margin:0px;
-	font-size: 100%;
+
+div.departmentTitle {
+	font-weight: bold;
 }
-div.genreList{
-	float:left;
-	width:450px;
-	margin-top:5px;
-	margin-left: 5px;
-	margin-right: 5px;
-	margin-bottom:10px;
-}
-h4.genreTitle{
-	font-size:25px;
-}
-h5.bigGenreTitle{
-	text-align: center;
-	font-size:25px;
-}
-div.bigGenre1{
-	float:left;
-	width:225px;
-	margin-top:10px;
-	margin-left:5px;
-	margin-right:5px;
-	background-color: #dd6666;
-	font-size:20px;
-}
-div.bigGenre2{
-	float:left;
-	width:225px;
-	margin-top:10px;
-	margin-left:5px;
-	margin-left:5px;
-	margin-bottom:10px;
-	background-color: #dd6666;
-	font-size:20px;
-}
-input.genreButton{
-	float:left;
-	width:225px;
-	height:50px;
-	margin-left:5px;
-	margin-right:5px;
-	font-size:40px;
-}
-div.employeeListPart{
-	clear:both;
-	width:840px;
-	margin-right:30px;
-	margin-left:30px;
-	background-color: #ffee99;
-}
-h1.employeeListTitle{
-	font-size: 40px;
-	text-align:center;
-}
-table.employeeList{
-	width:810px;
-	margin-left:15px;
-	margin-right:15px;
-	border: 3px #000000 solid;
-	text-align: center;
-}
-td.employeeColumn{
-	width:150px;
-	border:10px transparent solid;
-	padding-top:10px;
-	padding-bottom:10px;
+
+select.departmentSelect {
+	width: 90%;
 	font-size: 20px;
 }
-div.employeeImage{
-	text-align:center;
+
+input.departmentButton {
+
 }
-div.employeeImage img{
-	width:100%;
+
+div.genreList {
+
+}
+
+div.genreTitle {
+	font-weight: bold;
+}
+
+h5.bigGenreTitle {
+
+}
+
+div.bigGenre1 {
+
+}
+
+div.bigGenre2 {
+
+}
+
+input.genreButton {
+
+}
+
+div.employeeListPart {
+	/* 	background-color: blue; */
+	width: 800px;
+	display: table-cell;
+}
+
+h1.employeeListTitle {
+
+}
+
+table.employeeList {
+
+}
+
+td.employeeColumn {
+	width: 150px;
+	padding-left: 5px;
+	padding-right: 5px;
+	vertical-align: top;
+	padding-bottom: 20px;
+}
+
+div.employeeImage {
+	height: 150px;
+	width: 150px;
+	text-align: center;
+}
+
+div.employeeImage img {
+	max-width: 150px;
+	max-height: 150px;
+}
+
+.employeeName {
+	font-size: 16px;
+	font-weight: bold;
+	color: black;
+}
+
+/*ボタン*/
+.btn {
+	border: none;
+	font-family: inherit;
+	font-size: inherit;
+	color: inherit;
+	background: none;
+	cursor: pointer;
+	display: inline-block;
+	margin-bottom: 10px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 700;
+	outline: none;
+	position: relative;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+	background: #e6002d;
+}
+
+.btn:after {
+	content: '';
+	position: absolute;
+	z-index: -1;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.btn-2 {
+	/* 	background: #cb4e4e; */
+	background: #e6002d;
+	color: #fff;
+	box-shadow: 0 3px #CD0014;
+	-webkit-transition: none;
+	-moz-transition: none;
+	transition: none;
+}
+
+.btn-2[disabled] {
+	background: #e6002d;
+	color: #fff;
+	box-shadow: 0 3px #CD0014;
+	-webkit-transition: none;
+	-moz-transition: none;
+	transition: none;
+}
+
+.btn-2c {
+	border-radius: 5px;
+}
+
+.btn-2c:hover {
+	background: #e6002d;
+	color: #fff;
+	box-shadow: 0 1.5px #CD0014;
+	top: 2px;
+}
+
+.btn-2c:active {
+	box-shadow: 0 0 #CD0014;
+	top: 6px;
+}
+
+.homeButton {
+	width: 100%;
+	font-size: 16px;
+	/* 	color: black; */
+}
+
+.genreButton {
+	width: 90%;
+	margin-top: 20px;
+	font-size: 16px;
+	/* 	color: black; */
+}
+
+.trigger {
+	display: block;
+	width: 90%;
+	/* 	background-color: #F29900; */
+	background-color: rgba(204, 204, 204, 0.8);
+	font-size: 18px;
+	margin-top: 10px;
+}
+
+.toggle_container {
+	display: block;
+	padding-top: 10px;
+	width: 90%;
+	/* 	border: 1px solid #F29900; */
+	border: 1px solid rgba(204, 204, 204, 0.8);
+}
+
+.br {
+	margin-top: 10px;
 }

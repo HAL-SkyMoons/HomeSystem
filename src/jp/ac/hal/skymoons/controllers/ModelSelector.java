@@ -2,7 +2,9 @@ package jp.ac.hal.skymoons.controllers;
 
 import java.util.HashMap;
 
+import jp.ac.hal.skymoons.models.EmployeeMyPageModel;
 import jp.ac.hal.skymoons.models.EmployeePageModel;
+import jp.ac.hal.skymoons.models.EmployeePlofileEditModel;
 import jp.ac.hal.skymoons.models.EmployeeSearchModel;
 import jp.ac.hal.skymoons.models.Home;
 import jp.ac.hal.skymoons.models.PlanCalendar;
@@ -46,6 +48,9 @@ public class ModelSelector {
 		//社員出力機能
 		mapping.put("/HomeSystem/fc/EmployeeList", new EmployeeSearchModel());
 		mapping.put("/HomeSystem/fc/EmployeePage", new EmployeePageModel());
+		mapping.put("/HomeSystem/fc/EmployeeMyPage", new EmployeeMyPageModel());
+		//社員プロフィール編集機能
+		mapping.put("/HomeSystem/fc/EmployeeProfileEdit", new EmployeePlofileEditModel());
 
 		mapping.put("/homesystem/fcon/test", new TestModel());
 		mapping.put("/HomeSystem/fc/test", new TestModel());
@@ -82,6 +87,34 @@ public class ModelSelector {
 		mapping.put("/HomeSystem/fc/customer/detail", new CreateDetail());
 		mapping.put("/HomeSystem/fc/customer/edit", new CreateEdit());
 		mapping.put("/HomeSystem/fc/customer/deletecustomer", new DeleteCustomer());
+		// 社員情報管理機能
+		mapping.put("/HomeSystem/fc/staff/list", new jp.ac.hal.skymoons.models.staff.CreateList());
+
+		// ジャンル管理機能
+		mapping.put("/HomeSystem/fc/genre", new jp.ac.hal.skymoons.models.genre.GenreTop());
+		mapping.put("/HomeSystem/fc/genreList", new jp.ac.hal.skymoons.models.genre.GenreList());
+		mapping.put("/HomeSystem/fc/genreRegister", new jp.ac.hal.skymoons.models.genre.GenreRegister());
+		mapping.put("/HomeSystem/fc/genreChange", new jp.ac.hal.skymoons.models.genre.GenreChange());
+		mapping.put("/HomeSystem/fc/bigGenreList", new jp.ac.hal.skymoons.models.genre.BigGenreList());
+		mapping.put("/HomeSystem/fc/bigGenreRegister", new jp.ac.hal.skymoons.models.genre.BigGenreRegister());
+		mapping.put("/HomeSystem/fc/bigGenreChange", new jp.ac.hal.skymoons.models.genre.BigGenreChange());
+
+		//バッチ管理機能
+		mapping.put("/HomeSystem/fc/batchList", new jp.ac.hal.skymoons.models.batch.BatchList());
+		mapping.put("/HomeSystem/fc/batchRegister", new jp.ac.hal.skymoons.models.batch.BatchRegister());
+		mapping.put("/HomeSystem/fc/batchChange", new jp.ac.hal.skymoons.models.batch.BatchChange());
+
+		//トロフィー管理機能
+		mapping.put("/HomeSystem/fc/trophy", new jp.ac.hal.skymoons.models.trophy.TrophyList());
+		mapping.put("/HomeSystem/fc/trophyRegister", new jp.ac.hal.skymoons.models.trophy.TrophyRegister());
+		mapping.put("/HomeSystem/fc/trophyDetail", new jp.ac.hal.skymoons.models.trophy.TrophyDetail());
+		mapping.put("/HomeSystem/fc/trophyChange", new jp.ac.hal.skymoons.models.trophy.TrophyChange());
+
+		//社内資格管理機能
+		mapping.put("/HomeSystem/fc/companyCapacity", new jp.ac.hal.skymoons.models.companycapacity.CompanyCapacityList());
+		mapping.put("/HomeSystem/fc/companyCapacityRegister", new jp.ac.hal.skymoons.models.companycapacity.CompanyCapacityRegister());
+		mapping.put("/HomeSystem/fc/companyCapacityDetail", new jp.ac.hal.skymoons.models.companycapacity.CompanyCapacityDetail());
+		mapping.put("/HomeSystem/fc/companyCapacityChange", new jp.ac.hal.skymoons.models.companycapacity.CompanyCapacityChange());
 	}
 
 /**

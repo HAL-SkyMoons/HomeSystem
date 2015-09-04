@@ -24,10 +24,9 @@ public class CreateList extends AbstractModel{
 		
 		// セッションチェック
 		SessionController sessionController = new SessionController(request);
-		String url = sessionController.checkAdministratorSession();
-		if(url != null) {
+		if(sessionController.checkAdministratorSession2() == false) {
 			// セッションが無効
-			return url;
+			return sessionController.getForwardSessionErrorPageUrl();
 		}
 		
 		// データベース問合せ

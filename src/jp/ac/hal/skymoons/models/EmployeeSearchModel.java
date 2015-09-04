@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jp.ac.hal.skymoons.beans.BigGenreBean;
 import jp.ac.hal.skymoons.beans.DepartmentBean;
 import jp.ac.hal.skymoons.beans.EmployeeListBean;
 import jp.ac.hal.skymoons.beans.GenreBean;
@@ -17,10 +18,13 @@ public class EmployeeSearchModel extends AbstractModel {
 	public String doService(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		// TODO 自動生成されたメソッド・スタブ
+		System.out.println("employee search model in");
+
 		//返り値設定
 		ArrayList<GenreBean> genreReturn = new ArrayList<GenreBean>();
 		ArrayList<DepartmentBean> departmentReturn = new ArrayList<DepartmentBean>();
 		ArrayList<EmployeeListBean> employeeReturn = new ArrayList<EmployeeListBean>();
+		ArrayList<BigGenreBean>  bigGenreList = new ArrayList<BigGenreBean>();
 		//Session取得
 		SessionController sessionController = new SessionController(request);
 		System.out.println("SessionID is"+sessionController.getUserId());
@@ -47,6 +51,7 @@ public class EmployeeSearchModel extends AbstractModel {
 		//ジャンル、部署取得
 		genreReturn = (ArrayList<GenreBean>)dao.getGenreList();
 		departmentReturn = (ArrayList<DepartmentBean>)dao.getDepartmentList();
+		bigGenreList = (ArrayList<BigGenreBean>) dao.getAllBigGenre();
 
 		//Daoクローズ
 		dao.close();
@@ -55,6 +60,7 @@ public class EmployeeSearchModel extends AbstractModel {
 		request.setAttribute("genres", genreReturn);
 		request.setAttribute("departments", departmentReturn);
 		request.setAttribute("sessionId", (String)sessionController.getUserId());
+		request.setAttribute("bigGenreList", bigGenreList);
 		//参照jspファイルパスの指定
 		return "/Employee/EmployeeList.jsp";
 	}
