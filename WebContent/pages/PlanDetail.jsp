@@ -49,7 +49,9 @@
 
 				</div>
 			</div>
-			<div id="title"><span id="titleValue">${planDetail.planTitle}</span></div>
+			<div id="title">
+				<span id="titleValue">${planDetail.planTitle}</span>
+			</div>
 			<div id="planDetail">
 				<div id="startEnd">
 					実施予定日：<br>
@@ -90,12 +92,11 @@
 					</table>
 				</div>
 				<div id="planner">
-					企画者
-					<div id="img">
-						<img src="../images/employees/${planDetail.planner}.jpg">
-					</div>
-					${planDetail.plannerName}
-
+					企画者<a href="/HomeSystem/fc/EmployeePage?employeeId=${planDetail.planner}">
+						<div id="img">
+							<img src="../images/employees/${planDetail.planner}.jpg">
+						</div> ${planDetail.plannerName}
+					</a>
 				</div>
 			</div>
 			<div id="planComment">${Utility.nlToBR(planDetail.planComment)}</div>
@@ -204,10 +205,11 @@
 						<c:if test="${!isPlanner}">
 							<div class="gest">
 						</c:if>
+						<a href="/HomeSystem/fc/EmployeePage?employeeId=${comment.commentUser}">
 						<div class="face">
 							<img src="../images/employees/${comment.commentUser}.jpg">
 						</div>
-						<div class="name">${comment.commentName}</div>
+						<div class="name">${comment.commentName}</div></a>
 						<div class="home">
 							<c:if test="${user.userId != comment.commentUser }">
 								<a href="/HomeSystem/fc/Home?toUser=${comment.commentUser}" class="iframe"> <input type="button" name="submit" class="btn btn-2 btn-2c" value="褒める" />
@@ -276,19 +278,19 @@
 								</c:if>
 							</c:forEach>
 						</div>
-<!-- 							指定コメントファイルアップロード -->
-<!-- 						<div class="commentFileUpload"> -->
-<%-- 							<c:if test="${comment.commentUser == user.userId }"> --%>
-<!-- 								<form action="/HomeSystem/fc/PlanDetail" method="post" enctype="multipart/form-data"> -->
-<%-- 									<input type="hidden" name="commentNo" value="${comment.commentNo}" /> --%>
-<%-- 									<input type="hidden" name="planId" value="${planDetail.planId}" /> --%>
-<%-- 									<input type="file" name="file" id="commentUploadFile${comment.commentNo}" style="display:none;" onchange="$('#fake_${comment.commentNo}_file').text($(this)[0].files[0].name)" /> --%>
-<%-- 									<input type="button" class="btn btn-2 btn-2c uploadBtn" value="ファイル選択" onclick="$('#commentUploadFile${comment.commentNo}').click();" /> --%>
-<%-- 									<span id="fake_${comment.commentNo}_file"></span> <br> --%>
-<!-- 									<input type="submit" name="upload" value="送信" class="btn btn-2 btn-2c uploadBtn"> -->
-<!-- 								</form> -->
-<%-- 							</c:if> --%>
-<!-- 						</div> -->
+						<!-- 							指定コメントファイルアップロード -->
+						<!-- 						<div class="commentFileUpload"> -->
+						<%-- 							<c:if test="${comment.commentUser == user.userId }"> --%>
+						<!-- 								<form action="/HomeSystem/fc/PlanDetail" method="post" enctype="multipart/form-data"> -->
+						<%-- 									<input type="hidden" name="commentNo" value="${comment.commentNo}" /> --%>
+						<%-- 									<input type="hidden" name="planId" value="${planDetail.planId}" /> --%>
+						<%-- 									<input type="file" name="file" id="commentUploadFile${comment.commentNo}" style="display:none;" onchange="$('#fake_${comment.commentNo}_file').text($(this)[0].files[0].name)" /> --%>
+						<%-- 									<input type="button" class="btn btn-2 btn-2c uploadBtn" value="ファイル選択" onclick="$('#commentUploadFile${comment.commentNo}').click();" /> --%>
+						<%-- 									<span id="fake_${comment.commentNo}_file"></span> <br> --%>
+						<!-- 									<input type="submit" name="upload" value="送信" class="btn btn-2 btn-2c uploadBtn"> -->
+						<!-- 								</form> -->
+						<%-- 							</c:if> --%>
+						<!-- 						</div> -->
 					</div>
 		</div>
 	</div>

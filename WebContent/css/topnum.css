@@ -1,0 +1,97 @@
+@CHARSET "UTF-8";
+
+.wrapper {
+	width: 600px;
+	margin: 0 auto;
+}
+
+.title{
+	display: inline-table;
+}
+
+.titleName {
+	display: table-cell;
+	vertical-align: middle;
+	padding-top: 10px;
+}
+
+.rankLogo {
+	width: 60px;
+	height: 60px;
+}
+
+.sort {
+	width: 600px;
+	margin: 0 auto;
+	text-align: right;
+}
+
+.ranking {
+	display: table;
+}
+
+.row {
+	height: 150px;
+	display: table-row;
+	border-bottom: 1px solid black;
+}
+
+.rank {
+	width: 150px;
+	height: 150px;
+	display: table-cell;
+	text-align: center;
+}
+
+.rank>img {
+	width: 100px;
+	height: 100px;
+}
+
+.face {
+	width: 150px;
+	height: 150px;
+	display: table-cell;
+	text-align: center;
+}
+
+.face>img {
+	max-width: 150px;
+	max-height: 150px;
+}
+
+.detail {
+	height: 150px;
+	width: 200px;
+	display: table-cell;
+}
+
+.employeeName {
+	font-size: 24px;
+	font-weight: bold;
+	color: black;
+}
+
+.department {
+	font-size: 16px;
+}
+
+.count {
+	text-align: right;
+	font-size: 20px;
+}
+
+.submitBtn {
+	margin-top: 10px;
+	width: 200px;
+	height: 40px;
+}
+
+.btn {
+	background-color: rgba(204, 204, 204, 0.6);
+}
+
+select {
+	font-size: 16px;
+	height: 2em;
+}

@@ -30,7 +30,7 @@ public class RankingDAO {
 		ConnectionGet connectionGet = new ConnectionGet();
 		this.con = connectionGet.getCon();
 	}
-	
+
 	/**
 	 * コネクションをクローズする。
 	 */
@@ -46,7 +46,7 @@ public class RankingDAO {
 			System.out.println("ERROR:コネクションのクローズ処理中に問題が発生しました。");
 		}
 	}
-	
+
 	/**
 	 * バッチリストを取得する。
 	 * @return
@@ -67,7 +67,7 @@ public class RankingDAO {
 		}
 		return batchList;
 	}
-	
+
 	/**
 	 * 年リストを取得する。
 	 * @return
@@ -106,11 +106,13 @@ public class RankingDAO {
 	 * @throws SQLException
 	 */
 	public List<TopNumRankingBean> getRankingList(String whereBatch, String whereYear, String whereMonth) throws SQLException {
-		String sql	=	"SELECT COUNT(*) AS value, users.last_name || users.first_name AS name, hom.home_target"
+		String sql	=	"SELECT COUNT(*) AS value, CONCAT(users.last_name, users.first_name) AS name, hom.home_target,dep.department_name"
 					+	" FROM home_log AS hom"
 					+	" JOIN employees AS emp ON hom.home_target = emp.employee_id"
-					+	" JOIN users ON emp.employee_id = users.user_id";
-		
+					+	" JOIN users ON emp.employee_id = users.user_id"
+					+	" JOIN departments AS dep ON dep.department_ID = emp.department_ID";
+
+
 		// 条件式の生成
 		String whereSQL = null;
 		if(whereBatch != null) {
@@ -134,22 +136,23 @@ public class RankingDAO {
 		if(whereSQL != null) {
 			sql += " WHERE" + whereSQL;
 		}
-		
+
 		sql	+=	" GROUP BY hom.home_target"
 			+	" ORDER BY value desc";
-				
+
 		/*System.out.println("SQL:" + sql);*/
-		
+
 		PreparedStatement statement = con.prepareStatement(sql);
 		ResultSet resultSet = statement.executeQuery();
-		
+
 		List<TopNumRankingBean> result = new ArrayList<TopNumRankingBean>();
-		
+
 		while(resultSet.next()) {
 			TopNumRankingBean record = new TopNumRankingBean();
 			record.setValue(resultSet.getLong(1));
 			record.setName(resultSet.getString(2));
 			record.setId(resultSet.getString(3));
+			record.setDepartment(resultSet.getString(4));
 			result.add(record);
 		}
 		return result;
