@@ -5,7 +5,7 @@
 	margin: 0 auto;
 }
 
-.title{
+.title {
 	display: inline-table;
 }
 
@@ -55,7 +55,7 @@
 	text-align: center;
 }
 
-.face>img {
+.face>a>img {
 	max-width: 150px;
 	max-height: 150px;
 }

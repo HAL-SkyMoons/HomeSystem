@@ -23,7 +23,7 @@
 <link rel="stylesheet" type="text/css" href="../../css/reset.css">
 <link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="../../css/topnum.css">
-<title>バッジ獲得数ランキング</title>
+<title>ランキング</title>
 </head>
 <body>
 
@@ -132,7 +132,7 @@
 					value = list.get(i).getValue();
 				    }
 
-				    out.print("<div class=\"row\">");
+				    out.print("<div class=\"rows\">");
 
 				    out.print("<div class=\"rank\">");
 				    out.print("<img src=\"../../images/rank/" + outnum
