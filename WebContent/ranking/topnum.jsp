@@ -29,7 +29,10 @@
 
 
 	<div class="wrapper">
-	<div class="title"><img class="rankLogo" src="../../images/rank/rank.png"/><h1 class="titleName">ランキング</h1></div>
+		<div class="title">
+			<img class="rankLogo" src="../../images/rank/rank.png" />
+			<h1 class="titleName">ランキング</h1>
+		</div>
 
 		<%
 		    // ==========================================================================================
@@ -117,6 +120,26 @@
 		    //  ランキングリスト出力
 		    // ==========================================================================================
 
+
+		    out.print("<div class=\"rankingName\">");
+		    if (year != null) {
+				out.print(year + "年&nbsp;");
+		    }
+
+		    if (month != null) {
+				out.print(month + "月&nbsp;");
+		    }
+
+		    if (batch == null) {
+				out.print("総合");
+		    } else {
+				out.print(batchList.get(Integer.valueOf(batch)).getBatch_name());
+		    }
+
+		    out.print("ランキング");
+
+		    out.print("</div>");
+
 		    if (list.size() != 0) {
 
 				out.print("<div class=\"ranking\">");
@@ -140,14 +163,18 @@
 				    out.print("</div>");
 
 				    out.print("<div class=\"face\">");
-				    out.print("<a href=\"/HomeSystem/fc/EmployeePage?employeeId="+list.get(i).getId() +"\"><img src=\"../../images/employees/"
+				    out.print("<a href=\"/HomeSystem/fc/EmployeePage?employeeId="
+					    + list.get(i).getId()
+					    + "\"><img src=\"../../images/employees/"
 					    + list.get(i).getId() + ".jpg\"></a>");
 				    out.print("</div>");
 
 				    out.print("<div class=\"detail\">");
 				    out.print("<div class=\"department\">"
 					    + list.get(i).getDepartment() + "</div>");
-				    out.print("<a href=\"/HomeSystem/fc/EmployeePage?employeeId="+list.get(i).getId() +"\"><div class=\"employeeName\">"
+				    out.print("<a href=\"/HomeSystem/fc/EmployeePage?employeeId="
+					    + list.get(i).getId()
+					    + "\"><div class=\"employeeName\">"
 					    + list.get(i).getName() + "</div></a>");
 				    out.print("<div class=\"count\">" + list.get(i).getValue()
 					    + "個</div>");
