@@ -47,7 +47,7 @@
 					<tr>
 						<th class="searchTitle">キーワード</th>
 						<td class="searchForm"><input type="text" name="keyword" class="keyword" value="${searchKeyword}" /></td>
-						<td class="help"></td>
+						<td class="help">タイトルと内容にキーワードと<br/>一致する物があるコンテンツを表示します。</td>
 					</tr>
 					<tr>
 						<th class="searchTitle">企画者</th>
@@ -64,7 +64,7 @@
 									</c:if>
 								</c:forEach>
 							</select>
-						<td class="help"></td>
+						<td class="help">企画者を指定した人のみに<br/>限定する事が出来ます。</td>
 					</tr>
 					<tr>
 						<th class="searchTitle">オプション</th>
@@ -84,7 +84,7 @@
 								</c:if> 企画が存在する物のみを検索
 							</label>
 						</td>
-						<td class="help"></td>
+						<td class="help">検索結果をさらに絞り込む<br/>オプションを指定出来ます。</td>
 					</tr>
 					<tr>
 						<th class="searchTitle">順序</th>
@@ -101,7 +101,7 @@
 								</c:forEach>
 							</select>
 						</td>
-						<td class="help"></td>
+						<td class="help">検索結果の順番を指定した<br/>順番に変更します。</td>
 					</tr>
 				</table>
 	
