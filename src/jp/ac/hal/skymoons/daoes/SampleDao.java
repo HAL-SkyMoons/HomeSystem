@@ -287,6 +287,7 @@ public class SampleDao {
 		recode.setDepartmentName(result.getString("d.department_name"));
 		recode.setEmployeeGenre(getEmployeeGenre(result
 			.getString("e.employee_id")));
+		recode.setLevel(result.getInt("e.level"));
 		System.out.println(result.getString("e.employee_id")
 			+ result.getString("u.last_name") + ","
 			+ result.getInt("COUNT(*)"));
