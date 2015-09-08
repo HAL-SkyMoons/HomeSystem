@@ -963,7 +963,7 @@ public class SampleDao {
     public List<CommentBean> planCommentList(int planId) throws SQLException {
 
 	PreparedStatement select = con
-		.prepareStatement("select * from plan_comment p, users u where plan_id = ? and p.comment_user = u.user_id;");
+		.prepareStatement("select * from plan_comment p, users u,employees e where plan_id = ? and p.comment_user = u.user_id and p.comment_user = e.employee_id;");
 
 	select.setInt(1, planId);
 
@@ -982,6 +982,7 @@ public class SampleDao {
 	    record.setDeleteFlag(result.getInt("delete_flag"));
 	    record.setCommentDatetime(result.getDate("comment_datetime"));
 	    record.setComment(result.getString("comment"));
+	    record.setLevel(result.getInt("level"));
 
 	    table.add(record);
 	}

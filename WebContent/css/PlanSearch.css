@@ -42,12 +42,13 @@ table {
 }
 
 .help {
-	text-align: center;
+/* 	text-align: center; */
 	background-color: #FFFFB3;
 	width: 25%;
 	min-width: 25%;
 	border-bottom: 1px solid #666;
 	vertical-align: middle;
+	font-size: 12px;
 }
 
 .keyword {

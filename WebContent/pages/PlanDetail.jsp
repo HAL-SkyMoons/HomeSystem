@@ -1,3 +1,4 @@
+<%@page import="jp.ac.hal.skymoons.beans.EmployeeListBean"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="jp.ac.hal.skymoons.beans.FileBean"%>
 <%@page import="jp.ac.hal.skymoons.beans.UserBean"%>
@@ -38,6 +39,25 @@
 	});
 </script>
 </head>
+<%
+    //全体取得
+ArrayList<EmployeeListBean> employeeLists = (ArrayList<EmployeeListBean>)request.getAttribute("employeeDetail");
+// 一行取得(繰り返しの場合はここから)
+int plannerLevel = 1;
+PlanBean planDetail = (PlanBean)request.getAttribute("planDetail");
+for(EmployeeListBean employee : employeeLists ){
+
+	if(planDetail.getPlanner().equals(employee.getEmployeeId())){
+	 // レベル取得
+    plannerLevel = employee.getLevel();
+	 	break;
+	}
+}
+//レベルが画像の上限の場合
+if(plannerLevel>12){
+    plannerLevel=12;
+}
+%>
 <body>
 	<div id="wrapper">
 		<div id="plan">
@@ -95,6 +115,9 @@
 					企画者<a href="/HomeSystem/fc/EmployeePage?employeeId=${planDetail.planner}">
 						<div id="img">
 							<img src="../images/employees/${planDetail.planner}.jpg">
+						</div>
+						<div class="flameDiv">
+							<img src="../images/flame/<%=plannerLevel%>.png" class="employeeFlame">
 						</div> ${planDetail.plannerName}
 					</a>
 				</div>
@@ -206,10 +229,18 @@
 							<div class="gest">
 						</c:if>
 						<a href="/HomeSystem/fc/EmployeePage?employeeId=${comment.commentUser}">
-						<div class="face">
-							<img src="../images/employees/${comment.commentUser}.jpg">
-						</div>
-						<div class="name">${comment.commentName}</div></a>
+							<div class="face">
+								<img src="../images/employees/${comment.commentUser}.jpg">
+							</div>
+							<div class="commentFlameDiv">
+								<c:set var="level" value="${comment.level}" />
+								<c:if test="${comment.level > 12}">
+									<c:set var="level" value="12" />
+								</c:if>
+								<img src="../images/flame/${level}.png" class="commentFlame">
+							</div>
+							<div class="name">${comment.commentName}</div>
+						</a>
 						<div class="home">
 							<c:if test="${user.userId != comment.commentUser }">
 								<a href="/HomeSystem/fc/Home?toUser=${comment.commentUser}" class="iframe"> <input type="button" name="submit" class="btn btn-2 btn-2c" value="褒める" />

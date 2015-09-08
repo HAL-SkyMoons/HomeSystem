@@ -10,6 +10,7 @@ public class CommentBean {
 	private String commentName;;
 	private Date commentDatetime;
 	private int deleteFlag;
+	private int level;
 	private String comment;
 
 	public int getPlanID() {
@@ -66,6 +67,14 @@ public class CommentBean {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	public int getLevel() {
+	    return level;
+	}
+
+	public void setLevel(int level) {
+	    this.level = level;
 	}
 
 }

@@ -147,11 +147,15 @@
 				int num = 0;
 				int outnum = 1;
 				long value = 0;
-				for (int i = 0; i < list.size() && num <= 10; i++) {
+				for (int i = 0; i < list.size(); i++) {
 				    num++;
 				    if (value != list.get(i).getValue()) {
 					outnum = num;
 					value = list.get(i).getValue();
+				    }
+
+				    if(outnum > 10){
+						break;
 				    }
 
 				    out.print("<div class=\"ranking\">");

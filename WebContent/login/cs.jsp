@@ -4,40 +4,43 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<!-- ↓追記1 -->
 <meta http-equiv="content-style-type" content="text/css">
 <link rel="stylesheet" type="text/css" href="/HomeSystem/css/reset.css">
 <link rel="stylesheet" type="text/css" href="/HomeSystem/css/style.css">
 <link rel="stylesheet" type="text/css" href="/HomeSystem/css/logincs.css">
-<!-- ↑追記1 -->
 <title>顧客・社員用ログインページ</title>
 </head>
 <body>
-	<!-- ↓追記2 -->
-	<header></header>
-	<img src="/HomeSystem/images/logo.png">
-	<div id="box">
-		<!-- ↑追記2 -->
-		<h1>顧客・社員用ログインページ</h1>
-		<form action="/HomeSystem/fc/login/user" method="POST">
-			<%
-				if (request.getAttribute("message") != null) {
-					out.println("<p>" + request.getAttribute("message") + "</p>");
-				}
-			%>
-			<p>
-				LoginID:<input type="text" name="id" size="24">
-			</p>
-			<p>
-				Password:<input type="password" name="pass" size="24">
-			</p>
-			<p>
-				<input type="submit" name="submit" value="ログイン" class="btn btn-2 btn-2c">
-			</p>
-
-		</form>
-
-
+	<header>
+		<div id="logo">
+			<a href="/HomeSystem/login/cs.jsp"><img src="/HomeSystem/images/logo.png"></a>
+		</div>
+		<hr>
+	</header>
+	<div id="boxout">
+		<div id="boxcomment">aaaaaaaaaaaaaaa</div>
+		<div id="box">
+			<h1>顧客・社員用ログイン</h1>
+			<hr color="orange">
+			<form action="/HomeSystem/fc/login/user" method="POST">
+				<p>
+					ログインID:<input type="text" name="id" size="24">
+				</p>
+				<p>
+					パスワード:<input type="password" name="pass" size="24">
+				</p>
+				<p>
+					<%
+						if (request.getAttribute("message") != null) {
+							out.println(request.getAttribute("message"));
+						}
+					%>
+				</p>
+				<p>
+					<input type="submit" name="submit" value="ログイン" class="btn btn-2 btn-2c">
+				</p>
+			</form>
+		</div>
 	</div>
 
 </body>

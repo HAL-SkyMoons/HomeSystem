@@ -48,7 +48,9 @@
 				<tr>
 					<th class="searchTitle">キーワード</th>
 					<td class="searchForm"><input type="text" name="keyword" class="keyword" value="${searchKeyword}" /></td>
-					<td class="help"></td>
+					<td class="help">
+						タイトルと内容にキーワード<br>と<br>一致するものがある企画<br>を表示します。
+					</td>
 				</tr>
 				<tr>
 					<th class="searchTitle">企画者</th>
@@ -65,7 +67,9 @@
 
 							</c:forEach>
 						</select></td>
-					<td class="help"></td>
+					<td class="help">
+						企画者を指定した人のみに<br>限定することが出来ます。
+					</td>
 				</tr>
 				<tr>
 					<th class="searchTitle">オプション</th>
@@ -75,7 +79,9 @@
 								<input type="checkbox" name="endPlan" value="check">
 							</c:if> 終了企画を含める
 					</label></td>
-					<td class="help"></td>
+					<td class="help">
+						検索結果に終了済み企画を<br>含むことが出来ます。
+					</td>
 				</tr>
 				<tr>
 					<th class="searchTitle">順序</th>
@@ -93,7 +99,9 @@
 
 							</c:forEach>
 						</select></td>
-					<td class="help"></td>
+					<td class="help">
+						検索結果の順番を指定した<br>順序に変更します。
+					</td>
 				</tr>
 			</table>
 
