@@ -1,6 +1,7 @@
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="jp.ac.hal.skymoons.beans.EmployeeBatchBean"%>
+<%@page import="jp.ac.hal.skymoons.beans.EmployeePageBean"%>
 <%@page import="java.util.*"%>
 <%@page import="java.text.*"%>
 <%@page import="jp.ac.hal.skymoons.util.Utility"%>
@@ -19,232 +20,186 @@
 <script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="../js/colorbox/jquery.colorbox.js"></script>
 <%
-    //チャート出力用配列の準備
-			String[] chartName = (String[]) request.getAttribute("chartName");
-			int[] chartCount = (int[]) request.getAttribute("chartCount");
-			//月間
-			String[] chartNameMonth = (String[]) request
-					.getAttribute("chartNameMonth");
-			int[] chartCountMonth = (int[]) request
-					.getAttribute("chartCountMonth");
-			//年間
-			String[] chartNameYear = (String[]) request
-					.getAttribute("chartNameYear");
-			int[] chartCountYear = (int[]) request
-					.getAttribute("chartCountYear");
-			//通算
-			String[] chartNameTotal = (String[]) request
-					.getAttribute("chartNameTotal");
-			int[] chartCountTotal = (int[]) request
-					.getAttribute("chartCountTotal");
+	//チャート出力用配列の準備
+	String[] chartName = (String[])request.getAttribute("chartName");
+	int[] chartCount = (int[])request.getAttribute("chartCount");
+	//月間
+	int[] chartCountMonth = (int[])request.getAttribute("chartCountMonth");
+	//年間
+	int[] chartCountYear = (int[])request.getAttribute("chartCountYear");
+	//通算
+	int[] chartCountTotal = (int[])request.getAttribute("chartCountTotal");
+
+	ArrayList<EmployeePageBean> employeeDates = (ArrayList<EmployeePageBean>)request.getAttribute("employeeDetail");
+	EmployeePageBean employeeDate = employeeDates.get(0);
+	int level = employeeDate.getLevel();
+	if(level>12){
+		level=12;
+	}
 %>
 <script type="text/javascript" src="../js/Chart.js-master/Chart.js"></script>
 <script>
-	//ホメボタン
-	// 	function ImageUp(employeeId) {
-	// 		window.open("/HomeSystem/fc/Home?toUser="+employeeId,"window2","width=1000,height=500");
-	// 	}
-
 	$(function() {
 		$(".iframe").colorbox({
 			iframe : true,
 			width : "500px",
 			height : "90%",
-			opacity : 0.7,
-			fixed : true
+			opacity : 0.7
 		});
 	});
 	//グラフ切り替え(月間)
-	function graphChangeMonth() {
+	function graphChangeMonth(){
 		var radarChartData = {
-			labels : [
-<%if (chartNameMonth.length != 0 && chartCountMonth.length != 0) {
-				for (int i = 0; i < chartNameMonth.length;) {
-					out.print("\"" + chartNameMonth[i] + "\"");
-					i++;
-					if (i == chartCountMonth.length) {
-						break;
+				labels : [<% if(chartName.length !=0 && chartCountMonth.length !=0){
+					for (int i = 0; i < chartName.length;) {
+						out.print("\""+chartName[i]+"\"");
+						i++;
+						if(i==chartCountMonth.length){
+							break;
+						}
+							out.print(",");
 					}
-					out.print(",");
-				}
-			}%>
-	],
-			datasets : [ {
-				fillColor : "rgba(200,50,50,0.8)",
-				strokeColor : "rgba(255,0,0,1)",
-				pointColor : "rgba(255,0,0,1)",
-				pointStrokeColor : "#fff",
-				data : [
-<%if (chartNameMonth.length != 0 && chartCountMonth.length != 0) {
-				for (int i = 0; i < chartCountMonth.length;) {
-					out.print(chartCountMonth[i]);
-					i++;
-					if (i == chartCountMonth.length) {
-						break;
+					}%>],
+				datasets : [
+					{
+					fillColor : "rgba(200,50,50,0.8)",
+					strokeColor : "rgba(255,0,0,1)",
+					pointColor : "rgba(255,0,0,1)",
+					pointStrokeColor : "#fff",
+					data : [<% if(chartName.length !=0 && chartCountMonth.length !=0){
+						for (int i = 0; i < chartCountMonth.length;) {
+							out.print(chartCountMonth[i]);
+							i++;
+							if(i==chartCountMonth.length){
+								break;
+							}
+							out.print(",");
+						}
+						}%>]
 					}
-					out.print(",");
-				}
-			}%>
-	]
-			} ]
-		}
-		var myRadar = new Chart(document.getElementById("radar").getContext(
-				"2d")).Radar(radarChartData, {
-			scaleShowLabels : true,
-			scaleFontSize : 15,
-			scaleLineColor : "rgba(0,0,0,0.9)",
-			pointLabelFontSize : 20,
-		});
+				]
+			}
+			var myRadar = new Chart(document.getElementById("radar").getContext("2d"))
+				.Radar(radarChartData,{
+					scaleShowLabels : true, scaleFontSize : 15, scaleLineColor: "rgba(0,0,0,0.9)", pointLabelFontSize : 20, });
 	}
 	//グラフ切り替え(年間)
-	function graphChangeYear() {
+	function graphChangeYear(){
 		var radarChartData = {
-			labels : [
-<%if (chartNameYear.length != 0 && chartCountYear.length != 0) {
-				for (int i = 0; i < chartNameYear.length;) {
-					out.print("\"" + chartNameYear[i] + "\"");
-					i++;
-					if (i == chartCountYear.length) {
-						break;
+				labels : [<% if(chartName.length !=0 && chartCountYear.length !=0){
+					for (int i = 0; i < chartName.length;) {
+						out.print("\""+chartName[i]+"\"");
+						i++;
+						if(i==chartCountYear.length){
+							break;
+						}
+							out.print(",");
 					}
-					out.print(",");
-				}
-			}%>
-	],
-			datasets : [ {
-				fillColor : "rgba(200,50,50,0.8)",
-				strokeColor : "rgba(255,0,0,1)",
-				pointColor : "rgba(255,0,0,1)",
-				pointStrokeColor : "#fff",
-				data : [
-<%if (chartNameYear.length != 0 && chartCountYear.length != 0) {
-				for (int i = 0; i < chartCountYear.length;) {
-					out.print(chartCountYear[i]);
-					i++;
-					if (i == chartCountYear.length) {
-						break;
+					}%>],
+				datasets : [
+					{
+					fillColor : "rgba(200,50,50,0.8)",
+					strokeColor : "rgba(255,0,0,1)",
+					pointColor : "rgba(255,0,0,1)",
+					pointStrokeColor : "#fff",
+					data : [<% if(chartName.length !=0 && chartCountYear.length !=0){
+						for (int i = 0; i < chartCountYear.length;) {
+							out.print(chartCountYear[i]);
+							i++;
+							if(i==chartCountYear.length){
+								break;
+							}
+							out.print(",");
+						}
+						}%>]
 					}
-					out.print(",");
-				}
-			}%>
-	]
-			} ]
-		}
-		var myRadar = new Chart(document.getElementById("radar").getContext(
-				"2d")).Radar(radarChartData, {
-			scaleShowLabels : true,
-			scaleFontSize : 15,
-			scaleLineColor : "rgba(0,0,0,0.9)",
-			pointLabelFontSize : 20,
-		});
+				]
+			}
+			var myRadar = new Chart(document.getElementById("radar").getContext("2d"))
+				.Radar(radarChartData,{
+					scaleShowLabels : true, scaleFontSize : 15, scaleLineColor: "rgba(0,0,0,0.9)", pointLabelFontSize : 20, });
 	}
 	//グラフ切り替え(通算)
-	function graphChangeTotal() {
+	function graphChangeTotal(){
 		var radarChartData = {
-			labels : [
-<%if (chartNameTotal.length != 0 && chartCountTotal.length != 0) {
-				for (int i = 0; i < chartNameTotal.length;) {
-					out.print("\"" + chartNameTotal[i] + "\"");
-					i++;
-					if (i == chartCountTotal.length) {
-						break;
+				labels : [<% if(chartName.length !=0 && chartCountTotal.length !=0){
+					for (int i = 0; i < chartName.length;) {
+						out.print("\""+chartName[i]+"\"");
+						i++;
+						if(i==chartCountTotal.length){
+							break;
+						}
+							out.print(",");
 					}
-					out.print(",");
-				}
-			}%>
-	],
-			datasets : [ {
-				fillColor : "rgba(200,50,50,0.8)",
-				strokeColor : "rgba(255,0,0,1)",
-				pointColor : "rgba(255,0,0,1)",
-				pointStrokeColor : "#fff",
-				data : [
-<%if (chartNameTotal.length != 0 && chartCountTotal.length != 0) {
-				for (int i = 0; i < chartCountTotal.length;) {
-					out.print(chartCountTotal[i]);
-					i++;
-					if (i == chartCountTotal.length) {
-						break;
+					}%>],
+				datasets : [
+					{
+					fillColor : "rgba(200,50,50,0.8)",
+					strokeColor : "rgba(255,0,0,1)",
+					pointColor : "rgba(255,0,0,1)",
+					pointStrokeColor : "#fff",
+					data : [<% if(chartName.length !=0 && chartCountTotal.length !=0){
+						for (int i = 0; i < chartCountTotal.length;) {
+							out.print(chartCountTotal[i]);
+							i++;
+							if(i==chartCountTotal.length){
+								break;
+							}
+							out.print(",");
+						}
+						}%>]
 					}
-					out.print(",");
-				}
-			}%>
-	]
-			} ]
-		}
-		var myRadar = new Chart(document.getElementById("radar").getContext(
-				"2d")).Radar(radarChartData, {
-			scaleShowLabels : true,
-			scaleFontSize : 15,
-			scaleLineColor : "rgba(0,0,0,0.9)",
-			pointLabelFontSize : 20,
-		});
+				]
+			}
+			var myRadar = new Chart(document.getElementById("radar").getContext("2d"))
+				.Radar(radarChartData,{
+					scaleShowLabels : true, scaleFontSize : 15, scaleLineColor: "rgba(0,0,0,0.9)", pointLabelFontSize : 20, });
 	}
 
 	//履歴タブ切り替え
-	function activityChange(tabName) {
+	function activityChange(tabName){
 		document.getElementById("homeTab").style.display = 'none';
 		document.getElementById("planTab").style.display = 'none';
 		document.getElementById("planCommentTab").style.display = 'none';
 		//指定箇所の出力
 		document.getElementById(tabName).style.display = 'block';
-
-		document.getElementById("homeTabStyle").style.backgroundColor = "rgba(204, 204, 204, 0.3)";
-		document.getElementById("planTabStyle").style.backgroundColor = "rgba(204, 204, 204, 0.3)";
-		document.getElementById("planCommentTabStyle").style.backgroundColor = "rgba(204, 204, 204, 0.3)";
-		document.getElementById(tabName + "Style").style.backgroundColor = '#fff';
-
 	}
 	//バッジタブ切り替え
-	function badgeChange(tabName) {
+	function badgeChange(tabName){
 		document.getElementById("totalTab").style.display = 'none';
 		document.getElementById("monthTab").style.display = 'none';
 		document.getElementById("yearTab").style.display = 'none';
 		//指定箇所の出力
 		document.getElementById(tabName).style.display = 'block';
-
-		document.getElementById("totalTabStyle").style.backgroundColor = "rgba(204, 204, 204, 0.3)";
-		document.getElementById("monthTabStyle").style.backgroundColor = "rgba(204, 204, 204, 0.3)";
-		document.getElementById("yearTabStyle").style.backgroundColor = "rgba(204, 204, 204, 0.3)";
-		document.getElementById(tabName + "Style").style.backgroundColor = '#fff';
-
 		var countTotal =
-<%out.print(chartNameTotal.length);%>
-	;
-		var countMonth =
-<%out.print(chartNameMonth.length);%>
-	;
-		var countYear =
-<%out.print(chartNameYear.length);%>
-	;
+			<%out.print(chartCountTotal.length);%>
+				;
+					var countMonth =
+			<%out.print(chartCountMonth.length);%>
+				;
+					var countYear =
+			<%out.print(chartCountYear.length);%>
+				;
+					var max = Math.max(countTotal, countMonth, countYear);
 
-		var max = Math.max(countTotal, countMonth, countYear);
+					var count = Math.ceil(max / 5);
+					if (count == 0) {
+						count = 1;
+					}
+					var height = count * 71 + 21 + 'px';
 
-		var count = Math.ceil(max / 5);
-		if (count == 0) {
-			count = 1;
-		}
-		var height = count * 71 + 21 + 'px';
-
-		document.getElementById("totalTab").style.height = height;
-		document.getElementById("monthTab").style.height = height;
-		document.getElementById("yearTab").style.height = height;
-
+					document.getElementById("totalTab").style.height = height;
+					document.getElementById("monthTab").style.height = height;
+					document.getElementById("yearTab").style.height = height;
 	}
 	//資格タブ切り替え
-	function capacityChange(tabName) {
+	function capacityChange(tabName){
 		document.getElementById("capacityTab").style.display = 'none';
 		document.getElementById("companyCapacityTab").style.display = 'none';
 		document.getElementById("trophyTab").style.display = 'none';
 		//指定箇所の出力
 		document.getElementById(tabName).style.display = 'block';
-
-		document.getElementById("capacityTabStyle").style.backgroundColor = "rgba(204, 204, 204, 0.3)";
-		document.getElementById("companyCapacityTabStyle").style.backgroundColor = "rgba(204, 204, 204, 0.3)";
-		document.getElementById("trophyTabStyle").style.backgroundColor = "rgba(204, 204, 204, 0.3)";
-		document.getElementById(tabName + "Style").style.backgroundColor = '#fff';
 	}
-
 	$(document).ready(function() {
 
 		//Hide (Collapse) the toggle containers on load
@@ -255,13 +210,12 @@
 			$(this).toggleClass("active").next().slideToggle("slow");
 			return false; //Prevent the browser jump to the link anchor
 		});
-
 	});
 </script>
 <%
-    Date date = new Date();
-			SimpleDateFormat sdf = new SimpleDateFormat("S");
-			String milliSec = sdf.format(date);
+	Date date = new Date();
+	SimpleDateFormat sdf = new SimpleDateFormat("S");
+	String milliSec =  sdf.format(date);
 %>
 </head>
 <body>
@@ -272,9 +226,13 @@
 			<div class="employeeStatus">
 				<c:forEach var="employeeDetail" items="${employeeDetail}">
 					<ul class="employeeData">
-						<li class="employeeImage"><div class="imageDiv">
+						<li class="employeeImage">
+							<div class="imageDiv">
 								<img src="../images/employees/${employeeDetail.employeeId}.jpg?<%=milliSec %>" class="employeeImage">
-							</div></li>
+							</div><div class="flameDiv">
+								<img src="../images/flame/<%=level %>.png?<%=milliSec %>" class="employeeFlame">
+							</div>
+						</li>
 						<li class="departmentName">${employeeDetail.departmentName}</li>
 						<li class="employeeName">${employeeDetail.employeeName}</li>
 						<hr>
@@ -290,7 +248,7 @@
 					<br>
 					<a href="/HomeSystem/fc/PlanRegister"><input type="submit" value="企画投稿" class="btn btn-2 btn-2c planButton"></a>
 					<br>
-					<a href="/HomeSystem/fc/"><input type="submit" value="コンテンツ投稿" class="btn btn-2 btn-2c contentButton"></a>
+					<a href="/HomeSystem/fc/contents/addition"><input type="submit" value="コンテンツ投稿" class="btn btn-2 btn-2c contentButton"></a>
 				</c:forEach>
 			</div>
 
@@ -335,49 +293,8 @@
 					<img src="../images/icon/order.png" class="icon" />貰ったバッチでの能力診断
 				</h3>
 				<hr>
-				<canvas id="radar" height="400" width="540"></canvas>
+						<canvas id="radar" height="400" width="540"></canvas>
 			</div>
-			<script>
-				var radarChartData = {
-					labels : [
-			<%if (chartName.length != 0 && chartCount.length != 0) {
-				for (int i = 0; i < chartName.length;) {
-					out.print("\"" + chartName[i] + "\"");
-					i++;
-					if (i == chartCount.length) {
-						break;
-					}
-					out.print(",");
-				}
-			}%>
-				],
-					datasets : [ {
-						fillColor : "rgba(200,50,50,0.8)",
-						strokeColor : "rgba(255,0,0,1)",
-						pointColor : "rgba(255,0,0,1)",
-						pointStrokeColor : "#fff",
-						data : [
-			<%if (chartName.length != 0 && chartCount.length != 0) {
-				for (int i = 0; i < chartCount.length;) {
-					out.print(chartCount[i]);
-					i++;
-					if (i == chartCount.length) {
-						break;
-					}
-					out.print(",");
-				}
-			}%>
-				]
-					} ]
-				}
-				var myRadar = new Chart(document.getElementById("radar")
-						.getContext("2d")).Radar(radarChartData, {
-					scaleShowLabels : true,
-					scaleFontSize : 15,
-					scaleLineColor : "rgba(0,0,0,0.9)",
-					pointLabelFontSize : 20,
-				});
-			</script>
 			<!-- バッジ描画-------------------------------------------------------------------------------------------------- -->
 			<div class="badgeView">
 				<div class="badgeTabs" id="badgeTabs">
@@ -593,5 +510,11 @@
 		</div>
 		<div class="clear"></div>
 	</div>
+			<script type="text/javascript">
+				activityChange('homeTab');
+				badgeChange('totalTab');
+				capacityChange('capacityTab');
+				graphChangeTotal();
+			</script>
 </body>
 </html>

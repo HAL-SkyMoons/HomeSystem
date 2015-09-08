@@ -16,6 +16,7 @@ public class EmployeeListBean implements Serializable{
 	private String employeeName;
 	private String photoSrc;
 	private String departmentName;
+	private int level;
 	private ArrayList<String> employeeGenre;
 
 
@@ -43,6 +44,12 @@ public class EmployeeListBean implements Serializable{
 	}
 	public void setDepartmentName(String departmentName) {
 		this.departmentName = departmentName;
+	}
+	public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
 	}
 	public ArrayList<String> getEmployeeGenre() {
 		return employeeGenre;

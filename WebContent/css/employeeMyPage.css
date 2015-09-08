@@ -81,7 +81,14 @@ div.imageDiv {
 	margin-left: 25px;
 	position: relative;
 }
-
+div.flameDiv{
+	width:200px;
+	height: 200px;
+	margin-top: -200px;
+	margin-left: 25px;
+	margin-right: 25px;
+	position: relative;
+}
 img.employeeImage {
 	max-width: 200px;
 	max-height: 200px;
@@ -92,7 +99,6 @@ img.employeeImage {
 	left: 0;
 	margin: auto;
 }
-
 ul.employeeData {
 	margin-top: 5px;
 }
@@ -294,19 +300,20 @@ div.leftFlame {
 	float: left;
 	width: 100px;
 	height: 100px;
+	margin-left:10px;
 	background: blue;
 }
 
 div.rightFlame {
 	float: right;
-	width: 440px;
+	width: 360px;
 	height: 100px;
 	background: green;
 }
 
 div.trophyName {
 	clear: both;
-	width: 440px;
+	width: 360px;
 	height: 65px;
 	background: yellow;
 	line-height: 65px;
@@ -314,7 +321,7 @@ div.trophyName {
 }
 
 div.trophyCount {
-	width: 440px;
+	width: 360px;
 	height: 35px;
 	background: white;
 	line-height: 35px;

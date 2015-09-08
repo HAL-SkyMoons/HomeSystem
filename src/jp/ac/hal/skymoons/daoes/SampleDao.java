@@ -161,7 +161,6 @@ public class SampleDao {
      * @throws SQLException
      */
     public int delete(String sample) throws SQLException {
-
 	PreparedStatement delete = con
 		.prepareStatement("delete from sample where sample = ?; ");
 	delete.setString(1, sample);
@@ -264,7 +263,7 @@ public class SampleDao {
 	// SQL発行
 	try {
 	    PreparedStatement select = con
-		    .prepareStatement("SELECT e.employee_id ,u.last_name,u.first_name ,d.department_name,count(*) FROM employees AS e "
+		    .prepareStatement("SELECT e.employee_id ,u.last_name,u.first_name ,d.department_name,count(*) ,e.level FROM employees AS e "
 			    + "JOIN home_contents AS hc ON hc.employee_id = e.employee_id "
 			    + "JOIN users AS u ON u.user_id = e.employee_ID "
 			    + "JOIN departments AS d ON d.department_ID = e.department_ID "
@@ -288,6 +287,7 @@ public class SampleDao {
 		recode.setDepartmentName(result.getString("d.department_name"));
 		recode.setEmployeeGenre(getEmployeeGenre(result
 			.getString("e.employee_id")));
+		recode.setLevel(result.getInt("e.level"));
 		System.out.println(result.getString("e.employee_id")
 			+ result.getString("u.last_name") + ","
 			+ result.getInt("COUNT(*)"));
@@ -439,44 +439,79 @@ public class SampleDao {
     }
 
     /*
-     * 2015/6/23 中野 裕史郎 チャート描画用配列の取得
-     */
-    public int[] getEmployeeDetailOfBadgeCountForChart(String employeeId) {
-	int max = 0;
-	try {
-	    PreparedStatement select = con
-		    .prepareStatement("SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
-			    + "JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? GROUP BY hl.batch_id "
-			    + "ORDER BY b.batch_id");
-	    select.setString(1, employeeId);
-	    ResultSet result = select.executeQuery();
-	    while (result.next()) {
-		max++;
-	    }
-	} catch (SQLException e) {
-	    // TODO 自動生成された catch ブロック
-	    e.printStackTrace();
-	}
-	int[] resultTable = new int[max];
-	int count = 0;
-	try {
-	    PreparedStatement select = con
-		    .prepareStatement("SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
-			    + "JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
-			    + "GROUP BY hl.batch_id ORDER BY hl.batch_id");
-	    select.setString(1, employeeId);
-	    ResultSet result = select.executeQuery();
-	    while (result.next()) {
-		resultTable[count] = result.getInt("COUNT(*)");
-		count++;
-	    }
-	} catch (SQLException e) {
-	    // TODO 自動生成された catch ブロック
-	    e.printStackTrace();
-	}
+	 * 2015/6/23
+	 * 中野 裕史郎
+	 * チャート描画用配列の取得
+	 */
+	public String[] getEmployeeDetailOfBadgeNameForChart(String employeeId){
+		int max =0;
+		String sql = "SELECT batch_name FROM batch ORDER BY batch_id";
+		try {
+			PreparedStatement select = con.prepareStatement(sql);
+			ResultSet result = select.executeQuery();
+			while(result.next()){
+				max++;
+			}
+			System.out.println("Name for Chart Max is" +max);
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		String[] resultTable = new String[max];
+		int count =0;
+		try {
+			PreparedStatement select = con.prepareStatement(sql);
+			ResultSet result = select.executeQuery();
+			while(result.next()){
+				System.out.println("Name for Chart is" +result.getString("batch_name"));
+				resultTable[count] = result.getString("batch_name");
+				count++;
+			}
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
 
-	return resultTable;
-    }
+		return resultTable;
+	}
+	/*
+	 * 2015/6/23
+	 * 中野 裕史郎
+	 * チャート描画用配列の取得
+	 */
+	public int[] getEmployeeDetailOfBadgeCountForChart(String employeeId, String limit, String outPutDate,int batchKindCount){
+		int[] batchCount = new int[batchKindCount];
+		for(int count=0;count<batchKindCount-1;count++){
+			batchCount[count]=0;
+		}
+		String sql="";
+		if(limit.equals("month")||limit.equals("year")){
+			sql = "SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
+					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
+					+"AND home_datetime >= ? GROUP BY hl.batch_id ORDER BY b.batch_id";
+		}else if(limit.equals("total")){
+			sql = "SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
+					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
+					+"GROUP BY hl.batch_id ORDER BY b.batch_id";
+		}
+		try {
+			PreparedStatement select = con.prepareStatement(sql);
+			select.setString(1, employeeId);
+			if(limit.equals("month")||limit.equals("year")){
+				select.setString(2, outPutDate);
+			}
+			ResultSet result = select.executeQuery();
+			while(result.next()){
+				batchCount[result.getInt("hl.batch_id")-1]=result.getInt("COUNT(*)");
+				System.out.println("batchId= "+result.getInt("hl.batch_id")+" AND counts= "+result.getInt("COUNT(*)"));
+			}
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+
+		return batchCount;
+	}
 
     /**
      * 接続を閉じる
@@ -994,58 +1029,7 @@ public class SampleDao {
 	return resultTable;
     }
 
-    /*
-     * 2015/6/23 中野 裕史郎 チャート描画用配列の取得
-     */
-    public String[] getEmployeeDetailOfBadgeNameForChart(String employeeId,
-	    String limit, String outPutDate) {
-	int max = 0;
-	String sql = "";
-	if (limit.equals("month") || limit.equals("year")) {
-	    sql = "SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
-		    + "JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
-		    + "AND home_datetime >= ? GROUP BY hl.batch_id ORDER BY b.batch_id";
-	} else if (limit.equals("total")) {
-	    sql = "SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
-		    + "JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
-		    + "GROUP BY hl.batch_id ORDER BY b.batch_id";
-	}
-	try {
-	    PreparedStatement select = con.prepareStatement(sql);
-	    select.setString(1, employeeId);
-	    if (limit.equals("month") || limit.equals("year")) {
-		select.setString(2, outPutDate);
-	    }
-	    ResultSet result = select.executeQuery();
-	    while (result.next()) {
-		max++;
-	    }
-	    System.out.println("Name for Chart Max is" + max);
-	} catch (SQLException e) {
-	    // TODO 自動生成された catch ブロック
-	    e.printStackTrace();
-	}
-	String[] resultTable = new String[max];
-	int count = 0;
-	try {
-	    PreparedStatement select = con.prepareStatement(sql);
-	    select.setString(1, employeeId);
-	    if (limit.equals("month") || limit.equals("year")) {
-		select.setString(2, outPutDate);
-	    }
-	    ResultSet result = select.executeQuery();
-	    while (result.next()) {
-		System.out.println("Name for Chart is"
-			+ result.getString("b.batch_name"));
-		resultTable[count] = result.getString("b.batch_name");
-		count++;
-	    }
-	} catch (SQLException e) {
-	    // TODO 自動生成された catch ブロック
-	    e.printStackTrace();
-	}
-	return resultTable;
-    }
+
 
     /*
      * 2015/6/23 中野 裕史郎 チャート描画用配列の取得
@@ -1354,6 +1338,7 @@ public class SampleDao {
 		    .prepareStatement("UPDATE employees SET comment = ? WHERE employee_id = ?");
 	    update.setString(1, comment);
 	    update.setString(2, employeeId);
+	    System.out.println("登録："+comment);
 	    result = update.executeUpdate();
 	    if (result == 1) {
 		jud = true;
