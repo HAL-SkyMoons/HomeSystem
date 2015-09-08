@@ -386,7 +386,7 @@ public class SampleDao {
 
 	try {
 	    PreparedStatement select = con
-		    .prepareStatement("SELECT e.employee_ID,u.last_name,u.first_name , d.department_name ,e.level"
+		    .prepareStatement("SELECT e.employee_ID,u.last_name,u.first_name , d.department_name ,e.level "
 			    + "FROM Employees AS e JOIN Users AS u ON e.employee_ID = u.user_ID "
 			    + "JOIN Departments AS d ON e.department_ID = d.department_ID ORDER BY e.employee_ID");
 	    ResultSet result = select.executeQuery();
@@ -430,7 +430,7 @@ public class SampleDao {
 		recode.setDepartmentName(result.getString("d.department_name"));
 		recode.setEmployeeComment(result.getString("e.comment"));
 		recode.setLevel(result.getInt("e.level"));
-		recode.setExperience(result.getInt("e.experience"));
+		recode.setNowExperience(result.getInt("e.experience"));
 		resultTable.add(recode);
 	    }
 	} catch (SQLException e) {
