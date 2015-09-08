@@ -2,6 +2,7 @@ package jp.ac.hal.skymoons.models;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import jp.ac.hal.skymoons.beans.CommentBean;
+import jp.ac.hal.skymoons.beans.EmployeeListBean;
+import jp.ac.hal.skymoons.beans.EmployeePageBean;
 import jp.ac.hal.skymoons.beans.FileBean;
 import jp.ac.hal.skymoons.beans.GenreBean;
 import jp.ac.hal.skymoons.beans.PlanBean;
@@ -313,6 +316,11 @@ public class PlanDetail extends AbstractModel {
 	    // すべての評価の数
 	    int[] points = dao.planPointAll(planId);
 	    request.setAttribute("points", points);
+
+	    //枠
+	    ArrayList<EmployeeListBean> employeePageReturn = new ArrayList<EmployeeListBean>();
+	    employeePageReturn = (ArrayList<EmployeeListBean>)dao.getEmployee();
+	    request.setAttribute("employeeDetail", employeePageReturn);
 
 	    // 自分の評価を取得
 	    PlanPointBean planPointBean = new PlanPointBean();
