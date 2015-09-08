@@ -107,7 +107,7 @@
 				    out.println(">" + i + "</option>");
 				}
 		    }
-		    out.println("</select>月<br>");
+		    out.println("</select>月");
 
 		    // 送信ボタン
 		    out.println("<input type='submit' name='submit' value='表示' class='btn btn-2 btn-2c submitBtn'>");
@@ -119,7 +119,6 @@
 		    // ==========================================================================================
 		    //  ランキングリスト出力
 		    // ==========================================================================================
-
 
 		    out.print("<div class=\"rankingName\">");
 		    if (year != null) {
@@ -140,9 +139,9 @@
 
 		    out.print("</div>");
 
-		    if (list.size() != 0) {
+// 		    out.print("<div class=\"ranking\">");
 
-				out.print("<div class=\"ranking\">");
+		    if (list.size() != 0) {
 
 				// 順位管理
 				int num = 0;
@@ -154,6 +153,8 @@
 					outnum = num;
 					value = list.get(i).getValue();
 				    }
+
+				    out.print("<div class=\"ranking\">");
 
 				    out.print("<div class=\"rows\">");
 
@@ -183,9 +184,13 @@
 
 				    out.print("</div>");
 
+				    out.print("</div>");
+
+				    out.print("<hr>");
+
 				}
 
-				out.print("</div>");
+// 				out.print("</div>");
 
 		    } else {
 				out.println("<p>データがありません。</p>");

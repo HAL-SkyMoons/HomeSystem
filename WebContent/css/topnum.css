@@ -24,21 +24,24 @@
 	width: 600px;
 	margin: 0 auto;
 	text-align: right;
+	margin-top: 30px;
+	margin-bottom: 30px;
 }
 
 .ranking {
 	display: table;
+	width: 600px;
 }
 
-.row {
+.rows {
 	height: 150px;
 	display: table-row;
-	border: 1px solid black;
+
 }
 
 .rank {
 	width: 150px;
-	height: 150px;
+	/* 	height: 150px; */
 	display: table-cell;
 	text-align: center;
 }
@@ -50,7 +53,7 @@
 
 .face {
 	width: 150px;
-	height: 150px;
+	/* 	height: 150px; */
 	display: table-cell;
 	text-align: center;
 }
@@ -61,9 +64,10 @@
 }
 
 .detail {
-	height: 150px;
+	/* 	height: 150px; */
 	width: 200px;
 	display: table-cell;
+	padding-left: 50px;
 }
 
 .employeeName {
@@ -82,8 +86,8 @@
 }
 
 .submitBtn {
-	margin-top: 10px;
-	width: 200px;
+/* 	margin-top: 10px; */
+	width: 100px;
 	height: 40px;
 }
 
@@ -93,7 +97,7 @@
 
 select {
 	font-size: 16px;
-	height: 2em;
+	height: 40px;
 }
 
 .rankingName {
@@ -102,4 +106,69 @@ select {
 	width: 100%;
 	border-bottom: 1px solid #ccc;
 	margin-bottom: 20px;
+}
+
+/*ボタン*/
+.btn {
+	border: none;
+	font-family: inherit;
+	font-size: inherit;
+	color: inherit;
+	background: none;
+	cursor: pointer;
+	display: inline-block;
+	margin-bottom: 10px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 700;
+	outline: none;
+	position: relative;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+	background: #e6002d;
+}
+
+.btn:after {
+	content: '';
+	position: absolute;
+	z-index: -1;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.btn-2 {
+	/* 	background: #cb4e4e; */
+	background: #e6002d;
+	color: #fff;
+	box-shadow: 0 3px #CD0014;
+	-webkit-transition: none;
+	-moz-transition: none;
+	transition: none;
+}
+
+.btn-2[disabled] {
+	background: #e6002d;
+	color: #fff;
+	box-shadow: 0 3px #CD0014;
+	-webkit-transition: none;
+	-moz-transition: none;
+	transition: none;
+}
+
+.btn-2c {
+	border-radius: 5px;
+}
+
+.btn-2c:hover {
+	background: #e6002d;
+	color: #fff;
+	box-shadow: 0 1.5px #CD0014;
+	top: 2px;
+}
+
+.btn-2c:active {
+	box-shadow: 0 0 #CD0014;
+	top: 6px;
 }
