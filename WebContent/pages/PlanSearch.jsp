@@ -9,9 +9,8 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!-- <!DOCTYPE html> -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
 <title>企画検索</title>
@@ -49,9 +48,7 @@
 				<tr>
 					<th class="searchTitle">キーワード</th>
 					<td class="searchForm"><input type="text" name="keyword" class="keyword" value="${searchKeyword}" /></td>
-					<td class="help">
-						タイトルと内容にキーワード<br>と<br>一致するものがある企画<br>を表示します。
-					</td>
+					<td class="help"></td>
 				</tr>
 				<tr>
 					<th class="searchTitle">企画者</th>
@@ -68,9 +65,7 @@
 
 							</c:forEach>
 						</select></td>
-					<td class="help">
-						企画者を指定した人のみに<br>限定することが出来ます。
-					</td>
+					<td class="help"></td>
 				</tr>
 				<tr>
 					<th class="searchTitle">オプション</th>
@@ -80,9 +75,7 @@
 								<input type="checkbox" name="endPlan" value="check">
 							</c:if> 終了企画を含める
 					</label></td>
-					<td class="help">
-						検索内容にオプションの内容を含めて表示出来ます。
-					</td>
+					<td class="help"></td>
 				</tr>
 				<tr>
 					<th class="searchTitle">順序</th>
@@ -100,9 +93,7 @@
 
 							</c:forEach>
 						</select></td>
-					<td class="help">
-						検索結果の順番を指定した<br>順番に変更します。
-					</td>
+					<td class="help"></td>
 				</tr>
 			</table>
 

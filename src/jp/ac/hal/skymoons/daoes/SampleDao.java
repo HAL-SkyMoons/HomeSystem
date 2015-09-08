@@ -430,7 +430,9 @@ public class SampleDao {
 		recode.setDepartmentName(result.getString("d.department_name"));
 		recode.setEmployeeComment(result.getString("e.comment"));
 		recode.setLevel(result.getInt("e.level"));
-		recode.setNowExperience(result.getInt("e.experience"));
+		recode.setExperience(result.getInt("e.experience"));
+		recode.setNowExperience(getNowExperience(employeeId));
+		recode.setNextExperience(getNextExperience(employeeId));
 		resultTable.add(recode);
 	    }
 	} catch (SQLException e) {
@@ -484,7 +486,6 @@ public class SampleDao {
 	public int[] getEmployeeDetailOfBadgeCountForChart(String employeeId, String limit, String outPutDate,int batchKindCount){
 		int[] batchCount = new int[batchKindCount];
 		int arrayCount=0;
-		System.out.println("batchKindCount="+batchKindCount);
 		for(int count=0;count<batchKindCount-1;count++){
 			batchCount[count]=0;
 		}
@@ -516,6 +517,31 @@ public class SampleDao {
 		}
 
 		return batchCount;
+	}
+	/*
+	 * 2015/9/8
+	 * 中野 裕史郎
+	 * パスワード変更
+	 */
+	public boolean setPasswordforChange(String employeeId, String password) {
+		// TODO 自動生成されたメソッド・スタブ
+		boolean jud = false;
+		try {
+		    PreparedStatement update = con
+			    .prepareStatement("UPDATE users SET password = ? WHERE user_id = ?");
+		    update.setString(1, password);
+		    update.setString(2, employeeId);
+		    System.out.println("パス登録："+password);
+		    int result = update.executeUpdate();
+		    if (result == 1) {
+		    	jud = true;
+		    } else {
+		    	jud = false;
+		    }
+		} catch (SQLException e) {
+		    jud = false;
+		}
+		return jud;
 	}
 
     /**
@@ -1344,7 +1370,7 @@ public class SampleDao {
 		    .prepareStatement("UPDATE employees SET comment = ? WHERE employee_id = ?");
 	    update.setString(1, comment);
 	    update.setString(2, employeeId);
-	    System.out.println("登録："+comment);
+	    System.out.println("コメント登録："+comment);
 	    result = update.executeUpdate();
 	    if (result == 1) {
 		jud = true;

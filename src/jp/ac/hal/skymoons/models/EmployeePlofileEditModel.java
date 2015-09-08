@@ -49,9 +49,11 @@ public class EmployeePlofileEditModel extends AbstractModel{
 		List items;
 		//更新用引数
 		String comment = "";
+		String password= "";
 		String employeeId = (String)sessionController.getUserId();
 		//DB更新確認
-		boolean dbJud = false;
+		boolean commentJud = false;
+		boolean passwordJud = false;
 		boolean imageJud = false;
 		//form入力判定
 		if(ServletFileUpload.isMultipartContent(request)){
@@ -71,8 +73,20 @@ public class EmployeePlofileEditModel extends AbstractModel{
 						if(item.getFieldName().equals("comment")){
 							comment = item.getString("UTF-8");
 							if(comment != null && !(comment.isEmpty())){
-								dbJud = dao.setEmployeeDetailCommentUpdate(employeeId, comment);
-								if(dbJud==false){
+								commentJud = dao.setEmployeeDetailCommentUpdate(employeeId, comment);
+								if(commentJud==false){
+									System.out.println("DB update err...");
+									dao.rollback();
+								}else{
+									System.out.println("DB update success!!");
+									dao.commit();
+								}
+							}
+						}else if(item.getFieldName().equals("password")){
+							password = item.getString("UTF-8");
+							if(password != null && !(password.isEmpty())){
+								passwordJud = dao.setPasswordforChange(employeeId,password);
+								if(passwordJud==false){
 									System.out.println("DB update err...");
 									dao.rollback();
 								}else{
@@ -108,13 +122,17 @@ public class EmployeePlofileEditModel extends AbstractModel{
 							}
 						}
 					}
+					if(commentJud==false){
+
+						break;
+					}
 				}
 			} catch (FileUploadException e) {
 				// エラー処理
 				throw new ServletException(e);
 			}
 			//正常終了した場合マイページへ遷移
-			if(imageJud == true || dbJud == true){
+			if(imageJud == true || commentJud == true || passwordJud == true){
 				//マイページ用引数
 				ArrayList<EmployeePageBean> employeePageReturn = new ArrayList<EmployeePageBean>();
 				ArrayList<EmployeeBatchBean> employeeBatchReturn = new ArrayList<EmployeeBatchBean>();

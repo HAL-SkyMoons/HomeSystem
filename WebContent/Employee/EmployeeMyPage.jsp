@@ -237,10 +237,10 @@
 						<li class="employeeName">${employeeDetail.employeeName}</li>
 						<hr>
 						<li class="employeeLevel">レベル${employeeDetail.level}</li>
-						<li class="employeeExperience">${employeeDetail.experience-nowExperience}/${nextExperience-nowExperience}XP</li>
+						<li class="employeeExperience">${employeeDetail.experience-employeeDetail.nowExperience}/${employeeDetail.nextExperience-employeeDetail.nowExperience}XP</li>
 						<li>
-						<progress value="${employeeDetail.experience-nowExperience}" max="${nextExperience-nowExperience}">
-							<span>${(employeeDetail.experience-nowExperience) / (nextExperience-nowExperience) *100}</span>%
+						<progress value="${employeeDetail.experience-employeeDetail.nowExperience}" max="${employeeDetail.nextExperience-employeeDetail.nowExperience}">
+							<span>${(employeeDetail.experience-employeeDetail.nowExperience) / (employeeDetail.nextExperience-employeeDetail.nowExperience) *100}</span>%
 						</progress>
 						</li>
 					</ul>
