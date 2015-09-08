@@ -40,13 +40,14 @@ public class ContentsRegistDao {
 	public ContentsRegistBean findEmployee(String userId) throws SQLException{
 		//コンテンツの取得
 		ContentsRegistBean registBean = new ContentsRegistBean();
-		PreparedStatement employeePst = con.prepareStatement("select last_name, first_name from users where user_id = ?");
+		PreparedStatement employeePst = con.prepareStatement("select u.last_name, u.first_name, emp.level from users u, employees emp where u.user_id = emp.employee_id and u.user_id = ?");
 		employeePst.setString(1, userId);
 		ResultSet employeeResult = employeePst.executeQuery();
 		registBean.setEmployeeId(userId);
 		if (employeeResult.next()) {
-			registBean.setLastName(employeeResult.getString("last_name"));
-			registBean.setFirstName(employeeResult.getString("first_name"));
+			registBean.setLastName(employeeResult.getString("u.last_name"));
+			registBean.setFirstName(employeeResult.getString("u.first_name"));
+			registBean.setLevel(employeeResult.getInt("emp.level"));
 		}
 		employeeResult.close();
 		employeePst.close();

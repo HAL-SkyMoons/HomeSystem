@@ -181,7 +181,7 @@ public class ContentsDetailDao {
 		//戻り値のListを生成
 		ArrayList<ContentsDetailHomeLogBean> homeLogList = new ArrayList<>();
 		//コンテンツの取得
-		PreparedStatement homeLogPst = con.prepareStatement("select * from home_log hl, batch b, users u1, users u2 where hl.home_content_id = ? and hl.home_target = u1.user_id and hl.home_user = u2.user_id and hl.batch_id = b.batch_id");
+		PreparedStatement homeLogPst = con.prepareStatement("select * from home_log hl, batch b, users u1, users u2, employees emp where hl.home_content_id = ? and hl.home_target = u1.user_id and hl.home_user = u2.user_id and hl.batch_id = b.batch_id and hl.home_user = emp.employee_id ");
 		homeLogPst.setInt(1, homeContentId);
 		ResultSet homeLogResult = homeLogPst.executeQuery();
 		while(homeLogResult.next()){
@@ -199,6 +199,7 @@ public class ContentsDetailDao {
 			homeLogBean.setBatchComment(homeLogResult.getString("batch_comment"));
 			homeLogBean.setHomePoint(homeLogResult.getInt("home_point"));
 			homeLogBean.setHomeComment(homeLogResult.getString("home_comment"));
+			homeLogBean.setLevel(homeLogResult.getInt("emp.level"));
 			homeLogList.add(homeLogBean);
 		}
 		homeLogPst.close();

@@ -67,11 +67,9 @@
 						<div id="img">
 							<img src="../../images/employees/${i.employeeId}.jpg" alt="投稿者">
 						</div>
+						<c:set var="level" value="${i.level}"/>
 						<c:if test="${i.level > 12}">
 							<c:set var="level" value="12"/>
-						</c:if>
-						<c:if test="${i.level <= 12}">
-							<c:set var="level" value="${i.level}"/>
 						</c:if>
 						<div class="flameDiv">
 							<img src="../../images/flame/${level}.png" class="employeeFlame">
@@ -125,6 +123,13 @@
 							<c:if test="${fromUser}"><div class="planner"></c:if>
 							<c:if test="${!fromUser}"><div class="gest"></c:if>
 								<div class="face"><img src="../../images/employees/${homeLog.homeUser}.jpg"></div>
+								<c:set var="level" value="${homeLog.level}"/>
+								<c:if test="${homeLog.level > 12}">
+									<c:set var="level" value="12"/>
+								</c:if>
+								<div class="flameFaceDiv">
+									<img src="../../images/flame/${level}.png" class="employeeFlame">
+								</div>
 								<div class="name">${homeLog.homeUserLastName}${homeLog.homeUserFirstName}</div>
 								<div class="home">
 									<c:if test="${i.userId != homeLog.homeUser && i.employeeId != i.userId}">
@@ -135,14 +140,14 @@
 							</div>
 							<c:if test="${fromUser}"><div class="plannerComment"></c:if>
 							<c:if test="${!fromUser}"><div class="gestComment"></c:if>
-							<div class="commentHeader">
-								<div class="commentNo">No.${homeLogCount}</div>
-								<div id="comments"></div>
-								<div class="commentBody">${homeLog.homeComment}</div>
-								<div class="commentDate">${homeLog.homeDatetime}</div>
-							</div>
-							<div class="commenFootert">
-								<div class="commentFile">
+								<div class="commentHeader">
+									<div class="commentNo">No.${homeLogCount}</div>
+									<div id="comments"></div>
+									<div class="commentBody">${homeLog.homeComment}</div>
+									<div class="commentDate">${homeLog.homeDatetime}</div>
+								</div>
+								<div class="commenFootert">
+									<div class="commentFile"></div>
 								</div>
 							</div>
 						</div>
