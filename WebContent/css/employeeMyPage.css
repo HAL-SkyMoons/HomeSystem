@@ -81,7 +81,14 @@ div.imageDiv {
 	margin-left: 25px;
 	position: relative;
 }
-
+div.flameDiv{
+	width:200px;
+	height: 200px;
+	margin-top: -200px;
+	margin-left: 25px;
+	margin-right: 25px;
+	position: relative;
+}
 img.employeeImage {
 	max-width: 200px;
 	max-height: 200px;
@@ -92,7 +99,6 @@ img.employeeImage {
 	left: 0;
 	margin: auto;
 }
-
 ul.employeeData {
 	margin-top: 5px;
 }

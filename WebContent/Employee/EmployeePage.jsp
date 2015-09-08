@@ -1,6 +1,7 @@
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="jp.ac.hal.skymoons.beans.EmployeeBatchBean"%>
+<%@page import="jp.ac.hal.skymoons.beans.EmployeePageBean"%>
 <%@page import="java.util.*"%>
 <%@page import="java.text.*"%>
 <%@page import="jp.ac.hal.skymoons.util.Utility"%>
@@ -29,6 +30,12 @@
 	int[] chartCountYear = (int[])request.getAttribute("chartCountYear");
 	//通算
 	int[] chartCountTotal = (int[])request.getAttribute("chartCountTotal");
+	ArrayList<EmployeePageBean> employeeDates = (ArrayList<EmployeePageBean>)request.getAttribute("employeeDetail");
+	EmployeePageBean employeeDate = employeeDates.get(0);
+	int level = employeeDate.getLevel();
+	if(level>12){
+		level=12;
+	}
 %>
 <script type="text/javascript" src="../js/Chart.js-master/Chart.js"></script>
 <script>
@@ -228,6 +235,9 @@ function graphChangeTotal(){
 					<ul class="employeeData">
 						<li class="employeeImage"><div class="imageDiv">
 								<img src="../images/employees/${employeeDetail.employeeId}.jpg?<%=milliSec %>" class="employeeImage">
+								</div><div class="flameDiv">
+								<img src="../images/flame/<%=level %>.png?<%=milliSec %>" class="employeeFlame">
+							</div>
 							</div></li>
 						<li class="departmentName">${employeeDetail.departmentName}</li>
 						<li class="employeeName">${employeeDetail.employeeName}</li>
