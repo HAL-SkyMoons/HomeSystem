@@ -113,3 +113,16 @@
 	height: 50px;
 	font-size: 25px;
 }
+/*******************************
+* フレーム画像用
+********************************/
+div.flameDiv{
+	width: 100px;
+	height: 100px;
+	margin-top: -100px;
+	position: relative;
+}
+.flameDiv>img {
+	max-width: 100px;
+	max-height: 100px;
+}

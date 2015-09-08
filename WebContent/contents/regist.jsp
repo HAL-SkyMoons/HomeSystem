@@ -167,6 +167,13 @@
 							<div id="img">
 								<img src="../../images/employees/${i.employeeId}.jpg" alt="投稿者">
 							</div>
+							<c:set var="level" value="${i.level}"/>
+							<c:if test="${i.level > 12}">
+								<c:set var="level" value="12"/>
+							</c:if>
+							<div class="flameDiv">
+								<img src="../../images/flame/${level}.png" class="employeeFlame">
+							</div>
 							${i.lastName}${i.firstName}
 						</div>
 					</div>
