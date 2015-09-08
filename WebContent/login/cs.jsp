@@ -15,7 +15,7 @@
 <body>
 	<!-- ↓追記2 -->
 	<header></header>
-	<img src="../images/home2.png">
+	<img src="/HomeSystem/images/logo.png">
 	<div id="box">
 		<!-- ↑追記2 -->
 		<h1>顧客・社員用ログインページ</h1>
