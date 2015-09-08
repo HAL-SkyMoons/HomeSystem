@@ -1,19 +1,42 @@
 @CHARSET "UTF-8";
 
-#box{
-	height:500px;
-	width:600px;
-	margin:100px auto;
-	background: gray;
-	border-radius: 10px;        /* CSS3草案 */  
-	-webkit-border-radius: 10px;    /* Safari,Google Chrome用 */  
-	-moz-border-radius: 10px;   /* Firefox用 */  
-}
-img{
-	width:50px;
+#logo {
+	clear: both;
 }
 
-h1{
+#boxout {
+	width: 1000px;
+	height: 1000px;
+	margin: 0 auto;
+	position: relative;
+}
+
+#boxcomment {
+	margin-top: 200px;
+	float: left;
+}
+
+#box {
+	clear: both;
+	height: 300px;
+	width: 400px;
+	margin-top: 200px;
+	position: absolute;
+	right: 0;
+	padding: 20px;
+	background: moccasin;
+	border: solid 2.5px orange;
+	border-radius: 10px; /* CSS3草案 */
+	-webkit-border-radius: 10px; /* Safari,Google Chrome用 */
+	-moz-border-radius: 10px;
+}
+
+#box p {
+	height: 50px;
+	line-height: 50px;
+}
+
+h1 {
 	font-size: 20px;
 }
 
@@ -21,27 +44,75 @@ h1{
 	background: #f06060;
 }
 
-/* Button 2 */
+/*ボタン*/
+.btn {
+	border: none;
+	font-family: inherit;
+	font-size: inherit;
+	color: inherit;
+	background: none;
+	cursor: pointer;
+	display: inline-block;
+	margin-bottom: 10px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 700;
+	outline: none;
+	position: relative;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+	background: #e6002d;
+	width: 250px;
+	height: 35px;
+	margin: 0px 85px;
+}
+
+.btn:after {
+	content: '';
+	position: absolute;
+	z-index: -1;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
 .btn-2 {
-	background: #cb4e4e;
+	/* 	background: #cb4e4e; */
+	background: #e6002d;
 	color: #fff;
-	box-shadow: 0 6px #ab3c3c;
+	box-shadow: 0 3px #CD0014;
 	-webkit-transition: none;
 	-moz-transition: none;
 	transition: none;
 }
 
-/* Button 2c */
+.btn-2[disabled] {
+	background: #e6002d;
+	color: #fff;
+	box-shadow: 0 3px #CD0014;
+	-webkit-transition: none;
+	-moz-transition: none;
+	transition: none;
+}
+
 .btn-2c {
 	border-radius: 5px;
 }
 
 .btn-2c:hover {
-	box-shadow: 0 4px #ab3c3c;
+	background: #e6002d;
+	color: #fff;
+	box-shadow: 0 1.5px #CD0014;
 	top: 2px;
 }
 
 .btn-2c:active {
-	box-shadow: 0 0 #ab3c3c;
+	box-shadow: 0 0 #CD0014;
 	top: 6px;
+}
+
+.submit {
+	margin-top: 10px;
+	width: 400px;
 }

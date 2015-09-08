@@ -177,7 +177,7 @@ public class SampleDao {
 
 	try {
 	    PreparedStatement select = con
-		    .prepareStatement("SELECT e.employee_ID,u.last_name,u.first_name , d.department_name "
+		    .prepareStatement("SELECT e.employee_ID,u.last_name,u.first_name , d.department_name ,e.level"
 			    + "FROM Employees AS e JOIN Users AS u ON e.employee_ID = u.user_ID "
 			    + "JOIN Departments AS d ON e.department_ID = d.department_ID  WHERE e.department_ID = ? ORDER BY e.employee_ID");
 	    select.setInt(1, departmentId);
@@ -193,6 +193,7 @@ public class SampleDao {
 		record.setDepartmentName(result.getString("d.department_name"));
 		record.setEmployeeGenre(getEmployeeGenre(result
 			.getString("e.employee_ID")));
+		record.setLevel(result.getInt("e.level"));
 		resultTable.add(record);
 	    }
 	} catch (SQLException e) {
@@ -385,7 +386,7 @@ public class SampleDao {
 
 	try {
 	    PreparedStatement select = con
-		    .prepareStatement("SELECT e.employee_ID,u.last_name,u.first_name , d.department_name "
+		    .prepareStatement("SELECT e.employee_ID,u.last_name,u.first_name , d.department_name ,e.level "
 			    + "FROM Employees AS e JOIN Users AS u ON e.employee_ID = u.user_ID "
 			    + "JOIN Departments AS d ON e.department_ID = d.department_ID ORDER BY e.employee_ID");
 	    ResultSet result = select.executeQuery();
@@ -399,6 +400,7 @@ public class SampleDao {
 		record.setDepartmentName(result.getString("d.department_name"));
 		record.setEmployeeGenre(getEmployeeGenre(result
 			.getString("e.employee_ID")));
+		record.setLevel(result.getInt("e.level"));
 		resultTable.add(record);
 	    }
 	} catch (SQLException e) {
@@ -429,6 +431,8 @@ public class SampleDao {
 		recode.setEmployeeComment(result.getString("e.comment"));
 		recode.setLevel(result.getInt("e.level"));
 		recode.setExperience(result.getInt("e.experience"));
+		recode.setNowExperience(getNowExperience(employeeId));
+		recode.setNextExperience(getNextExperience(employeeId));
 		resultTable.add(recode);
 	    }
 	} catch (SQLException e) {
@@ -481,6 +485,7 @@ public class SampleDao {
 	 */
 	public int[] getEmployeeDetailOfBadgeCountForChart(String employeeId, String limit, String outPutDate,int batchKindCount){
 		int[] batchCount = new int[batchKindCount];
+		int arrayCount=0;
 		for(int count=0;count<batchKindCount-1;count++){
 			batchCount[count]=0;
 		}
@@ -502,8 +507,9 @@ public class SampleDao {
 			}
 			ResultSet result = select.executeQuery();
 			while(result.next()){
-				batchCount[result.getInt("hl.batch_id")-1]=result.getInt("COUNT(*)");
+				batchCount[arrayCount]=result.getInt("COUNT(*)");
 				System.out.println("batchId= "+result.getInt("hl.batch_id")+" AND counts= "+result.getInt("COUNT(*)"));
+				arrayCount++;
 			}
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック
@@ -511,6 +517,31 @@ public class SampleDao {
 		}
 
 		return batchCount;
+	}
+	/*
+	 * 2015/9/8
+	 * 中野 裕史郎
+	 * パスワード変更
+	 */
+	public boolean setPasswordforChange(String employeeId, String password) {
+		// TODO 自動生成されたメソッド・スタブ
+		boolean jud = false;
+		try {
+		    PreparedStatement update = con
+			    .prepareStatement("UPDATE users SET password = ? WHERE user_id = ?");
+		    update.setString(1, password);
+		    update.setString(2, employeeId);
+		    System.out.println("パス登録："+password);
+		    int result = update.executeUpdate();
+		    if (result == 1) {
+		    	jud = true;
+		    } else {
+		    	jud = false;
+		    }
+		} catch (SQLException e) {
+		    jud = false;
+		}
+		return jud;
 	}
 
     /**
@@ -932,7 +963,7 @@ public class SampleDao {
     public List<CommentBean> planCommentList(int planId) throws SQLException {
 
 	PreparedStatement select = con
-		.prepareStatement("select * from plan_comment p, users u where plan_id = ? and p.comment_user = u.user_id;");
+		.prepareStatement("select * from plan_comment p, users u,employees e where plan_id = ? and p.comment_user = u.user_id and p.comment_user = e.employee_id;");
 
 	select.setInt(1, planId);
 
@@ -951,6 +982,7 @@ public class SampleDao {
 	    record.setDeleteFlag(result.getInt("delete_flag"));
 	    record.setCommentDatetime(result.getDate("comment_datetime"));
 	    record.setComment(result.getString("comment"));
+	    record.setLevel(result.getInt("level"));
 
 	    table.add(record);
 	}
@@ -1338,7 +1370,7 @@ public class SampleDao {
 		    .prepareStatement("UPDATE employees SET comment = ? WHERE employee_id = ?");
 	    update.setString(1, comment);
 	    update.setString(2, employeeId);
-	    System.out.println("登録："+comment);
+	    System.out.println("コメント登録："+comment);
 	    result = update.executeUpdate();
 	    if (result == 1) {
 		jud = true;

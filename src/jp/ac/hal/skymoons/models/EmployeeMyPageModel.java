@@ -80,7 +80,6 @@ public class EmployeeMyPageModel extends AbstractModel{
 		employeeBatchMonthReturn = (ArrayList<EmployeeBatchBean>)dao.getEmployeeDetailOfBatchInLimited(loginUserId,monthDate);
 		employeeBatchYearReturn = (ArrayList<EmployeeBatchBean>)dao.getEmployeeDetailOfBatchInLimited(loginUserId,yearDate);
 		bigGenreList = (ArrayList<BigGenreBean>) dao.getAllBigGenre();
-
 		//チャート描画用情報取得処理
 		employeeChartBatchName = (String[])dao.getEmployeeDetailOfBadgeNameForChart(loginUserId);
 		batchKindCount = employeeChartBatchName.length;

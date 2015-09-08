@@ -237,10 +237,10 @@
 						<li class="employeeName">${employeeDetail.employeeName}</li>
 						<hr>
 						<li class="employeeLevel">レベル${employeeDetail.level}</li>
-						<li class="employeeExperience">${employeeDetail.experience-nowExperience}/${nextExperience-nowExperience}XP</li>
+						<li class="employeeExperience">${employeeDetail.experience-employeeDetail.nowExperience}/${employeeDetail.nextExperience-employeeDetail.nowExperience}XP</li>
 						<li>
-						<progress value="${employeeDetail.experience-nowExperience}" max="${nextExperience-nowExperience}">
-							<span>${(employeeDetail.experience-nowExperience) / (nextExperience-nowExperience) *100}</span>%
+						<progress value="${employeeDetail.experience-employeeDetail.nowExperience}" max="${employeeDetail.nextExperience-employeeDetail.nowExperience}">
+							<span>${(employeeDetail.experience-employeeDetail.nowExperience) / (employeeDetail.nextExperience-employeeDetail.nowExperience) *100}</span>%
 						</progress>
 						</li>
 					</ul>
@@ -248,7 +248,7 @@
 					<br>
 					<a href="/HomeSystem/fc/PlanRegister"><input type="submit" value="企画投稿" class="btn btn-2 btn-2c planButton"></a>
 					<br>
-					<a href="/HomeSystem/fc/contents/addition"><input type="submit" value="コンテンツ投稿" class="btn btn-2 btn-2c contentButton"></a>
+					<a href="/HomeSystem/fc/contents/regist"><input type="submit" value="コンテンツ投稿" class="btn btn-2 btn-2c contentButton"></a>
 				</c:forEach>
 			</div>
 
@@ -424,27 +424,26 @@
 					<hr />
 				</div>
 				<div class="trophyDetail" id="trophyTab">
-					<hr />
 					<c:if test="${empty employeeTrophy}" var="flgA" />
 					<c:if test="${flgA == true}">
 						<h4 class="notActivity">まだトロフィーの取得はありません</h4>
 					</c:if>
 					<c:forEach var="employeeTrophy" items="${employeeTrophy}" varStatus="status">
+						<hr/>
 						<div class="trophyFlame">
 							<div class="leftFlame">
 								<img src="../images/trophy/${employeeTrophy.trophyImg}.png" class="trophyImage">
 							</div>
 							<div class="rightFlame">
 								<div class="trophyName">
-									<h4 class="trophyName">${employeeTrophy.trophyName}</h4>
+									<p class="trophyName">${employeeTrophy.trophyName}</p>
 								</div>
 								<div class="trophyCount">
-									<h4 class="trophyCount">× ${employeeTrophy.trophyCount}ケ</h4>
+									<p class="trophyCount">× ${employeeTrophy.trophyCount}個</p>
 								</div>
 							</div>
 						</div>
 					</c:forEach>
-					<hr />
 				</div>
 			</div>
 

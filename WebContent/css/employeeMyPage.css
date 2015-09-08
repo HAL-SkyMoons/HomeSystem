@@ -213,7 +213,6 @@ a.capacityTab {
 	float: left;
 	width: 33.5%;
 	height: 100%;
-	background-color: #ffc8e7;
 	padding-top: 4px;
 }
 
@@ -221,7 +220,6 @@ a.companyCapacityTab {
 	float: left;
 	width: 33%;
 	height: 100%;
-	background-color: #fefe72;
 	padding-top: 4px;
 }
 
@@ -229,7 +227,6 @@ a.trophyTab {
 	float: left;
 	width: 33.5%;
 	height: 100%;
-	background-color: #ddddff;
 	padding-top: 4px;
 }
 
@@ -290,10 +287,11 @@ div.trophyDetail {
 	overflow: auto;
 }
 
-div.flame {
+div.torophyFlame {
 	width: 540px;
 	height: 100px;
 	background: red;
+	clear:both;
 }
 
 div.leftFlame {
@@ -301,23 +299,20 @@ div.leftFlame {
 	width: 100px;
 	height: 100px;
 	margin-left:10px;
-	background: blue;
 }
 
 div.rightFlame {
 	float: right;
 	width: 360px;
 	height: 100px;
-	background: green;
 }
 
 div.trophyName {
 	clear: both;
 	width: 360px;
 	height: 65px;
-	background: yellow;
 	line-height: 65px;
-	text-align: center;
+	text-align: left;
 }
 
 div.trophyCount {
@@ -327,9 +322,12 @@ div.trophyCount {
 	line-height: 35px;
 	text-align: right;
 }
-
-h4.trophyCount {
+p.trophyName{
+	font-size:20px;
+}
+p.trophyCount {
 	padding-right: 30px;
+	font-size: 20px;
 }
 
 img.trophyImage {
