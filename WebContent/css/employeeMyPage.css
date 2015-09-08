@@ -300,19 +300,20 @@ div.leftFlame {
 	float: left;
 	width: 100px;
 	height: 100px;
+	margin-left:10px;
 	background: blue;
 }
 
 div.rightFlame {
 	float: right;
-	width: 440px;
+	width: 360px;
 	height: 100px;
 	background: green;
 }
 
 div.trophyName {
 	clear: both;
-	width: 440px;
+	width: 360px;
 	height: 65px;
 	background: yellow;
 	line-height: 65px;
@@ -320,7 +321,7 @@ div.trophyName {
 }
 
 div.trophyCount {
-	width: 440px;
+	width: 360px;
 	height: 35px;
 	background: white;
 	line-height: 35px;

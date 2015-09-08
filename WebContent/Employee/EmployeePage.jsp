@@ -237,7 +237,6 @@ function graphChangeTotal(){
 								<img src="../images/employees/${employeeDetail.employeeId}.jpg?<%=milliSec %>" class="employeeImage">
 								</div><div class="flameDiv">
 								<img src="../images/flame/<%=level %>.png?<%=milliSec %>" class="employeeFlame">
-							</div>
 							</div></li>
 						<li class="departmentName">${employeeDetail.departmentName}</li>
 						<li class="employeeName">${employeeDetail.employeeName}</li>

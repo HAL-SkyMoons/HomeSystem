@@ -263,7 +263,7 @@ public class SampleDao {
 	// SQL発行
 	try {
 	    PreparedStatement select = con
-		    .prepareStatement("SELECT e.employee_id ,u.last_name,u.first_name ,d.department_name,count(*) FROM employees AS e "
+		    .prepareStatement("SELECT e.employee_id ,u.last_name,u.first_name ,d.department_name,count(*) ,e.level FROM employees AS e "
 			    + "JOIN home_contents AS hc ON hc.employee_id = e.employee_id "
 			    + "JOIN users AS u ON u.user_id = e.employee_ID "
 			    + "JOIN departments AS d ON d.department_ID = e.department_ID "
