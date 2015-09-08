@@ -22,14 +22,14 @@ public class CreateRankingList extends AbstractModel {
 	@Override
 	public String doService(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		
+
 		// セッションチェック
 		SessionController sessionController = new SessionController(request);
 		if(sessionController.checkUserSession2() == false) {
 			// セッションが無効
 			return sessionController.getForwardSessionErrorPageUrl();
 		}
-		
+
 		// 条件指定
 		String whereBatch = null;
 		String whereYear = null;
@@ -49,7 +49,7 @@ public class CreateRankingList extends AbstractModel {
 				request.setAttribute("month", whereMonth);
 			}
 		}
-		
+
 		// Database
 		RankingDAO rankingDAO = null;
 		try{
@@ -69,7 +69,7 @@ public class CreateRankingList extends AbstractModel {
 		} finally {
 			rankingDAO.close();
 		}
-		
+
 		return "/ranking/topnum.jsp";
 	}
 

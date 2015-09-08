@@ -124,7 +124,7 @@
 				<c:forEach items="${contentsList}" var="i">
 					<div class="data">
 						<div class="title">
-							<a href="javascript:PostContentsDetail(${i.homeContentId})">タイトル:${i.homeContentTitle}</a>
+							<a href="javascript:PostContentsDetail(${i.homeContentId})">${i.homeContentTitle}</a>
 						</div>
 						<hr>
 						<div class="left">
