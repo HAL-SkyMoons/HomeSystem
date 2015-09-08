@@ -7,33 +7,52 @@
 #boxout {
 	width: 1000px;
 	height: 1000px;
-	margin: 0 auto;
+	margin: 200px auto;
 	position: relative;
 }
 
 #boxcomment {
-	margin-top: 200px;
+	padding: 80px 170px 0 0;
 	float: left;
+	font-size: 50px;
+	font-style: italic;
+}
+
+#boxcomment label {
+	color: red;
 }
 
 #box {
 	clear: both;
-	height: 300px;
+	height: 260px;
 	width: 400px;
-	margin-top: 200px;
 	position: absolute;
 	right: 0;
 	padding: 20px;
 	background: moccasin;
 	border: solid 2.5px orange;
-	border-radius: 10px; /* CSS3草案 */
-	-webkit-border-radius: 10px; /* Safari,Google Chrome用 */
+	border-radius: 10px; /* CSS3闕画｡� */
+	-webkit-border-radius: 10px; /* Safari,Google Chrome逕ｨ */
 	-moz-border-radius: 10px;
 }
 
 #box p {
-	height: 50px;
-	line-height: 50px;
+	height: 60px;
+	line-height: 60px;
+	position: relative;
+	text-align: right;
+	margin-right: 20px;
+}
+
+#box h5 {
+	height: 30px;
+	color: red;
+	margin-left: 20px;
+}
+
+#text {
+	height: 25px;
+	font-size: 15px;
 }
 
 h1 {
@@ -44,7 +63,7 @@ h1 {
 	background: #f06060;
 }
 
-/*ボタン*/
+/*繝懊ち繝ｳ*/
 .btn {
 	border: none;
 	font-family: inherit;
