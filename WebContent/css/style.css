@@ -6,15 +6,19 @@ body {
 }
 
 header {
+	height: 10px;
+	width: 100%;
+	background: orange;
+}
+
+#logo {
 	width: 1000px;
 	margin: 0 auto;
 }
 
-#logo{
-	float:left;
-}
 #logo img {
 	width: 250px;
+	margin: 20px auto 0;
 }
 
 /*ボタン*/
@@ -88,12 +92,12 @@ header {
 }
 
 /* メニューバー */
-ul{
-	clear:both;
-	width:900px;
-	height:60px;
-	margin:0 auto;
-	background:#e6002d;
+ul {
+	clear: both;
+	width: 900px;
+	height: 60px;
+	margin: 0 auto;
+	background: #e6002d;
 }
 
 li {
@@ -117,6 +121,6 @@ li a:hover {
 	background: blue;
 }
 
-.space{
-	width:50px;
+.space {
+	width: 50px;
 }
