@@ -88,7 +88,18 @@ public class ContentsDetailDao {
 				//取得失敗時の処理
 			}
 			namePst.close();
-
+			
+			//名前の取得
+			PreparedStatement employeePst = con.prepareStatement("select * from employees where employee_id = ? ;");
+			employeePst.setString(1, contentsResult.getString("employee_id"));
+			ResultSet employeeResult = employeePst.executeQuery();
+			if(employeeResult.next()){
+				detailBean.setLevel(employeeResult.getInt("level"));
+			}else{
+				//取得失敗時の処理
+			}
+			employeePst.close();			
+			
 			//ジャンルの取得
 			PreparedStatement genrePst = con.prepareStatement(
 					"select * from home_genre, genre "

@@ -70,39 +70,42 @@ public class EmployeePlofileEditModel extends AbstractModel{
 						//commentのDB更新処理
 						if(item.getFieldName().equals("comment")){
 							comment = item.getString("UTF-8");
-							dbJud = dao.setEmployeeDetailCommentUpdate(employeeId, comment);
-							if(dbJud==false){
-								System.out.println("DB update err...");
-								dao.rollback();
-								break;
-							}else{
-								System.out.println("DB update success!!");
-								dao.commit();
+							if(comment != null && !(comment.isEmpty())){
+								dbJud = dao.setEmployeeDetailCommentUpdate(employeeId, comment);
+								if(dbJud==false){
+									System.out.println("DB update err...");
+									dao.rollback();
+								}else{
+									System.out.println("DB update success!!");
+									dao.commit();
+								}
 							}
 						}
 					} else {
 						//画像のinput処理
 						System.out.println("Image file got is "+item.getName());
-						if(item.getName().endsWith(".jpg")){
-							//画像拡張子、名前の確認
-							//画像パスの取得
-							String path = request.getServletContext().getRealPath("/images/employees/");
-							System.out.println("image folder is "+path);
-							//画像名の取得
-							String fileName = item.getName();
-							fileName = (new File(fileName)).getName();
-							System.out.println((new File(path + "/"+employeeId+".jpg")));
-							//画像の保存
-							item.write(new File(path + "/"+employeeId+".jpg"));
-							imageJud = true;
-						}else{
-							//画像拡張子がjpg以外の場合
-							System.out.println("Image update err");
-							request.setAttribute("err", "画像の拡張子がjpgではありません");
-							defaultComment = dao.getEmployeeDetailComment(employeeId);
-					    	request.setAttribute("comment",defaultComment);
-							returnURI = "/Employee/EmployeePlofileEditPage.jsp";
-							break;
+						if(item.getName() !=null && !(item.getName().isEmpty())){
+							if(item.getName().endsWith(".jpg")){
+								//画像拡張子、名前の確認
+								//画像パスの取得
+								String path = request.getServletContext().getRealPath("/images/employees/");
+								System.out.println("image folder is "+path);
+								//画像名の取得
+								String fileName = item.getName();
+								fileName = (new File(fileName)).getName();
+								System.out.println((new File(path + "/"+employeeId+".jpg")));
+								//画像の保存
+								item.write(new File(path + "/"+employeeId+".jpg"));
+								imageJud = true;
+							}else{
+								//画像拡張子がjpg以外の場合
+								System.out.println("Image update err");
+								request.setAttribute("err", "画像の拡張子がjpgではありません");
+								defaultComment = dao.getEmployeeDetailComment(employeeId);
+						    	request.setAttribute("comment",defaultComment);
+								returnURI = "/Employee/EmployeePlofileEditPage.jsp";
+								break;
+							}
 						}
 					}
 				}
@@ -111,7 +114,7 @@ public class EmployeePlofileEditModel extends AbstractModel{
 				throw new ServletException(e);
 			}
 			//正常終了した場合マイページへ遷移
-			if(imageJud == true && dbJud == true){
+			if(imageJud == true || dbJud == true){
 				//マイページ用引数
 				ArrayList<EmployeePageBean> employeePageReturn = new ArrayList<EmployeePageBean>();
 				ArrayList<EmployeeBatchBean> employeeBatchReturn = new ArrayList<EmployeeBatchBean>();
@@ -121,9 +124,7 @@ public class EmployeePlofileEditModel extends AbstractModel{
 				ArrayList<EmployeeHomeLogBean> employeeHomeLogReturn = new ArrayList<EmployeeHomeLogBean>();
 				ArrayList<EmployeeBatchBean> employeeBatchMonthReturn = new ArrayList<EmployeeBatchBean>();
 				ArrayList<EmployeeBatchBean> employeeBatchYearReturn = new ArrayList<EmployeeBatchBean>();
-				int nextExperience = 0;
-				int nowExperience = 0;
-				ArrayList<BigGenreBean>  bigGenreList = new ArrayList<BigGenreBean>();
+				ArrayList<BigGenreBean> bigGenreList = new ArrayList<BigGenreBean>();
 				//マイページ追加項目
 				ArrayList<EmployeeCapacityBean> employeeCapacityReturn = new ArrayList<EmployeeCapacityBean>();
 				ArrayList<EmployeeCompanyCapacityBean> employeeCompanyCapacityReturn = new ArrayList<EmployeeCompanyCapacityBean>();
@@ -131,14 +132,12 @@ public class EmployeePlofileEditModel extends AbstractModel{
 				//チャート描画用変数
 				String[] employeeChartBatchName = {};
 				int[] employeeChartBatchCount = {};
+				int batchKindCount=0;
 				//月間
-				String[] employeeChartBatchNameMonth = {};
 				int[] employeeChartBatchCountMonth = {};
 				//年間
-				String[] employeeChartBatchNameYear = {};
 				int[] employeeChartBatchCountYear = {};
 				//通算
-				String[] employeeChartBatchNameTotal = {};
 				int[] employeeChartBatchCountTotal = {};
 				//引数準備
 				String loginUserId = (String)sessionController.getUserId();
@@ -162,18 +161,15 @@ public class EmployeePlofileEditModel extends AbstractModel{
 				employeeHomeLogReturn = (ArrayList<EmployeeHomeLogBean>)dao.getEmployeeDetailOfHomeLog(loginUserId);
 				employeeBatchMonthReturn = (ArrayList<EmployeeBatchBean>)dao.getEmployeeDetailOfBatchInLimited(loginUserId,monthDate);
 				employeeBatchYearReturn = (ArrayList<EmployeeBatchBean>)dao.getEmployeeDetailOfBatchInLimited(loginUserId,yearDate);
-				nextExperience = dao.getNextExperience(loginUserId);
-				nowExperience = dao.getNowExperience(loginUserId);
 				bigGenreList = (ArrayList<BigGenreBean>) dao.getAllBigGenre();
+
 				//チャート描画用情報取得処理
-				employeeChartBatchName = (String[])dao.getEmployeeDetailOfBadgeNameForChart(loginUserId,"total","total");
-				employeeChartBatchCount = (int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"total","total");
-				employeeChartBatchNameMonth = (String[])dao.getEmployeeDetailOfBadgeNameForChart(loginUserId,"month",monthDate);
-				employeeChartBatchCountMonth =(int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"month",monthDate);
-				employeeChartBatchNameYear = (String[])dao.getEmployeeDetailOfBadgeNameForChart(loginUserId,"year",yearDate);
-				employeeChartBatchCountYear =(int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"year",yearDate);
-				employeeChartBatchNameTotal = (String[])dao.getEmployeeDetailOfBadgeNameForChart(loginUserId,"total","total");
-				employeeChartBatchCountTotal =(int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"total","total");
+				employeeChartBatchName = (String[])dao.getEmployeeDetailOfBadgeNameForChart(loginUserId);
+				batchKindCount = employeeChartBatchName.length;
+				employeeChartBatchCount = (int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"total","total",batchKindCount);
+				employeeChartBatchCountMonth =(int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"month",monthDate,batchKindCount);
+				employeeChartBatchCountYear =(int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"year",yearDate,batchKindCount);
+				employeeChartBatchCountTotal =(int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"total","total",batchKindCount);
 				//マイページ追加項目
 				employeeCapacityReturn = (ArrayList<EmployeeCapacityBean>)dao.getMyEmployeeDetailOfCapacity(loginUserId);
 				employeeCompanyCapacityReturn = (ArrayList<EmployeeCompanyCapacityBean>)dao.getMyEmployeeDetailOfCompanyCapacity(loginUserId);
@@ -189,17 +185,13 @@ public class EmployeePlofileEditModel extends AbstractModel{
 				request.setAttribute("sessionId", (String)sessionController.getUserId());
 				request.setAttribute("employeeBadgeMonth", employeeBatchMonthReturn);
 				request.setAttribute("employeeBadgeYear", employeeBatchYearReturn);
-				request.setAttribute("nextExperience", nextExperience);
-				request.setAttribute("nowExperience", nowExperience);
 				request.setAttribute("bigGenreList", bigGenreList);
+
 				//チャート用の引数をsetAttribute
 				request.setAttribute("chartName", employeeChartBatchName);
 				request.setAttribute("chartCount", employeeChartBatchCount);
-				request.setAttribute("chartNameMonth", employeeChartBatchNameMonth);
 				request.setAttribute("chartCountMonth", employeeChartBatchCountMonth);
-				request.setAttribute("chartNameYear", employeeChartBatchNameYear);
 				request.setAttribute("chartCountYear", employeeChartBatchCountYear);
-				request.setAttribute("chartNameTotal", employeeChartBatchNameTotal);
 				request.setAttribute("chartCountTotal", employeeChartBatchCountTotal);
 				//マイページ追加項目
 				request.setAttribute("employeeCapacity", employeeCapacityReturn);
