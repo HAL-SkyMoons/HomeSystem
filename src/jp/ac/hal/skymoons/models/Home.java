@@ -62,6 +62,7 @@ public class Home extends AbstractModel {
 					String contentTitle = dao.getContentTitle(Integer
 							.valueOf(request.getParameter("contentsId")));
 					request.setAttribute("contentTitle", contentTitle);
+					request.setAttribute("contentsId", request.getParameter("contentsId") );
 				}
 				dao.close();
 
