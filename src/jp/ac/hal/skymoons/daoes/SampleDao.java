@@ -485,6 +485,7 @@ public class SampleDao {
 	 */
 	public int[] getEmployeeDetailOfBadgeCountForChart(String employeeId, String limit, String outPutDate,int batchKindCount){
 		int[] batchCount = new int[batchKindCount];
+		int arrayCount=0;
 		for(int count=0;count<batchKindCount-1;count++){
 			batchCount[count]=0;
 		}
@@ -506,8 +507,9 @@ public class SampleDao {
 			}
 			ResultSet result = select.executeQuery();
 			while(result.next()){
-				batchCount[result.getInt("hl.batch_id")-1]=result.getInt("COUNT(*)");
+				batchCount[arrayCount]=result.getInt("COUNT(*)");
 				System.out.println("batchId= "+result.getInt("hl.batch_id")+" AND counts= "+result.getInt("COUNT(*)"));
+				arrayCount++;
 			}
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック

@@ -80,6 +80,8 @@ public class EmployeePlofileEditModel extends AbstractModel{
 									dao.commit();
 								}
 							}
+						}else if(item.getFieldName().equals("password")){
+
 						}
 					} else {
 						//画像のinput処理
