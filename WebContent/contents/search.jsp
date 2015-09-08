@@ -8,58 +8,133 @@
 		response.sendRedirect(url);
 	}
 %>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<script type="text/javascript" src="../../js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+	function Post(planId) {
+		form1.detail.value = "detail";
+		form1.planId.value = planId;
+		form1.submit();
+	}
+
+	$(document).ready(function() {
+
+		//Hide (Collapse) the toggle containers on load
+		$(".toggle_container").hide();
+
+		//Switch the "Open" and "Close" state per click then slide up/down (depending on open/close state)
+		$(".trigger").click(function() {
+			$(this).toggleClass("active").next().slideToggle("slow");
+			return false; //Prevent the browser jump to the link anchor
+		});
+
+	});
+</script>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>コンテンツ検索</title>
+		<link rel="stylesheet" type="text/css" href="../../css/reset.css">
+		<link rel="stylesheet" type="text/css" href="../../css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="../../css/bootstrap-theme.min.css">
+		<link rel="stylesheet" type="text/css" href="../../css/ContentsCommon.css">
+		<link rel="stylesheet" type="text/css" href="../../css/ContentsSearch.css">
 	</head>
 	<body>
-		<h1>検索条件の指定</h1>
-		<form action="../../fc/contents/list" method="post">
-			<table border="1">
-				<tr>
-					<td>記事名検索ワード</td>
-					<td>記事内容検索ワード</td>
-					<td>ジャンル選択</td>
-					<td>投稿社員</td>
-				</tr>
-				<tr>
-					<td>キーワード：<input type="text" name="titleKeyword"/></td>
-					<td>キーワード：<input type="text" name="commentKeyword"/></td>
-					<td>ジャンル<br/>
-						<c:forEach items="${genreList}" var="j">
-							<input type="checkbox" name="genreId" value="${j.genreId}">${j.bigGenreName}-${j.genreName}<br/>
-						</c:forEach>
-					</td>
-					<td>大ジャンル<br/>
-						<c:forEach items="${bigGenreList}" var="j">
-							<input type="checkbox" name="bigGenreId" value="${j.bigGenreId}">${j.bigGenreName}<br/>
-						</c:forEach>
-					</td>
-					<td>社員
-						<select name="employeeId">
-							<option value="">指定なし</option>
-							<c:forEach items="${employeeList}" var="j">
-								<option value="${j.employeeId}">${j.firstName}${j.lastName}</option>
-							</c:forEach>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td>順序
-						<input type="radio" name="orderColumn" value="home_content_id" checked/>作成順
-						<input type="radio" name="orderColumn" value="home_content_datetime"/>日付順
-						<input type="radio" name="orderColumn" value="home_content_title"/>タイトル順
-						<input type="radio" name="orderColumn" value="employee_id"/>社員順
-					</td>
-					<td>
-						<input type="radio" name="orderMode" value="asc" checked/>昇順
-						<input type="radio" name="orderMode" value="desc"/>降順
-					</td>
-					<td><input type="submit" value="検索"></td>
-				</tr>
-			</table>
-		</form>
+		<div class="wrapper">
+			<form action="list" method="post">
+				<table class="search">
+					<tr>
+						<th class="searchTitle">キーワード</th>
+						<td class="searchForm"><input type="text" name="keyword" class="keyword" value="${searchKeyword}" /></td>
+						<td class="help"></td>
+					</tr>
+					<tr>
+						<th class="searchTitle">企画者</th>
+						<td class="searchForm">
+							<select name="employeeId">
+								<option value="">---指定なし---</option>
+								<c:forEach items="${employeeList}" var="j">
+									
+									<c:if test="${searchPlanner != null && searchPlanner == j.employeeId}">
+										<option value="${j.employeeId}" selected="selected">${j.lastName}&nbsp;${j.firstName}</option>
+									</c:if>
+									<c:if test="${searchPlanner == null || searchPlanner != j.employeeId}">
+										<option value="${j.employeeId}">${j.lastName}&nbsp;${j.firstName}</option>
+									</c:if>
+								</c:forEach>
+							</select>
+						<td class="help"></td>
+					</tr>
+					<tr>
+						<th class="searchTitle">オプション</th>
+						<td class="searchForm">
+							<label>
+								<c:if test="${endContent != null}">
+									<input type="checkbox" name="endContent" value="true" checked="checked"/>
+								</c:if> <c:if test="${endContent == null}">
+									<input type="checkbox" name="endContent" value="true"/>
+								</c:if> 終了していないコンテンツのみを検索
+							</label>
+							<label>
+								<c:if test="${existPlan != null}">
+									<input type="checkbox" name="existPlan" value="true" checked="checked"/>
+								</c:if> <c:if test="${existPlan == null}">
+									<input type="checkbox" name="existPlan" value="true"/>
+								</c:if> 企画が存在する物のみを検索
+							</label>
+						</td>
+						<td class="help"></td>
+					</tr>
+					<tr>
+						<th class="searchTitle">順序</th>
+						<td class="searchForm">
+							<select name="order">
+								<option value="">---指定なし---</option>
+								<c:forEach var="order" items="${orderList}">
+									<c:if test="${searchOrder != null && order.key == searchOrder}">
+										<option value="${order.key}" selected="selected">${order.value}</option>
+									</c:if>
+									<c:if test="${searchOrder == null || order.key != searchOrder}">
+										<option value="${order.key}">${order.value}</option>
+									</c:if>
+								</c:forEach>
+							</select>
+						</td>
+						<td class="help"></td>
+					</tr>
+				</table>
+	
+				<c:forEach var="bigGenre" items="${bigGenreList}">
+					<span class="trigger">&#9661;${bigGenre.bigGenreName}</span>
+					<div class="toggle_container">
+						<table>
+							<tr>
+								<c:set var="count" value="0" />
+								<c:forEach var="genre" items="${genreList}" varStatus="status">
+									<c:if test="${genre.bigGenreId == bigGenre.bigGenreId}">
+										<td><label> <c:if test="${searchGenre.containsKey(genre.genreId)}">
+													<input type="checkbox" name="genre" value="${genre.genreId }" checked="checked">${genre.genreName }
+										</c:if> <c:if test="${!searchGenre.containsKey(genre.genreId)}">
+													<input type="checkbox" name="genre" value="${genre.genreId }">${genre.genreName }
+										</c:if>
+										</label></td>
+										<c:set var="count" value="${count+1}" />
+									</c:if>
+									<c:if test="${count%3 ==0}">
+								</tr>
+								<tr>
+									</c:if>
+								</c:forEach>
+							</tr>
+						</table>
+					</div>
+					<br>
+				</c:forEach>
+				<div class="btnZone">
+					<input type="submit" name="search" class="btn btn-2 btn-2c searchBtn" value="検索">
+				</div>
+			</form>
+		</div>
 	</body>
 </html>

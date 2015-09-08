@@ -1,13 +1,13 @@
 package jp.ac.hal.skymoons.models.customer;
 
-import java.util.HashMap;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import jp.ac.hal.skymoons.beans.customer.CustomerUsersBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.customer.CustomerDAO;
+import jp.ac.hal.skymoons.security.session.SessionController;
 
 /**
  * 顧客情報データベース登録処理。
@@ -21,16 +21,26 @@ public class InsertCustomer extends AbstractModel{
 	public String doService(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		
+		// セッションチェック
+		SessionController sessionController = new SessionController(request);
+		if(sessionController.getAdministratorId() == null) {
+			// セッションが無効
+			return "/error/session.jsp";
+		}
 		HttpSession session = request.getSession();
 		if(session.getAttribute("CustomerAddValue") == null) {
+			// セッションが無効
 			return "/fc/customer/add";
 		}
-		HashMap<String, String> value = getValue(session);
-		session.removeAttribute("CustomerAddValue");
-		CustomerDAO customerDAO = new CustomerDAO();
 		
+		CustomerUsersBean record = (CustomerUsersBean)session.getAttribute("CustomerAddValue");
+		// セッション破棄
+		session.removeAttribute("CustomerAddValue");
+		
+		// DBに追加
+		CustomerDAO customerDAO = new CustomerDAO();
 		try {
-			customerDAO.insertCustomer(value);
+			customerDAO.insertCustomerUsers(record);
 		} catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("ERROR:顧客情報データベース追加処理中に問題が発生しました。");
@@ -40,15 +50,4 @@ public class InsertCustomer extends AbstractModel{
 		}
 		return "/fc/customer/list";
 	}
-	
-	/**
-	 * 入力情報の取得。
-	 * @return
-	 * value
-	 */
-	@SuppressWarnings("unchecked")
-	private HashMap<String, String> getValue(HttpSession session) {
-		return (HashMap<String, String>)session.getAttribute("CustomerAddValue");
-	}
-
 }

@@ -1,0 +1,163 @@
+@CHARSET "UTF-8";
+
+#title {
+	width: 100%;
+	text-align: center;
+}
+
+#titleValue {
+	padding:0.5em;
+	width: 100%;
+	max-width: 100%;
+	font-size: 20px;
+	text-align: left;
+	word-break: break-all;
+	word-wrap: break-word;
+	display: inline-block;
+}
+
+#contentsDetail {
+	overflow: hidden;
+}
+
+#planDate {
+	float: right;
+}
+
+#startEnd {
+	float: left;
+	text-align: center;
+	margin-top: 20px;
+	padding: 5px;
+}
+
+#dateInfo{
+	color: red;
+	margin-top: 5px;
+	font-size: 18px;
+}
+
+.center {
+	width: 100%;
+	display: inline-block;
+}
+
+#planner {
+	float: right;
+	text-align: center;
+}
+
+#file {
+	display: none;
+}
+
+.file {
+	position: relative;
+	width: 80px;
+	margin: 8px;
+	/* 	float: left; */
+	display: inline-block;
+	text-align: center;
+}
+
+.fileName {
+	width: 80px;
+	font-size: 11px;
+	white-space: pre; /* CSS 2.0 */
+	white-space: pre-wrap; /* CSS 2.1 */
+	white-space: pre-line; /* CSS 3.0 */
+	white-space: -pre-wrap; /* Opera 4-6 */
+	white-space: -o-pre-wrap; /* Opera 7 */
+	white-space: -moz-pre-wrap; /* Mozilla */
+	white-space: -hp-pre-wrap; /* HP Printers */
+	word-wrap: break-word;
+	white-space: pre; /* IE 5+ */
+}
+
+.fileImage>img {
+	width: 60px;
+	height: 60px;
+}
+
+.download {
+	margin: 10px auto;
+/* 	width: 100%; */
+	font-size: 10px;
+	padding: 8px;
+	text-align: center;
+}
+
+.del {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+
+#contentsComment {
+	border: 1px solid black;
+	padding: 10px;
+	width: 500px;
+	max-width: 500px;
+	margin-bottom: 5px;
+	-webkit-border-radius: 10px;
+	/*  height: 50px; */
+}
+
+#contentsCommentValue {
+	width: 100%;
+	max-width: 100%;
+	padding:0.4em;
+}
+
+ｃ {
+	border: 1px solid black;
+	padding: 10px;
+	width: 500px;
+	max-width: 500px;
+	margin-bottom: 5px;
+	-webkit-border-radius: 10px;
+	/*  height: 50px; */
+}
+
+#img {
+	width: 100px;
+	height: 100px;
+}
+
+#img>img {
+	max-width: 100px;
+	max-height: 100px;
+}
+
+.trigger {
+	display: inline-block;
+	width: 100%;
+	background-color: #F29900;
+	font-size: 18px;
+	margin-top: 10px;
+}
+
+.toggle_container {
+	display: inline-block;
+	width: 100%;
+	border: 1px solid #F29900;
+}
+
+
+
+/*ボタン*/
+
+.submit {
+	margin-top: 20px;
+	width: 50%;
+	height: 50px;
+	font-size: 25px;
+}
+
+.contentsEnd {
+	margin-top: 20px;
+	width: 50%;
+	height: 50px;
+	font-size: 25px;
+}
+

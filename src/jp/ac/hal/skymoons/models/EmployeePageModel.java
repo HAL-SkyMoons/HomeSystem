@@ -9,6 +9,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jp.ac.hal.skymoons.beans.BigGenreBean;
 import jp.ac.hal.skymoons.beans.EmployeeBatchBean;
 import jp.ac.hal.skymoons.beans.EmployeeGenreBean;
 import jp.ac.hal.skymoons.beans.EmployeeHomeLogBean;
@@ -42,6 +43,8 @@ public class EmployeePageModel extends AbstractModel{
 		ArrayList<EmployeeHomeLogBean> employeeHomeLogReturn = new ArrayList<EmployeeHomeLogBean>();
 		ArrayList<EmployeeBatchBean> employeeBatchMonthReturn = new ArrayList<EmployeeBatchBean>();
 		ArrayList<EmployeeBatchBean> employeeBatchYearReturn = new ArrayList<EmployeeBatchBean>();
+		ArrayList<BigGenreBean>  bigGenreList = new ArrayList<BigGenreBean>();
+
 		//チャート描画用変数
 		String[] employeeChartBatchName = {};
 		int[] employeeChartBatchCount = {};
@@ -76,6 +79,8 @@ public class EmployeePageModel extends AbstractModel{
 		employeeHomeLogReturn = (ArrayList<EmployeeHomeLogBean>)dao.getEmployeeDetailOfHomeLog(employeeId);
 		employeeBatchMonthReturn = (ArrayList<EmployeeBatchBean>)dao.getEmployeeDetailOfBatchInLimited(employeeId,monthDate);
 		employeeBatchYearReturn = (ArrayList<EmployeeBatchBean>)dao.getEmployeeDetailOfBatchInLimited(employeeId,yearDate);
+		bigGenreList = (ArrayList<BigGenreBean>) dao.getAllBigGenre();
+
 		//チャート描画用情報取得処理
 		employeeChartBatchName = (String[])dao.getEmployeeDetailOfBadgeNameForChart(employeeId);
 		batchKindCount = employeeChartBatchName.length;
@@ -95,6 +100,8 @@ public class EmployeePageModel extends AbstractModel{
 		request.setAttribute("sessionId", (String)sessionController.getUserId());
 		request.setAttribute("employeeBadgeMonth", employeeBatchMonthReturn);
 		request.setAttribute("employeeBadgeYear", employeeBatchYearReturn);
+		request.setAttribute("bigGenreList", bigGenreList);
+
 		//チャート用の引数をsetAttribute
 		request.setAttribute("chartName", employeeChartBatchName);
 		request.setAttribute("chartCount", employeeChartBatchCount);
@@ -104,5 +111,5 @@ public class EmployeePageModel extends AbstractModel{
 		//参照ファイルパスの指定
 		return "/Employee/EmployeePage.jsp";
 	}
-
 }
+

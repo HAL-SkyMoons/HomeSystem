@@ -18,6 +18,14 @@ public class SessionController {
 	// フォワード用セッションエラーページURL
 	private String forwardSessionErrorPageUrl =
 		"/error/session.jsp";
+	// 社員・顧客ユーザのフォワード用セッションエラーページURL
+	private String csUserforwardSessionErrorPageUrl =
+		"/login/cs.jsp";
+	// 社員・顧客ユーザのフォワード用セッションエラーページURL
+	private String administratorUserforwardSessionErrorPageUrl =
+		"/login/a.jsp";
+	// セッションタイム
+	private int sessionTime = 60 * 30; // 30分
 	
 	/**
 	 * セッションを取得し、操作する為の準備を行う。
@@ -25,7 +33,7 @@ public class SessionController {
 	 */
 	public SessionController(HttpServletRequest request) {
 		this.session = request.getSession();
-		this.session.setMaxInactiveInterval(60 * 10);
+		this.session.setMaxInactiveInterval(sessionTime);
 	}
 
 // ==========================================================================================
@@ -104,13 +112,21 @@ public class SessionController {
 					setId("classFlag", this.session.getAttribute("classFlag").toString());
 					return null;
 				} else {
-					return "/error/session.jsp";
+					if(key.equals("uId")) {
+						return csUserforwardSessionErrorPageUrl;
+					} else {
+						return administratorUserforwardSessionErrorPageUrl;
+					}
 				}
 			} else {
 				return null;
 			}
 		} else {
-			return "/error/session.jsp";
+			if(key.equals("uId")) {
+				return csUserforwardSessionErrorPageUrl;
+			} else {
+				return administratorUserforwardSessionErrorPageUrl;
+			}
 		}
 	}
 

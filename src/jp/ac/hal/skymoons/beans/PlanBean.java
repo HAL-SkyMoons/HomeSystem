@@ -5,86 +5,105 @@ import java.util.Date;
 
 public class PlanBean implements Serializable {
 
-	private int planId;
-	private String planTitle;
-	private String planner;
-	private String plannerName;
-	private Date planDatetime;
-	private Date startDate;
-	private Date endDate;
-	private String planComment;
-	private int executeFlag;
+    private int planId;
+    private String planTitle;
+    private String planner;
+    private String plannerName;
+    private Date planDatetime;
+    private Date startDate;
+    private Date endDate;
+    private String planComment;
+    private int executeFlag;
 
-	public int getPlanId() {
-		return planId;
-	}
+    private int commentCount;
+    private int pointCount;
 
-	public void setPlanId(int planId) {
-		this.planId = planId;
-	}
+    public int getCommentCount() {
+	return commentCount;
+    }
 
-	public String getPlanTitle() {
-		return planTitle;
-	}
+    public void setCommentCount(int commentCount) {
+	this.commentCount = commentCount;
+    }
 
-	public void setPlanTitle(String planTitle) {
-		this.planTitle = planTitle;
-	}
+    public int getPointCount() {
+	return pointCount;
+    }
 
-	public String getPlanner() {
-		return planner;
-	}
+    public void setPointCount(int pointCount) {
+	this.pointCount = pointCount;
+    }
 
-	public void setPlanner(String planner) {
-		this.planner = planner;
-	}
+    public int getPlanId() {
+	return planId;
+    }
 
-	public String getPlannerName() {
-		return plannerName;
-	}
+    public void setPlanId(int planId) {
+	this.planId = planId;
+    }
 
-	public void setPlannerName(String plannerName) {
-		this.plannerName = plannerName;
-	}
+    public String getPlanTitle() {
+	return planTitle;
+    }
 
-	public Date getPlanDatetime() {
-		return planDatetime;
-	}
+    public void setPlanTitle(String planTitle) {
+	this.planTitle = planTitle;
+    }
 
-	public void setPlanDatetime(Date planDatetime) {
-		this.planDatetime = planDatetime;
-	}
+    public String getPlanner() {
+	return planner;
+    }
 
-	public Date getStartDate() {
-		return startDate;
-	}
+    public void setPlanner(String planner) {
+	this.planner = planner;
+    }
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
-	}
+    public String getPlannerName() {
+	return plannerName;
+    }
 
-	public Date getEndDate() {
-		return endDate;
-	}
+    public void setPlannerName(String plannerName) {
+	this.plannerName = plannerName;
+    }
 
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
+    public Date getPlanDatetime() {
+	return planDatetime;
+    }
 
-	public String getPlanComment() {
-		return planComment;
-	}
+    public void setPlanDatetime(Date planDatetime) {
+	this.planDatetime = planDatetime;
+    }
 
-	public void setPlanComment(String planComment) {
-		this.planComment = planComment;
-	}
+    public Date getStartDate() {
+	return startDate;
+    }
 
-	public int getExecuteFlag() {
-		return executeFlag;
-	}
+    public void setStartDate(Date startDate) {
+	this.startDate = startDate;
+    }
 
-	public void setExecuteFlag(int executeFlag) {
-		this.executeFlag = executeFlag;
-	};
+    public Date getEndDate() {
+	return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+	this.endDate = endDate;
+    }
+
+    public String getPlanComment() {
+	return planComment;
+    }
+
+    public void setPlanComment(String planComment) {
+	this.planComment = planComment;
+    }
+
+    public int getExecuteFlag() {
+	return executeFlag;
+    }
+
+    public void setExecuteFlag(int executeFlag) {
+	this.executeFlag = executeFlag;
+    };
 
 }

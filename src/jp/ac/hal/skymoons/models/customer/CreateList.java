@@ -11,7 +11,7 @@ import jp.ac.hal.skymoons.daoes.customer.CustomerDAO;
 import jp.ac.hal.skymoons.security.session.SessionController;
 
 /**
- * 顧客一覧作成処理。
+ * 顧客一覧画面作成処理。
  * @author YAMAZAKI GEN
  * @since 2015/06/09
  * @version 1.0
@@ -24,10 +24,9 @@ public class CreateList extends AbstractModel{
 		
 		// セッションチェック
 		SessionController sessionController = new SessionController(request);
-		String url = sessionController.checkAdministratorSession();
-		if(url != null) {
+		if(sessionController.checkAdministratorSession2() == false) {
 			// セッションが無効
-			return url;
+			return sessionController.getForwardSessionErrorPageUrl();
 		}
 		
 		// データベース問合せ
