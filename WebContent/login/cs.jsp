@@ -20,7 +20,7 @@
 	<div id="boxout">
 		<div id="boxcomment">aaaaaaaaaaaaaaa</div>
 		<div id="box">
-			<h1>顧客・社員用ログインページ</h1>
+			<h1>顧客・社員用ログイン</h1>
 			<hr color="orange">
 			<form action="/HomeSystem/fc/login/user" method="POST">
 				<p>
