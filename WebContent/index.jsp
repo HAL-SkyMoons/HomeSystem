@@ -3,6 +3,7 @@
 <%
 	SessionController sessionController = new SessionController(request);
 	String url = sessionController.checkUserSession();
+	String employeeId = sessionController.getUserId();
 	if (url != null) {
 		response.sendRedirect("/HomeSystem" + url);
 	}
@@ -24,7 +25,7 @@
 			<a href="/HomeSystem/index.jsp"><img src="/HomeSystem/images/logo.png" /></a>
 		</div>
 		<div id="mypage">
-			<form action="/HomeSystem/fc/EmployeeList">
+			<form action="/HomeSystem/fc/EmployeeMyPage">
 				<input type="submit" class="btn btn-2 btn-2c submit" value="マイページ">
 			</form>
 		</div>
