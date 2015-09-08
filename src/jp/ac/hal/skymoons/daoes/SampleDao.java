@@ -177,7 +177,7 @@ public class SampleDao {
 
 	try {
 	    PreparedStatement select = con
-		    .prepareStatement("SELECT e.employee_ID,u.last_name,u.first_name , d.department_name "
+		    .prepareStatement("SELECT e.employee_ID,u.last_name,u.first_name , d.department_name ,e.level"
 			    + "FROM Employees AS e JOIN Users AS u ON e.employee_ID = u.user_ID "
 			    + "JOIN Departments AS d ON e.department_ID = d.department_ID  WHERE e.department_ID = ? ORDER BY e.employee_ID");
 	    select.setInt(1, departmentId);
@@ -193,6 +193,7 @@ public class SampleDao {
 		record.setDepartmentName(result.getString("d.department_name"));
 		record.setEmployeeGenre(getEmployeeGenre(result
 			.getString("e.employee_ID")));
+		record.setLevel(result.getInt("e.level"));
 		resultTable.add(record);
 	    }
 	} catch (SQLException e) {
@@ -385,7 +386,7 @@ public class SampleDao {
 
 	try {
 	    PreparedStatement select = con
-		    .prepareStatement("SELECT e.employee_ID,u.last_name,u.first_name , d.department_name "
+		    .prepareStatement("SELECT e.employee_ID,u.last_name,u.first_name , d.department_name ,e.level"
 			    + "FROM Employees AS e JOIN Users AS u ON e.employee_ID = u.user_ID "
 			    + "JOIN Departments AS d ON e.department_ID = d.department_ID ORDER BY e.employee_ID");
 	    ResultSet result = select.executeQuery();
@@ -399,6 +400,7 @@ public class SampleDao {
 		record.setDepartmentName(result.getString("d.department_name"));
 		record.setEmployeeGenre(getEmployeeGenre(result
 			.getString("e.employee_ID")));
+		record.setLevel(result.getInt("e.level"));
 		resultTable.add(record);
 	    }
 	} catch (SQLException e) {
