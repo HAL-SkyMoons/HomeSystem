@@ -1,0 +1,47 @@
+@CHARSET "UTF-8";
+
+#box{
+	height:500px;
+	width:600px;
+	margin:100px auto;
+	background: gray;
+	border-radius: 10px;        /* CSS3草案 */  
+	-webkit-border-radius: 10px;    /* Safari,Google Chrome用 */  
+	-moz-border-radius: 10px;   /* Firefox用 */  
+}
+img{
+	width:50px;
+}
+
+h1{
+	font-size: 20px;
+}
+
+.color-2 {
+	background: #f06060;
+}
+
+/* Button 2 */
+.btn-2 {
+	background: #cb4e4e;
+	color: #fff;
+	box-shadow: 0 6px #ab3c3c;
+	-webkit-transition: none;
+	-moz-transition: none;
+	transition: none;
+}
+
+/* Button 2c */
+.btn-2c {
+	border-radius: 5px;
+}
+
+.btn-2c:hover {
+	box-shadow: 0 4px #ab3c3c;
+	top: 2px;
+}
+
+.btn-2c:active {
+	box-shadow: 0 0 #ab3c3c;
+	top: 6px;
+}

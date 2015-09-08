@@ -13,7 +13,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>企画一覧</title>
+<title>企画検索</title>
 <link rel="stylesheet" type="text/css" href="../css/reset.css">
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">

@@ -176,6 +176,8 @@
 #img {
 	width: 100px;
 	height: 100px;
+	margin-left: 25px;
+	margin-right: 25px;
 }
 
 #img>img {
@@ -312,4 +314,19 @@
 	border-right-color: #000;
 	border-width: 8px;
 	margin-top: -8px;
+}
+/*******************************
+* フレーム画像用
+********************************/
+div.flameDiv{
+	width:100px;
+	height: 100px;
+	margin-top: -100px;
+	margin-left: 25px;
+	margin-right: 25px;
+	position: relative;
+}
+.flameDiv>img {
+	max-width: 100px;
+	max-height: 100px;
 }
