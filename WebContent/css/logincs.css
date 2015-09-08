@@ -31,6 +31,11 @@
 	-moz-border-radius: 10px;
 }
 
+#box p {
+	height: 50px;
+	line-height: 50px;
+}
+
 h1 {
 	font-size: 20px;
 }
@@ -60,7 +65,7 @@ h1 {
 	background: #e6002d;
 	width: 250px;
 	height: 35px;
-	margin: 100px 85px;
+	margin: 0px 85px;
 }
 
 .btn:after {

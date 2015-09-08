@@ -29,11 +29,13 @@
 				<p>
 					パスワード:<input type="password" name="pass" size="24">
 				</p>
-				<%
-					if (request.getAttribute("message") != null) {
-						out.println("<p>" + request.getAttribute("message") + "</p>");
-					}
-				%>
+				<p>
+					<%
+						if (request.getAttribute("message") != null) {
+							out.println(request.getAttribute("message"));
+						}
+					%>
+				</p>
 				<p>
 					<input type="submit" name="submit" value="ログイン" class="btn btn-2 btn-2c">
 				</p>
