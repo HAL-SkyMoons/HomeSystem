@@ -430,7 +430,9 @@ public class SampleDao {
 		recode.setDepartmentName(result.getString("d.department_name"));
 		recode.setEmployeeComment(result.getString("e.comment"));
 		recode.setLevel(result.getInt("e.level"));
-		recode.setNowExperience(result.getInt("e.experience"));
+		recode.setExperience(result.getInt("e.experience"));
+		recode.setNowExperience(getNowExperience(employeeId));
+		recode.setNextExperience(getNextExperience(employeeId));
 		resultTable.add(recode);
 	    }
 	} catch (SQLException e) {

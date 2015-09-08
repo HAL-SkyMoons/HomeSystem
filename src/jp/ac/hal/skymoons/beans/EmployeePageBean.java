@@ -8,6 +8,7 @@ public class EmployeePageBean implements Serializable{
 	private String departmentName;
 	private String employeeComment;
 	private int level;
+	private int experience;
 	private int nowExperience;
 	private int nextExperience;
 
@@ -40,6 +41,12 @@ public class EmployeePageBean implements Serializable{
 	}
 	public void setLevel(int level) {
 		this.level = level;
+	}
+	public int getExperience() {
+		return experience;
+	}
+	public void setExperience(int experience) {
+		this.experience = experience;
 	}
 	public int getNowExperience() {
 		return nowExperience;
