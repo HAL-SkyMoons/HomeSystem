@@ -11,7 +11,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>Employee Page</title>
+<title>マイページ</title>
 <link rel="stylesheet" type="text/css" href="../css/reset.css">
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
@@ -244,7 +244,7 @@
 						</progress>
 						</li>
 					</ul>
-					<a href="EmployeeProfileEdit"><input type="submit" value="プロフィール編集" class="btn btn-2 btn-2c editButton"></a>
+					<a href="EmployeeProfileEdit"><input type="submit" value="ユーザ情報編集" class="btn btn-2 btn-2c editButton"></a>
 					<br>
 					<a href="/HomeSystem/fc/PlanRegister"><input type="submit" value="企画投稿" class="btn btn-2 btn-2c planButton"></a>
 					<br>

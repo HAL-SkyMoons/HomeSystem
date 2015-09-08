@@ -13,7 +13,7 @@
 <link rel="stylesheet" type="text/css" href="../js/colorbox/colorbox.css">
 <script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="../js/colorbox/jquery.colorbox.js"></script>
-<title>Insert title here</title>
+<title>社員一覧ページ</title>
 <script type="text/javascript">
 	// 	function ImageUp(employeeId) {
 	// 		window.open("/HomeSystem/fc/Home?toUser="+employeeId,"window2","width=1000,height=500");

@@ -72,6 +72,7 @@ public class EmployeePlofileEditModel extends AbstractModel{
 						//commentのDB更新処理
 						if(item.getFieldName().equals("comment")){
 							comment = item.getString("UTF-8");
+							System.out.println("comment is "+comment);
 							if(comment != null && !(comment.isEmpty())){
 								commentJud = dao.setEmployeeDetailCommentUpdate(employeeId, comment);
 								if(commentJud==false){
@@ -84,6 +85,7 @@ public class EmployeePlofileEditModel extends AbstractModel{
 							}
 						}else if(item.getFieldName().equals("password")){
 							password = item.getString("UTF-8");
+							System.out.println("password is "+password);
 							if(password != null && !(password.isEmpty())){
 								passwordJud = dao.setPasswordforChange(employeeId,password);
 								if(passwordJud==false){
@@ -121,10 +123,6 @@ public class EmployeePlofileEditModel extends AbstractModel{
 								break;
 							}
 						}
-					}
-					if(commentJud==false){
-
-						break;
 					}
 				}
 			} catch (FileUploadException e) {
