@@ -21,8 +21,6 @@
 	Date date = new Date();
 	SimpleDateFormat sdf = new SimpleDateFormat("S");
 	String milliSec = sdf.format(date);
-%>
-<%
 	ArrayList<EmployeePageBean> employeeDates = (ArrayList<EmployeePageBean>) request
 			.getAttribute("employeeDetail");
 	EmployeePageBean employeeDate = employeeDates.get(0);
@@ -43,6 +41,7 @@
 </head>
 <body>
 
+	<!--******************************** こっからへっだー ***********************************-->
 	<div id="headerline">line</div>
 	<header>
 
@@ -80,11 +79,13 @@
 			<ul>
 				<li class="menu1"><a href="/HomeSystem/fc/EmployeeList">社員</a></li>
 				<li class="menu2"><a href="/HomeSystem/fc/PlanList">企画</a></li>
-				<li class="menu2"><a href="/HomeSystem/fc/contents/list">ホメホメコンテンツ</a></li>
-				<li class="menu3"><a href="/HomeSystem/fc/ranking/topnum">ランキング</a></li>
+				<li class="menu3"><a href="/HomeSystem/fc/contents/list">ホメホメコンテンツ</a></li>
+				<li class="menu4"><a href="/HomeSystem/fc/ranking/topnum">ランキング</a></li>
+
 			</ul>
 		</div>
 	</header>
+	<!--*********************************ここまでへっだー ***********************************-->
 </body>
 </html>
 
