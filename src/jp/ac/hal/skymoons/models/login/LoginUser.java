@@ -27,8 +27,6 @@ public class LoginUser extends AbstractModel {
 	public String doService(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
-		HttpSession session = request.getSession(false);
-		if (session == null) {
 			if (request.getParameter("submit") == null) {
 				// ログインボタンが押されていない
 				return "/login/cs.jsp";
@@ -66,25 +64,13 @@ public class LoginUser extends AbstractModel {
 						request);
 				sessionController.setUserIdAndGroup(request.getParameter("id")
 						.toString(), class_flag);
-				// ヘッダー情報取得処理(getHeaderDataメソッド 引数：HttpRequestとHttpResponse ,
-				// 返り値：ArrayList<EmployeePageBean>
-				HeaderDataGetUtil headerUtil = new HeaderDataGetUtil();
-				ArrayList<EmployeePageBean> employeePageReturn = headerUtil
-						.getHeaderData(request, response);
-				request.setAttribute("employeeDetail", employeePageReturn);
-				return "/index.jsp";
+
+				return "../Index";
 			} else {
 				// 認証失敗
 				request.setAttribute("message", "認証に失敗しました。");
 				return "/login/cs.jsp";
 			}
-		} else {
 
-			HeaderDataGetUtil headerUtil = new HeaderDataGetUtil();
-			ArrayList<EmployeePageBean> employeePageReturn = headerUtil
-					.getHeaderData(request, response);
-			request.setAttribute("employeeDetail", employeePageReturn);
-			return "/index.jsp";
-		}
 	}
 }

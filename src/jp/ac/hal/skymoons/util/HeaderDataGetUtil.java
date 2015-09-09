@@ -19,6 +19,7 @@ public class HeaderDataGetUtil {
 		SampleDao dao = new SampleDao();
 		ArrayList<EmployeePageBean> employeePageReturn = (ArrayList<EmployeePageBean>) dao
 							.getEmployeeDetail(sessionController.getUserId());
+		dao.close();
 		return employeePageReturn;
 	}
 }

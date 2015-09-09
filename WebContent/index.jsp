@@ -44,7 +44,7 @@
 <body>
 	<header>
 		<div id="logo">
-			<a href="/HomeSystem/fc/login/user"><img src="/HomeSystem/images/logo.png" /></a>
+			<a href="/HomeSystem/fc/Index"><img src="/HomeSystem/images/logo.png" /></a>
 		</div>
 		<div id="mypage">
 			<form action="/HomeSystem/fc/EmployeeMyPage">
@@ -57,17 +57,16 @@
 			</form>
 		</div>
 
+
 		<!-- ユーザ情報描画-------------------------------------------------------------------------------------------------- -->
 
 		<div class="employeeStatus">
 			<c:forEach var="employeeDetail" items="${employeeDetail}">
-
-
 				<div class="imageDiv">
-					<img src="../images/employees/${employeeDetail.employeeId}.jpg?<%=milliSec%>" class="employeeImage">
+					<img src="/HomeSystem/images/employees/${employeeDetail.employeeId}.jpg?<%=milliSec%>" class="employeeImage">
 				</div>
 				<div class="flameDiv">
-					<img src="../images/flame/<%=level%>.png?<%=milliSec%>" class="employeeFlame">
+					<img src="/HomeSystem/images/flame/<%=level%>.png?<%=milliSec%>" class="employeeFlame">
 				</div>
 
 				${employeeDetail.departmentName}</li>
