@@ -75,15 +75,24 @@
 			</div>
 
 		</div>
-		<div id="headermenu">
-			<ul>
-				<li class="menu1"><a href="/HomeSystem/fc/EmployeeList">社員</a></li>
-				<li class="menu2"><a href="/HomeSystem/fc/PlanList">企画</a></li>
-				<li class="menu3"><a href="/HomeSystem/fc/contents/list">ホメホメコンテンツ</a></li>
-				<li class="menu4"><a href="/HomeSystem/fc/ranking/topnum">ランキング</a></li>
 
-			</ul>
-		</div>
+		<ul id="headermenu">
+			<li class="menu1"><a href="/HomeSystem/fc/EmployeeList">社員</a></li>
+			<li class="menu2"><a href="#">企画</a>
+				<ul>
+					<li><a href="/HomeSystem/fc/PlanList">企画一覧</a></li>
+					<li><a href="/HomeSystem/fc/PlanRegister">企画登録</a></li>
+					<li><a href="/HomeSystem/fc/PlanCalendar">企画カレンダー</a></li>
+				</ul></li>
+			<li class="menu3"><a href="/HomeSystem/fc/contents/list">ホメホメコンテンツ</a>
+				<ul>
+					<li><a href="/HomeSystem/fc/PlanList">コンテンツ一覧</a></li>
+					<li><a href="/HomeSystem/fc/PlanList">コンテンツ一覧</a></li>
+				</ul></li>
+			<li class="menu4"><a href="/HomeSystem/fc/ranking/topnum">ランキング</a></li>
+
+		</ul>
+
 	</header>
 	<!--*********************************ここまでへっだー ***********************************-->
 </body>
