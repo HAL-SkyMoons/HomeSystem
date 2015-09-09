@@ -1,6 +1,7 @@
 <%@page import="jp.ac.hal.skymoons.beans.ranking.BatchBean"%>
 <%@page import="jp.ac.hal.skymoons.beans.ranking.TopNumRankingBean"%>
 <%@page import="java.util.List"%>
+<%@page import="jp.ac.hal.skymoons.security.session.SessionController"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%
     @SuppressWarnings("unchecked")
@@ -15,6 +16,7 @@
     String batch = (String) request.getAttribute("batch");
     String year = (String) request.getAttribute("year");
     String month = (String) request.getAttribute("month");
+    SessionController sessionController = new SessionController(request);
 %>
 <!DOCTYPE htm>
 <html lang="ja">
@@ -139,7 +141,7 @@
 
 		    out.print("</div>");
 
-// 		    out.print("<div class=\"ranking\">");
+		    // 		    out.print("<div class=\"ranking\">");
 
 		    if (list.size() != 0) {
 
@@ -154,8 +156,23 @@
 					value = list.get(i).getValue();
 				    }
 
-				    if(outnum > 10){
-						break;
+				    if (outnum > 10) {
+					break;
+				    }
+
+				    int level = list.get(i).getLevel();
+				    if (level > 12) {
+					level = 12;
+				    }
+
+				    String employeePageUrl = "";
+				    String userId = sessionController.getUserId();
+
+				    if (userId.equals(list.get(i).getId())) {
+					employeePageUrl = "/HomeSystem/fc/EmployeeMyPage";
+				    } else {
+					employeePageUrl = "/HomeSystem/fc/EmployeePage?employeeId="
+						+ list.get(i).getId();
 				    }
 
 				    out.print("<div class=\"ranking\">");
@@ -168,17 +185,23 @@
 				    out.print("</div>");
 
 				    out.print("<div class=\"face\">");
-				    out.print("<a href=\"/HomeSystem/fc/EmployeePage?employeeId="
-					    + list.get(i).getId()
+				    out.print("<a href=\"" + employeePageUrl
 					    + "\"><img src=\"../../images/employees/"
 					    + list.get(i).getId() + ".jpg\"></a>");
+
 				    out.print("</div>");
+
+				    out.print("<a href=\"" + employeePageUrl + "\">");
+
+				    out.print("<div class=\"flameDiv\"><img src=\"/HomeSystem/images/flame/"
+					    + level + ".png\" class=\"employeeFlame\"></div>");
+
+				    out.print("</a>");
 
 				    out.print("<div class=\"detail\">");
 				    out.print("<div class=\"department\">"
 					    + list.get(i).getDepartment() + "</div>");
-				    out.print("<a href=\"/HomeSystem/fc/EmployeePage?employeeId="
-					    + list.get(i).getId()
+				    out.print("<a href=\"" + employeePageUrl
 					    + "\"><div class=\"employeeName\">"
 					    + list.get(i).getName() + "</div></a>");
 				    out.print("<div class=\"count\">" + list.get(i).getValue()
@@ -194,7 +217,7 @@
 
 				}
 
-// 				out.print("</div>");
+				// 				out.print("</div>");
 
 		    } else {
 				out.println("<p>データがありません。</p>");

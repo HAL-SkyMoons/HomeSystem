@@ -12,6 +12,7 @@ public class TopNumRankingBean {
     private String name = null;
     private String id = null;
     private String department = null;
+    private int level = 0;
 
     public long getValue() {
 	return value;
@@ -43,5 +44,13 @@ public class TopNumRankingBean {
 
     public void setDepartment(String department) {
 	this.department = department;
+    }
+
+    public int getLevel() {
+	return level;
+    }
+
+    public void setLevel(int level) {
+	this.level = level;
     }
 }
