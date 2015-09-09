@@ -38,7 +38,7 @@
 			<li class="menu1"><a href="/HomeSystem/fc/EmployeeList">社員</a></li>
 			<li class="menu2"><a href="/HomeSystem/fc/PlanList">企画</a></li>
 			<li class="menu2"><a href="/HomeSystem/fc/contents/list">ホメホメコンテンツ</a></li>
-			<li class="menu2"><a href="/HomeSystem/fc/ranking/topnum">ランキング</a></li>
+			<li class="menu3"><a href="/HomeSystem/fc/ranking/topnum">ランキング</a></li>
 
 		</ul>
 	</header>
