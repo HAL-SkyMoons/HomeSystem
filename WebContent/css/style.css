@@ -15,7 +15,8 @@ body {
 
 header {
 	width: 1000px;
-	margin: 0 auto;
+	margin: 0 auto 10px;
+	height: 250px;
 }
 
 #logo {
@@ -38,7 +39,7 @@ header {
 #headerstr {
 	position: absolute;
 	width: 400px;
-	height: 156px;
+	height: 71px;
 	right: 250px;
 	top: 85px;
 	text-align: right;
@@ -82,7 +83,7 @@ header {
 #headerbutton {
 	position: absolute;
 	width: 100px;
-	height: 156px;
+	height: 86px;
 	top: 70px;
 	right: 0;
 }
@@ -94,11 +95,14 @@ ul {
 	height: 60px;
 	margin: 20px auto;
 	background: #e6002d;
+	border-radius: 10px; /* CSS3闕画｡� */
+	-webkit-border-radius: 10px; /* Safari,Google Chrome逕ｨ */
+	-moz-border-radius: 10px;
+	font-size: 20px;
 }
 
 li {
-	display: block;;
-	background: #e6002d;
+	/*background: #e6002d;*/
 	float: left;
 	width: 250px;
 	height: 60px;
@@ -109,14 +113,15 @@ li {
 li a {
 	color: white;
 	display: block;
+	width: 250px;
 	height: 60px;
 	line-height: 60px;
 }
 
 li a:hover {
-	background: blue;
+	color: orange;
+	text-decoration: none;
 }
-
 /*ボタン*/
 .btn {
 	border: none;
