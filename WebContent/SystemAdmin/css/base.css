@@ -22,6 +22,11 @@ a:VISITED {
 	text-decoration: none;
 }
 
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
 body {
 	color: #FFFFFF;
 	background: #000000;

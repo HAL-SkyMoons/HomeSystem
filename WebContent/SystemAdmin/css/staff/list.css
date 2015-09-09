@@ -1,0 +1,50 @@
+@CHARSET "UTF-8";
+
+#listBox {
+
+}
+
+#listBox table {
+	color: #000000;
+	background-color: #FFFFFF;
+	
+	margin: 0px auto;
+}
+
+#listBox caption {
+	color: #FFFFFF;
+	
+	font-size: 22px;
+	letter-spacing: 1px;
+}
+
+#listBox th {
+	border: #333333 solid 1px;
+	padding: 3px 30px;
+	
+	color: #000000;
+	background: #999999;
+}
+
+#listBox td {
+	padding: 3px 30px;
+	border: #333333 solid 1px;
+	
+	text-align: center;
+}
+
+.record2 {
+	background: #CCCCCC;
+}
+
+.detailBtn {
+	border: #000000 solid 1px;
+	padding: 1px 20px;
+	
+	color: #000000;
+	background: #FFFFFF;
+}
+.detailBtn:HOVER {
+	color: #FFFFFF;
+	background: #000000;
+}

@@ -20,24 +20,24 @@
 		<div id="contentBox">
 			<div id="box1A">
 				<h2>ユーザ管理</h2>
-				<div class="btn1">社員</div>
-				<div class="btn2">顧客</div>
-				<div class="btn2">管理者</div>
+				<a href="/HomeSystem/fc/SystemAdmin/staff/list"><div class="btn1">社員</div></a>
+				<a href="/HomeSystem/fc/SystemAdmin/customer/list"><div class="btn2">顧客</div></a>
+				<a href="/HomeSystem/fc/SystemAdmin/admin/list"><div class="btn2">管理者</div></a>
 				<div class="btn2">none</div>
 				<div class="btn2">none</div>
 			</div>
 			<div id="box1B">
 				<h2>コンテンツ管理</h2>
-				<div class="btn1">none</div>
-				<div class="btn2">none</div>
+				<div class="btn1">ホメコンテンツ</div>
+				<div class="btn2">企画</div>
 				<div class="btn2">none</div>
 				<div class="btn2">none</div>
 				<div class="btn2">none</div>
 			</div>
 			<div id="box1C">
 				<h2>マスター管理</h2>
-				<div class="btn1">none</div>
-				<div class="btn2">none</div>
+				<div class="btn1">バッジ</div>
+				<div class="btn2">トロフィー</div>
 				<div class="btn2">none</div>
 				<div class="btn2">none</div>
 				<div class="btn2">none</div>

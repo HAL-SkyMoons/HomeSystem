@@ -24,7 +24,7 @@ public class Menu extends AbstractModel {
 			// セッションが無い
 			// 画面遷移
 			return "../../SystemAdmin/login.jsp";
-		}
+		}		
 		
 		// メニュー画面へ遷移
 		return "../../SystemAdmin/menu.jsp";

@@ -17,7 +17,7 @@ public class CreateList extends AbstractModel {
 	public String doService(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		
-		return "/staff/list.jsp";
+		return "../../../SystemAdmin/staff/list.jsp";
 	}
 
 }
