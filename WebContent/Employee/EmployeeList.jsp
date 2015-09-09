@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@page import="java.util.*"%>
 <%@page import="java.text.*"%>
+<%@page import="jp.ac.hal.skymoons.beans.EmployeeListBean"%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -15,9 +16,6 @@
 <script type="text/javascript" src="../js/colorbox/jquery.colorbox.js"></script>
 <title>社員一覧ページ</title>
 <script type="text/javascript">
-	// 	function ImageUp(employeeId) {
-	// 		window.open("/HomeSystem/fc/Home?toUser="+employeeId,"window2","width=1000,height=500");
-	// 	}
 	window.onload = function() {
 		document.getElementById('bigGenreList1').style.display = 'none';
 		document.getElementById('bigGenreList2').style.display = 'none';
@@ -106,16 +104,49 @@
 				<tr>
 					<c:forEach var="employee" items="${employees}" varStatus="status">
 						<td class="employeeColumn">
-							<div class="employeeImage">
 								<c:choose>
 									<c:when test="${sessionId == employee.employeeId}">
-										<a href="./EmployeeMyPage"> <img src="../images/employees/${employee.employeeId}.jpg?"></a>
-							</div> ${employee.departmentName} <br> <a href="./EmployeeMyPage" class="employeeName">${employee.employeeName}</a> </c:when> <c:when test="${sessionId != employee.employeeId }">
-								<a href="./EmployeePage?employeeId=${employee.employeeId}"> <img src="../images/employees/${employee.employeeId}.jpg?<%=milliSec %>"></a>
-								</div> ${employee.departmentName} <br>
-								<a href="./EmployeePage?employeeId=${employee.employeeId}" class="employeeName">${employee.employeeName}</a>
-							</c:when> </c:choose><br> <c:if test="${sessionId != employee.employeeId}">
-								<a class="iframe" href="/HomeSystem/fc/Home?toUser=${employee.employeeId}"><input type="button" value="この人を褒める" class="btn btn-2 btn-2c homeButton"></a>
+										<div class="employeeImage">
+											<a href="./EmployeeMyPage">
+												<img src="../images/employees/${employee.employeeId}.jpg?">
+											</a>
+											<div class="employeeFlame">
+												<a href="./EmployeeMyPage">
+													<c:if test="${employee.level>12}" var="flameFlg"/>
+													<c:if test="${flameFlg}">
+														<img src="../images/flame/12.png">
+													</c:if>
+													<c:if test="${!flameFlg}">
+														<img src="../images/flame/${employee.level}.png"/>
+													</c:if>
+												</a>
+											</div>
+										</div>
+										 ${employee.departmentName} <br> <a href="./EmployeeMyPage" class="employeeName">${employee.employeeName}</a>
+									</c:when>
+									<c:when test="${sessionId != employee.employeeId }">
+									 	<div class="employeeImage">
+											<a href="./EmployeePage?employeeId=${employee.employeeId}">
+												<img src="../images/employees/${employee.employeeId}.jpg?<%=milliSec %>">
+											</a>
+											<div class="employeeFlame">
+										 		 <a href="./EmployeePage?employeeId=${employee.employeeId}">
+																<c:if test="${employee.level>12}" var="flameFlg"/>
+																<c:if test="${flameFlg}">
+																	<img src="../images/flame/12.png">
+																</c:if>
+																<c:if test="${!flameFlg}">
+																	<img src="../images/flame/${employee.level}.png"/>
+																</c:if>
+												</a>
+											</div>
+										</div>
+										 ${employee.departmentName} <br>
+										<a href="./EmployeePage?employeeId=${employee.employeeId}" class="employeeName">${employee.employeeName}</a>
+									</c:when>
+								 </c:choose>
+								 <br> <c:if test="${sessionId != employee.employeeId}">
+									<a class="iframe" href="/HomeSystem/fc/Home?toUser=${employee.employeeId}"><input type="button" value="この人を褒める" class="btn btn-2 btn-2c homeButton"></a>
 								<br />
 							</c:if> <!-- 							<ul> --> <%-- 								<c:forEach var="employeeGenre" items="${employee.employeeGenre}"> --%> <%-- 									<li>${employeeGenre}</li> --%> <%-- 								</c:forEach> --%> <!-- 							</ul> -->
 						</td>
@@ -129,3 +160,4 @@
 	</div>
 </body>
 </html>
+

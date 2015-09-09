@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ import jp.ac.hal.skymoons.beans.EmployeeBatchBean;
 import jp.ac.hal.skymoons.beans.EmployeeCapacityBean;
 import jp.ac.hal.skymoons.beans.EmployeeCompanyCapacityBean;
 import jp.ac.hal.skymoons.beans.EmployeeGenreBean;
+import jp.ac.hal.skymoons.beans.EmployeeHomeBean;
 import jp.ac.hal.skymoons.beans.EmployeeHomeLogBean;
 import jp.ac.hal.skymoons.beans.EmployeeListBean;
 import jp.ac.hal.skymoons.beans.EmployeePageBean;
@@ -35,6 +37,7 @@ import jp.ac.hal.skymoons.beans.PlanPointBean;
 import jp.ac.hal.skymoons.beans.PlanPointsBean;
 import jp.ac.hal.skymoons.beans.SampleBean;
 import jp.ac.hal.skymoons.beans.UserBean;
+import jp.ac.hal.skymoons.beans.contents.ContentsDetailHomeLogBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
 
 public class SampleDao {
@@ -2566,5 +2569,40 @@ public class SampleDao {
 
 	return record;
     }
+
+    /**
+     * 特定社員宛のホメログ取得
+     * @param employeeId
+     * @return
+     * @throws SQLException
+     */
+    public ArrayList<EmployeeHomeBean> getHomeLog(String employeeId) throws SQLException {
+	//戻り値のListを生成
+	ArrayList<EmployeeHomeBean> homeList = new ArrayList<>();
+	//コンテンツの取得
+	PreparedStatement homeLogPst = con.prepareStatement("select * from batch b, users u1, users u2 ,home_log hl left outer join  employees emp on hl.home_user = emp.employee_id where hl.home_target = ? and hl.home_target = u1.user_id and hl.home_user = u2.user_id and hl.batch_id = b.batch_id order by hl.home_datetime DESC ");
+	homeLogPst.setString(1, employeeId);
+	ResultSet homeLogResult = homeLogPst.executeQuery();
+	while(homeLogResult.next()){
+	    EmployeeHomeBean homeLogBean = new EmployeeHomeBean();
+		homeLogBean.setHomeTarget(homeLogResult.getString("home_target"));
+		homeLogBean.setHomeTargetFirstName(homeLogResult.getString("u1.first_name"));
+		homeLogBean.setHomeTargetLastName(homeLogResult.getString("u1.last_name"));
+		homeLogBean.setHomeUser(homeLogResult.getString("home_user"));
+		homeLogBean.setHomeUserFirstName(homeLogResult.getString("u2.first_name"));
+		homeLogBean.setHomeUserLastName(homeLogResult.getString("u2.last_name"));
+		homeLogBean.setHomeDatetime(new SimpleDateFormat("yyyy年MM月dd日 hh時MM分").format(homeLogResult.getDate("home_datetime")));
+		homeLogBean.setBatchId(homeLogResult.getInt("batch_id"));
+		homeLogBean.setBatchName(homeLogResult.getString("batch_name"));
+		homeLogBean.setBatchComment(homeLogResult.getString("batch_comment"));
+		homeLogBean.setHomePoint(homeLogResult.getInt("home_point"));
+		homeLogBean.setHomeComment(homeLogResult.getString("home_comment"));
+		homeLogBean.setLevel(homeLogResult.getInt("emp.level"));
+		homeLogBean.setClassFlag(homeLogResult.getInt("u2.class_flag"));
+		homeList.add(homeLogBean);
+	}
+	homeLogPst.close();
+	return homeList;
+}
 
 }
