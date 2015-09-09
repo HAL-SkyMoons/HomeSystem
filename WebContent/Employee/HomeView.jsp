@@ -23,6 +23,8 @@
 <body>
 	<div class="wrapper">
 		<div class="title"><img src="../images/icon/message.png"><h1 class="titleName">あなた宛のホメコメント</h1></div>
+		<a href="/HomeSystem/fc/EmployeeMyPage"><input type='submit' name='submit' value='戻る' class='btn btn-2 btn-2c backBtn'></a>
+
 		<hr>
 		<div class="contents">
 
