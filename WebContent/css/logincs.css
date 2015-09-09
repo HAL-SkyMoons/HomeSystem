@@ -2,12 +2,13 @@
 
 hr {
 	clear: both;
+
 }
 
 #boxout {
 	width: 1000px;
 	height: 1000px;
-	margin: 50px auto;
+	margin: 0 auto;
 	position: relative;
 }
 

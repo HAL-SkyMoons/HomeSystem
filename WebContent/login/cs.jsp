@@ -18,7 +18,7 @@
 		</div>
 
 	</header>
-	<hr>
+
 	<div id="boxout">
 		<div id="boxcomment">
 			<label>ホメ</label>た数だけ<br> <label> 　　　笑顔</label>がある
