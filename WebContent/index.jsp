@@ -3,7 +3,6 @@
 <%
 	SessionController sessionController = new SessionController(request);
 	String url = sessionController.checkUserSession();
-	String employeeId = sessionController.getUserId();
 	if (url != null) {
 		response.sendRedirect("/HomeSystem" + url);
 	}
