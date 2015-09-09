@@ -1,18 +1,18 @@
 @CHARSET "UTF-8";
 
-#logo {
+hr {
 	clear: both;
 }
 
 #boxout {
 	width: 1000px;
 	height: 1000px;
-	margin: 200px auto;
+	margin: 50px auto;
 	position: relative;
 }
 
 #boxcomment {
-	padding: 80px 170px 0 0;
+	padding: 80px 170px 0 30px;
 	float: left;
 	font-size: 50px;
 	font-style: italic;

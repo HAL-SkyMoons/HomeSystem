@@ -42,53 +42,48 @@
 <title>トップ</title>
 </head>
 <body>
+
+	<div id="headerline">line</div>
 	<header>
+
 		<div id="logo">
 			<a href="/HomeSystem/fc/Index"><img src="/HomeSystem/images/logo.png" /></a>
 		</div>
-		<div id="mypage">
-			<form action="/HomeSystem/fc/EmployeeMyPage">
-				<input type="submit" class="btn btn-2 btn-2c submit" value="マイページ">
-			</form>
-		</div>
-		<div id="logout">
-			<form action="/HomeSystem/fc/logout/user">
-				<input type="submit" class="btn btn-2 btn-2c submit" value="ログアウト">
-			</form>
-		</div>
 
-
-		<!-- ユーザ情報描画-------------------------------------------------------------------------------------------------- -->
-
-		<div class="employeeStatus">
+		<div id="headerright">
 			<c:forEach var="employeeDetail" items="${employeeDetail}">
-				<div class="imageDiv">
-					<img src="/HomeSystem/images/employees/${employeeDetail.employeeId}.jpg?<%=milliSec%>" class="employeeImage">
+				<div id="headerstr">
+					<label id="headername">${employeeDetail.employeeName}さん</label><br> <label id="headerlevel">レベル${employeeDetail.level}</label>
 				</div>
-				<div class="flameDiv">
-					<img src="/HomeSystem/images/flame/<%=level%>.png?<%=milliSec%>" class="employeeFlame">
+				<div id="headerimage">
+					<img src="/HomeSystem/images/employees/${employeeDetail.employeeId}.jpg?<%=milliSec%>">
+					<div id="headerflame">
+						<img src="/HomeSystem/images/flame/<%=level%>.png?<%=milliSec%>">
+					</div>
 				</div>
-
-				${employeeDetail.departmentName}</li>
-				${employeeDetail.employeeName}
-				レベル${employeeDetail.level}
-				${employeeDetail.experience-employeeDetail.nowExperience}/${employeeDetail.nextExperience-employeeDetail.nowExperience}XP
-				<progress value="${employeeDetail.experience-employeeDetail.nowExperience}" max="${employeeDetail.nextExperience-employeeDetail.nowExperience}">
-					<span>${(employeeDetail.experience-employeeDetail.nowExperience) / (employeeDetail.nextExperience-employeeDetail.nowExperience) *100}</span>%
-				</progress>
-
 			</c:forEach>
+			<div id="headerbutton">
+				<div id="mypage">
+					<form action="/HomeSystem/fc/EmployeeMyPage">
+						<input type="submit" class="btn btn-2 btn-2c submit" value="マイページ">
+					</form>
+				</div>
+				<div id="logout">
+					<form action="/HomeSystem/fc/logout/user">
+						<input type="submit" class="btn btn-2 btn-2c submit" value="ログアウト">
+					</form>
+				</div>
+			</div>
+
 		</div>
-
-		<ul>
-
-
-			<li class="menu1"><a href="/HomeSystem/fc/EmployeeList">社員</a></li>
-			<li class="menu2"><a href="/HomeSystem/fc/PlanList">企画</a></li>
-			<li class="menu2"><a href="/HomeSystem/fc/contents/list">ホメホメコンテンツ</a></li>
-			<li class="menu3"><a href="/HomeSystem/fc/ranking/topnum">ランキング</a></li>
-
-		</ul>
+		<div id="headermenu">
+			<ul>
+				<li class="menu1"><a href="/HomeSystem/fc/EmployeeList">社員</a></li>
+				<li class="menu2"><a href="/HomeSystem/fc/PlanList">企画</a></li>
+				<li class="menu2"><a href="/HomeSystem/fc/contents/list">ホメホメコンテンツ</a></li>
+				<li class="menu3"><a href="/HomeSystem/fc/ranking/topnum">ランキング</a></li>
+			</ul>
+		</div>
 	</header>
 </body>
 </html>

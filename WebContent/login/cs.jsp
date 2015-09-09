@@ -11,12 +11,14 @@
 <title>顧客・社員用ログインページ</title>
 </head>
 <body>
+	<div id="headerline">line</div>
 	<header>
 		<div id="logo">
 			<a href="/HomeSystem/login/cs.jsp"><img src="/HomeSystem/images/logo.png"></a>
 		</div>
-		<hr>
+
 	</header>
+	<hr>
 	<div id="boxout">
 		<div id="boxcomment">
 			<label>ホメ</label>た数だけ<br> <label> 　　　笑顔</label>がある
@@ -27,10 +29,10 @@
 
 			<form action="/HomeSystem/fc/login/user" method="POST">
 				<p>
-					ログインID:<input type="text" name="id" size="30" id="text">
+					ログインID：<input type="text" name="id" size="30" id="text">
 				</p>
 				<p>
-					パスワード:<input type="password" name="pass" size="30" id="text">
+					パスワード：<input type="password" name="pass" size="30" id="text">
 				</p>
 				<h5>
 					<%
