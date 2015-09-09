@@ -115,6 +115,9 @@ public class ModelSelector {
 		mapping.put("/HomeSystem/fc/companyCapacityRegister", new jp.ac.hal.skymoons.models.companycapacity.CompanyCapacityRegister());
 		mapping.put("/HomeSystem/fc/companyCapacityDetail", new jp.ac.hal.skymoons.models.companycapacity.CompanyCapacityDetail());
 		mapping.put("/HomeSystem/fc/companyCapacityChange", new jp.ac.hal.skymoons.models.companycapacity.CompanyCapacityChange());
+
+		//ホメ閲覧機能
+		mapping.put("/HomeSystem/fc/HomeView", new jp.ac.hal.skymoons.models.HomeView() );
 	}
 
 /**

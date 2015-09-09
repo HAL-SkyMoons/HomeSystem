@@ -1,0 +1,117 @@
+@CHARSET "UTF-8";
+
+.wrapper {
+	width: 1000px;
+	margin: 0 auto;
+}
+
+.contens {
+	width: 1000px;
+}
+
+.home {
+	width: 490px;
+	display: inline-block;
+	margin: 4px;
+}
+
+.title {
+	display: inline-table;
+}
+
+.titleName {
+	display: table-cell;
+	vertical-align: middle;
+	padding-top: 10px;
+}
+
+.title>img {
+	width: 60px;
+	height: 60px;
+}
+
+/*******************************
+* 左からの吹き出し
+********************************/
+.comment {
+	width: 400px;
+	/* 	float: right; */
+	display: inline-block;
+	border: 1px solid black;
+	-webkit-border-radius: 10px;
+	padding: 3px;
+	position: relative;
+	vertical-align: top;
+	z-index: -2;
+}
+
+.comment:after, .comment:before {
+	right: 100%;
+	top: 30px;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	z-index: -1;
+}
+
+.comment:after {
+	border-color: rgba(255, 255, 255, 0);
+	border-right-color: #fff;
+	border-width: 7px;
+	margin-top: -7px;
+	z-index: -1;
+}
+
+.comment:before {
+	border-color: rgba(0, 0, 0, 0);
+	border-right-color: #000;
+	border-width: 8px;
+	margin-top: -8px;
+	z-index: -1;
+}
+
+.commentBody {
+	min-height: 2em;
+}
+
+.user {
+	/* 	float: left; */
+	display: inline-block;
+}
+
+.face {
+	text-align: center;
+}
+
+.face>a>img {
+	max-width: 80px;
+	max-height: 80px;
+}
+
+.face>img {
+	max-width: 80px;
+	max-height: 80px;
+}
+
+.name {
+	text-align: center;
+}
+
+.commentDate {
+	text-align: right;
+}
+
+div.flameDiv {
+	width: 80px;
+	height: 80px;
+	margin-top: -80px;
+	position: relative;
+}
+
+.flame {
+	width: 80px;
+	height: 80px;
+}
