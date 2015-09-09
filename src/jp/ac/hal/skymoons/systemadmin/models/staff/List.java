@@ -28,10 +28,11 @@ public class List extends AbstractModel {
 			return "../../../SystemAdmin/login.jsp";
 		}
 		
+		// 検索機能
 		String[] where = null;
 		if(request.getParameter("searchBtn") != null) {
 			if(request.getParameter("keyword") != "") {
-				where = request.getParameter("keyword").toString().replace("　", " ").split(" ");
+				where = request.getParameter("keyword").toString().replace("　", " ").split("[\\s]+");
 				System.out.println("検索を実行します。");
 				for(int i = 0; i < where.length; i++) {
 					System.out.println("条件" + (i + 1) + ":" + where[i]);
@@ -57,7 +58,7 @@ public class List extends AbstractModel {
 		
 		java.util.List<StaffBean> staffList = null;
 		try {
-			staffList = staffDAO.getList();
+			staffList = staffDAO.getList(where);
 		} catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("ERROR:データベースから社員情報取得中にエラーが発生しました。");

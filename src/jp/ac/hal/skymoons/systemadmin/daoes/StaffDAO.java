@@ -110,13 +110,25 @@ public class StaffDAO {
 	 * 社員ユーザ一覧画面用の社員ユーザリスト
 	 * @throws SQLException 
 	 */
-	public List<StaffBean> getList() throws SQLException {
+	public List<StaffBean> getList(String[] where) throws SQLException {
 		List<StaffBean> result = new ArrayList<StaffBean>();
 		String sql = "SELECT u.user_id, u.password, u.last_name, u.first_name, u.lapse_flag, u.first_name_kana, u.last_name_kana, e.comment, e.level, e.experience, d.department_ID, d.department_name"
 			+ " FROM users AS u"
 			+ " JOIN employees AS e ON u.user_id = e.employee_ID"
-			+ " JOIN departments AS d ON e.department_ID = d.department_ID"
-			+ " ORDER BY u.user_id";
+			+ " JOIN departments AS d ON e.department_ID = d.department_ID";
+		
+		// 条件指定
+		if(where != null) {
+			sql += " where";
+			for (int i = 0; i < where.length; i++) {
+				if (i > 0) {
+					sql += " AND";
+				}
+				sql += " CONCAT(u.last_name, u.first_name, u.first_name_kana , u.last_name_kana, d.department_name) LIKE '%" + where[i] + "%'";
+			}
+		}
+		
+		sql += " ORDER BY u.user_id";
 		PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
 		ResultSet resultSet = preparedStatement.executeQuery();
 		while(resultSet.next()) {
