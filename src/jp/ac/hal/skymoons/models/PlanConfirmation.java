@@ -1,12 +1,16 @@
 package jp.ac.hal.skymoons.models;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jp.ac.hal.skymoons.beans.EmployeePageBean;
 import jp.ac.hal.skymoons.beans.PlanBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.SampleDao;
+import jp.ac.hal.skymoons.util.HeaderDataGetUtil;
 
 public class PlanConfirmation extends AbstractModel {
 
@@ -14,6 +18,12 @@ public class PlanConfirmation extends AbstractModel {
 	public String doService(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
+
+
+		HeaderDataGetUtil headerUtil = new HeaderDataGetUtil();
+		ArrayList<EmployeePageBean> employeePageReturn = headerUtil
+				.getHeaderData(request, response);
+		request.setAttribute("employeeDetail", employeePageReturn);
 
 		// POSTで企画内容が送信されているか
 		if (request.getParameter("submit") != null) {

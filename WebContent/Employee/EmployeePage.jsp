@@ -1,180 +1,167 @@
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="jp.ac.hal.skymoons.beans.EmployeeBatchBean"%>
+<%@page import="jp.ac.hal.skymoons.beans.EmployeePageBean"%>
 <%@page import="java.util.*"%>
 <%@page import="java.text.*"%>
+<%@page import="jp.ac.hal.skymoons.util.Utility"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>Employee Page</title>
+<title>社員ページ</title>
 <link rel="stylesheet" type="text/css" href="../css/reset.css">
 <!-- <link rel="stylesheet" type="text/css" href="../css/employeePage.css"> -->
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
 <link rel="stylesheet" type="text/css" href="../css/employeeMyPage.css">
 <link rel="stylesheet" type="text/css" href="../js/colorbox/colorbox.css">
+<link rel="stylesheet" type="text/css" href="/HomeSystem/css/style.css">
 <script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="../js/colorbox/jquery.colorbox.js"></script>
 <%
-    //チャート出力用配列の準備
-			String[] chartName = (String[]) request.getAttribute("chartName");
-			int[] chartCount = (int[]) request.getAttribute("chartCount");
-			//月間
-			String[] chartNameMonth = (String[]) request
-					.getAttribute("chartNameMonth");
-			int[] chartCountMonth = (int[]) request
-					.getAttribute("chartCountMonth");
-			//年間
-			String[] chartNameYear = (String[]) request
-					.getAttribute("chartNameYear");
-			int[] chartCountYear = (int[]) request
-					.getAttribute("chartCountYear");
-			//通算
-			String[] chartNameTotal = (String[]) request
-					.getAttribute("chartNameTotal");
-			int[] chartCountTotal = (int[]) request
-					.getAttribute("chartCountTotal");
+	//チャート出力用配列の準備
+	String[] chartName = (String[])request.getAttribute("chartName");
+	int[] chartCount = (int[])request.getAttribute("chartCount");
+	//月間
+	int[] chartCountMonth = (int[])request.getAttribute("chartCountMonth");
+	//年間
+	int[] chartCountYear = (int[])request.getAttribute("chartCountYear");
+	//通算
+	int[] chartCountTotal = (int[])request.getAttribute("chartCountTotal");
+	ArrayList<EmployeePageBean> employeeDates = (ArrayList<EmployeePageBean>)request.getAttribute("employeeDetail");
+	EmployeePageBean employeeDate = employeeDates.get(0);
+	int level = employeeDate.getLevel();
+	if(level>12){
+		level=12;
+	}
+	ArrayList<EmployeePageBean> headerEmployeeDatas = (ArrayList<EmployeePageBean>)request.getAttribute("headerEmployeeData");
+	EmployeePageBean headerEmployeeData = headerEmployeeDatas.get(0);
+	int headerEmployeeLevel = headerEmployeeData.getLevel();
+	if(headerEmployeeLevel>12){
+		headerEmployeeLevel=12;
+	}
 %>
 <script type="text/javascript" src="../js/Chart.js-master/Chart.js"></script>
 <script>
-	$(function() {
-		$(".iframe").colorbox({
-			iframe : true,
-			width : "500px",
-			height : "90%",
-			opacity : 0.7,
-			fixed : true
-		});
+$(function() {
+	$(".iframe").colorbox({
+		iframe : true,
+		width : "500px",
+		height : "90%",
+		opacity : 0.7
 	});
-	//グラフ切り替え(月間)
-	function graphChangeMonth() {
-		var radarChartData = {
-			labels : [
-<%if (chartNameMonth.length != 0 && chartCountMonth.length != 0) {
-				for (int i = 0; i < chartNameMonth.length;) {
-					out.print("\"" + chartNameMonth[i] + "\"");
+});
+//グラフ切り替え(月間)
+function graphChangeMonth(){
+	var radarChartData = {
+			labels : [<% if(chartName.length !=0 && chartCountMonth.length !=0){
+				for (int i = 0; i < chartName.length;) {
+					out.print("\""+chartName[i]+"\"");
 					i++;
-					if (i == chartCountMonth.length) {
+					if(i==chartCountMonth.length){
 						break;
 					}
-					out.print(",");
+						out.print(",");
 				}
-			}%>
-	],
-			datasets : [ {
+				}%>],
+			datasets : [
+				{
 				fillColor : "rgba(200,50,50,0.8)",
 				strokeColor : "rgba(255,0,0,1)",
 				pointColor : "rgba(255,0,0,1)",
 				pointStrokeColor : "#fff",
-				data : [
-<%if (chartNameMonth.length != 0 && chartCountMonth.length != 0) {
-				for (int i = 0; i < chartCountMonth.length;) {
-					out.print(chartCountMonth[i]);
-					i++;
-					if (i == chartCountMonth.length) {
-						break;
+				data : [<% if(chartName.length !=0 && chartCountMonth.length !=0){
+					for (int i = 0; i < chartCountMonth.length;) {
+						out.print(chartCountMonth[i]);
+						i++;
+						if(i==chartCountMonth.length){
+							break;
+						}
+						out.print(",");
 					}
-					out.print(",");
+					}%>]
 				}
-			}%>
-	]
-			} ]
+			]
 		}
-		var myRadar = new Chart(document.getElementById("radar").getContext(
-				"2d")).Radar(radarChartData, {
-			scaleShowLabels : true,
-			scaleFontSize : 15,
-			scaleLineColor : "rgba(0,0,0,0.9)",
-			pointLabelFontSize : 20,
-		});
-	}
-	//グラフ切り替え(年間)
-	function graphChangeYear() {
-		var radarChartData = {
-			labels : [
-<%if (chartNameYear.length != 0 && chartCountYear.length != 0) {
-				for (int i = 0; i < chartNameYear.length;) {
-					out.print("\"" + chartNameYear[i] + "\"");
+		var myRadar = new Chart(document.getElementById("radar").getContext("2d"))
+			.Radar(radarChartData,{
+				scaleShowLabels : true, scaleFontSize : 15, scaleLineColor: "rgba(0,0,0,0.9)", pointLabelFontSize : 20, });
+}
+//グラフ切り替え(年間)
+function graphChangeYear(){
+	var radarChartData = {
+			labels : [<% if(chartName.length !=0 && chartCountYear.length !=0){
+				for (int i = 0; i < chartName.length;) {
+					out.print("\""+chartName[i]+"\"");
 					i++;
-					if (i == chartCountYear.length) {
+					if(i==chartCountYear.length){
 						break;
 					}
-					out.print(",");
+						out.print(",");
 				}
-			}%>
-	],
-			datasets : [ {
+				}%>],
+			datasets : [
+				{
 				fillColor : "rgba(200,50,50,0.8)",
 				strokeColor : "rgba(255,0,0,1)",
 				pointColor : "rgba(255,0,0,1)",
 				pointStrokeColor : "#fff",
-				data : [
-<%if (chartNameYear.length != 0 && chartCountYear.length != 0) {
-				for (int i = 0; i < chartCountYear.length;) {
-					out.print(chartCountYear[i]);
-					i++;
-					if (i == chartCountYear.length) {
-						break;
+				data : [<% if(chartName.length !=0 && chartCountYear.length !=0){
+					for (int i = 0; i < chartCountYear.length;) {
+						out.print(chartCountYear[i]);
+						i++;
+						if(i==chartCountYear.length){
+							break;
+						}
+						out.print(",");
 					}
-					out.print(",");
+					}%>]
 				}
-			}%>
-	]
-			} ]
+			]
 		}
-		var myRadar = new Chart(document.getElementById("radar").getContext(
-				"2d")).Radar(radarChartData, {
-			scaleShowLabels : true,
-			scaleFontSize : 15,
-			scaleLineColor : "rgba(0,0,0,0.9)",
-			pointLabelFontSize : 20,
-		});
-	}
-	//グラフ切り替え(通算)
-	function graphChangeTotal() {
-		var radarChartData = {
-			labels : [
-<%if (chartNameTotal.length != 0 && chartCountTotal.length != 0) {
-				for (int i = 0; i < chartNameTotal.length;) {
-					out.print("\"" + chartNameTotal[i] + "\"");
+		var myRadar = new Chart(document.getElementById("radar").getContext("2d"))
+			.Radar(radarChartData,{
+				scaleShowLabels : true, scaleFontSize : 15, scaleLineColor: "rgba(0,0,0,0.9)", pointLabelFontSize : 20, });
+}
+//グラフ切り替え(通算)
+function graphChangeTotal(){
+	var radarChartData = {
+			labels : [<% if(chartName.length !=0 && chartCountTotal.length !=0){
+				for (int i = 0; i < chartName.length;) {
+					out.print("\""+chartName[i]+"\"");
 					i++;
-					if (i == chartCountTotal.length) {
+					if(i==chartCountTotal.length){
 						break;
 					}
-					out.print(",");
+						out.print(",");
 				}
-			}%>
-	],
-			datasets : [ {
+				}%>],
+			datasets : [
+				{
 				fillColor : "rgba(200,50,50,0.8)",
 				strokeColor : "rgba(255,0,0,1)",
 				pointColor : "rgba(255,0,0,1)",
 				pointStrokeColor : "#fff",
-				data : [
-<%if (chartNameTotal.length != 0 && chartCountTotal.length != 0) {
-				for (int i = 0; i < chartCountTotal.length;) {
-					out.print(chartCountTotal[i]);
-					i++;
-					if (i == chartCountTotal.length) {
-						break;
+				data : [<% if(chartName.length !=0 && chartCountTotal.length !=0){
+					for (int i = 0; i < chartCountTotal.length;) {
+						out.print(chartCountTotal[i]);
+						i++;
+						if(i==chartCountTotal.length){
+							break;
+						}
+						out.print(",");
 					}
-					out.print(",");
+					}%>]
 				}
-			}%>
-	]
-			} ]
+			]
 		}
-		var myRadar = new Chart(document.getElementById("radar").getContext(
-				"2d")).Radar(radarChartData, {
-			scaleShowLabels : true,
-			scaleFontSize : 15,
-			scaleLineColor : "rgba(0,0,0,0.9)",
-			pointLabelFontSize : 20,
-		});
-	}
+		var myRadar = new Chart(document.getElementById("radar").getContext("2d"))
+			.Radar(radarChartData,{
+				scaleShowLabels : true, scaleFontSize : 15, scaleLineColor: "rgba(0,0,0,0.9)", pointLabelFontSize : 20, });
+}
 
 	//履歴タブ切り替え
 	function activityChange(tabName) {
@@ -204,13 +191,13 @@
 		document.getElementById(tabName + "Style").style.backgroundColor = '#fff';
 
 		var countTotal =
-<%out.print(chartNameTotal.length);%>
+<%out.print(chartCountTotal.length);%>
 	;
 		var countMonth =
-<%out.print(chartNameMonth.length);%>
+<%out.print(chartCountMonth.length);%>
 	;
 		var countYear =
-<%out.print(chartNameYear.length);%>
+<%out.print(chartCountYear.length);%>
 	;
 
 		var max = Math.max(countTotal, countMonth, countYear);
@@ -239,6 +226,14 @@
 		});
 
 	});
+	//画像差し替えメソッド
+	$(document).ready(function() {
+	    $('.employeeImage').error(function() {
+	        $(this).attr({
+	            src: '../images/icon/NoImage.png'
+	        });
+	    });
+	});
 </script>
 <%
     Date date = new Date();
@@ -247,6 +242,61 @@
 %>
 </head>
 <body>
+<!--******************************** こっからへっだー ***********************************-->
+	<div id="allwrap">
+		<div id="headerline">line</div>
+		<header>
+
+			<div id="logo">
+				<a href="/HomeSystem/fc/Index"><img src="/HomeSystem/images/logo.png" /></a>
+			</div>
+
+			<div id="headerright">
+				<c:forEach var="headerEmployeeData" items="${headerEmployeeData}">
+					<div id="headerstr">
+						<label id="headername">${headerEmployeeData.employeeName}さん</label><br> <label id="headerlevel">レベル${headerEmployeeData.level}</label>
+					</div>
+					<div id="headerimage">
+						<img src="/HomeSystem/images/employees/${headerEmployeeData.employeeId}.jpg?<%=milliSec%>" class="employeeImage">
+						<div id="headerflame">
+							<img src="/HomeSystem/images/flame/<%=headerEmployeeLevel%>.png?<%=milliSec%>">
+						</div>
+					</div>
+				</c:forEach>
+				<div id="headerbutton">
+					<div id="mypage">
+						<form action="/HomeSystem/fc/EmployeeMyPage">
+							<input type="submit" class="btn btn-2 btn-2c submit" value="マイページ">
+						</form>
+					</div>
+					<div id="logout">
+						<form action="/HomeSystem/fc/logout/user">
+							<input type="submit" class="btn btn-2 btn-2c submit" value="ログアウト">
+						</form>
+					</div>
+				</div>
+
+			</div>
+
+			<ul id="headermenu">
+				<li class="menu1"><a href="/HomeSystem/fc/EmployeeList">社員一覧</a></li>
+				<li class="menu2"><a href="#">企画</a>
+					<ul>
+						<li><a href="/HomeSystem/fc/PlanList">企画一覧</a></li>
+						<li><a href="/HomeSystem/fc/PlanRegister">企画登録</a></li>
+						<li><a href="/HomeSystem/fc/PlanCalendar">企画カレンダー</a></li>
+					</ul></li>
+				<li class="menu3"><a href="#">ホメホメコンテンツ</a>
+					<ul>
+						<li><a href="/HomeSystem/fc/contents/list">コンテンツ一覧</a></li>
+						<li><a href="/HomeSystem/fc/contents/regist">コンテンツ登録</a></li>
+					</ul></li>
+				<li class="menu4"><a href="/HomeSystem/fc/ranking/topnum">ランキング</a></li>
+			</ul>
+
+		</header>
+		<div id="allcontents">
+			<!--*********************************ここまでへっだー ***********************************-->
 	<div class="contents">
 		<h1 class="employeePageTitle">社員ページ</h1>
 		<div class="leftContents">
@@ -255,6 +305,8 @@
 					<ul class="employeeData">
 						<li class="employeeImage"><div class="imageDiv">
 								<img src="../images/employees/${employeeDetail.employeeId}.jpg?<%=milliSec %>" class="employeeImage">
+								</div><div class="flameDiv">
+								<img src="../images/flame/<%=level %>.png?<%=milliSec %>" class="employeeFlame">
 							</div></li>
 						<li class="departmentName">${employeeDetail.departmentName}</li>
 						<li class="employeeName">${employeeDetail.employeeName}</li>
@@ -307,47 +359,6 @@
 				<hr>
 				<canvas id="radar" height="400" width="540"></canvas>
 			</div>
-			<script>
-				var radarChartData = {
-					labels : [
-			<%if (chartName.length != 0 && chartCount.length != 0) {
-				for (int i = 0; i < chartName.length;) {
-					out.print("\"" + chartName[i] + "\"");
-					i++;
-					if (i == chartCount.length) {
-						break;
-					}
-					out.print(",");
-				}
-			}%>
-				],
-					datasets : [ {
-						fillColor : "rgba(200,50,50,0.8)",
-						strokeColor : "rgba(255,0,0,1)",
-						pointColor : "rgba(255,0,0,1)",
-						pointStrokeColor : "#fff",
-						data : [
-			<%if (chartName.length != 0 && chartCount.length != 0) {
-				for (int i = 0; i < chartCount.length;) {
-					out.print(chartCount[i]);
-					i++;
-					if (i == chartCount.length) {
-						break;
-					}
-					out.print(",");
-				}
-			}%>
-				]
-					} ]
-				}
-				var myRadar = new Chart(document.getElementById("radar")
-						.getContext("2d")).Radar(radarChartData, {
-					scaleShowLabels : true,
-					scaleFontSize : 15,
-					scaleLineColor : "rgba(0,0,0,0.9)",
-					pointLabelFontSize : 20,
-				});
-			</script>
 			<div class="badgeView">
 				<div class="badgeTabs" id="badgeTabs">
 					<a href="javascript:badgeChange('totalTab');graphChangeTotal();" class="totalTab" id="totalTabStyle">入社以来</a> <a href="javascript:badgeChange('monthTab');graphChangeMonth();" class="monthTab" id="monthTabStyle">1ケ月間</a> <a href="javascript:badgeChange('yearTab');graphChangeYear();" class="yearTab" id="yearTabStyle">1年間</a>
@@ -495,9 +506,61 @@
 			<script type="text/javascript">
 				activityChange('homeTab');
 				badgeChange('totalTab');
+				graphChangeTotal();
 			</script>
 		</div>
 		<div class="clear"></div>
 	</div>
+		<!--*********************************ここからふったー ***********************************-->
+		</div>
+		<footer>
+			<div id="footertop">
+				<a href="#top">▲ページTOPへ</a>
+			</div>
+
+			<div id="footermenu">
+				<div id="footermenuin">
+					<div id="footermenu1">
+						<h4>社員</h4>
+						<p>
+							<a href="/HomeSystem/fc/EmployeeList">社員一覧</a>
+						</p>
+						<p>
+							<a href="/HomeSystem/fc/EmployeeMyPage">マイページ</a>
+						</p>
+					</div>
+					<div id="footermenu2">
+						<h4>企画</h4>
+						<p>
+							<a href="/HomeSystem/fc/PlanList">企画一覧</a>
+						</p>
+						<p>
+							<a href="/HomeSystem/fc/PlanRegister">企画登校</a>
+						</p>
+						<p>
+							<a href="/HomeSystem/fc/PlanCalendar">企画カレンダー</a>
+						</p>
+					</div>
+					<div id="footermenu3">
+						<h4>ホメホメコンテンツ</h4>
+						<p>
+							<a href="/HomeSystem/fc/contents/list">コンテンツ一覧</a>
+						</p>
+						<p>
+							<a href="/HomeSystem/fc/contents/regist">コンテンツ登録</a>
+						</p>
+					</div>
+					<div id="footermenu4">
+						<h4>ランキング</h4>
+						<p>
+							<a href="/HomeSystem/fc/ranking/topnum">ランキング</a>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div id="footerline">Copyright &copy; 2015-2016 SkyMoons All Rights Reserved.</div>
+		</footer>
+	</div>
+	<!--*********************************ここまでふったー ***********************************-->
 </body>
 </html>

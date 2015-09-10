@@ -14,6 +14,7 @@ public class PlanBean implements Serializable {
     private Date endDate;
     private String planComment;
     private int executeFlag;
+    private int level;
 
     private int commentCount;
     private int pointCount;
@@ -104,6 +105,14 @@ public class PlanBean implements Serializable {
 
     public void setExecuteFlag(int executeFlag) {
 	this.executeFlag = executeFlag;
+    }
+
+    public int getLevel() {
+	return level;
+    }
+
+    public void setLevel(int level) {
+	this.level = level;
     };
 
 }

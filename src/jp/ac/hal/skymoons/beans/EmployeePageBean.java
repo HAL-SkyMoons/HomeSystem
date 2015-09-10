@@ -9,6 +9,8 @@ public class EmployeePageBean implements Serializable{
 	private String employeeComment;
 	private int level;
 	private int experience;
+	private int nowExperience;
+	private int nextExperience;
 
 	public String getEmployeeId() {
 		return employeeId;
@@ -45,6 +47,18 @@ public class EmployeePageBean implements Serializable{
 	}
 	public void setExperience(int experience) {
 		this.experience = experience;
+	}
+	public int getNowExperience() {
+		return nowExperience;
+	}
+	public void setNowExperience(int experience) {
+		this.nowExperience = experience;
+	}
+	public int getNextExperience() {
+		return nextExperience;
+	}
+	public void setNextExperience(int nextExperience) {
+		this.nextExperience = nextExperience;
 	}
 
 }

@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,7 @@ import jp.ac.hal.skymoons.beans.EmployeeBatchBean;
 import jp.ac.hal.skymoons.beans.EmployeeCapacityBean;
 import jp.ac.hal.skymoons.beans.EmployeeCompanyCapacityBean;
 import jp.ac.hal.skymoons.beans.EmployeeGenreBean;
+import jp.ac.hal.skymoons.beans.EmployeeHomeBean;
 import jp.ac.hal.skymoons.beans.EmployeeHomeLogBean;
 import jp.ac.hal.skymoons.beans.EmployeeListBean;
 import jp.ac.hal.skymoons.beans.EmployeePageBean;
@@ -35,6 +37,7 @@ import jp.ac.hal.skymoons.beans.PlanPointBean;
 import jp.ac.hal.skymoons.beans.PlanPointsBean;
 import jp.ac.hal.skymoons.beans.SampleBean;
 import jp.ac.hal.skymoons.beans.UserBean;
+import jp.ac.hal.skymoons.beans.contents.ContentsDetailHomeLogBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
 
 public class SampleDao {
@@ -161,7 +164,6 @@ public class SampleDao {
      * @throws SQLException
      */
     public int delete(String sample) throws SQLException {
-
 	PreparedStatement delete = con
 		.prepareStatement("delete from sample where sample = ?; ");
 	delete.setString(1, sample);
@@ -178,7 +180,7 @@ public class SampleDao {
 
 	try {
 	    PreparedStatement select = con
-		    .prepareStatement("SELECT e.employee_ID,u.last_name,u.first_name , d.department_name "
+		    .prepareStatement("SELECT e.employee_ID,u.last_name,u.first_name , d.department_name ,e.level "
 			    + "FROM Employees AS e JOIN Users AS u ON e.employee_ID = u.user_ID "
 			    + "JOIN Departments AS d ON e.department_ID = d.department_ID  WHERE e.department_ID = ? ORDER BY e.employee_ID");
 	    select.setInt(1, departmentId);
@@ -194,6 +196,7 @@ public class SampleDao {
 		record.setDepartmentName(result.getString("d.department_name"));
 		record.setEmployeeGenre(getEmployeeGenre(result
 			.getString("e.employee_ID")));
+		record.setLevel(result.getInt("e.level"));
 		resultTable.add(record);
 	    }
 	} catch (SQLException e) {
@@ -264,7 +267,7 @@ public class SampleDao {
 	// SQL発行
 	try {
 	    PreparedStatement select = con
-		    .prepareStatement("SELECT e.employee_id ,u.last_name,u.first_name ,d.department_name,count(*) FROM employees AS e "
+		    .prepareStatement("SELECT e.employee_id ,u.last_name,u.first_name ,d.department_name,count(*) ,e.level FROM employees AS e "
 			    + "JOIN home_contents AS hc ON hc.employee_id = e.employee_id "
 			    + "JOIN users AS u ON u.user_id = e.employee_ID "
 			    + "JOIN departments AS d ON d.department_ID = e.department_ID "
@@ -288,6 +291,7 @@ public class SampleDao {
 		recode.setDepartmentName(result.getString("d.department_name"));
 		recode.setEmployeeGenre(getEmployeeGenre(result
 			.getString("e.employee_id")));
+		recode.setLevel(result.getInt("e.level"));
 		System.out.println(result.getString("e.employee_id")
 			+ result.getString("u.last_name") + ","
 			+ result.getInt("COUNT(*)"));
@@ -385,7 +389,7 @@ public class SampleDao {
 
 	try {
 	    PreparedStatement select = con
-		    .prepareStatement("SELECT e.employee_ID,u.last_name,u.first_name , d.department_name "
+		    .prepareStatement("SELECT e.employee_ID,u.last_name,u.first_name , d.department_name ,e.level "
 			    + "FROM Employees AS e JOIN Users AS u ON e.employee_ID = u.user_ID "
 			    + "JOIN Departments AS d ON e.department_ID = d.department_ID ORDER BY e.employee_ID");
 	    ResultSet result = select.executeQuery();
@@ -399,6 +403,7 @@ public class SampleDao {
 		record.setDepartmentName(result.getString("d.department_name"));
 		record.setEmployeeGenre(getEmployeeGenre(result
 			.getString("e.employee_ID")));
+		record.setLevel(result.getInt("e.level"));
 		resultTable.add(record);
 	    }
 	} catch (SQLException e) {
@@ -429,6 +434,8 @@ public class SampleDao {
 		recode.setEmployeeComment(result.getString("e.comment"));
 		recode.setLevel(result.getInt("e.level"));
 		recode.setExperience(result.getInt("e.experience"));
+		recode.setNowExperience(getNowExperience(employeeId));
+		recode.setNextExperience(getNextExperience(employeeId));
 		resultTable.add(recode);
 	    }
 	} catch (SQLException e) {
@@ -439,44 +446,106 @@ public class SampleDao {
     }
 
     /*
-     * 2015/6/23 中野 裕史郎 チャート描画用配列の取得
-     */
-    public int[] getEmployeeDetailOfBadgeCountForChart(String employeeId) {
-	int max = 0;
-	try {
-	    PreparedStatement select = con
-		    .prepareStatement("SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
-			    + "JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? GROUP BY hl.batch_id "
-			    + "ORDER BY b.batch_id");
-	    select.setString(1, employeeId);
-	    ResultSet result = select.executeQuery();
-	    while (result.next()) {
-		max++;
-	    }
-	} catch (SQLException e) {
-	    // TODO 自動生成された catch ブロック
-	    e.printStackTrace();
-	}
-	int[] resultTable = new int[max];
-	int count = 0;
-	try {
-	    PreparedStatement select = con
-		    .prepareStatement("SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
-			    + "JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
-			    + "GROUP BY hl.batch_id ORDER BY hl.batch_id");
-	    select.setString(1, employeeId);
-	    ResultSet result = select.executeQuery();
-	    while (result.next()) {
-		resultTable[count] = result.getInt("COUNT(*)");
-		count++;
-	    }
-	} catch (SQLException e) {
-	    // TODO 自動生成された catch ブロック
-	    e.printStackTrace();
-	}
+	 * 2015/6/23
+	 * 中野 裕史郎
+	 * チャート描画用配列の取得
+	 */
+	public String[] getEmployeeDetailOfBadgeNameForChart(String employeeId){
+		int max =0;
+		String sql = "SELECT batch_name FROM batch ORDER BY batch_id";
+		try {
+			PreparedStatement select = con.prepareStatement(sql);
+			ResultSet result = select.executeQuery();
+			while(result.next()){
+				max++;
+			}
+			System.out.println("Name for Chart Max is" +max);
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		String[] resultTable = new String[max];
+		int count =0;
+		try {
+			PreparedStatement select = con.prepareStatement(sql);
+			ResultSet result = select.executeQuery();
+			while(result.next()){
+				System.out.println("Name for Chart is" +result.getString("batch_name"));
+				resultTable[count] = result.getString("batch_name");
+				count++;
+			}
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
 
-	return resultTable;
-    }
+		return resultTable;
+	}
+	/*
+	 * 2015/6/23
+	 * 中野 裕史郎
+	 * チャート描画用配列の取得
+	 */
+	public int[] getEmployeeDetailOfBadgeCountForChart(String employeeId, String limit, String outPutDate,int batchKindCount){
+		int[] batchCount = new int[batchKindCount];
+		int arrayCount=0;
+		for(int count=0;count<batchKindCount-1;count++){
+			batchCount[count]=0;
+		}
+		String sql="";
+		if(limit.equals("month")||limit.equals("year")){
+			sql = "SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
+					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
+					+"AND home_datetime >= ? GROUP BY hl.batch_id ORDER BY b.batch_id";
+		}else if(limit.equals("total")){
+			sql = "SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
+					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
+					+"GROUP BY hl.batch_id ORDER BY b.batch_id";
+		}
+		try {
+			PreparedStatement select = con.prepareStatement(sql);
+			select.setString(1, employeeId);
+			if(limit.equals("month")||limit.equals("year")){
+				select.setString(2, outPutDate);
+			}
+			ResultSet result = select.executeQuery();
+			while(result.next()){
+				batchCount[arrayCount]=result.getInt("COUNT(*)");
+				System.out.println("batchId= "+result.getInt("hl.batch_id")+" AND counts= "+result.getInt("COUNT(*)"));
+				arrayCount++;
+			}
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+
+		return batchCount;
+	}
+	/*
+	 * 2015/9/8
+	 * 中野 裕史郎
+	 * パスワード変更
+	 */
+	public boolean setPasswordforChange(String employeeId, String password) {
+		// TODO 自動生成されたメソッド・スタブ
+		boolean jud = false;
+		try {
+		    PreparedStatement update = con
+			    .prepareStatement("UPDATE users SET password = ? WHERE user_id = ?");
+		    update.setString(1, password);
+		    update.setString(2, employeeId);
+		    System.out.println("パス登録："+password);
+		    int result = update.executeUpdate();
+		    if (result == 1) {
+		    	jud = true;
+		    } else {
+		    	jud = false;
+		    }
+		} catch (SQLException e) {
+		    jud = false;
+		}
+		return jud;
+	}
 
     /**
      * 接続を閉じる
@@ -719,7 +788,7 @@ public class SampleDao {
     public PlanBean planDetail(int planId) throws SQLException {
 
 	PreparedStatement select = con
-		.prepareStatement("select * from plan p, users u where plan_id = ? and p.planner = u.user_id ;");
+		.prepareStatement("select * from plan p, users u,employees e where plan_id = ? and p.planner = u.user_id and p.planner = e.employee_id ;");
 
 	select.setInt(1, planId);
 	ResultSet result = select.executeQuery();
@@ -737,6 +806,7 @@ public class SampleDao {
 	    record.setStartDate(result.getTimestamp("start_date"));
 	    record.setEndDate(result.getTimestamp("end_date"));
 	    record.setExecuteFlag(result.getInt("execute_flag"));
+	    record.setLevel(result.getInt("level"));
 
 	}
 
@@ -897,7 +967,7 @@ public class SampleDao {
     public List<CommentBean> planCommentList(int planId) throws SQLException {
 
 	PreparedStatement select = con
-		.prepareStatement("select * from plan_comment p, users u where plan_id = ? and p.comment_user = u.user_id;");
+		.prepareStatement("select * from plan_comment p, users u,employees e where plan_id = ? and p.comment_user = u.user_id and p.comment_user = e.employee_id;");
 
 	select.setInt(1, planId);
 
@@ -916,6 +986,7 @@ public class SampleDao {
 	    record.setDeleteFlag(result.getInt("delete_flag"));
 	    record.setCommentDatetime(result.getDate("comment_datetime"));
 	    record.setComment(result.getString("comment"));
+	    record.setLevel(result.getInt("level"));
 
 	    table.add(record);
 	}
@@ -994,58 +1065,7 @@ public class SampleDao {
 	return resultTable;
     }
 
-    /*
-     * 2015/6/23 中野 裕史郎 チャート描画用配列の取得
-     */
-    public String[] getEmployeeDetailOfBadgeNameForChart(String employeeId,
-	    String limit, String outPutDate) {
-	int max = 0;
-	String sql = "";
-	if (limit.equals("month") || limit.equals("year")) {
-	    sql = "SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
-		    + "JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
-		    + "AND home_datetime >= ? GROUP BY hl.batch_id ORDER BY b.batch_id";
-	} else if (limit.equals("total")) {
-	    sql = "SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
-		    + "JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
-		    + "GROUP BY hl.batch_id ORDER BY b.batch_id";
-	}
-	try {
-	    PreparedStatement select = con.prepareStatement(sql);
-	    select.setString(1, employeeId);
-	    if (limit.equals("month") || limit.equals("year")) {
-		select.setString(2, outPutDate);
-	    }
-	    ResultSet result = select.executeQuery();
-	    while (result.next()) {
-		max++;
-	    }
-	    System.out.println("Name for Chart Max is" + max);
-	} catch (SQLException e) {
-	    // TODO 自動生成された catch ブロック
-	    e.printStackTrace();
-	}
-	String[] resultTable = new String[max];
-	int count = 0;
-	try {
-	    PreparedStatement select = con.prepareStatement(sql);
-	    select.setString(1, employeeId);
-	    if (limit.equals("month") || limit.equals("year")) {
-		select.setString(2, outPutDate);
-	    }
-	    ResultSet result = select.executeQuery();
-	    while (result.next()) {
-		System.out.println("Name for Chart is"
-			+ result.getString("b.batch_name"));
-		resultTable[count] = result.getString("b.batch_name");
-		count++;
-	    }
-	} catch (SQLException e) {
-	    // TODO 自動生成された catch ブロック
-	    e.printStackTrace();
-	}
-	return resultTable;
-    }
+
 
     /*
      * 2015/6/23 中野 裕史郎 チャート描画用配列の取得
@@ -1354,6 +1374,7 @@ public class SampleDao {
 		    .prepareStatement("UPDATE employees SET comment = ? WHERE employee_id = ?");
 	    update.setString(1, comment);
 	    update.setString(2, employeeId);
+	    System.out.println("コメント登録："+comment);
 	    result = update.executeUpdate();
 	    if (result == 1) {
 		jud = true;
@@ -1647,7 +1668,7 @@ public class SampleDao {
     public UserBean getUser(String userId) throws SQLException {
 
 	PreparedStatement select = con
-		.prepareStatement("select user_id,last_name,first_name from users where user_id = ? ;");
+		.prepareStatement("select u.user_id,u.last_name,u.first_name,e.level from users u, employees e where u.user_id = ? and u.user_id = e.employee_id ;");
 
 	select.setString(1, userId);
 	ResultSet result = select.executeQuery();
@@ -1655,9 +1676,10 @@ public class SampleDao {
 	UserBean record = new UserBean();
 
 	if (result.next()) {
-	    record.setUserId(result.getString("user_id"));
-	    record.setLastName(result.getString("last_name"));
-	    record.setFirstName(result.getString("first_name"));
+	    record.setUserId(result.getString("u.user_id"));
+	    record.setLastName(result.getString("u.last_name"));
+	    record.setFirstName(result.getString("u.first_name"));
+	    record.setLevel(result.getInt("e.level"));
 	}
 
 	return record;
@@ -2549,5 +2571,40 @@ public class SampleDao {
 
 	return record;
     }
+
+    /**
+     * 特定社員宛のホメログ取得
+     * @param employeeId
+     * @return
+     * @throws SQLException
+     */
+    public ArrayList<EmployeeHomeBean> getHomeLog(String employeeId) throws SQLException {
+	//戻り値のListを生成
+	ArrayList<EmployeeHomeBean> homeList = new ArrayList<>();
+	//コンテンツの取得
+	PreparedStatement homeLogPst = con.prepareStatement("select * from batch b, users u1, users u2 ,home_log hl left outer join  employees emp on hl.home_user = emp.employee_id where hl.home_target = ? and hl.home_target = u1.user_id and hl.home_user = u2.user_id and hl.batch_id = b.batch_id order by hl.home_datetime DESC ");
+	homeLogPst.setString(1, employeeId);
+	ResultSet homeLogResult = homeLogPst.executeQuery();
+	while(homeLogResult.next()){
+	    EmployeeHomeBean homeLogBean = new EmployeeHomeBean();
+		homeLogBean.setHomeTarget(homeLogResult.getString("home_target"));
+		homeLogBean.setHomeTargetFirstName(homeLogResult.getString("u1.first_name"));
+		homeLogBean.setHomeTargetLastName(homeLogResult.getString("u1.last_name"));
+		homeLogBean.setHomeUser(homeLogResult.getString("home_user"));
+		homeLogBean.setHomeUserFirstName(homeLogResult.getString("u2.first_name"));
+		homeLogBean.setHomeUserLastName(homeLogResult.getString("u2.last_name"));
+		homeLogBean.setHomeDatetime(new SimpleDateFormat("yyyy年MM月dd日 hh時MM分").format(homeLogResult.getDate("home_datetime")));
+		homeLogBean.setBatchId(homeLogResult.getInt("batch_id"));
+		homeLogBean.setBatchName(homeLogResult.getString("batch_name"));
+		homeLogBean.setBatchComment(homeLogResult.getString("batch_comment"));
+		homeLogBean.setHomePoint(homeLogResult.getInt("home_point"));
+		homeLogBean.setHomeComment(homeLogResult.getString("home_comment"));
+		homeLogBean.setLevel(homeLogResult.getInt("emp.level"));
+		homeLogBean.setClassFlag(homeLogResult.getInt("u2.class_flag"));
+		homeList.add(homeLogBean);
+	}
+	homeLogPst.close();
+	return homeList;
+}
 
 }

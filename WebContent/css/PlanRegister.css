@@ -11,9 +11,9 @@
 	width: 500px;
 }
 
-#planHeader {
-	overflow: hidden;
-}
+/* #planHeader { */
+/* 	overflow: hidden; */
+/* } */
 
 #planDate {
 	float: right;
@@ -25,7 +25,7 @@
 }
 
 #titleValue {
-	padding:0.5em;
+	padding: 0.5em;
 	width: 100%;
 	max-width: 100%;
 	font-size: 20px;
@@ -46,7 +46,7 @@
 	padding: 5px;
 }
 
-#dateInfo{
+#dateInfo {
 	color: red;
 	margin-top: 5px;
 	font-size: 18px;
@@ -75,7 +75,7 @@
 #planCommentValue {
 	width: 100%;
 	max-width: 100%;
-	padding:0.4em;
+	padding: 0.4em;
 }
 
 ｃ {
@@ -91,11 +91,18 @@
 #img {
 	width: 100px;
 	height: 100px;
+	position: relative;
 }
 
 #img>img {
 	max-width: 100px;
 	max-height: 100px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: auto;
 }
 
 .trigger {
@@ -111,8 +118,6 @@
 	width: 100%;
 	border: 1px solid #F29900;
 }
-
-
 
 /*ボタン*/
 .btn {
@@ -184,9 +189,21 @@
 	text-align: center;
 }
 
-.submit {
+.submitBtn {
 	margin-top: 20px;
 	width: 50%;
 	height: 50px;
 	font-size: 25px;
+}
+
+div.flameDiv {
+	width: 100px;
+	height: 100px;
+	margin-top: -100px;
+	position: relative;
+}
+
+.employeeFlame {
+	width: 100px;
+	height: 100px;
 }

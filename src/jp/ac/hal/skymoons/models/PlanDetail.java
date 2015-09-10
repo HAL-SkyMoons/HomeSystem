@@ -2,6 +2,7 @@ package jp.ac.hal.skymoons.models;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import jp.ac.hal.skymoons.beans.CommentBean;
+import jp.ac.hal.skymoons.beans.EmployeeListBean;
+import jp.ac.hal.skymoons.beans.EmployeePageBean;
 import jp.ac.hal.skymoons.beans.FileBean;
 import jp.ac.hal.skymoons.beans.GenreBean;
 import jp.ac.hal.skymoons.beans.PlanBean;
@@ -17,6 +20,7 @@ import jp.ac.hal.skymoons.beans.UserBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.SampleDao;
 import jp.ac.hal.skymoons.security.session.SessionController;
+import jp.ac.hal.skymoons.util.HeaderDataGetUtil;
 import jp.ac.hal.skymoons.util.Utility;
 
 import org.apache.commons.fileupload.FileItem;
@@ -30,6 +34,11 @@ public class PlanDetail extends AbstractModel {
     public String doService(HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	// TODO Auto-generated method stub
+
+	HeaderDataGetUtil headerUtil = new HeaderDataGetUtil();
+	ArrayList<EmployeePageBean> employeePageReturn = headerUtil
+			.getHeaderData(request, response);
+	request.setAttribute("employeeDetail", employeePageReturn);
 
 	if (request.getParameter("download") != null) {
 	    System.out.println("download");
@@ -314,6 +323,11 @@ public class PlanDetail extends AbstractModel {
 	    int[] points = dao.planPointAll(planId);
 	    request.setAttribute("points", points);
 
+	    //枠
+//	    ArrayList<EmployeeListBean> employeePageReturn = new ArrayList<EmployeeListBean>();
+//	    employeePageReturn = (ArrayList<EmployeeListBean>)dao.getEmployee();
+//	    request.setAttribute("employeeDetail", employeePageReturn);
+
 	    // 自分の評価を取得
 	    PlanPointBean planPointBean = new PlanPointBean();
 	    planPointBean.setPlanId(planId);
@@ -322,6 +336,9 @@ public class PlanDetail extends AbstractModel {
 
 	    request.setAttribute("planPoint", planPointBean);
 	    dao.close();
+
+	    request.setAttribute("userId", sessionController.getUserId());
+
 
 	    return "/pages/PlanDetail.jsp";
 

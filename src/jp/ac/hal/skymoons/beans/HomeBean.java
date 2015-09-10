@@ -12,6 +12,7 @@ public class HomeBean implements Serializable {
 	private int homePoint;
 	private String comment;
 	private int contentsId;
+	private int level;
 
 	public String getToUserId() {
 		return toUserId;
@@ -67,6 +68,14 @@ public class HomeBean implements Serializable {
 
 	public void setContentsId(int contentsId) {
 		this.contentsId = contentsId;
+	}
+
+	public int getLevel() {
+	    return level;
+	}
+
+	public void setLevel(int level) {
+	    this.level = level;
 	}
 
 }

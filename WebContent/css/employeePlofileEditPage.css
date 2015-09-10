@@ -25,18 +25,6 @@ div.contents {
 	margin-bottom: 5px;
 }
 
-img {
-	display: block;
-	max-width: 200px;
-	max-height: 200px;
-	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	margin: auto;
-}
-
 .uploadBtn {
 	width: 200px;
 }
@@ -59,7 +47,7 @@ img {
 .help {
 	width: 30%;
 	vertical-align: middle;
-	background-color: rgba(204, 204, 204, 0.3);
+	background-color: moccasin;
 }
 
 .comment {

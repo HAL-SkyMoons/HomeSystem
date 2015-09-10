@@ -7,6 +7,19 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+
+<%@page import="java.util.HashMap"%>
+<%@page import="jp.ac.hal.skymoons.beans.EmployeeBatchBean"%>
+<%@page import="jp.ac.hal.skymoons.beans.EmployeePageBean"%>
+<%@page import="java.util.*"%>
+<%@page import="java.text.*"%>
+<%@page import="jp.ac.hal.skymoons.util.Utility"%>
+<%
+    Date date = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("S");
+			String milliSec = sdf.format(date);
+%>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -22,38 +35,66 @@
 <script src="../js/image-picker/image-picker.js" type="text/javascript"></script>
 <script src="../js/image-picker/image-picker.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="../js/autosize/autosize.js"></script>
+<script type="text/javascript">
+	//画像差し替えメソッド
+	$(document).ready(function() {
+		$('.js-replace-no-image').error(function() {
+			$(this).attr({
+				src : '../images/icon/NoImage.png'
+			});
+		});
+	});
+</script>
+<%
+    UserBean user =(UserBean)request.getAttribute("toUser");
+	int level = user.getLevel();
+	if(level > 12)
+	{
+	    level = 12;
+	}
+%>
 </head>
 <body>
 	<div id="wrapper">
 		<form action="/HomeSystem/fc/Home" method="post">
 
 			<div id="touser">
-				<div id="face">
-					<img src="../images/employees/${toUser.userId}.jpg">
+				<div class="left">
+					<div id="face">
+						<img src="../images/employees/${toUser.userId}.jpg?<%=milliSec%>" class="js-replace-no-image">
+					</div>
+					<div class="flameDiv">
+						<img src="../images/flame/<%=level%>.png" class="employeeFlame">
+					</div>
 				</div>
-				<div id="name">
-					<h3>
-						<input type="hidden" name="fromId" value="${fromUser.userId}">
-						<p>${toUser.lastName}${toUser.firstName}</p>
-						<input type="hidden" name="toId" value="${toUser.userId}">
-					</h3>
-					<div id="content">
-						【関連コンテンツ】<br>
-						<c:if test="${contentTitle == null}">
-							<p>なし</p>
-							<input type="hidden" name="contentsId" value="0">
-						</c:if>
+				<div class="right">
+					<div id="name">
+						<h3>
+							<input type="hidden" name="fromId" value="${fromUser.userId}">
+							<p>${toUser.lastName}${toUser.firstName}</p>
+							<input type="hidden" name="toId" value="${toUser.userId}">
+						</h3>
+						<div id="content">
+							【関連コンテンツ】<br>
+							<c:if test="${contentTitle == null}">
+								<p>なし</p>
+								<input type="hidden" name="contentsId" value="0">
+							</c:if>
 
-						<c:if test="${contentTitle != null}">
-							<p>${contentTitle}</p>
-							<input type="hidden" name="contentsId" value="${contentsId}">
-						</c:if>
-					</div>
-					<div id="point">
-						評価ポイント：
-						<input type="number" name="point" min="1" max="10" value="1">
+							<c:if test="${contentTitle != null}">
+								<p>${contentTitle}</p>
+								<input type="hidden" name="contentsId" value="${contentsId}">
+							</c:if>
+						</div>
+						<div id="point">
+							評価ポイント：
+							<input type="number" name="point" min="1" max="10" value="1">
+						</div>
 					</div>
 				</div>
+				<div class="clear"></div>
+
+
 
 			</div>
 

@@ -1,17 +1,21 @@
 package jp.ac.hal.skymoons.models;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import jp.ac.hal.skymoons.beans.BigGenreBean;
+import jp.ac.hal.skymoons.beans.EmployeePageBean;
 import jp.ac.hal.skymoons.beans.GenreBean;
 import jp.ac.hal.skymoons.beans.UserBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.SampleDao;
 import jp.ac.hal.skymoons.security.session.SessionController;
+import jp.ac.hal.skymoons.util.HeaderDataGetUtil;
 
 public class PlanSearch extends AbstractModel {
 
@@ -25,15 +29,17 @@ public class PlanSearch extends AbstractModel {
 		&& sessionController.getUserClass_flag().equals("1")) {
 	    SampleDao dao = new SampleDao();
 
-	    //全画面のフォーム情報取得
+	    // 全画面のフォーム情報取得
 	    if (request.getParameter("searchKeyword") != null
 		    && !request.getParameter("searchKeyword").equals("")) {
-		request.setAttribute("searchKeyword", request.getParameter("searchKeyword"));
+		request.setAttribute("searchKeyword",
+			request.getParameter("searchKeyword"));
 
 	    }
 	    if (request.getParameter("searchPlanner") != null
 		    && !request.getParameter("searchPlanner").equals("")) {
-		request.setAttribute("searchPlanner", request.getParameter("searchPlanner"));
+		request.setAttribute("searchPlanner",
+			request.getParameter("searchPlanner"));
 
 	    }
 	    if (request.getParameter("endPlan") != null
@@ -43,7 +49,8 @@ public class PlanSearch extends AbstractModel {
 	    }
 	    if (request.getParameter("searchOrder") != null
 		    && !request.getParameter("searchOrder").equals("")) {
-		request.setAttribute("searchOrder", request.getParameter("searchOrder"));
+		request.setAttribute("searchOrder",
+			request.getParameter("searchOrder"));
 
 	    }
 	    if (request.getParameterValues("searchGenre") != null
@@ -53,15 +60,15 @@ public class PlanSearch extends AbstractModel {
 
 		HashMap<Integer, Integer> searchGenre = new HashMap<Integer, Integer>();
 		for (String genre : genres) {
-		    searchGenre.put(Integer.valueOf(genre), Integer.valueOf(genre));
+		    searchGenre.put(Integer.valueOf(genre),
+			    Integer.valueOf(genre));
 		}
 
 		request.setAttribute("searchGenre", searchGenre);
 
 	    }
 
-
-	    //order用HashMap設定
+	    // order用HashMap設定
 	    LinkedHashMap<String, String> orderList = new LinkedHashMap<String, String>();
 
 	    orderList.put("dateDesc", "投稿日時が新しい順");
@@ -79,7 +86,6 @@ public class PlanSearch extends AbstractModel {
 
 	    request.setAttribute("orderList", orderList);
 
-
 	    List<GenreBean> genreList = dao.genreAll();
 	    List<UserBean> employeeList = dao.getAllEmployeeId();
 	    List<BigGenreBean> bigGenreList = dao.getAllBigGenre();
@@ -88,6 +94,11 @@ public class PlanSearch extends AbstractModel {
 	    request.setAttribute("genreList", genreList);
 	    request.setAttribute("bigGenreList", bigGenreList);
 	    request.setAttribute("employeeList", employeeList);
+
+	    HeaderDataGetUtil headerUtil = new HeaderDataGetUtil();
+	    ArrayList<EmployeePageBean> employeePageReturn = headerUtil
+		    .getHeaderData(request, response);
+	    request.setAttribute("employeeDetail", employeePageReturn);
 
 	    return "/pages/PlanSearch.jsp";
 	} else {

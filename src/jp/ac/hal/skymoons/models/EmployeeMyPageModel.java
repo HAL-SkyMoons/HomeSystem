@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +22,7 @@ import jp.ac.hal.skymoons.beans.EmployeeTrophyBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.SampleDao;
 import jp.ac.hal.skymoons.security.session.SessionController;
+import jp.ac.hal.skymoons.util.HeaderDataGetUtil;
 
 public class EmployeeMyPageModel extends AbstractModel{
 	@Override
@@ -40,8 +40,6 @@ public class EmployeeMyPageModel extends AbstractModel{
 		ArrayList<EmployeeHomeLogBean> employeeHomeLogReturn = new ArrayList<EmployeeHomeLogBean>();
 		ArrayList<EmployeeBatchBean> employeeBatchMonthReturn = new ArrayList<EmployeeBatchBean>();
 		ArrayList<EmployeeBatchBean> employeeBatchYearReturn = new ArrayList<EmployeeBatchBean>();
-		int nextExperience = 0;
-		int nowExperience = 0;
 		ArrayList<BigGenreBean>  bigGenreList = new ArrayList<BigGenreBean>();
 		//マイページ追加項目
 		ArrayList<EmployeeCapacityBean> employeeCapacityReturn = new ArrayList<EmployeeCapacityBean>();
@@ -50,14 +48,12 @@ public class EmployeeMyPageModel extends AbstractModel{
 		//チャート描画用変数
 		String[] employeeChartBatchName = {};
 		int[] employeeChartBatchCount = {};
+		int batchKindCount=0;
 		//月間
-		String[] employeeChartBatchNameMonth = {};
 		int[] employeeChartBatchCountMonth = {};
 		//年間
-		String[] employeeChartBatchNameYear = {};
 		int[] employeeChartBatchCountYear = {};
 		//通算
-		String[] employeeChartBatchNameTotal = {};
 		int[] employeeChartBatchCountTotal = {};
 
 		//引数準備
@@ -84,18 +80,13 @@ public class EmployeeMyPageModel extends AbstractModel{
 		employeeHomeLogReturn = (ArrayList<EmployeeHomeLogBean>)dao.getEmployeeDetailOfHomeLog(loginUserId);
 		employeeBatchMonthReturn = (ArrayList<EmployeeBatchBean>)dao.getEmployeeDetailOfBatchInLimited(loginUserId,monthDate);
 		employeeBatchYearReturn = (ArrayList<EmployeeBatchBean>)dao.getEmployeeDetailOfBatchInLimited(loginUserId,yearDate);
-		nextExperience = dao.getNextExperience(loginUserId);
-		nowExperience = dao.getNowExperience(loginUserId);
 		bigGenreList = (ArrayList<BigGenreBean>) dao.getAllBigGenre();
 		//チャート描画用情報取得処理
-		employeeChartBatchName = (String[])dao.getEmployeeDetailOfBadgeNameForChart(loginUserId,"total","total");
-		employeeChartBatchCount = (int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"total","total");
-		employeeChartBatchNameMonth = (String[])dao.getEmployeeDetailOfBadgeNameForChart(loginUserId,"month",monthDate);
-		employeeChartBatchCountMonth =(int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"month",monthDate);
-		employeeChartBatchNameYear = (String[])dao.getEmployeeDetailOfBadgeNameForChart(loginUserId,"year",yearDate);
-		employeeChartBatchCountYear =(int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"year",yearDate);
-		employeeChartBatchNameTotal = (String[])dao.getEmployeeDetailOfBadgeNameForChart(loginUserId,"total","total");
-		employeeChartBatchCountTotal =(int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"total","total");
+		employeeChartBatchName = (String[])dao.getEmployeeDetailOfBadgeNameForChart(loginUserId);
+		batchKindCount = employeeChartBatchName.length;
+		employeeChartBatchCountMonth =(int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"month",monthDate,batchKindCount);
+		employeeChartBatchCountYear =(int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"year",yearDate,batchKindCount);
+		employeeChartBatchCountTotal =(int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"total","total",batchKindCount);
 		//マイページ追加項目
 		employeeCapacityReturn = (ArrayList<EmployeeCapacityBean>)dao.getMyEmployeeDetailOfCapacity(loginUserId);
 		employeeCompanyCapacityReturn = (ArrayList<EmployeeCompanyCapacityBean>)dao.getMyEmployeeDetailOfCompanyCapacity(loginUserId);
@@ -112,22 +103,23 @@ public class EmployeeMyPageModel extends AbstractModel{
 		request.setAttribute("sessionId", (String)sessionController.getUserId());
 		request.setAttribute("employeeBadgeMonth", employeeBatchMonthReturn);
 		request.setAttribute("employeeBadgeYear", employeeBatchYearReturn);
-		request.setAttribute("nextExperience", nextExperience);
-		request.setAttribute("nowExperience", nowExperience);
 		request.setAttribute("bigGenreList", bigGenreList);
+
 		//チャート用の引数をsetAttribute
 		request.setAttribute("chartName", employeeChartBatchName);
 		request.setAttribute("chartCount", employeeChartBatchCount);
-		request.setAttribute("chartNameMonth", employeeChartBatchNameMonth);
 		request.setAttribute("chartCountMonth", employeeChartBatchCountMonth);
-		request.setAttribute("chartNameYear", employeeChartBatchNameYear);
 		request.setAttribute("chartCountYear", employeeChartBatchCountYear);
-		request.setAttribute("chartNameTotal", employeeChartBatchNameTotal);
 		request.setAttribute("chartCountTotal", employeeChartBatchCountTotal);
 		//マイページ追加項目
 		request.setAttribute("employeeCapacity", employeeCapacityReturn);
 		request.setAttribute("employeeCompanyCapacity", employeeCompanyCapacityReturn);
 		request.setAttribute("employeeTrophy", employeeTrophyReturn);
+		//Header用データ取得
+		HeaderDataGetUtil headerUtil = new HeaderDataGetUtil();
+		ArrayList<EmployeePageBean> headerEmployeeData = headerUtil
+		.getHeaderData(request, response);
+		request.setAttribute("headerEmployeeData", headerEmployeeData);
 		//参照ファイルパスの指定
 		return "/Employee/EmployeeMyPage.jsp";
 	}

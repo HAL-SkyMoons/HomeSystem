@@ -21,6 +21,7 @@ public class ContentsRegistBean implements Serializable {
 	private String employeeId;
 	private String firstName;
 	private String lastName;
+	private int level;
 	private ArrayList<Integer> bigGenreId;
 	private ArrayList<String> bigGenreName;
 	private ArrayList<Integer> genreId;
@@ -122,6 +123,12 @@ public class ContentsRegistBean implements Serializable {
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+	public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
 	}
 	public ArrayList<Integer> getBigGenreId() {
 		return bigGenreId;

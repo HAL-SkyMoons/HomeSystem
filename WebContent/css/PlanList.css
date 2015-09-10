@@ -143,7 +143,12 @@ body {
 	width: auto;
 }
 
-img {
+.like > img {
+	width: 2em;
+	height: 2em;
+}
+
+.dislike > img {
 	width: 2em;
 	height: 2em;
 }

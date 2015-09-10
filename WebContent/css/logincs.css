@@ -1,0 +1,138 @@
+@CHARSET "UTF-8";
+
+hr {
+	clear: both;
+
+}
+
+#boxout {
+	width: 1000px;
+	height: 0px;
+	margin: 0 auto;
+	position: relative;
+}
+
+#boxcomment {
+	padding: 80px 170px 0 30px;
+	float: left;
+	font-size: 50px;
+	font-style: italic;
+}
+
+#boxcomment label {
+	color: red;
+}
+
+#box {
+	clear: both;
+	height: 260px;
+	width: 400px;
+	position: absolute;
+	right: 0;
+	padding: 20px;
+	background: moccasin;
+	border: solid 2.5px orange;
+	border-radius: 10px; /* CSS3闕画｡� */
+	-webkit-border-radius: 10px; /* Safari,Google Chrome逕ｨ */
+	-moz-border-radius: 10px;
+}
+
+#box p {
+	height: 60px;
+	line-height: 60px;
+	position: relative;
+	text-align: right;
+	margin-right: 20px;
+}
+
+#box h5 {
+	height: 30px;
+	color: red;
+	margin-left: 20px;
+}
+
+#text {
+	height: 25px;
+	font-size: 15px;
+}
+
+h1 {
+	font-size: 20px;
+}
+
+.color-2 {
+	background: #f06060;
+}
+
+/*繝懊ち繝ｳ*/
+.btn {
+	border: none;
+	font-family: inherit;
+	font-size: inherit;
+	color: inherit;
+	background: none;
+	cursor: pointer;
+	display: inline-block;
+	margin-bottom: 10px;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	font-weight: 700;
+	outline: none;
+	position: relative;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+	background: #e6002d;
+	width: 250px;
+	height: 35px;
+	margin: 0px 85px;
+}
+
+.btn:after {
+	content: '';
+	position: absolute;
+	z-index: -1;
+	-webkit-transition: all 0.3s;
+	-moz-transition: all 0.3s;
+	transition: all 0.3s;
+}
+
+.btn-2 {
+	/* 	background: #cb4e4e; */
+	background: #e6002d;
+	color: #fff;
+	box-shadow: 0 3px #CD0014;
+	-webkit-transition: none;
+	-moz-transition: none;
+	transition: none;
+}
+
+.btn-2[disabled] {
+	background: #e6002d;
+	color: #fff;
+	box-shadow: 0 3px #CD0014;
+	-webkit-transition: none;
+	-moz-transition: none;
+	transition: none;
+}
+
+.btn-2c {
+	border-radius: 5px;
+}
+
+.btn-2c:hover {
+	background: #e6002d;
+	color: #fff;
+	box-shadow: 0 1.5px #CD0014;
+	top: 2px;
+}
+
+.btn-2c:active {
+	box-shadow: 0 0 #CD0014;
+	top: 6px;
+}
+
+.submit {
+	margin-top: 10px;
+	width: 400px;
+}

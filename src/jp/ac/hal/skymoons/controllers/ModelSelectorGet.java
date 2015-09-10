@@ -20,6 +20,7 @@ import jp.ac.hal.skymoons.models.contents.ContentsSearchModel;
 import jp.ac.hal.skymoons.models.customer.CreateAdd;
 import jp.ac.hal.skymoons.models.customer.CreateList;
 import jp.ac.hal.skymoons.models.customer.InsertCustomer;
+import jp.ac.hal.skymoons.models.login.Index;
 import jp.ac.hal.skymoons.models.login.LoginAdministrator;
 import jp.ac.hal.skymoons.models.login.LoginUser;
 import jp.ac.hal.skymoons.models.login.LogoutAdministrator;
@@ -32,6 +33,9 @@ public class ModelSelectorGet {
 	static{
 		mapping = new HashMap<String, AbstractModel>();
 		mapping.put("/HomeSystem/fc/test", new TestModel());
+
+		//indexよう
+		mapping.put("/HomeSystem/fc/Index", new Index());
 		//社員出力機能
 		mapping.put("/HomeSystem/fc/EmployeeList", new EmployeeSearchModel());
 		mapping.put("/HomeSystem/fc/EmployeePage", new EmployeePageModel());
@@ -104,6 +108,9 @@ public class ModelSelectorGet {
 		mapping.put("/HomeSystem/fc/SystemAdmin/staff/list", new jp.ac.hal.skymoons.systemadmin.models.staff.List());
 		mapping.put("/HomeSystem/fc/SystemAdmin/staff/add", new jp.ac.hal.skymoons.systemadmin.models.staff.Add());
 		mapping.put("/HomeSystem/fc/SystemAdmin/staff/detail", new jp.ac.hal.skymoons.systemadmin.models.staff.Detail());
+
+		//ホメ閲覧機能
+		mapping.put("/HomeSystem/fc/HomeView", new jp.ac.hal.skymoons.models.HomeView() );
 	}
 
 /**

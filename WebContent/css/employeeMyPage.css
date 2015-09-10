@@ -81,7 +81,18 @@ div.imageDiv {
 	margin-left: 25px;
 	position: relative;
 }
-
+div.flameDiv{
+	width:200px;
+	height: 200px;
+	margin-top: -200px;
+	margin-left: 25px;
+	margin-right: 25px;
+	position: relative;
+}
+div.flameDiv img{
+	width: 200px;
+	height: 200px;
+}
 img.employeeImage {
 	max-width: 200px;
 	max-height: 200px;
@@ -92,7 +103,6 @@ img.employeeImage {
 	left: 0;
 	margin: auto;
 }
-
 ul.employeeData {
 	margin-top: 5px;
 }
@@ -207,7 +217,6 @@ a.capacityTab {
 	float: left;
 	width: 33.5%;
 	height: 100%;
-	background-color: #ffc8e7;
 	padding-top: 4px;
 }
 
@@ -215,7 +224,6 @@ a.companyCapacityTab {
 	float: left;
 	width: 33%;
 	height: 100%;
-	background-color: #fefe72;
 	padding-top: 4px;
 }
 
@@ -223,7 +231,6 @@ a.trophyTab {
 	float: left;
 	width: 33.5%;
 	height: 100%;
-	background-color: #ddddff;
 	padding-top: 4px;
 }
 
@@ -284,45 +291,47 @@ div.trophyDetail {
 	overflow: auto;
 }
 
-div.flame {
+div.torophyFlame {
 	width: 540px;
 	height: 100px;
 	background: red;
+	clear:both;
 }
 
 div.leftFlame {
 	float: left;
 	width: 100px;
 	height: 100px;
-	background: blue;
+	margin-left:10px;
 }
 
 div.rightFlame {
 	float: right;
-	width: 440px;
+	width: 360px;
 	height: 100px;
-	background: green;
 }
 
 div.trophyName {
 	clear: both;
-	width: 440px;
+	width: 360px;
 	height: 65px;
-	background: yellow;
 	line-height: 65px;
-	text-align: center;
+	text-align: left;
 }
 
 div.trophyCount {
-	width: 440px;
+	width: 360px;
 	height: 35px;
 	background: white;
 	line-height: 35px;
 	text-align: right;
 }
-
-h4.trophyCount {
+p.trophyName{
+	font-size:20px;
+}
+p.trophyCount {
 	padding-right: 30px;
+	font-size: 20px;
 }
 
 img.trophyImage {
@@ -517,7 +526,7 @@ input.homeButton {
 
 .btn {
 	width: 90%;
-	height: 40px;
+	height: 30px;
 	margin-top: 10px;
 	background-color: rgba(204, 204, 204, 0.8);
 }

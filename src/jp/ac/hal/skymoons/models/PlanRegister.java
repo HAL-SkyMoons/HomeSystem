@@ -8,12 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import jp.ac.hal.skymoons.beans.BigGenreBean;
+import jp.ac.hal.skymoons.beans.EmployeePageBean;
 import jp.ac.hal.skymoons.beans.GenreBean;
 import jp.ac.hal.skymoons.beans.PlanBean;
 import jp.ac.hal.skymoons.beans.UserBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.SampleDao;
 import jp.ac.hal.skymoons.security.session.SessionController;
+import jp.ac.hal.skymoons.util.HeaderDataGetUtil;
 
 public class PlanRegister extends AbstractModel {
 
@@ -71,6 +73,11 @@ public class PlanRegister extends AbstractModel {
 	    request.setAttribute("genreIds", genreIds);
 	    request.setAttribute("genreNames", genreNames);
 
+	    HeaderDataGetUtil headerUtil = new HeaderDataGetUtil();
+	    ArrayList<EmployeePageBean> employeePageReturn = headerUtil
+		    .getHeaderData(request, response);
+	    request.setAttribute("employeeDetail", employeePageReturn);
+
 	    // 企画登録確認画面へ
 	    return "/pages/PlanConfirmation.jsp";
 	}
@@ -86,6 +93,11 @@ public class PlanRegister extends AbstractModel {
 	    request.setAttribute("genreList", genreList);
 	    request.setAttribute("bigGenreList", bigGenreList);
 	    request.setAttribute("user", user);
+
+	    HeaderDataGetUtil headerUtil = new HeaderDataGetUtil();
+	    ArrayList<EmployeePageBean> employeePageReturn = headerUtil
+		    .getHeaderData(request, response);
+	    request.setAttribute("employeeDetail", employeePageReturn);
 
 	    // 企画登録画面へ
 	    return "/pages/PlanRegister.jsp";

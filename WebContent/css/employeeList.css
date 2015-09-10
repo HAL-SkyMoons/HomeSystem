@@ -88,10 +88,34 @@ div.employeeImage {
 	height: 150px;
 	width: 150px;
 	text-align: center;
+	position:relative;
+}
+
+.js-replace-no-image{
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	margin: auto;
+}
+
+
+div.employeeFlame{
+	height:150px;
+	width: 150px;
+	position:absolute;
+	top:0;
+
+}
+div.employeeFlame img{
+	height:150px;
+	width: 150px;
+
 }
 
 div.employeeImage img {
-	max-width: 150px;
+max-width: 150px;
 	max-height: 150px;
 }
 
