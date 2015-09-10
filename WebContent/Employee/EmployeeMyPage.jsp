@@ -257,6 +257,8 @@
 					<a href="/HomeSystem/fc/PlanRegister"><input type="submit" value="企画投稿" class="btn btn-2 btn-2c planButton"></a>
 					<br>
 					<a href="/HomeSystem/fc/contents/regist"><input type="submit" value="コンテンツ投稿" class="btn btn-2 btn-2c contentButton"></a>
+					<br>
+					<a href="/HomeSystem/fc/HomeView"><input type="submit" value="ホメホメ閲覧" class="btn btn-2 btn-2c contentButton"></a>
 				</c:forEach>
 			</div>
 
