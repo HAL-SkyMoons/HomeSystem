@@ -220,6 +220,41 @@ header {
 	border-bottom: 0;
 }
 
+html, body {
+	height: 100%;
+}
+
+#allwrap {
+	width: 100%;
+	position: relative;
+	height: auto !important; /*IE6対策*/
+	height: 100%; /*IE6対策*/
+	min-height: 100%;
+}
+
+#allcontents {
+	padding-bottom: 50px; /*フッターの高さと同じ*/
+}
+
+footer {
+	height: 100px;
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	background: red;
+}
+
+#footerline {
+	height: 50px;
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	background: orange;
+	text-align: center;
+	line-height: 50px;
+	color: white;
+}
+
 /*ボタン*/
 .btn {
 	border: none;
