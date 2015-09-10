@@ -58,6 +58,16 @@
 		document.getElementById('outputKeyword').value = document.forms['formKeyword'].elements['inputKeyword'].value;
 	}
 </script>
+<script type="text/javascript">
+	//画像差し替えメソッド
+	$(document).ready(function() {
+	    $('.js-replace-no-image').error(function() {
+	        $(this).attr({
+	            src: '/HomeSystem/images/employees/NoImage.png'
+	        });
+	    });
+	});
+</script>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -86,7 +96,7 @@
 						<label id="headername">${employeeDetail.employeeName}さん</label><br> <label id="headerlevel">レベル${employeeDetail.level}</label>
 					</div>
 					<div id="headerimage">
-						<img src="/HomeSystem/images/employees/${employeeDetail.employeeId}.jpg?<%=milliSec%>">
+						<img src="/HomeSystem/images/employees/${employeeDetail.employeeId}.jpg?<%=milliSec%>" class="js-replace-no-image">
 						<div id="headerflame">
 							<img src="/HomeSystem/images/flame/<%=level%>.png?<%=milliSec%>">
 						</div>
@@ -128,6 +138,7 @@
 			<!--*********************************ここまでへっだー ***********************************-->
 	
 		<div class="wrapper">
+			<h1>コンテンツ一覧</h1>
 			<table class="search">
 				<tr>
 					<th>キーワード</th>
