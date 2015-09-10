@@ -11,9 +11,9 @@
 	width: 500px;
 }
 
-#planHeader {
-	overflow: hidden;
-}
+/* #planHeader { */
+/* 	overflow: hidden; */
+/* } */
 
 #planDate {
 	float: right;

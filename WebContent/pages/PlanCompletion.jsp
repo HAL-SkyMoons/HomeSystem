@@ -29,17 +29,18 @@
 <link rel="stylesheet" type="text/css" href="../css/reset.css">
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
+<link rel="stylesheet" type="text/css" href="../css/PlanCompletion.css">
 <link rel="stylesheet" type="text/css" href="/HomeSystem/css/style.css">
 <script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
-//画像差し替えメソッド
-$(document).ready(function() {
-    $('.js-replace-no-image').error(function() {
-        $(this).attr({
-            src: '../images/icon/NoImage.png'
-        });
-    });
-});
+	//画像差し替えメソッド
+	$(document).ready(function() {
+		$('.js-replace-no-image').error(function() {
+			$(this).attr({
+				src : '../images/icon/NoImage.png'
+			});
+		});
+	});
 </script>
 </head>
 <body>
@@ -98,7 +99,10 @@ $(document).ready(function() {
 		</header>
 		<div id="allcontents">
 			<!--*********************************ここまでへっだー ***********************************-->
-			登録完了 <a href="/HomeSystem/fc/PlanList">企画一覧 </a>
+			<div class="wrapper">
+				<h1>登録完了</h1>
+				<br> <a href="/HomeSystem/fc/PlanList"><input type="submit" value="一覧へ戻る" class="btn btn-2 btn-2c submitBtn"></a>
+			</div>
 			<!--*********************************ここからふったー ***********************************-->
 		</div>
 		<footer>
