@@ -20,6 +20,7 @@ import jp.ac.hal.skymoons.beans.UserBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.SampleDao;
 import jp.ac.hal.skymoons.security.session.SessionController;
+import jp.ac.hal.skymoons.util.HeaderDataGetUtil;
 import jp.ac.hal.skymoons.util.Utility;
 
 import org.apache.commons.fileupload.FileItem;
@@ -33,6 +34,11 @@ public class PlanDetail extends AbstractModel {
     public String doService(HttpServletRequest request,
 	    HttpServletResponse response) throws Exception {
 	// TODO Auto-generated method stub
+
+	HeaderDataGetUtil headerUtil = new HeaderDataGetUtil();
+	ArrayList<EmployeePageBean> employeePageReturn = headerUtil
+			.getHeaderData(request, response);
+	request.setAttribute("employeeDetail", employeePageReturn);
 
 	if (request.getParameter("download") != null) {
 	    System.out.println("download");
@@ -318,9 +324,9 @@ public class PlanDetail extends AbstractModel {
 	    request.setAttribute("points", points);
 
 	    //枠
-	    ArrayList<EmployeeListBean> employeePageReturn = new ArrayList<EmployeeListBean>();
-	    employeePageReturn = (ArrayList<EmployeeListBean>)dao.getEmployee();
-	    request.setAttribute("employeeDetail", employeePageReturn);
+//	    ArrayList<EmployeeListBean> employeePageReturn = new ArrayList<EmployeeListBean>();
+//	    employeePageReturn = (ArrayList<EmployeeListBean>)dao.getEmployee();
+//	    request.setAttribute("employeeDetail", employeePageReturn);
 
 	    // 自分の評価を取得
 	    PlanPointBean planPointBean = new PlanPointBean();

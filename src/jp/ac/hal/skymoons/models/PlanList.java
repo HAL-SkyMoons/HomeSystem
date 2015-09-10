@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jp.ac.hal.skymoons.beans.EmployeePageBean;
 import jp.ac.hal.skymoons.beans.GenreBean;
 import jp.ac.hal.skymoons.beans.PlanBean;
 import jp.ac.hal.skymoons.beans.PlanPointsBean;
@@ -15,6 +16,7 @@ import jp.ac.hal.skymoons.beans.UserBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.SampleDao;
 import jp.ac.hal.skymoons.security.session.SessionController;
+import jp.ac.hal.skymoons.util.HeaderDataGetUtil;
 
 public class PlanList extends AbstractModel {
 
@@ -123,9 +125,15 @@ public class PlanList extends AbstractModel {
 	    request.setAttribute("pointMap", pointMap);
 	    request.setAttribute("genreMap", genreMap);
 
-	    if (request.getParameter("order") != null && !request.getParameter("order").equals("")) {
+	    if (request.getParameter("order") != null
+		    && !request.getParameter("order").equals("")) {
 		request.setAttribute("order", request.getParameter("order"));
 	    }
+
+	    HeaderDataGetUtil headerUtil = new HeaderDataGetUtil();
+	    ArrayList<EmployeePageBean> employeePageReturn = headerUtil
+		    .getHeaderData(request, response);
+	    request.setAttribute("employeeDetail", employeePageReturn);
 
 	    return "/pages/PlanList.jsp";
 	} else if (sessionController.checkUserSession() != null) {
