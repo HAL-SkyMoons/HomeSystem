@@ -7,12 +7,14 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jp.ac.hal.skymoons.beans.EmployeePageBean;
 import jp.ac.hal.skymoons.beans.contents.ContentsGenreBean;
 import jp.ac.hal.skymoons.beans.contents.ContentsRegistBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.contents.ContentsGenreDao;
 import jp.ac.hal.skymoons.daoes.contents.ContentsRegistDao;
 import jp.ac.hal.skymoons.security.session.SessionController;
+import jp.ac.hal.skymoons.util.HeaderDataGetUtil;
 
 public class ContentsRegistModel extends AbstractModel{
 
@@ -21,6 +23,12 @@ public class ContentsRegistModel extends AbstractModel{
 			HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 		try{
+			//header情報取得
+			HeaderDataGetUtil headerUtil = new HeaderDataGetUtil();
+			ArrayList<EmployeePageBean> employeePageReturn = headerUtil
+					.getHeaderData(request, response);
+			request.setAttribute("employeeDetail", employeePageReturn);
+			
 			//ログインユーザーが社員であるかを確認する
 			SessionController sc = new SessionController(request);
 			if(sc.checkUserSession2() == true && sc.getUserClass_flag() != null && sc.getUserClass_flag().equals("1") && sc.getUserId() != null){

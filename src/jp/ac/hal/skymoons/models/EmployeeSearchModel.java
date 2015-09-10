@@ -8,10 +8,12 @@ import javax.servlet.http.HttpServletResponse;
 import jp.ac.hal.skymoons.beans.BigGenreBean;
 import jp.ac.hal.skymoons.beans.DepartmentBean;
 import jp.ac.hal.skymoons.beans.EmployeeListBean;
+import jp.ac.hal.skymoons.beans.EmployeePageBean;
 import jp.ac.hal.skymoons.beans.GenreBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.SampleDao;
 import jp.ac.hal.skymoons.security.session.SessionController;
+import jp.ac.hal.skymoons.util.HeaderDataGetUtil;
 public class EmployeeSearchModel extends AbstractModel {
 
 	@Override
@@ -61,6 +63,11 @@ public class EmployeeSearchModel extends AbstractModel {
 		request.setAttribute("departments", departmentReturn);
 		request.setAttribute("sessionId", (String)sessionController.getUserId());
 		request.setAttribute("bigGenreList", bigGenreList);
+		//Header用データ取得
+		HeaderDataGetUtil headerUtil = new HeaderDataGetUtil();
+		ArrayList<EmployeePageBean> employeePageReturn = headerUtil
+				.getHeaderData(request, response);
+		request.setAttribute("employeeDetail", employeePageReturn);
 		//参照jspファイルパスの指定
 		return "/Employee/EmployeeList.jsp";
 	}

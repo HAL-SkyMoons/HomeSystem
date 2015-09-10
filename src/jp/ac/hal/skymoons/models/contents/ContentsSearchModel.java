@@ -7,11 +7,13 @@ import java.util.LinkedHashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import jp.ac.hal.skymoons.beans.EmployeePageBean;
 import jp.ac.hal.skymoons.beans.contents.ContentsEmployeeBean;
 import jp.ac.hal.skymoons.beans.contents.ContentsGenreBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.contents.ContentsGenreDao;
 import jp.ac.hal.skymoons.daoes.contents.ContentsSearchDao;
+import jp.ac.hal.skymoons.util.HeaderDataGetUtil;
 
 public class ContentsSearchModel extends AbstractModel{
 
@@ -20,6 +22,12 @@ public class ContentsSearchModel extends AbstractModel{
 			HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 		try{
+			//header情報取得
+			HeaderDataGetUtil headerUtil = new HeaderDataGetUtil();
+			ArrayList<EmployeePageBean> employeePageReturn = headerUtil
+					.getHeaderData(request, response);
+			request.setAttribute("employeeDetail", employeePageReturn);
+			
 			//DAOのインスタンス化
 			ContentsSearchDao dao = new ContentsSearchDao();
 			
