@@ -248,7 +248,7 @@
 					</div>
 				</div>
 				<div id="title">
-					<textarea id="titleValue" rows="1" name="planTitle" placeholder="企画タイトル" maxlength="100">${plan.planTitle}</textarea>
+					<textarea id="titleValue" rows="1" name="planTitle" placeholder="企画タイトル" maxlength="100" required="required">${plan.planTitle}</textarea>
 				</div>
 				<div id="planDetail">
 					<div id="startEnd">
@@ -342,6 +342,9 @@
 						企画者
 						<div id="img">
 							<img src="../images/employees/${plan.planner}.jpg">
+						</div>
+						<div class="flameDiv">
+							<img src="../images/flame/${plan.level}.png" class="employeeFlame">
 						</div>
 						${plan.plannerName}
 						<input type="hidden" name="planner" value="${plan.planner}">

@@ -9,6 +9,7 @@ public class UserBean implements Serializable {
 	private String lastName;
 	private String firstName;
 	private int classFlag;
+	private int level;
 
 	public String getUserId() {
 		return userId;
@@ -48,6 +49,14 @@ public class UserBean implements Serializable {
 
 	public void setClassFlag(int classFlag) {
 		this.classFlag = classFlag;
+	}
+
+	public int getLevel() {
+	    return level;
+	}
+
+	public void setLevel(int level) {
+	    this.level = level;
 	}
 
 }

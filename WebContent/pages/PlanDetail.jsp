@@ -1,3 +1,4 @@
+<%@page import="jp.ac.hal.skymoons.security.session.SessionController"%>
 <%@page import="jp.ac.hal.skymoons.beans.EmployeeListBean"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="jp.ac.hal.skymoons.beans.FileBean"%>
@@ -112,7 +113,13 @@ if(plannerLevel>12){
 					</table>
 				</div>
 				<div id="planner">
-					企画者<a href="/HomeSystem/fc/EmployeePage?employeeId=${planDetail.planner}">
+					<c:if test="${planDetail.planner == userId }">
+						<c:set var="plannerUrl" value="/HomeSystem/fc/EmployeeMyPage" />
+					</c:if>
+					<c:if test="${planDetail.planner != userId }">
+						<c:set var="plannerUrl" value="/HomeSystem/fc/EmployeePage?employeeId=${planDetail.planner}" />
+					</c:if>
+					企画者<a href="${plannerUrl}">
 						<div id="img">
 							<img src="../images/employees/${planDetail.planner}.jpg">
 						</div>
@@ -228,7 +235,13 @@ if(plannerLevel>12){
 						<c:if test="${!isPlanner}">
 							<div class="gest">
 						</c:if>
-						<a href="/HomeSystem/fc/EmployeePage?employeeId=${comment.commentUser}">
+						<c:if test="${comment.commentUser == userId }">
+							<c:set var="commentUserUrl" value="/HomeSystem/fc/EmployeeMyPage" />
+						</c:if>
+						<c:if test="${comment.commentUser != userId }">
+							<c:set var="commentUserUrl" value="/HomeSystem/fc/EmployeePage?employeeId=${comment.commentUser}" />
+						</c:if>
+						<a href="${commentUserUrl}">
 							<div class="face">
 								<img src="../images/employees/${comment.commentUser}.jpg">
 							</div>

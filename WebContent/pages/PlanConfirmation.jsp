@@ -57,6 +57,9 @@
 						<div id="img">
 							<img src="../images/employees/${user.userId}.jpg">
 						</div>
+						<div class="flameDiv">
+							<img src="../images/flame/${user.level}.png" class="employeeFlame">
+						</div>
 						${user.lastName}${user.firstName}
 						<input type="hidden" name="planner" value="${user.userId}">
 					</div>

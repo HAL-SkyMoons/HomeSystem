@@ -331,6 +331,9 @@ public class PlanDetail extends AbstractModel {
 	    request.setAttribute("planPoint", planPointBean);
 	    dao.close();
 
+	    request.setAttribute("userId", sessionController.getUserId());
+
+
 	    return "/pages/PlanDetail.jsp";
 
 	} else if (sessionController.checkUserSession() != null) {
