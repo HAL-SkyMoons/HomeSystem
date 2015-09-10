@@ -11,7 +11,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>Employee Page</title>
+<title>社員ページ</title>
 <link rel="stylesheet" type="text/css" href="../css/reset.css">
 <!-- <link rel="stylesheet" type="text/css" href="../css/employeePage.css"> -->
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
@@ -218,6 +218,14 @@ function graphChangeTotal(){
 			return false; //Prevent the browser jump to the link anchor
 		});
 
+	});
+	//画像差し替えメソッド
+	$(document).ready(function() {
+	    $('.employeeImage').error(function() {
+	        $(this).attr({
+	            src: '../images/employees/NoImage.png'
+	        });
+	    });
 	});
 </script>
 <%

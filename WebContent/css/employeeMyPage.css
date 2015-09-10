@@ -89,6 +89,10 @@ div.flameDiv{
 	margin-right: 25px;
 	position: relative;
 }
+div.flameDiv img{
+	width: 200px;
+	height: 200px;
+}
 img.employeeImage {
 	max-width: 200px;
 	max-height: 200px;

@@ -4,7 +4,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>ユーザ情報編集</title>
 <link rel="stylesheet" type="text/css" href="../css/reset.css">
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
@@ -32,6 +32,10 @@
 				<tr>
 					<td><br>【 一言コメント 】<br> <textarea name="comment" class="comment" maxlength="500">${comment}</textarea> <%-- 					<input type="text" name="comment" value="${comment}" /></td> --%>
 					<td class="help">最大500文字<br>※改行込<br>現在文字数：<span class="count">${comment.length()}</count></td>
+				</tr>
+				<tr>
+					<td><br>【 パスワード変更 】<br> <input type="password" name="password" class="comment" maxlength="20"> <%-- 					<input type="text" name="comment" value="${comment}" /></td> --%>
+					<td class="help">最大20文字<br></td>
 				</tr>
 			</table>
 			<input type="submit" name="button" value="更新" class="btn btn-2 btn-2c submitBtn">

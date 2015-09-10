@@ -11,7 +11,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<title>Employee Page</title>
+<title>マイページ</title>
 <link rel="stylesheet" type="text/css" href="../css/reset.css">
 <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
@@ -211,6 +211,14 @@
 			return false; //Prevent the browser jump to the link anchor
 		});
 	});
+	//画像差し替えメソッド
+	$(document).ready(function() {
+	    $('.employeeImage').error(function() {
+	        $(this).attr({
+	            src: '../images/employees/NoImage.png'
+	        });
+	    });
+	});
 </script>
 <%
 	Date date = new Date();
@@ -244,11 +252,13 @@
 						</progress>
 						</li>
 					</ul>
-					<a href="EmployeeProfileEdit"><input type="submit" value="プロフィール編集" class="btn btn-2 btn-2c editButton"></a>
+					<a href="EmployeeProfileEdit"><input type="submit" value="ユーザ情報編集" class="btn btn-2 btn-2c editButton"></a>
 					<br>
 					<a href="/HomeSystem/fc/PlanRegister"><input type="submit" value="企画投稿" class="btn btn-2 btn-2c planButton"></a>
 					<br>
 					<a href="/HomeSystem/fc/contents/regist"><input type="submit" value="コンテンツ投稿" class="btn btn-2 btn-2c contentButton"></a>
+					<br>
+					<a href="/HomeSystem/fc/HomeView"><input type="submit" value="ホメホメ閲覧" class="btn btn-2 btn-2c contentButton"></a>
 				</c:forEach>
 			</div>
 

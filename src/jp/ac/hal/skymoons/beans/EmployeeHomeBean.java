@@ -1,0 +1,107 @@
+package jp.ac.hal.skymoons.beans;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
+
+public class EmployeeHomeBean implements Serializable {
+	private String homeTarget;
+	private String homeTargetFirstName;
+	private String homeTargetLastName;
+	private String homeUser;
+	private String homeUserFirstName;
+	private String homeUserLastName;
+	private String homeDatetime;
+	private int batchId;
+	private String batchName;
+	private String batchComment;
+	private int homePoint;
+	private String homeComment;
+	private int level;
+	private int classFlag;
+
+	public String getHomeTarget() {
+		return homeTarget;
+	}
+	public void setHomeTarget(String homeTarget) {
+		this.homeTarget = homeTarget;
+	}
+	public String getHomeTargetFirstName() {
+		return homeTargetFirstName;
+	}
+	public void setHomeTargetFirstName(String homeTargetFirstName) {
+		this.homeTargetFirstName = homeTargetFirstName;
+	}
+	public String getHomeTargetLastName() {
+		return homeTargetLastName;
+	}
+	public void setHomeTargetLastName(String homeTargetLastName) {
+		this.homeTargetLastName = homeTargetLastName;
+	}
+	public String getHomeUser() {
+		return homeUser;
+	}
+	public void setHomeUser(String homeUser) {
+		this.homeUser = homeUser;
+	}
+	public String getHomeUserFirstName() {
+		return homeUserFirstName;
+	}
+	public void setHomeUserFirstName(String homeUserFirstName) {
+		this.homeUserFirstName = homeUserFirstName;
+	}
+	public String getHomeUserLastName() {
+		return homeUserLastName;
+	}
+	public void setHomeUserLastName(String homeUserLastName) {
+		this.homeUserLastName = homeUserLastName;
+	}
+	public String getHomeDatetime() {
+		return homeDatetime;
+	}
+	public void setHomeDatetime(String homeDatetime) {
+		this.homeDatetime = homeDatetime;
+	}
+	public int getBatchId() {
+		return batchId;
+	}
+	public void setBatchId(int batchId) {
+		this.batchId = batchId;
+	}
+	public String getBatchName() {
+		return batchName;
+	}
+	public void setBatchName(String batchName) {
+		this.batchName = batchName;
+	}
+	public String getBatchComment() {
+		return batchComment;
+	}
+	public void setBatchComment(String batchComment) {
+		this.batchComment = batchComment;
+	}
+	public int getHomePoint() {
+		return homePoint;
+	}
+	public void setHomePoint(int homePoint) {
+		this.homePoint = homePoint;
+	}
+	public String getHomeComment() {
+		return homeComment;
+	}
+	public void setHomeComment(String homeComment) {
+		this.homeComment = homeComment;
+	}
+	public int getLevel() {
+		return level;
+	}
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	public int getClassFlag() {
+	    return classFlag;
+	}
+	public void setClassFlag(int classFlag) {
+	    this.classFlag = classFlag;
+	}
+}
