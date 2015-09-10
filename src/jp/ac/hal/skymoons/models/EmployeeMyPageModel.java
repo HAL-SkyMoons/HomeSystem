@@ -22,6 +22,7 @@ import jp.ac.hal.skymoons.beans.EmployeeTrophyBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.SampleDao;
 import jp.ac.hal.skymoons.security.session.SessionController;
+import jp.ac.hal.skymoons.util.HeaderDataGetUtil;
 
 public class EmployeeMyPageModel extends AbstractModel{
 	@Override
@@ -114,6 +115,11 @@ public class EmployeeMyPageModel extends AbstractModel{
 		request.setAttribute("employeeCapacity", employeeCapacityReturn);
 		request.setAttribute("employeeCompanyCapacity", employeeCompanyCapacityReturn);
 		request.setAttribute("employeeTrophy", employeeTrophyReturn);
+		//Header用データ取得
+		HeaderDataGetUtil headerUtil = new HeaderDataGetUtil();
+		ArrayList<EmployeePageBean> headerEmployeeData = headerUtil
+		.getHeaderData(request, response);
+		request.setAttribute("headerEmployeeData", headerEmployeeData);
 		//参照ファイルパスの指定
 		return "/Employee/EmployeeMyPage.jsp";
 	}

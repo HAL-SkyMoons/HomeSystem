@@ -18,6 +18,7 @@
 <link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css">
 <link rel="stylesheet" type="text/css" href="../css/employeeMyPage.css">
 <link rel="stylesheet" type="text/css" href="../js/colorbox/colorbox.css">
+<link rel="stylesheet" type="text/css" href="/HomeSystem/css/style.css">
 <script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="../js/colorbox/jquery.colorbox.js"></script>
 <%
@@ -35,6 +36,12 @@
 	int level = employeeDate.getLevel();
 	if(level>12){
 		level=12;
+	}
+	ArrayList<EmployeePageBean> headerEmployeeDatas = (ArrayList<EmployeePageBean>)request.getAttribute("headerEmployeeData");
+	EmployeePageBean headerEmployeeData = headerEmployeeDatas.get(0);
+	int headerEmployeeLevel = headerEmployeeData.getLevel();
+	if(headerEmployeeLevel>12){
+		headerEmployeeLevel=12;
 	}
 %>
 <script type="text/javascript" src="../js/Chart.js-master/Chart.js"></script>
@@ -235,6 +242,61 @@ function graphChangeTotal(){
 %>
 </head>
 <body>
+<!--******************************** こっからへっだー ***********************************-->
+	<div id="allwrap">
+		<div id="headerline">line</div>
+		<header>
+
+			<div id="logo">
+				<a href="/HomeSystem/fc/Index"><img src="/HomeSystem/images/logo.png" /></a>
+			</div>
+
+			<div id="headerright">
+				<c:forEach var="headerEmployeeData" items="${headerEmployeeData}">
+					<div id="headerstr">
+						<label id="headername">${headerEmployeeData.employeeName}さん</label><br> <label id="headerlevel">レベル${headerEmployeeData.level}</label>
+					</div>
+					<div id="headerimage">
+						<img src="/HomeSystem/images/employees/${headerEmployeeData.employeeId}.jpg?<%=milliSec%>">
+						<div id="headerflame">
+							<img src="/HomeSystem/images/flame/<%=headerEmployeeLevel%>.png?<%=milliSec%>">
+						</div>
+					</div>
+				</c:forEach>
+				<div id="headerbutton">
+					<div id="mypage">
+						<form action="/HomeSystem/fc/EmployeeMyPage">
+							<input type="submit" class="btn btn-2 btn-2c submit" value="マイページ">
+						</form>
+					</div>
+					<div id="logout">
+						<form action="/HomeSystem/fc/logout/user">
+							<input type="submit" class="btn btn-2 btn-2c submit" value="ログアウト">
+						</form>
+					</div>
+				</div>
+
+			</div>
+
+			<ul id="headermenu">
+				<li class="menu1"><a href="/HomeSystem/fc/EmployeeList">社員一覧</a></li>
+				<li class="menu2"><a href="#">企画</a>
+					<ul>
+						<li><a href="/HomeSystem/fc/PlanList">企画一覧</a></li>
+						<li><a href="/HomeSystem/fc/PlanRegister">企画登録</a></li>
+						<li><a href="/HomeSystem/fc/PlanCalendar">企画カレンダー</a></li>
+					</ul></li>
+				<li class="menu3"><a href="#">ホメホメコンテンツ</a>
+					<ul>
+						<li><a href="/HomeSystem/fc/contents/list">コンテンツ一覧</a></li>
+						<li><a href="/HomeSystem/fc/contents/regist">コンテンツ登録</a></li>
+					</ul></li>
+				<li class="menu4"><a href="/HomeSystem/fc/ranking/topnum">ランキング</a></li>
+			</ul>
+
+		</header>
+		<div id="allcontents">
+			<!--*********************************ここまでへっだー ***********************************-->
 	<div class="contents">
 		<h1 class="employeePageTitle">社員ページ</h1>
 		<div class="leftContents">
@@ -449,5 +511,56 @@ function graphChangeTotal(){
 		</div>
 		<div class="clear"></div>
 	</div>
+		<!--*********************************ここからふったー ***********************************-->
+		</div>
+		<footer>
+			<div id="footertop">
+				<a href="#top">▲ページTOPへ</a>
+			</div>
+
+			<div id="footermenu">
+				<div id="footermenuin">
+					<div id="footermenu1">
+						<h4>社員</h4>
+						<p>
+							<a href="/HomeSystem/fc/EmployeeList">社員一覧</a>
+						</p>
+						<p>
+							<a href="/HomeSystem/fc/EmployeeMyPage">マイページ</a>
+						</p>
+					</div>
+					<div id="footermenu2">
+						<h4>企画</h4>
+						<p>
+							<a href="/HomeSystem/fc/PlanList">企画一覧</a>
+						</p>
+						<p>
+							<a href="/HomeSystem/fc/PlanRegister">企画登校</a>
+						</p>
+						<p>
+							<a href="/HomeSystem/fc/PlanCalendar">企画カレンダー</a>
+						</p>
+					</div>
+					<div id="footermenu3">
+						<h4>ホメホメコンテンツ</h4>
+						<p>
+							<a href="/HomeSystem/fc/contents/list">コンテンツ一覧</a>
+						</p>
+						<p>
+							<a href="/HomeSystem/fc/contents/regist">コンテンツ登録</a>
+						</p>
+					</div>
+					<div id="footermenu4">
+						<h4>ランキング</h4>
+						<p>
+							<a href="/HomeSystem/fc/ranking/topnum">ランキング</a>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div id="footerline">Copyright &copy; 2015-2016 SkyMoons All Rights Reserved.</div>
+		</footer>
+	</div>
+	<!--*********************************ここまでふったー ***********************************-->
 </body>
 </html>

@@ -25,6 +25,7 @@ import jp.ac.hal.skymoons.beans.EmployeeTrophyBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.SampleDao;
 import jp.ac.hal.skymoons.security.session.SessionController;
+import jp.ac.hal.skymoons.util.HeaderDataGetUtil;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
@@ -216,12 +217,22 @@ public class EmployeePlofileEditModel extends AbstractModel{
 				returnURI = "/Employee/EmployeeMyPage.jsp";
 
 			}else{
+				//Header用データ取得
+				HeaderDataGetUtil headerUtil = new HeaderDataGetUtil();
+				ArrayList<EmployeePageBean> headerEmployeeData = headerUtil
+				.getHeaderData(request, response);
+				request.setAttribute("headerEmployeeData", headerEmployeeData);
 				returnURI = "/Employee/EmployeePlofileEditPage.jsp";
 			}
 	    }else{
 	    	System.out.println("form item is not seted");
 	    	defaultComment = dao.getEmployeeDetailComment(employeeId);
 	    	request.setAttribute("comment",defaultComment);
+			//Header用データ取得
+			HeaderDataGetUtil headerUtil = new HeaderDataGetUtil();
+			ArrayList<EmployeePageBean> headerEmployeeData = headerUtil
+			.getHeaderData(request, response);
+			request.setAttribute("headerEmployeeData", headerEmployeeData);
 			returnURI = "/Employee/EmployeePlofileEditPage.jsp";
 	    }
 		dao.close();
