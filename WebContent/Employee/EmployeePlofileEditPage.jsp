@@ -27,6 +27,14 @@
 			$('.count').html(thisValueLength);
 		});
 	});
+	//画像差し替えメソッド
+	$(document).ready(function() {
+	    $('.js-replace-no-image').error(function() {
+	        $(this).attr({
+	            src: '../images/icon/NoImage.png'
+	        });
+	    });
+	});
 </script>
 <%
 	Date date = new Date();
@@ -55,7 +63,7 @@
 						<label id="headername">${headerEmployeeData.employeeName}さん</label><br> <label id="headerlevel">レベル${headerEmployeeData.level}</label>
 					</div>
 					<div id="headerimage">
-						<img src="/HomeSystem/images/employees/${headerEmployeeData.employeeId}.jpg?<%=milliSec%>">
+						<img src="/HomeSystem/images/employees/${headerEmployeeData.employeeId}.jpg?<%=milliSec%>" class="js-replace-no-image">
 						<div id="headerflame">
 							<img src="/HomeSystem/images/flame/<%=headerEmployeeLevel%>.png?<%=milliSec%>">
 						</div>

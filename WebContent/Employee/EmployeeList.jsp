@@ -61,7 +61,7 @@
 	$(document).ready(function() {
 	    $('.js-replace-no-image').error(function() {
 	        $(this).attr({
-	            src: '../images/employees/NoImage.png'
+	            src: '../images/icon/NoImage.png'
 	        });
 	    });
 	});
@@ -95,7 +95,7 @@
 						<label id="headername">${employeeDetail.employeeName}さん</label><br> <label id="headerlevel">レベル${employeeDetail.level}</label>
 					</div>
 					<div id="headerimage">
-						<img src="/HomeSystem/images/employees/${employeeDetail.employeeId}.jpg?<%=milliSec%>">
+						<img src="/HomeSystem/images/employees/${employeeDetail.employeeId}.jpg?<%=milliSec%>" class="js-replace-no-image">
 						<div id="headerflame">
 							<img src="/HomeSystem/images/flame/<%=level%>.png?<%=milliSec%>">
 						</div>
