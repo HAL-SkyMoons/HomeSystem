@@ -28,11 +28,21 @@
 	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<script type="text/javascript" src="../../js/autosize/autosize.js"></script>
+<script type="text/javascript" src="../../js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="../../js/colorbox/jquery.colorbox.js"></script>
 <c:if test="${scriptMessage != null}" >${scriptMessage}</c:if>
+<script type="text/javascript">
+	//画像差し替えメソッド
+	$(document).ready(function() {
+	    $('.js-replace-no-image').error(function() {
+	        $(this).attr({
+	            src: '/HomeSystem/images/employees/NoImage.png'
+	        });
+	    });
+	});
+</script>
 <html>
-	<script type="text/javascript" src="../../js/autosize/autosize.js"></script>
-	<script type="text/javascript" src="../../js/jquery-2.1.4.min.js"></script>
-	<script type="text/javascript" src="../../js/colorbox/jquery.colorbox.js"></script>
 	<script type="text/javascript">
 		//　イメージポップアップ表示
 		$(function() {
@@ -73,7 +83,7 @@
 						<label id="headername">${employeeDetail.employeeName}さん</label><br> <label id="headerlevel">レベル${employeeDetail.level}</label>
 					</div>
 					<div id="headerimage">
-						<img src="/HomeSystem/images/employees/${employeeDetail.employeeId}.jpg?<%=milliSec%>">
+						<img src="/HomeSystem/images/employees/${employeeDetail.employeeId}.jpg?<%=milliSec%>" class="js-replace-no-image">
 						<div id="headerflame">
 							<img src="/HomeSystem/images/flame/<%=level%>.png?<%=milliSec%>">
 						</div>
@@ -116,6 +126,7 @@
 	
 		<c:set var="i" value="${detailList}"/>
 		<div id="wrapper">
+			<h1>コンテンツ詳細</h1>
 			<div id="contents">
 				<c:if test="${i.endDatetime == '未完了' && i.employeeId == i.userId}" >
 					<form action="./edit" method="post">
@@ -150,7 +161,7 @@
 							</c:if>
 						</c:if>
 							<div id="img">
-								<img src="../../images/employees/${i.employeeId}.jpg" alt="投稿者">
+								<img src="../../images/employees/${i.employeeId}.jpg" alt="投稿者" class="js-replace-no-image">
 							</div>
 							<c:if test="${i.level != null}">
 								<c:set var="level" value="${i.level}"/>
@@ -158,7 +169,7 @@
 									<c:set var="level" value="12"/>
 								</c:if>
 								<div class="flameDiv">
-									<img src="../../images/flame/${level}.png" class="employeeFlame">
+									<img src="/HomeSystem/images/images/flame/${level}.png" class="employeeFlame">
 								</div>
 							</c:if>
 							${i.lastName}${i.firstName}<br/>
@@ -223,7 +234,7 @@
 								<c:if test="${fromUser}"><div class="planner"></c:if>
 								<c:if test="${!fromUser}"><div class="gest"></c:if>
 									
-									<div class="face"><img src="../../images/employees/${homeLog.homeUser}.jpg"></div>
+									<div class="face"><img src="../../images/employees/${homeLog.homeUser}.jpg class="js-replace-no-image""></div>
 									<c:if test="${homeLog.level != null}">
 										<c:set var="level" value="${homeLog.level}"/>
 										<c:if test="${homeLog.level > 12}">

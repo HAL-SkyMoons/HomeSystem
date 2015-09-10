@@ -28,7 +28,19 @@
 	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+		<script type="text/javascript" src="../../js/jquery-2.1.4.min.js"></script>
+		<script type="text/javascript" src="../../js/autosize/autosize.js"></script>
 <c:if test="${scriptMessage != null}" >${scriptMessage}</c:if>
+<script type="text/javascript">
+	//画像差し替えメソッド
+	$(document).ready(function() {
+	    $('.js-replace-no-image').error(function() {
+	        $(this).attr({
+	            src: '/HomeSystem/images/employees/NoImage.png'
+	        });
+	    });
+	});
+</script>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -40,8 +52,6 @@
 		<link rel="stylesheet" type="text/css" href="/HomeSystem/css/style.css">
 		<title>コンテンツ登録</title>
 		
-		<script type="text/javascript" src="../../js/jquery-2.1.4.min.js"></script>
-		<script type="text/javascript" src="../../js/autosize/autosize.js"></script>
 		<script type="text/javascript">
 		$(document).ready(function() {
 		
@@ -74,7 +84,7 @@
 						<label id="headername">${employeeDetail.employeeName}さん</label><br> <label id="headerlevel">レベル${employeeDetail.level}</label>
 					</div>
 					<div id="headerimage">
-						<img src="/HomeSystem/images/employees/${employeeDetail.employeeId}.jpg?<%=milliSec%>">
+						<img src="/HomeSystem/images/employees/${employeeDetail.employeeId}.jpg?<%=milliSec%>" class="js-replace-no-image">
 						<div id="headerflame">
 							<img src="/HomeSystem/images/flame/<%=level%>.png?<%=milliSec%>">
 						</div>
@@ -117,6 +127,7 @@
 	
 		<c:set var="i" value="${registData}"/>
 		<div id="wrapper">
+			<h1>コンテンツ登録</h1>
 			<form action="addition" method="post">
 				<div id="contents">
 					<div id="contentsHeader">
@@ -243,7 +254,7 @@
 						</div>
 						<div id="planner">投稿者
 							<div id="img">
-								<img src="../../images/employees/${i.employeeId}.jpg" alt="投稿者">
+								<img src="../../images/employees/${i.employeeId}.jpg" alt="投稿者" class="js-replace-no-image">
 							</div>
 							<c:if test="${i.level != null}">
 								<c:set var="level" value="${i.level}"/>
