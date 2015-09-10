@@ -14,6 +14,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+import jp.ac.hal.skymoons.beans.EmployeePageBean;
 import jp.ac.hal.skymoons.beans.contents.ContentsDataBean;
 import jp.ac.hal.skymoons.beans.contents.ContentsEditBean;
 import jp.ac.hal.skymoons.beans.contents.ContentsGenreBean;
@@ -22,6 +23,7 @@ import jp.ac.hal.skymoons.daoes.contents.ContentsDetailDao;
 import jp.ac.hal.skymoons.daoes.contents.ContentsEditDao;
 import jp.ac.hal.skymoons.daoes.contents.ContentsGenreDao;
 import jp.ac.hal.skymoons.security.session.SessionController;
+import jp.ac.hal.skymoons.util.HeaderDataGetUtil;
 import jp.ac.hal.skymoons.util.Utility;
 
 public class ContentsEditModel extends AbstractModel{
@@ -31,6 +33,12 @@ public class ContentsEditModel extends AbstractModel{
 			HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 		try{
+			//header情報取得
+			HeaderDataGetUtil headerUtil = new HeaderDataGetUtil();
+			ArrayList<EmployeePageBean> employeePageReturn = headerUtil
+					.getHeaderData(request, response);
+			request.setAttribute("employeeDetail", employeePageReturn);
+			
 			//ログインユーザーの確認
 			SessionController sc = new SessionController(request);
 			if(sc.checkUserSession2() == true && sc.getUserId() != null){

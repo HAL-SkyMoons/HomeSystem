@@ -14,9 +14,11 @@ body {
 }
 
 header {
+	position:relative;
 	width: 1000px;
 	margin: 0 auto 10px;
-	height: 250px;
+	height: 350px;
+
 }
 
 #logo {
@@ -27,6 +29,7 @@ header {
 
 #logo img {
 	width: 250px;
+	height: 156px;
 	margin: 20px auto 0;
 }
 
@@ -230,10 +233,11 @@ html, body {
 	height: auto !important; /*IE6対策*/
 	height: 100%; /*IE6対策*/
 	min-height: 100%;
+
 }
 
 #allcontents {
-	padding-bottom: 50px; /*フッターの高さと同じ*/
+	padding-bottom: 250px; /*フッターの高さと同じ*/
 }
 
 footer {
