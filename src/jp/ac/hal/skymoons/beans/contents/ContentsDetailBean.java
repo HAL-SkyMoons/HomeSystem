@@ -17,6 +17,7 @@ public class ContentsDetailBean implements Serializable {
 	private String firstName;
 	private String lastName;
 	private int level;
+	private int classFlag;
 	private ArrayList<Integer> bigGenreId;
 	private ArrayList<String> bigGenreName;
 	private ArrayList<Integer> genreId;
@@ -95,6 +96,12 @@ public class ContentsDetailBean implements Serializable {
 	}
 	public void setLevel(int level) {
 		this.level = level;
+	}
+	public int getClassFlag() {
+		return classFlag;
+	}
+	public void setClassFlag(int classFlag) {
+		this.classFlag = classFlag;
 	}
 	public ArrayList<Integer> getBigGenreId() {
 		return bigGenreId;

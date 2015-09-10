@@ -19,6 +19,7 @@ public class ContentsDetailHomeLogBean implements Serializable {
 	private int homePoint;
 	private String homeComment;
 	private int level;
+	private int classFlag;
 	public int getHomeContentId() {
 		return homeContentId;
 	}
@@ -102,5 +103,11 @@ public class ContentsDetailHomeLogBean implements Serializable {
 	}
 	public void setLevel(int level) {
 		this.level = level;
+	}
+	public int getClassFlag() {
+		return classFlag;
+	}
+	public void setClassFlag(int classFlag) {
+		this.classFlag = classFlag;
 	}
 }

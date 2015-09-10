@@ -28,6 +28,7 @@ import jp.ac.hal.skymoons.models.customer.CreateEdit;
 import jp.ac.hal.skymoons.models.customer.CreateList;
 import jp.ac.hal.skymoons.models.customer.DeleteCustomer;
 import jp.ac.hal.skymoons.models.customer.CreateDetail;
+import jp.ac.hal.skymoons.models.login.Index;
 import jp.ac.hal.skymoons.models.login.LoginAdministrator;
 import jp.ac.hal.skymoons.models.login.LoginUser;
 import jp.ac.hal.skymoons.models.ranking.CreateRankingList;
@@ -45,6 +46,9 @@ public class ModelSelector {
 		mapping = new HashMap<String, AbstractModel>();
 
 		mapping.put("/HomeSystem/fc/Employee", new TestModel());
+
+		//indexよう
+		mapping.put("/HomeSystem/fc/Index", new Index());
 		//社員出力機能
 		mapping.put("/HomeSystem/fc/EmployeeList", new EmployeeSearchModel());
 		mapping.put("/HomeSystem/fc/EmployeePage", new EmployeePageModel());

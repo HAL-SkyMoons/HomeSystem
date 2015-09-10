@@ -219,6 +219,14 @@ function graphChangeTotal(){
 		});
 
 	});
+	//画像差し替えメソッド
+	$(document).ready(function() {
+	    $('.employeeImage').error(function() {
+	        $(this).attr({
+	            src: '../images/employees/NoImage.png'
+	        });
+	    });
+	});
 </script>
 <%
     Date date = new Date();

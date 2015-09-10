@@ -1,7 +1,13 @@
 package jp.ac.hal.skymoons.security.session;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import jp.ac.hal.skymoons.beans.EmployeePageBean;
+import jp.ac.hal.skymoons.daoes.SampleDao;
 
 /**
  * セッションに関する操作と管理を行う。
@@ -10,7 +16,9 @@ import javax.servlet.http.HttpSession;
  * @version 2.0
  */
 public class SessionController {
-	
+
+
+
 	private HttpSession session = null;
 	// リダイレクト用セッションエラーページURL
 	private String redirectSessionErrorPageUrl =
@@ -26,7 +34,7 @@ public class SessionController {
 		"/login/a.jsp";
 	// セッションタイム
 	private int sessionTime = 60 * 30; // 30分
-	
+
 	/**
 	 * セッションを取得し、操作する為の準備を行う。
 	 * @param request
@@ -39,7 +47,7 @@ public class SessionController {
 // ==========================================================================================
 //  セッションの登録機能
 // ==========================================================================================
-	
+
 	/**
 	 * 管理者ユーザのユーザIDをセッションに登録する。
 	 * @param aId
@@ -48,7 +56,7 @@ public class SessionController {
 	public void setAdministratorId(String aId) {
 		setId("aId", aId);
 	}
-	
+
 	/**
 	 * 顧客ユーザ又は社員ユーザのユーザIDとユーザグループをセッションに登録する。
 	 * @param uId
@@ -60,7 +68,7 @@ public class SessionController {
 		setId("uId", userId);
 		setId("classFlag", classFlag);
 	}
-	
+
 	/**
 	 * セッション登録用共通機能。
 	 * @param id
@@ -71,11 +79,11 @@ public class SessionController {
 	private void setId(String key, String value) {
 		this.session.setAttribute(key, value);
 	}
-	
+
 // ==========================================================================================
 //  セッションの継続確認機能
 // ==========================================================================================
-	
+
 	/**
 	 * 管理者ユーザのセッションが有効か確認を行う。
 	 * @return
@@ -85,7 +93,7 @@ public class SessionController {
 	public String checkAdministratorSession() {
 		return checkSession("aId");
 	}
-	
+
 	/**
 	 * 顧客ユーザ又は社員ユーザのセッションが有効か確認を行う。
 	 * @return
@@ -95,7 +103,7 @@ public class SessionController {
 	public String checkUserSession() {
 		return checkSession("uId");
 	}
-	
+
 	/**
 	 * セッションが有効か確認を行う共通機能。
 	 * @param key
@@ -109,6 +117,7 @@ public class SessionController {
 			setId(key, this.session.getAttribute(key).toString());
 			if(key.equals("uId")) {
 				if(this.session.getAttribute("classFlag") != null) {
+
 					setId("classFlag", this.session.getAttribute("classFlag").toString());
 					return null;
 				} else {
@@ -123,6 +132,7 @@ public class SessionController {
 			}
 		} else {
 			if(key.equals("uId")) {
+
 				return csUserforwardSessionErrorPageUrl;
 			} else {
 				return administratorUserforwardSessionErrorPageUrl;
@@ -133,7 +143,7 @@ public class SessionController {
 // ==========================================================================================
 //  セッションの継続確認機能（２）
 // ==========================================================================================
-	
+
 	/**
 	 * 管理者ユーザのセッションが有効か確認を行う。
 	 * @return
@@ -143,7 +153,7 @@ public class SessionController {
 	public Boolean checkAdministratorSession2() {
 		return checkSession2("aId");
 	}
-	
+
 	/**
 	 * 顧客ユーザ又は社員ユーザのセッションが有効か確認を行う。
 	 * @return
@@ -153,7 +163,7 @@ public class SessionController {
 	public Boolean checkUserSession2() {
 		return checkSession2("uId");
 	}
-	
+
 	/**
 	 * セッションが有効か確認を行う共通機能。
 	 * @param key
@@ -183,14 +193,14 @@ public class SessionController {
 // ==========================================================================================
 //  セッションの破棄機能
 // ==========================================================================================
-	
+
 	/**
 	 * 管理者ユーザのセッションを破棄する。
 	 */
 	public void discardAdministratorSession() {
 		discardSession("aId");
 	}
-	
+
 	/**
 	 * 顧客ユーザ又は社員ユーザのセッションを破棄する。
 	 */
@@ -198,7 +208,7 @@ public class SessionController {
 		discardSession("uId");
 		discardSession("classFlag");
 	}
-	
+
 	/**
 	 * セッション破棄を行う共通機能。
 	 * @param key
@@ -207,11 +217,11 @@ public class SessionController {
 	private void discardSession(String key) {
 		this.session.removeAttribute(key);
 	}
-	
+
 // ==========================================================================================
 //  セッション情報の取得機能
 // ==========================================================================================
-	
+
 	/**
 	 * セッションから管理者ユーザIDを取得する。
 	 * @return
@@ -220,7 +230,7 @@ public class SessionController {
 	public String getAdministratorId() {
 		return this.session.getAttribute("aId").toString();
 	}
-	
+
 	/**
 	 * セッションから顧客ユーザ又は社員ユーザIDを取得する。
 	 * @return
@@ -229,7 +239,7 @@ public class SessionController {
 	public String getUserId() {
 		return this.session.getAttribute("uId").toString();
 	}
-	
+
 	/**
 	 * セッションから顧客ユーザ又は社員ユーザのクラスフラグを取得する。
 	 * @return
@@ -242,7 +252,7 @@ public class SessionController {
 // ==========================================================================================
 //  セッションエラーページURLの取得機能
 // ==========================================================================================
-	
+
 	/**
 	 * リダイレクト用のセッションエラーページのURLを取得する。
 	 * @return
@@ -250,7 +260,7 @@ public class SessionController {
 	public String getRedirectSessionErrorPageUrl() {
 		return this.redirectSessionErrorPageUrl;
 	}
-	
+
 	/**
 	 * フォワード用のセッションエラーページのURLを取得する。
 	 * @return
