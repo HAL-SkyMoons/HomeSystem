@@ -37,7 +37,7 @@
 	$(document).ready(function() {
 	    $('.js-replace-no-image').error(function() {
 	        $(this).attr({
-	            src: '/HomeSystem/images/employees/NoImage.png'
+	            src: '/HomeSystem/images/icon/NoImage.png'
 	        });
 	    });
 	});
@@ -67,7 +67,7 @@
 		<title>コンテンツ詳細</title>
 	</head>
 	<body>
-	
+
 		<!--******************************** こっからへっだー ***********************************-->
 	<div id="allwrap">
 		<div id="headerline">line</div>
@@ -123,7 +123,7 @@
 		</header>
 		<div id="allcontents">
 			<!--*********************************ここまでへっだー ***********************************-->
-	
+
 		<c:set var="i" value="${detailList}"/>
 		<div id="wrapper">
 			<h1>コンテンツ詳細</h1>
@@ -169,7 +169,7 @@
 									<c:set var="level" value="12"/>
 								</c:if>
 								<div class="flameDiv">
-									<img src="/HomeSystem/images/images/flame/${level}.png" class="employeeFlame">
+									<img src="/HomeSystem/images/flame/${level}.png" class="employeeFlame">
 								</div>
 							</c:if>
 							${i.lastName}${i.firstName}<br/>
@@ -192,7 +192,7 @@
 						<c:set var="cnt" value="${cnt + 1}"/>
 					</c:forEach>
 				</div>
-	
+
 				<hr>
 				<c:if test="${dataList != null}">
 					<h3>添付ファイル</h3>
@@ -214,15 +214,15 @@
 					</div>
 					<hr>
 				</c:if>
-				
+
 				<div class="commentData">
 					<c:set var="homeLogCount" value="1"/>
 					<c:forEach items="${homeLogList}" var="homeLog">
 						<div class="commentData">
 							<c:if test="${i.employeeId == homeLog.homeUser}"><c:set var="fromUser" value="true"/></c:if>
 							<c:if test="${i.employeeId != homeLog.homeUser}"><c:set var="fromUser" value="false"/></c:if>
-							
-							
+
+
 							<c:if test="${homeLog.classFlag == 1}">
 								<c:if test="${i.userId == homeLog.homeUser}">
 									<a href="/HomeSystem/fc/EmployeeMyPage">
@@ -233,8 +233,8 @@
 							</c:if>
 								<c:if test="${fromUser}"><div class="planner"></c:if>
 								<c:if test="${!fromUser}"><div class="gest"></c:if>
-									
-									<div class="face"><img src="../../images/employees/${homeLog.homeUser}.jpg class="js-replace-no-image""></div>
+
+									<div class="face"><img src="../../images/employees/${homeLog.homeUser}.jpg" class="js-replace-no-image"></div>
 									<c:if test="${homeLog.level != null}">
 										<c:set var="level" value="${homeLog.level}"/>
 										<c:if test="${homeLog.level > 12}">
@@ -272,7 +272,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 			<!--*********************************ここからふったー ***********************************-->
 		</div>
 		<footer>

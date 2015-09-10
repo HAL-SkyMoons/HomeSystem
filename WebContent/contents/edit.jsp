@@ -28,8 +28,8 @@
 	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<script type="text/javascript" src="../../js/jquery-2.1.4.min.js"></script>
-<script type="text/javascript" src="../../js/autosize/autosize.js"></script>
+<script type="text/javascript" src="/HomeSystem/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="/HomeSystem/js/autosize/autosize.js"></script>
 <script>
 $(document).ready(function() {
 
@@ -50,7 +50,7 @@ $(document).ready(function() {
 	$(document).ready(function() {
 	    $('.js-replace-no-image').error(function() {
 	        $(this).attr({
-	            src: '/HomeSystem/images/employees/NoImage.png'
+	        	src: '/HomeSystem/images/icon/NoImage.png'
 	        });
 	    });
 	});
@@ -68,7 +68,7 @@ $(document).ready(function() {
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 		<title>コンテンツ編集</title>
 	</head>
-	
+
 		<!--******************************** こっからへっだー ***********************************-->
 	<div id="allwrap">
 		<div id="headerline">line</div>
@@ -124,7 +124,7 @@ $(document).ready(function() {
 		</header>
 		<div id="allcontents">
 			<!--*********************************ここまでへっだー ***********************************-->
-	
+
 	<body>
 		<c:set var="i" value="${editData}"/>
 		<div id="wrapper">
@@ -348,7 +348,7 @@ $(document).ready(function() {
 				</div>
 			</div>
 		</div>
-		
+
 			<!--*********************************ここからふったー ***********************************-->
 		</div>
 		<footer>
