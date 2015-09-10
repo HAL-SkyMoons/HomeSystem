@@ -49,9 +49,9 @@
 				</div>
 			</div>
 		</div>
-		<footer>
+		<div id="loginfooter">
 			<div id="footerline">Copyright &copy; 2015-2016 SkyMoons All Rights Reserved.</div>
-		</footer>
+		</div>
 	</div>
 
 </body>

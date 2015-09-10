@@ -320,6 +320,13 @@ footer {
 	border-right: 1px solid white;
 }
 
+#loginfooter {
+	height: 50px;
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+}
+
 #footerline {
 	height: 50px;
 	position: absolute;
