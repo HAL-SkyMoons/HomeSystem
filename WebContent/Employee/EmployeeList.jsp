@@ -39,7 +39,6 @@
 		}
 		document.getElementById(tabName).style.display = state;
 	}
-
 	$(document).ready(function() {
 
 		//Hide (Collapse) the toggle containers on load
@@ -51,6 +50,14 @@
 			return false; //Prevent the browser jump to the link anchor
 		});
 
+	});
+	//画像差し替えメソッド
+	$(document).ready(function() {
+	    $('.js-replace-no-image').error(function() {
+	        $(this).attr({
+	            src: '../images/employees/NoImage.png'
+	        });
+	    });
 	});
 </script>
 <%
@@ -108,7 +115,7 @@
 									<c:when test="${sessionId == employee.employeeId}">
 										<div class="employeeImage">
 											<a href="./EmployeeMyPage">
-												<img src="../images/employees/${employee.employeeId}.jpg?">
+												<img src="../images/employees/${employee.employeeId}.jpg?<%=milliSec %>" class="js-replace-no-image">
 											</a>
 											<div class="employeeFlame">
 												<a href="./EmployeeMyPage">
@@ -127,7 +134,7 @@
 									<c:when test="${sessionId != employee.employeeId }">
 									 	<div class="employeeImage">
 											<a href="./EmployeePage?employeeId=${employee.employeeId}">
-												<img src="../images/employees/${employee.employeeId}.jpg?<%=milliSec %>">
+												<img src="../images/employees/${employee.employeeId}.jpg?<%=milliSec %>" class="js-replace-no-image">
 											</a>
 											<div class="employeeFlame">
 										 		 <a href="./EmployeePage?employeeId=${employee.employeeId}">

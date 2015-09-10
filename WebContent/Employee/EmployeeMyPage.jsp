@@ -211,6 +211,14 @@
 			return false; //Prevent the browser jump to the link anchor
 		});
 	});
+	//画像差し替えメソッド
+	$(document).ready(function() {
+	    $('.employeeImage').error(function() {
+	        $(this).attr({
+	            src: '../images/employees/NoImage.png'
+	        });
+	    });
+	});
 </script>
 <%
 	Date date = new Date();
