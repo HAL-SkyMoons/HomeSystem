@@ -17,7 +17,8 @@ header {
 	position:relative;
 	width: 1000px;
 	margin: 0 auto 10px;
-	height: 350px;
+	height: 216px;
+	z-index: 5
 
 }
 

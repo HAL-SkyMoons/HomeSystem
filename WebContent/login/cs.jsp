@@ -22,7 +22,7 @@
 		<div id="allcontents">
 			<div id="boxout">
 				<div id="boxcomment">
-					<label>ホメ</label>た数だけ<br> <label> 笑顔</label>がある
+					<label>ホメ</label>た数だけ<br> <label>　　　 笑顔</label>がある
 				</div>
 				<div id="box">
 					<h1>顧客・社員用ログイン</h1>
@@ -51,7 +51,7 @@
 		</div>
 		<div id="loginfooter">
 			<div id="footerline">Copyright &copy; 2015-2016 SkyMoons All Rights Reserved.</div>
-		</div>
+		<>
 	</div>
 
 </body>
