@@ -6,9 +6,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import jp.ac.hal.skymoons.beans.EmployeeHomeBean;
+import jp.ac.hal.skymoons.beans.EmployeePageBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.SampleDao;
 import jp.ac.hal.skymoons.security.session.SessionController;
+import jp.ac.hal.skymoons.util.HeaderDataGetUtil;
 
 public class HomeView extends AbstractModel{
 
@@ -25,6 +27,11 @@ public class HomeView extends AbstractModel{
 		dao.close();
 
 		request.setAttribute("homeList", homeList);
+		//Header用データ取得
+		HeaderDataGetUtil headerUtil = new HeaderDataGetUtil();
+		ArrayList<EmployeePageBean> headerEmployeeData = headerUtil
+		.getHeaderData(request, response);
+		request.setAttribute("headerEmployeeData", headerEmployeeData);
 		return "/Employee/HomeView.jsp";
 
 	    }else{

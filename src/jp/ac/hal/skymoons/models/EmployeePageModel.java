@@ -19,6 +19,7 @@ import jp.ac.hal.skymoons.beans.EmployeePlanCommentBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.SampleDao;
 import jp.ac.hal.skymoons.security.session.SessionController;
+import jp.ac.hal.skymoons.util.HeaderDataGetUtil;
 
 public class EmployeePageModel extends AbstractModel{
 
@@ -108,6 +109,11 @@ public class EmployeePageModel extends AbstractModel{
 		request.setAttribute("chartCountMonth", employeeChartBatchCountMonth);
 		request.setAttribute("chartCountYear", employeeChartBatchCountYear);
 		request.setAttribute("chartCountTotal", employeeChartBatchCountTotal);
+		//Header用データ取得
+		HeaderDataGetUtil headerUtil = new HeaderDataGetUtil();
+		ArrayList<EmployeePageBean> headerEmployeeData = headerUtil
+		.getHeaderData(request, response);
+		request.setAttribute("headerEmployeeData", headerEmployeeData);
 		//参照ファイルパスの指定
 		return "/Employee/EmployeePage.jsp";
 	}
