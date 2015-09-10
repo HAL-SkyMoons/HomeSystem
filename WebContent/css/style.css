@@ -237,22 +237,71 @@ html, body {
 }
 
 footer {
-	height: 100px;
+	height: 191px;
 	position: absolute;
 	width: 100%;
 	bottom: 0;
-	background: red;
+}
+
+#footertop {
+	height: 40px;
+	position: absolute;
+	width: 1000px;
+	bottom: 200px;
+	right: 0;
+	left: 0;
+	margin: auto;
+	text-align: right;
+	line-height: 40px;
+	color: white;
 }
 
 #footermenu {
-	height: 50px;
+	height: 150px;
 	position: absolute;
 	width: 100%;
 	bottom: 50px;
 	background: orange;
 	text-align: center;
-	line-height: 50px;
 	color: white;
+}
+
+#footermenuin {
+	height: 150px;
+	position: absolute;
+	width: 1000px;
+	right: 0;
+	left: 0;
+	margin: auto;
+	bottom: 0;
+	background: orange;
+	text-align: center;
+	color: white;
+}
+
+#footermenu1, #footermenu2, #footermenu3, #footermenu4 {
+	height: 125px;
+	float: left;
+	width: 248.75px;
+	margin-top: 10px;
+}
+
+#footermenu1, #footermenu2, #footermenu3, #footermenu4 {
+	border-left: 1px solid white;
+}
+
+#footermenu1 a, #footermenu2 a, #footermenu3 a, #footermenu4 a {
+	color: white;
+}
+
+#footermenu1 a:hover, #footermenu2 a:hover, #footermenu3 a:hover,
+	#footermenu4 a:hover {
+	text-decoration: none;
+	color: red;
+}
+
+#footermenu4 {
+	border-right: 1px solid white;
 }
 
 #footerline {
@@ -264,6 +313,7 @@ footer {
 	text-align: center;
 	line-height: 50px;
 	color: white;
+	border-top: 1px solid white;
 }
 
 /*ボタン*/
