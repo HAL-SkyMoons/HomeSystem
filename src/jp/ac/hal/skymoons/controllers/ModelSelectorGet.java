@@ -102,6 +102,8 @@ public class ModelSelectorGet {
 		mapping.put("/HomeSystem/fc/SystemAdmin/logout", new jp.ac.hal.skymoons.systemadmin.models.Logout());
 		mapping.put("/HomeSystem/fc/SystemAdmin/menu", new jp.ac.hal.skymoons.systemadmin.models.Menu());
 		mapping.put("/HomeSystem/fc/SystemAdmin/staff/list", new jp.ac.hal.skymoons.systemadmin.models.staff.List());
+		mapping.put("/HomeSystem/fc/SystemAdmin/staff/add", new jp.ac.hal.skymoons.systemadmin.models.staff.Add());
+		mapping.put("/HomeSystem/fc/SystemAdmin/staff/detail", new jp.ac.hal.skymoons.systemadmin.models.staff.Detail());
 	}
 
 /**

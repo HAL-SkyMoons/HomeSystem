@@ -20,7 +20,7 @@
 	<div id="wrapper">
 		<header>
 			<a href="/HomeSystem/fc/SystemAdmin/menu"><div class="menuLeftBox">メニュー</div></a>
-			<a href="/HomeSystem/fc/SystemAdmin/menu"><div class="menuLeftBox">登録</div></a>
+			<a href="/HomeSystem/fc/SystemAdmin/staff/add"><div class="menuLeftBox">登録</div></a>
 			<div id="menuSearchBox">
 				<form action="list" method="post">
 					<input id="searchInput1" type="text" name="keyword" maxlength="50" placeholder="キーワード検索" <% if(request.getAttribute("where") != null){ out.print("value='" + request.getAttribute("where") + "'"); } %> ><input id="searchInput2" type="submit" name="searchBtn" value="検索">
@@ -37,7 +37,7 @@
 							out.println("<table>");
 							out.println("<caption>社員ユーザ一覧</caption>");
 							out.println("<tr>");
-							out.println("<th>姓</th><th>名</th><th>所属部署</th><th>状態</th><th>詳細</th>");
+							out.println("<th>姓</th><th>名</th><th>所属部署</th><th>使用可否</th><th>詳細</th>");
 							out.println("</tr>");
 							int flg = 0;
 							for(int i = 0; i < staffList.size(); i++) {

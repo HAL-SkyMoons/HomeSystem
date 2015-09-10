@@ -85,9 +85,10 @@ public class LoginDAO {
 	
 	/**
 	 * トランザクションをロールバックします。
+	 * @throws SQLException 
 	 */
-	public void rollback() {
-		this.rollback();
+	public void rollback() throws SQLException {
+		this.connection.rollback();
 	}
 	
 	/**

@@ -1,0 +1,70 @@
+@CHARSET "UTF-8";
+
+#formTable, #formTable tr, #formTable td {
+	border: #666666 solid 1px;
+	
+	color: #FFFFFF;
+	background: #000000;
+}
+
+.col1 {
+	width: 300px;
+	padding: 5px 10px;
+	
+	font-size: 24px;
+}
+
+.msg1 {
+	float: left;
+}
+
+.msg2 {
+	color: #FFFFFF;
+	background: #AA0000;
+	padding: 1px 3px;
+	
+	float: right;
+}
+
+.col2 {
+	width: 645px;
+	padding: 5px 10px;
+}
+
+.input1 {
+	font-size: 24px;
+}
+
+select {
+	font-size: 20px;
+}
+
+#record1 {
+	padding: 5px 10px;
+}
+
+#submitBtn {
+	border: #FFFFFF solid 1px;
+	padding: 1px 10px;
+	
+	color: #000000;
+	background: #FFFFFF;
+	
+	font-size: 24px;
+	
+	float: left;
+}
+#submitBtn:HOVER {
+	border: #FFFFFF solid 1px;
+	
+	color: #FFFFFF;
+	background: #000000;
+}
+
+#message {
+	color: #FF0000;
+	
+	font-size: 18px;
+	text-indent: 1em;
+	letter-spacing: 1px;
+}

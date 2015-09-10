@@ -89,9 +89,10 @@ public class StaffDAO {
 	
 	/**
 	 * トランザクションをロールバックします。
+	 * @throws SQLException 
 	 */
-	public void rollback() {
-		this.rollback();
+	public void rollback() throws SQLException {
+		this.connection.rollback();
 	}
 	
 	/**
@@ -148,5 +149,31 @@ public class StaffDAO {
 			result.add(record);
 		}
 		return result;
+	}
+	
+	/**
+	 * 社員ユーザ情報を登録します。
+	 * @param value
+	 * 社員ユーザレコード情報
+	 * @return
+	 * 処理件数
+	 * @throws SQLException 
+	 */
+	public int addStaffUser(String[] values) throws SQLException {
+		String sql1 = "INSERT INTO users VALUES (?, ?, ?, ?, 1, 0, ?, ?, ?)";
+		PreparedStatement preparedStatement = this.connection.prepareStatement(sql1);
+		preparedStatement.setString(1, values[4]);
+		preparedStatement.setString(2, values[5]);
+		preparedStatement.setString(3, values[0]);
+		preparedStatement.setString(4, values[1]);
+		preparedStatement.setString(5, values[7]);
+		preparedStatement.setString(6, values[2]);
+		preparedStatement.setString(7, values[3]);
+		preparedStatement.executeUpdate();
+		String sql2 = "INSERT INTO employees VALUES (?, '', 1, 0, 0, ?);";
+		preparedStatement = this.connection.prepareStatement(sql2);
+		preparedStatement.setString(1, values[4]);
+		preparedStatement.setString(2, values[6]);
+		return preparedStatement.executeUpdate();
 	}
 }

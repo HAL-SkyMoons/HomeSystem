@@ -30,7 +30,15 @@ public class List extends AbstractModel {
 		
 		// 検索機能
 		String[] where = null;
-		if(request.getParameter("searchBtn") != null) {
+		if(request.getAttribute("where") != null) {
+			if(request.getAttribute("where")  != "") {
+				where = request.getAttribute("where") .toString().replace("　", " ").split("[\\s]+");
+				System.out.println("検索を実行します。");
+				for(int i = 0; i < where.length; i++) {
+					System.out.println("条件" + (i + 1) + ":" + where[i]);
+				}
+			}
+		} else if(request.getParameter("searchBtn") != null) {
 			if(request.getParameter("keyword") != "") {
 				where = request.getParameter("keyword").toString().replace("　", " ").split("[\\s]+");
 				System.out.println("検索を実行します。");
@@ -62,10 +70,10 @@ public class List extends AbstractModel {
 		} catch(Exception e) {
 			e.printStackTrace();
 			System.out.println("ERROR:データベースから社員情報取得中にエラーが発生しました。");
+			staffDAO.connectionClose();
 			request.setAttribute("url", "/HomeSystem/fc/SystemAdmin/menu");
 			return "../../../SystemAdmin/error/error.jsp";
 		}
-		
 		staffDAO.connectionClose();
 		
 		request.setAttribute("staffList", staffList);
