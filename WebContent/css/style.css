@@ -254,6 +254,17 @@ footer {
 	text-align: right;
 	line-height: 40px;
 	color: white;
+	font-size: 20px;
+}
+
+#footertop a {
+	text-decoration: none;
+	color: gray;
+}
+
+#footertop a:hover {
+	text-decoration: none;
+	color: gray;
 }
 
 #footermenu {
@@ -284,6 +295,11 @@ footer {
 	float: left;
 	width: 248.75px;
 	margin-top: 10px;
+}
+
+#footermenu1 h4, #footermenu2 h4, #footermenu3 h4, #footermenu4 h4 {
+	font-weight: 900;
+	color: gray;
 }
 
 #footermenu1, #footermenu2, #footermenu3, #footermenu4 {
