@@ -134,10 +134,10 @@ header {
 	height: 60px;
 	margin: 20px auto;
 	background: #e6002d;
+	font-size: 20px;
 	border-radius: 10px; /* CSS3闕画｡� */
 	-webkit-border-radius: 10px; /* Safari,Google Chrome逕ｨ */
 	-moz-border-radius: 10px;
-	font-size: 20px;
 }
 
 #headermenu li {
@@ -162,6 +162,20 @@ header {
 #headermenu li:hover>a {
 	background: orange;
 	color: red;
+}
+
+.menu1 a:hover {
+	-webkit-border-top-left-radius: 10px;
+	-moz-border-radius-topleft: 10px;
+	-webkit-border-bottom-left-radius: 10px;
+	-moz-border-radius-bottomleft: 10px;
+}
+
+.menu4 a:hover {
+	-webkit-border-top-right-radius: 10px;
+	-moz-border-radius-topright: 10px;
+	-webkit-border-bottom-right-radius: 10px;
+	-moz-border-radius-bottomright: 10px;
 }
 
 #headermenu li ul {
@@ -196,8 +210,6 @@ header {
 #headermenu li:hover ul li {
 	overflow: visible;
 	height: 60px;
-	border-top: 1px solid red;
-	border-bottom: 1px solid red;
 }
 
 #headermenu li:hover ul li:first-child {
