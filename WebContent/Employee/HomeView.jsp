@@ -26,6 +26,15 @@
 			columnWidth : 500
 		});
 	});
+	//画像差し替えメソッド
+	$(document).ready(function() {
+	    $('.js-replace-no-image').error(function() {
+	        $(this).attr({
+	            src: '../images/icon/NoImage.png'
+
+	        });
+	    });
+	});
 </script>
 <%
 	ArrayList<EmployeePageBean> headerEmployeeDatas = (ArrayList<EmployeePageBean>)request.getAttribute("headerEmployeeData");
@@ -44,7 +53,6 @@
 	<div id="allwrap">
 		<div id="headerline">line</div>
 		<header>
-
 			<div id="logo">
 				<a href="/HomeSystem/fc/Index"><img src="/HomeSystem/images/logo.png" /></a>
 			</div>
@@ -55,7 +63,7 @@
 						<label id="headername">${headerEmployeeData.employeeName}さん</label><br> <label id="headerlevel">レベル${headerEmployeeData.level}</label>
 					</div>
 					<div id="headerimage">
-						<img src="/HomeSystem/images/employees/${headerEmployeeData.employeeId}.jpg?<%=milliSec%>">
+						<img src="/HomeSystem/images/employees/${headerEmployeeData.employeeId}.jpg?<%=milliSec%>" class="js-replace-no-image">
 						<div id="headerflame">
 							<img src="/HomeSystem/images/flame/<%=headerEmployeeLevel%>.png?<%=milliSec%>">
 						</div>
@@ -107,7 +115,7 @@
 					<div class="user">
 						<div class="face">
 							<c:if test="${homeData.classFlag == 1}">
-								<a href="/HomeSystem/fc/EmployeePage?employeeId=${homeData.homeUser}"> <img src="../images/employees/${homeData.homeUser}.jpg">
+								<a href="/HomeSystem/fc/EmployeePage?employeeId=${homeData.homeUser}"> <img src="../images/employees/${homeData.homeUser}.jpg?<%=milliSec%>" class="js-replace-no-image">
 								</a>
 							</c:if>
 							<c:if test="${homeData.classFlag == 0}">
@@ -120,7 +128,7 @@
 								<c:if test="${homeData.level > 12}">
 									<c:set var="level" value="12" />
 								</c:if>
-								<a href="/HomeSystem/fc/EmployeePage?employeeId=${homeData.homeUser}"> <img src="../images/flame/${level}.png" class="flame">
+								<a href="/HomeSystem/fc/EmployeePage?employeeId=${homeData.homeUser}"> <img src="../images/flame/${level}.png?<%=milliSec%>" class="flame">
 								</a>
 							</c:if>
 						</div>
