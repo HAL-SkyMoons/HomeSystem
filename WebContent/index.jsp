@@ -42,59 +42,73 @@
 <body>
 
 	<!--******************************** こっからへっだー ***********************************-->
-	<div id="headerline">line</div>
-	<header>
+	<div id="allwrap">
+		<div id="headerline">line</div>
+		<header>
 
-		<div id="logo">
-			<a href="/HomeSystem/fc/Index"><img src="/HomeSystem/images/logo.png" /></a>
-		</div>
-
-		<div id="headerright">
-			<c:forEach var="employeeDetail" items="${employeeDetail}">
-				<div id="headerstr">
-					<label id="headername">${employeeDetail.employeeName}さん</label><br> <label id="headerlevel">レベル${employeeDetail.level}</label>
-				</div>
-				<div id="headerimage">
-					<img src="/HomeSystem/images/employees/${employeeDetail.employeeId}.jpg?<%=milliSec%>">
-					<div id="headerflame">
-						<img src="/HomeSystem/images/flame/<%=level%>.png?<%=milliSec%>">
-					</div>
-				</div>
-			</c:forEach>
-			<div id="headerbutton">
-				<div id="mypage">
-					<form action="/HomeSystem/fc/EmployeeMyPage">
-						<input type="submit" class="btn btn-2 btn-2c submit" value="マイページ">
-					</form>
-				</div>
-				<div id="logout">
-					<form action="/HomeSystem/fc/logout/user">
-						<input type="submit" class="btn btn-2 btn-2c submit" value="ログアウト">
-					</form>
-				</div>
+			<div id="logo">
+				<a href="/HomeSystem/fc/Index"><img src="/HomeSystem/images/logo.png" /></a>
 			</div>
 
+			<div id="headerright">
+				<c:forEach var="employeeDetail" items="${employeeDetail}">
+					<div id="headerstr">
+						<label id="headername">${employeeDetail.employeeName}さん</label><br> <label id="headerlevel">レベル${employeeDetail.level}</label>
+					</div>
+					<div id="headerimage">
+						<img src="/HomeSystem/images/employees/${employeeDetail.employeeId}.jpg?<%=milliSec%>">
+						<div id="headerflame">
+							<img src="/HomeSystem/images/flame/<%=level%>.png?<%=milliSec%>">
+						</div>
+					</div>
+				</c:forEach>
+				<div id="headerbutton">
+					<div id="mypage">
+						<form action="/HomeSystem/fc/EmployeeMyPage">
+							<input type="submit" class="btn btn-2 btn-2c submit" value="マイページ">
+						</form>
+					</div>
+					<div id="logout">
+						<form action="/HomeSystem/fc/logout/user">
+							<input type="submit" class="btn btn-2 btn-2c submit" value="ログアウト">
+						</form>
+					</div>
+				</div>
+
+			</div>
+
+			<ul id="headermenu">
+				<li class="menu1"><a href="/HomeSystem/fc/EmployeeList">社員</a></li>
+				<li class="menu2"><a href="#">企画</a>
+					<ul>
+						<li><a href="/HomeSystem/fc/PlanList">企画一覧</a></li>
+						<li><a href="/HomeSystem/fc/PlanRegister">企画登録</a></li>
+						<li><a href="/HomeSystem/fc/PlanCalendar">企画カレンダー</a></li>
+					</ul></li>
+				<li class="menu3"><a href="/HomeSystem/fc/contents/list">ホメホメコンテンツ</a>
+					<ul>
+						<li><a href="/HomeSystem/fc/PlanList">コンテンツ一覧</a></li>
+						<li><a href="/HomeSystem/fc/PlanList">コンテンツ一覧</a></li>
+					</ul></li>
+				<li class="menu4"><a href="/HomeSystem/fc/ranking/topnum">ランキング</a></li>
+
+			</ul>
+
+		</header>
+		<div id="allcontents">
+			<!--*********************************ここまでへっだー ***********************************-->
+
+
+			<!-- ここに内容 -->
+
+
+			<!--*********************************ここからふったー ***********************************-->
 		</div>
-
-		<ul id="headermenu">
-			<li class="menu1"><a href="/HomeSystem/fc/EmployeeList">社員</a></li>
-			<li class="menu2"><a href="#">企画</a>
-				<ul>
-					<li><a href="/HomeSystem/fc/PlanList">企画一覧</a></li>
-					<li><a href="/HomeSystem/fc/PlanRegister">企画登録</a></li>
-					<li><a href="/HomeSystem/fc/PlanCalendar">企画カレンダー</a></li>
-				</ul></li>
-			<li class="menu3"><a href="/HomeSystem/fc/contents/list">ホメホメコンテンツ</a>
-				<ul>
-					<li><a href="/HomeSystem/fc/PlanList">コンテンツ一覧</a></li>
-					<li><a href="/HomeSystem/fc/PlanList">コンテンツ一覧</a></li>
-				</ul></li>
-			<li class="menu4"><a href="/HomeSystem/fc/ranking/topnum">ランキング</a></li>
-
-		</ul>
-
-	</header>
-	<!--*********************************ここまでへっだー ***********************************-->
+		<footer>
+			<div id="footerline">こぴーらいと</div>
+		</footer>
+	</div>
+	<!--*********************************ここまでふったー ***********************************-->
 </body>
 </html>
 
