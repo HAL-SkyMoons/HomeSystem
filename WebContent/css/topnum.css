@@ -36,7 +36,6 @@
 .rows {
 	height: 150px;
 	display: table-row;
-
 }
 
 .rank {
@@ -53,9 +52,10 @@
 
 .face {
 	width: 150px;
-	/* 	height: 150px; */
 	display: table-cell;
 	text-align: center;
+	left: 60px;
+	position: relative;
 }
 
 .face>a>img {
@@ -63,11 +63,24 @@
 	max-height: 150px;
 }
 
+.flameDiv {
+	width: 0px;
+	height: 0px;
+}
+
+.employeeFlame {
+	width: 150px;
+	height: 150px;
+	margin-left: -90px;
+	position: relative;
+}
+
 .detail {
 	/* 	height: 150px; */
 	width: 200px;
 	display: table-cell;
 	padding-left: 50px;
+	vertical-align: middle;
 }
 
 .employeeName {
@@ -86,7 +99,7 @@
 }
 
 .submitBtn {
-/* 	margin-top: 10px; */
+	/* 	margin-top: 10px; */
 	width: 100px;
 	height: 40px;
 }
@@ -172,3 +185,4 @@ select {
 	box-shadow: 0 0 #CD0014;
 	top: 6px;
 }
+

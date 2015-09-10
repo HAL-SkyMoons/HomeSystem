@@ -106,7 +106,7 @@ public class RankingDAO {
 	 * @throws SQLException
 	 */
 	public List<TopNumRankingBean> getRankingList(String whereBatch, String whereYear, String whereMonth) throws SQLException {
-		String sql	=	"SELECT COUNT(*) AS value, CONCAT(users.last_name, users.first_name) AS name, hom.home_target,dep.department_name"
+		String sql	=	"SELECT COUNT(*) AS value, CONCAT(users.last_name, users.first_name) AS name, hom.home_target,dep.department_name,emp.level"
 					+	" FROM home_log AS hom"
 					+	" JOIN employees AS emp ON hom.home_target = emp.employee_id"
 					+	" JOIN users ON emp.employee_id = users.user_id"
@@ -153,6 +153,7 @@ public class RankingDAO {
 			record.setName(resultSet.getString(2));
 			record.setId(resultSet.getString(3));
 			record.setDepartment(resultSet.getString(4));
+			record.setLevel(resultSet.getInt(5));
 			result.add(record);
 		}
 		return result;

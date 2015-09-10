@@ -1,5 +1,6 @@
 package jp.ac.hal.skymoons.models;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -7,11 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import jp.ac.hal.skymoons.beans.BigGenreBean;
+import jp.ac.hal.skymoons.beans.EmployeePageBean;
 import jp.ac.hal.skymoons.beans.GenreBean;
 import jp.ac.hal.skymoons.beans.PlanBean;
 import jp.ac.hal.skymoons.controllers.AbstractModel;
 import jp.ac.hal.skymoons.daoes.SampleDao;
 import jp.ac.hal.skymoons.security.session.SessionController;
+import jp.ac.hal.skymoons.util.HeaderDataGetUtil;
 
 public class PlanEdit extends AbstractModel {
 
@@ -47,6 +50,11 @@ public class PlanEdit extends AbstractModel {
 	    request.setAttribute("bigGenreList", bigGenreList);
 
 	    dao.close();
+
+	    HeaderDataGetUtil headerUtil = new HeaderDataGetUtil();
+	    ArrayList<EmployeePageBean> employeePageReturn = headerUtil
+		    .getHeaderData(request, response);
+	    request.setAttribute("employeeDetail", employeePageReturn);
 
 	    return "/pages/PlanEdit.jsp";
 	} else {

@@ -788,7 +788,7 @@ public class SampleDao {
     public PlanBean planDetail(int planId) throws SQLException {
 
 	PreparedStatement select = con
-		.prepareStatement("select * from plan p, users u where plan_id = ? and p.planner = u.user_id ;");
+		.prepareStatement("select * from plan p, users u,employees e where plan_id = ? and p.planner = u.user_id and p.planner = e.employee_id ;");
 
 	select.setInt(1, planId);
 	ResultSet result = select.executeQuery();
@@ -806,6 +806,7 @@ public class SampleDao {
 	    record.setStartDate(result.getTimestamp("start_date"));
 	    record.setEndDate(result.getTimestamp("end_date"));
 	    record.setExecuteFlag(result.getInt("execute_flag"));
+	    record.setLevel(result.getInt("level"));
 
 	}
 
@@ -1667,7 +1668,7 @@ public class SampleDao {
     public UserBean getUser(String userId) throws SQLException {
 
 	PreparedStatement select = con
-		.prepareStatement("select user_id,last_name,first_name from users where user_id = ? ;");
+		.prepareStatement("select u.user_id,u.last_name,u.first_name,e.level from users u, employees e where u.user_id = ? and u.user_id = e.employee_id ;");
 
 	select.setString(1, userId);
 	ResultSet result = select.executeQuery();
@@ -1675,9 +1676,10 @@ public class SampleDao {
 	UserBean record = new UserBean();
 
 	if (result.next()) {
-	    record.setUserId(result.getString("user_id"));
-	    record.setLastName(result.getString("last_name"));
-	    record.setFirstName(result.getString("first_name"));
+	    record.setUserId(result.getString("u.user_id"));
+	    record.setLastName(result.getString("u.last_name"));
+	    record.setFirstName(result.getString("u.first_name"));
+	    record.setLevel(result.getInt("e.level"));
 	}
 
 	return record;

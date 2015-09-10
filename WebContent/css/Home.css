@@ -22,19 +22,32 @@ body {
 }
 
 p {
-	display:inline-block;
+	display: inline-block;
 	text-align: left;
 	word-break: keep-all;
 }
 
 #face {
-	width: 45%;
+	width: 150px;
+	height: 150px;
 	margin: 0 auto;
 	display: inline-block;
+	position: relative;
+}
+
+#face>img {
+	max-width: 150px;
+	max-height: 150px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: auto;
 }
 
 #name {
-	width: 45%;
+	width: 100%;
 	vertical-align: middle;
 	display: inline-block;
 }
@@ -124,6 +137,40 @@ p {
 }
 
 .submit {
-	margin-top:10px;
+	margin-top: 10px;
 	width: 400px;
+}
+
+.flameDiv {
+	width: 150px;
+	height: 150px;
+	margin-top: -150px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	margin: auto;
+}
+
+.employeeFlame {
+	width: 150px;
+	height: 150px;
+}
+
+.left {
+	float: left;
+	width: 250px;
+	height: 150px;
+	position: relative;
+}
+
+.right {
+	float: right;
+	width: 250px;
+	height: 150px;
+}
+
+.clear {
+	clear: both;
 }
