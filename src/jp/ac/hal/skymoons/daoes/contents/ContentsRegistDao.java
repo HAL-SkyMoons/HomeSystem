@@ -47,7 +47,9 @@ public class ContentsRegistDao {
 		if (employeeResult.next()) {
 			registBean.setLastName(employeeResult.getString("u.last_name"));
 			registBean.setFirstName(employeeResult.getString("u.first_name"));
-			registBean.setLevel(employeeResult.getInt("emp.level"));
+			if(employeeResult.getString("emp.level") != null){
+				registBean.setLevel(employeeResult.getInt("emp.level"));
+			}
 		}
 		employeeResult.close();
 		employeePst.close();

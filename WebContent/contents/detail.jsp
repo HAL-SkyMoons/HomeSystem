@@ -64,17 +64,30 @@
 					</div>
 					<div id="planner">
 						投稿者
-						<div id="img">
-							<img src="../../images/employees/${i.employeeId}.jpg" alt="投稿者">
-						</div>
-						<c:set var="level" value="${i.level}"/>
-						<c:if test="${i.level > 12}">
-							<c:set var="level" value="12"/>
+						<c:if test="${i.classFlag == 1}">
+							<c:if test="${i.userId == i.employeeId}">
+								<a href="/HomeSystem/fc/EmployeeMyPage">
+							</c:if>
+							<c:if test="${i.userId != i.employeeId}">
+								<a href="/HomeSystem/fc/EmployeePage?employeeId=${i.employeeId}">
+							</c:if>
 						</c:if>
-						<div class="flameDiv">
-							<img src="../../images/flame/${level}.png" class="employeeFlame">
-						</div>
-						${i.lastName}${i.firstName}<br/>
+							<div id="img">
+								<img src="../../images/employees/${i.employeeId}.jpg" alt="投稿者">
+							</div>
+							<c:if test="${i.level != null}">
+								<c:set var="level" value="${i.level}"/>
+								<c:if test="${i.level > 12}">
+									<c:set var="level" value="12"/>
+								</c:if>
+								<div class="flameDiv">
+									<img src="../../images/flame/${level}.png" class="employeeFlame">
+								</div>
+							</c:if>
+							${i.lastName}${i.firstName}<br/>
+						<c:if test="${i.classFlag == 1}">
+							</a>
+						</c:if>
 						<c:if test="${i.employeeId != i.userId}">
 							<a class="iframe" href="/HomeSystem/fc/Home?toUser=${i.employeeId}&contentsId=${i.homeContentId}" ><input type="button" value="ホメる" class="btn btn-2 btn-2c"></a>
 						</c:if>
@@ -120,24 +133,39 @@
 						<div class="commentData">
 							<c:if test="${i.employeeId == homeLog.homeUser}"><c:set var="fromUser" value="true"/></c:if>
 							<c:if test="${i.employeeId != homeLog.homeUser}"><c:set var="fromUser" value="false"/></c:if>
-							<c:if test="${fromUser}"><div class="planner"></c:if>
-							<c:if test="${!fromUser}"><div class="gest"></c:if>
-								<div class="face"><img src="../../images/employees/${homeLog.homeUser}.jpg"></div>
-								<c:set var="level" value="${homeLog.level}"/>
-								<c:if test="${homeLog.level > 12}">
-									<c:set var="level" value="12"/>
+							
+							
+							<c:if test="${homeLog.classFlag == 1}">
+								<c:if test="${i.userId == homeLog.homeUser}">
+									<a href="/HomeSystem/fc/EmployeeMyPage">
 								</c:if>
-								<div class="flameFaceDiv">
-									<img src="../../images/flame/${level}.png" class="employeeFlame">
-								</div>
-								<div class="name">${homeLog.homeUserLastName}${homeLog.homeUserFirstName}</div>
-								<div class="home">
-									<c:if test="${i.userId != homeLog.homeUser && i.employeeId != i.userId}">
-										<a class="iframe" href="/HomeSystem/fc/Home?toUser=${homeLog.homeUser}&contentsId=${i.homeContentId}"><input type="button" value="ホメる" class="btn btn-2 btn-2c"></a>
+								<c:if test="${i.userId != homeLog.homeUser}">
+									<a href="/HomeSystem/fc/EmployeePage?employeeId=${i.employeeId}">
+								</c:if>
+							</c:if>
+								<c:if test="${fromUser}"><div class="planner"></c:if>
+								<c:if test="${!fromUser}"><div class="gest"></c:if>
+									
+									<div class="face"><img src="../../images/employees/${homeLog.homeUser}.jpg"></div>
+									<c:if test="${homeLog.level != null}">
+										<c:set var="level" value="${homeLog.level}"/>
+										<c:if test="${homeLog.level > 12}">
+											<c:set var="level" value="12"/>
+										</c:if>
+										<div class="flameFaceDiv">
+											<img src="../../images/flame/${level}.png" class="employeeFlame">
+										</div>
 									</c:if>
+									<div class="name">${homeLog.homeUserLastName}${homeLog.homeUserFirstName}</div>
+									<div class="home">
+										<c:if test="${i.userId != homeLog.homeUser && i.employeeId != i.userId}">
+											<a class="iframe" href="/HomeSystem/fc/Home?toUser=${homeLog.homeUser}&contentsId=${i.homeContentId}"><input type="button" value="ホメる" class="btn btn-2 btn-2c"></a>
+										</c:if>
+									</div>
 								</div>
-								
-							</div>
+							<c:if test="${homeLog.classFlag == 1}">
+								</a>
+							</c:if>
 							<c:if test="${fromUser}"><div class="plannerComment"></c:if>
 							<c:if test="${!fromUser}"><div class="gestComment"></c:if>
 								<div class="commentHeader">

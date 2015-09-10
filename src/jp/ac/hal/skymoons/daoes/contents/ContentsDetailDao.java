@@ -84,6 +84,7 @@ public class ContentsDetailDao {
 			if(nameResult.next()){
 				detailBean.setFirstName(nameResult.getString("first_name"));
 				detailBean.setLastName(nameResult.getString("last_name"));
+				detailBean.setClassFlag(nameResult.getInt("class_flag"));
 			}else{
 				//取得失敗時の処理
 			}
@@ -94,7 +95,9 @@ public class ContentsDetailDao {
 			employeePst.setString(1, contentsResult.getString("employee_id"));
 			ResultSet employeeResult = employeePst.executeQuery();
 			if(employeeResult.next()){
-				detailBean.setLevel(employeeResult.getInt("level"));
+				if(employeeResult.getString("level") != null){
+					detailBean.setLevel(employeeResult.getInt("level"));
+				}
 			}else{
 				//取得失敗時の処理
 			}
@@ -181,7 +184,20 @@ public class ContentsDetailDao {
 		//戻り値のListを生成
 		ArrayList<ContentsDetailHomeLogBean> homeLogList = new ArrayList<>();
 		//コンテンツの取得
-		PreparedStatement homeLogPst = con.prepareStatement("select * from home_log hl, batch b, users u1, users u2, employees emp where hl.home_content_id = ? and hl.home_target = u1.user_id and hl.home_user = u2.user_id and hl.batch_id = b.batch_id and hl.home_user = emp.employee_id ");
+		/*
+		PreparedStatement homeLogPst = con.prepareStatement(
+				"select * from home_log hl, batch b, users u1, users u2, employees emp "
+				+ "where hl.home_content_id = ? and hl.home_target = u1.user_id "
+				+ "and hl.home_user = u2.user_id and hl.batch_id = b.batch_id "
+				+ "and hl.home_user = emp.employee_id ");
+		*/
+		PreparedStatement homeLogPst = con.prepareStatement(
+				"select * from home_log hl "
+				+ "right join employees emp on hl.home_user = emp.employee_id "
+				+ "join batch b on hl.batch_id = b.batch_id "
+				+ "join users u1 on hl.home_target = u1.user_id "
+				+ "join users u2 on hl.home_user = u2.user_id "
+				+ "where hl.home_content_id = ? ");
 		homeLogPst.setInt(1, homeContentId);
 		ResultSet homeLogResult = homeLogPst.executeQuery();
 		while(homeLogResult.next()){
@@ -199,7 +215,10 @@ public class ContentsDetailDao {
 			homeLogBean.setBatchComment(homeLogResult.getString("batch_comment"));
 			homeLogBean.setHomePoint(homeLogResult.getInt("home_point"));
 			homeLogBean.setHomeComment(homeLogResult.getString("home_comment"));
-			homeLogBean.setLevel(homeLogResult.getInt("emp.level"));
+			if(homeLogResult.getString("emp.level") != null){
+				homeLogBean.setLevel(homeLogResult.getInt("emp.level"));
+			}
+			homeLogBean.setClassFlag(homeLogResult.getInt("class_flag"));
 			homeLogList.add(homeLogBean);
 		}
 		homeLogPst.close();

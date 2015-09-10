@@ -83,12 +83,15 @@ public class ContentsEditDao {
 			editBean.setEndMinute(new SimpleDateFormat("MM").format(endDatetime));
 			
 			//名前の取得
-			PreparedStatement namePst = con.prepareStatement("select * from users where user_id = ? ;");
+			PreparedStatement namePst = con.prepareStatement("select * from users u, employees e where user_id = ? and u.user_id = e.employee_id;");
 			namePst.setString(1, contentsResult.getString("employee_id"));
 			ResultSet nameResult = namePst.executeQuery();
 			if(nameResult.next()){
-				editBean.setFirstName(nameResult.getString("first_name"));
-				editBean.setLastName(nameResult.getString("last_name"));
+				editBean.setFirstName(nameResult.getString("u.first_name"));
+				editBean.setLastName(nameResult.getString("u.last_name"));
+				if(nameResult.getString("e.level") != null){
+					editBean.setLevel(nameResult.getInt("e.level"));
+				}
 			}else{
 				//取得失敗時の処理
 			}
