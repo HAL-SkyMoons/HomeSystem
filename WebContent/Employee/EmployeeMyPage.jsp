@@ -216,10 +216,11 @@
 	$(document).ready(function() {
 	    $('.employeeImage').error(function() {
 	        $(this).attr({
-	            src: '../images/employees/NoImage.png'
+	            src: '../images/icon/NoImage.png'
 	        });
 	    });
 	});
+
 </script>
 <%
 	Date date = new Date();
@@ -243,7 +244,7 @@
 						<label id="headername">${employeeDetail.employeeName}さん</label><br> <label id="headerlevel">レベル${employeeDetail.level}</label>
 					</div>
 					<div id="headerimage">
-						<img src="/HomeSystem/images/employees/${employeeDetail.employeeId}.jpg?<%=milliSec%>">
+						<img src="/HomeSystem/images/employees/${employeeDetail.employeeId}.jpg?<%=milliSec%>" class="employeeImage">
 						<div id="headerflame">
 							<img src="/HomeSystem/images/flame/<%=level%>.png?<%=milliSec%>">
 						</div>

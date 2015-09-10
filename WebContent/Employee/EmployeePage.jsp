@@ -230,7 +230,7 @@ function graphChangeTotal(){
 	$(document).ready(function() {
 	    $('.employeeImage').error(function() {
 	        $(this).attr({
-	            src: '../images/employees/NoImage.png'
+	            src: '../images/icon/NoImage.png'
 	        });
 	    });
 	});
@@ -257,7 +257,7 @@ function graphChangeTotal(){
 						<label id="headername">${headerEmployeeData.employeeName}さん</label><br> <label id="headerlevel">レベル${headerEmployeeData.level}</label>
 					</div>
 					<div id="headerimage">
-						<img src="/HomeSystem/images/employees/${headerEmployeeData.employeeId}.jpg?<%=milliSec%>">
+						<img src="/HomeSystem/images/employees/${headerEmployeeData.employeeId}.jpg?<%=milliSec%>" class="employeeImage">
 						<div id="headerflame">
 							<img src="/HomeSystem/images/flame/<%=headerEmployeeLevel%>.png?<%=milliSec%>">
 						</div>
