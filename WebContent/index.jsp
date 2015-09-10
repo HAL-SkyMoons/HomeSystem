@@ -22,13 +22,24 @@
 	SimpleDateFormat sdf = new SimpleDateFormat("S");
 	String milliSec = sdf.format(date);
 	ArrayList<EmployeePageBean> employeeDates = (ArrayList<EmployeePageBean>) request
-			.getAttribute("employeeDetail");
+	.getAttribute("employeeDetail");
 	EmployeePageBean employeeDate = employeeDates.get(0);
 	int level = employeeDate.getLevel();
 	if (level > 12) {
 		level = 12;
 	}
 %>
+<script type="text/javascript" src="../js/Chart.js-master/Chart.js"></script>
+<script>
+	//画像差し替えメソッド
+	$(document).ready(function() {
+		$('.employeeImage').error(function() {
+			$(this).attr({
+				src : '//images/employees/NoImage.png'
+			});
+		});
+	});
+</script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,7 +67,7 @@
 						<label id="headername">${employeeDetail.employeeName}さん</label><br> <label id="headerlevel">レベル${employeeDetail.level}</label>
 					</div>
 					<div id="headerimage">
-						<img src="/HomeSystem/images/employees/${employeeDetail.employeeId}.jpg?<%=milliSec%>">
+						<img src="/HomeSystem/images/employees/${employeeDetail.employeeId}.jpg?<%=milliSec%>" class="js-replace-no-image">
 						<div id="headerflame">
 							<img src="/HomeSystem/images/flame/<%=level%>.png?<%=milliSec%>">
 						</div>
