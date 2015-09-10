@@ -103,7 +103,35 @@
 			<!--*********************************ここからふったー ***********************************-->
 		</div>
 		<footer>
-			<div id="footermenu"></div>
+			<div id="footertop">
+				<a href="#top">▲ページTOPへ▲</a>
+			</div>
+
+			<div id="footermenu">
+				<div id="footermenuin">
+					<div id="footermenu1">
+						<h4>社員</h4>
+						<p><a href="/HomeSystem/fc/EmployeeList">社員一覧</a></p>
+						<p><a href="/HomeSystem/fc/EmployeeMyPage">マイページ</a></p>
+					</div>
+					<div id="footermenu2">
+						<h4>企画</h4>
+						<p><a href="/HomeSystem/fc/PlanList">企画一覧</a></p>
+						<p><a href="/HomeSystem/fc/PlanRegister">企画登校</a></p>
+						<p><a href="/HomeSystem/fc/PlanCalendar">企画カレンダー</a></p>
+					</div>
+					<div id="footermenu3">
+						<h4>コンテンツ</h4>
+						<p><a href="/HomeSystem/fc/EmployeeList">ホメホメコンテンツ</a></p>
+						<p><a href="/HomeSystem/fc/EmployeeList">ホメホメコンテンツ</a></p>
+					</div>
+					<div id="footermenu4">
+						<h4>ランキング</h4>
+						<p><a href="/HomeSystem/fc/ranking/topnum">ランキング</a></p>
+					</div>
+				</div>
+			</div>
+
 			<div id="footerline">Copyright &copy; 2015-2016 SkyMoons All Rights Reserved.</div>
 		</footer>
 	</div>
