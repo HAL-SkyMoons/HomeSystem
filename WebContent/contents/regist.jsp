@@ -286,7 +286,7 @@
 					</c:forEach>
 				</div>
 				<div class="btnZone">
-					<input type="submit" name="submit" class="btn btn-2 btn-2c submit" id="submit" value="登録">
+					<input type="submit" name="submit" class="btn btn-2 btn-2c contents_submit" id="submit" value="登録">
 				</div>
 			</form>
 		</div>
