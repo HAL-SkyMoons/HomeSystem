@@ -9,6 +9,8 @@
 <%@page import="java.text.*"%>
 <%@page import="jp.ac.hal.skymoons.util.Utility"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<script type="text/javascript" src="/HomeSystem/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="/HomeSystem/js/colorbox/jquery.colorbox.js"></script>
 
 <%
 	SessionController sessionController = new SessionController(request);
@@ -29,13 +31,13 @@
 		level = 12;
 	}
 %>
-<script type="text/javascript" src="../js/Chart.js-master/Chart.js"></script>
+
 <script>
 	//画像差し替えメソッド
 	$(document).ready(function() {
-		$('.employeeImage').error(function() {
+		$('.js-replace-no-image').error(function() {
 			$(this).attr({
-				src : '//images/employees/NoImage.png'
+				src : '/HomeSystem/images//icon/NoImage.png'
 			});
 		});
 	});

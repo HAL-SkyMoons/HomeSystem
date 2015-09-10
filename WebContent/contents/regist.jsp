@@ -27,6 +27,8 @@
 		level = 12;
 	}
 %>
+<script type="text/javascript" src="/HomeSystem/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="/HomeSystem/js/colorbox/jquery.colorbox.js"></script>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 		<script type="text/javascript" src="../../js/jquery-2.1.4.min.js"></script>
 		<script type="text/javascript" src="../../js/autosize/autosize.js"></script>
@@ -36,7 +38,7 @@
 	$(document).ready(function() {
 	    $('.js-replace-no-image').error(function() {
 	        $(this).attr({
-	            src: '/HomeSystem/images/employees/NoImage.png'
+	            src: '/HomeSystem/images/icon/NoImage.png'
 	        });
 	    });
 	});
@@ -51,24 +53,24 @@
 		<link rel="stylesheet" type="text/css" href="../../css/ContentsRegist.css">
 		<link rel="stylesheet" type="text/css" href="/HomeSystem/css/style.css">
 		<title>コンテンツ登録</title>
-		
+
 		<script type="text/javascript">
 		$(document).ready(function() {
-		
+
 			//Hide (Collapse) the toggle containers on load
 			$(".toggle_container").hide();
-		
+
 			//Switch the "Open" and "Close" state per click then slide up/down (depending on open/close state)
 			$(".trigger").click(function() {
 				$(this).toggleClass("active").next().slideToggle("slow");
 				return false; //Prevent the browser jump to the link anchor
 			});
-		
+
 		});
 		</script>
 	</head>
 	<body>
-	
+
 		<!--******************************** こっからへっだー ***********************************-->
 	<div id="allwrap">
 		<div id="headerline">line</div>
@@ -124,7 +126,7 @@
 		</header>
 		<div id="allcontents">
 			<!--*********************************ここまでへっだー ***********************************-->
-	
+
 		<c:set var="i" value="${registData}"/>
 		<div id="wrapper">
 			<h1>コンテンツ登録</h1>
@@ -301,7 +303,7 @@
 				</div>
 			</form>
 		</div>
-		
+
 			<!--*********************************ここからふったー ***********************************-->
 		</div>
 		<footer>
