@@ -52,6 +52,7 @@
 <link rel="stylesheet" type="text/css" href="/HomeSystem/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="/HomeSystem/css/bootstrap-theme.min.css">
 <link rel="stylesheet" type="text/css" href="/HomeSystem/css/style.css">
+<link rel="stylesheet" type="text/css" href="/HomeSystem/css/index.css">
 <title>トップ</title>
 </head>
 <body>
@@ -112,8 +113,23 @@
 		<div id="allcontents">
 			<!--*********************************ここまでへっだー ***********************************-->
 
-			<!-- ここに内容 -->
+			<div id="wrapper">
+				<div id="top">
+					<img src="/HomeSystem/images/index/index1.png">
+					<p>ホメ、ホメられてやる気を充実</p>
+				</div>
+				<div id="bottom">
+					<div id="bottomleft">
+						<img src="/HomeSystem/images/index/index2.png">
 
+						<p>ポイントをもらって溜めてレベルがアップ！</p>
+					</div>
+					<div id="bottomright">
+						<img src="/HomeSystem/images/index/index3.png">
+						<p>企画を立てて相互評価！</p>
+					</div>
+				</div>
+			</div>
 			<!--*********************************ここからふったー ***********************************-->
 		</div>
 		<footer>
