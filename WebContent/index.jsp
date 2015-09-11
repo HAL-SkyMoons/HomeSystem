@@ -17,6 +17,7 @@
 	String url = sessionController.checkUserSession();
 	if (url != null) {
 		response.sendRedirect("/HomeSystem" + url);
+
 	}
 %>
 <%
@@ -31,6 +32,7 @@
 		level = 12;
 	}
 %>
+
 
 <script>
 	//画像差し替えメソッド
