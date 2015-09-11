@@ -17,19 +17,21 @@
 	String url = sessionController.checkUserSession();
 	if (url != null) {
 		response.sendRedirect("/HomeSystem" + url);
-
 	}
 %>
 <%
 	Date date = new Date();
 	SimpleDateFormat sdf = new SimpleDateFormat("S");
 	String milliSec = sdf.format(date);
-	ArrayList<EmployeePageBean> employeeDates = (ArrayList<EmployeePageBean>) request
-	.getAttribute("employeeDetail");
-	EmployeePageBean employeeDate = employeeDates.get(0);
-	int level = employeeDate.getLevel();
-	if (level > 12) {
-		level = 12;
+	int level = 0;
+	if(request.getAttribute("employeeDetail") != null){
+		ArrayList<EmployeePageBean> employeeDates = (ArrayList<EmployeePageBean>) request
+		.getAttribute("employeeDetail");
+		EmployeePageBean employeeDate = employeeDates.get(0);
+		level = employeeDate.getLevel();
+		if (level > 12) {
+			level = 12;
+		}
 	}
 %>
 
