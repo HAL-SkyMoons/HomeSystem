@@ -130,6 +130,7 @@ $(document).ready(function() {
 		<div id="allcontents">
 			<!--*********************************ここまでへっだー ***********************************-->
 	<div id="wrapper">
+	<h1>企画登録確認</h1>
 		<form action="/HomeSystem/fc/PlanConfirmation" method="post">
 			<div id="plan">
 				<div id="planHeader">

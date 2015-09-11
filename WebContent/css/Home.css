@@ -31,8 +31,8 @@ p {
 	width: 150px;
 	height: 150px;
 	margin: 0 auto;
-	display: inline-block;
 	position: relative;
+	display: inline-block;
 }
 
 #face>img {

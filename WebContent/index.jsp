@@ -23,14 +23,18 @@
 	Date date = new Date();
 	SimpleDateFormat sdf = new SimpleDateFormat("S");
 	String milliSec = sdf.format(date);
-	ArrayList<EmployeePageBean> employeeDates = (ArrayList<EmployeePageBean>) request
-	.getAttribute("employeeDetail");
-	EmployeePageBean employeeDate = employeeDates.get(0);
-	int level = employeeDate.getLevel();
-	if (level > 12) {
-		level = 12;
+	int level = 0;
+	if(request.getAttribute("employeeDetail") != null){
+		ArrayList<EmployeePageBean> employeeDates = (ArrayList<EmployeePageBean>) request
+		.getAttribute("employeeDetail");
+		EmployeePageBean employeeDate = employeeDates.get(0);
+		level = employeeDate.getLevel();
+		if (level > 12) {
+			level = 12;
+		}
 	}
 %>
+
 
 <script>
 	//画像差し替えメソッド
@@ -50,6 +54,7 @@
 <link rel="stylesheet" type="text/css" href="/HomeSystem/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="/HomeSystem/css/bootstrap-theme.min.css">
 <link rel="stylesheet" type="text/css" href="/HomeSystem/css/style.css">
+<link rel="stylesheet" type="text/css" href="/HomeSystem/css/index.css">
 <title>トップ</title>
 </head>
 <body>
@@ -110,14 +115,27 @@
 		<div id="allcontents">
 			<!--*********************************ここまでへっだー ***********************************-->
 
-			<!-- ここに内容 -->
+			<div id="wrapper">
+				<div id="top">
+					<img src="/HomeSystem/images/index/index1.png">
+					<p>ホメ、ホメられてやる気を充実</p>
+				</div>
+				<div id="bottom">
+					<div id="bottomleft">
+						<img src="/HomeSystem/images/index/index2.png">
 
+						<p>ポイントをもらって溜めてレベルがアップ！</p>
+					</div>
+					<div id="bottomright">
+						<img src="/HomeSystem/images/index/index3.png">
+						<p>企画を立てて相互評価！</p>
+					</div>
+				</div>
+			</div>
 			<!--*********************************ここからふったー ***********************************-->
 		</div>
 		<footer>
-			<div id="footertop">
-				<a href="#top">▲ページTOPへ</a>
-			</div>
+
 
 			<div id="footermenu">
 				<div id="footermenuin">

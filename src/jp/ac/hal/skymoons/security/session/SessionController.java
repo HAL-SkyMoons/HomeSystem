@@ -25,7 +25,8 @@ public class SessionController {
 		"/HomeSystem/error/session.jsp";
 	// フォワード用セッションエラーページURL
 	private String forwardSessionErrorPageUrl =
-		"/error/session.jsp";
+			"/login/cs.jsp";
+		//"/error/session.jsp";
 	// 社員・顧客ユーザのフォワード用セッションエラーページURL
 	private String csUserforwardSessionErrorPageUrl =
 		"/login/cs.jsp";

@@ -5,6 +5,10 @@ body {
 		'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, sans-serif;
 }
 
+h1 {
+	margin: 30px 0 10px;
+}
+
 #headerline {
 	height: 10px;
 	width: 100%;
@@ -14,12 +18,11 @@ body {
 }
 
 header {
-	position:relative;
+	position: relative;
 	width: 1000px;
 	margin: 0 auto 10px;
 	height: 216px;
 	z-index: 5
-
 }
 
 #logo {
@@ -233,7 +236,6 @@ html, body {
 	height: auto !important; /*IE6対策*/
 	height: 100%; /*IE6対策*/
 	min-height: 100%;
-
 }
 
 #allcontents {

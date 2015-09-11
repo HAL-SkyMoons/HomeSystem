@@ -10,7 +10,7 @@
 <%@page import="jp.ac.hal.skymoons.util.Utility"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
-    Date date = new Date();
+	Date date = new Date();
     SimpleDateFormat sdf = new SimpleDateFormat("S");
     String milliSec = sdf.format(date);
     ArrayList<EmployeePageBean> employeeDates = (ArrayList<EmployeePageBean>) request

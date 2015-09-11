@@ -1,0 +1,44 @@
+@CHARSET "UTF-8";
+
+#wrapper {
+	width: 900px;
+	margin: 25px auto 0;
+}
+
+#allcontents {
+	padding-bottom: 200px;
+}
+
+#top, #bottom {
+	width: 900px;
+	height: 350px;
+	text-align: center;
+}
+
+#top img {
+	height: 300px;
+}
+
+#bottomleft, #bottomright {
+	padding-top: 50px;
+	width: 450px;
+	height: 350px;
+	text-align: center;
+}
+
+#bottom img {
+	height: 200px;
+}
+
+p {
+	font-size: 20px;
+	margin: 20px;
+}
+
+#bottomleft {
+	float: left;
+}
+
+#bottomright {
+	margin-left: 450px;
+}

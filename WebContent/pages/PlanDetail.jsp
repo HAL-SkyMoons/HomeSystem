@@ -134,6 +134,7 @@
 		<div id="allcontents">
 			<!--*********************************ここまでへっだー ***********************************-->
 			<div id="wrapper">
+			<h1>企画詳細</h1>
 				<div id="plan">
 					<div id="planHeader">
 						<div id="id">No.${planDetail.planId}</div>

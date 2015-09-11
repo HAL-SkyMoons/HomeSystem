@@ -6,7 +6,10 @@
 	font-family: 'Lucida Grande', 'Hiragino Kaku Gothic ProN',
 		'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, sans-serif;
 	text-align: center;
+	padding-top:100px;
 }
+
+
 
 /*ボタン*/
 .btn {

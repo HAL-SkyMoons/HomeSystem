@@ -325,6 +325,7 @@
 		<div id="allcontents">
 			<!--*********************************ここまでへっだー ***********************************-->
 			<div id="wrapper">
+			<h1>企画編集</h1>
 				<form action="/HomeSystem/fc/PlanDetail" method="post">
 					<div id="plan">
 						<div id="planHeader">
