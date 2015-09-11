@@ -11,11 +11,11 @@
 <%@page import="jp.ac.hal.skymoons.util.Utility"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
-    Date date = new Date();
+	Date date = new Date();
 	SimpleDateFormat sdf = new SimpleDateFormat("S");
 	String milliSec = sdf.format(date);
 	ArrayList<EmployeePageBean> employeeDates = (ArrayList<EmployeePageBean>) request
-			.getAttribute("employeeDetail");
+	.getAttribute("employeeDetail");
 	EmployeePageBean employeeDate = employeeDates.get(0);
 	int level = employeeDate.getLevel();
 	if (level > 12) {
@@ -28,7 +28,7 @@
 <meta charset="UTF-8">
 <title>企画カレンダー</title>
 <%
-    ArrayList<PlanBean> planList = (ArrayList<PlanBean>)request.getAttribute("planList");
+	ArrayList<PlanBean> planList = (ArrayList<PlanBean>)request.getAttribute("planList");
 %>
 <!-- CSS -->
 <link rel="stylesheet" type="text/css" href="/HomeSystem/css/reset.css">
@@ -43,14 +43,14 @@
 <script type="text/javascript" src="../js/fullcalendar/js/fullcalendar.min.js"></script>
 <script type="text/javascript" src="../js/fullcalendar/js/ja.js"></script>
 <script type="text/javascript">
-//画像差し替えメソッド
-$(document).ready(function() {
-    $('.js-replace-no-image').error(function() {
-        $(this).attr({
-            src: '../images/icon/NoImage.png'
-        });
-    });
-});
+	//画像差し替えメソッド
+	$(document).ready(function() {
+		$('.js-replace-no-image').error(function() {
+			$(this).attr({
+				src : '../images/icon/NoImage.png'
+			});
+		});
+	});
 </script>
 
 <script>
@@ -156,7 +156,10 @@ $(document).ready(function() {
 		</header>
 		<div id="allcontents">
 			<!--*********************************ここまでへっだー ***********************************-->
-			<div id="calendar"></div>
+			<div id="waapper" style="width:1000px; margin:0 auto;" >
+				<h1>企画カレンダー</h1>
+				<div id="calendar"></div>
+			</div>
 			<!--*********************************ここからふったー ***********************************-->
 		</div>
 		<footer>

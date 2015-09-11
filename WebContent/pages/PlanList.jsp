@@ -133,6 +133,7 @@ $(document).ready(function() {
 		<div id="allcontents">
 			<!--*********************************ここまでへっだー ***********************************-->
 	<div class="wrapper">
+	<h1>企画一覧</h1>
 		<table class="search">
 			<tr>
 				<th>キーワード</th>

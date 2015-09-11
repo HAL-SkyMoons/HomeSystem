@@ -20,7 +20,7 @@
 	SimpleDateFormat sdf = new SimpleDateFormat("S");
 	String milliSec = sdf.format(date);
 	ArrayList<EmployeePageBean> employeeDates = (ArrayList<EmployeePageBean>) request
-			.getAttribute("employeeDetail");
+	.getAttribute("employeeDetail");
 	EmployeePageBean employeeDate = employeeDates.get(0);
 	int level = employeeDate.getLevel();
 	if (level > 12) {
@@ -34,7 +34,7 @@
     userLevel = 12;
 	}
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -47,14 +47,14 @@
 <script type="text/javascript" src="../js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="../js/autosize/autosize.js"></script>
 <script type="text/javascript">
-//画像差し替えメソッド
-$(document).ready(function() {
-    $('.js-replace-no-image').error(function() {
-        $(this).attr({
-            src: '../images/icon/NoImage.png'
-        });
-    });
-});
+	//画像差し替えメソッド
+	$(document).ready(function() {
+		$('.js-replace-no-image').error(function() {
+			$(this).attr({
+				src : '/HomeSystem/images/icon/NoImage.png'
+			});
+		});
+	});
 </script>
 <script type="text/javascript">
 	$(function() {
@@ -291,159 +291,143 @@ $(document).ready(function() {
 		</header>
 		<div id="allcontents">
 			<!--*********************************ここまでへっだー ***********************************-->
-	<div id="wrapper">
-		<form action="/HomeSystem/fc/PlanRegister" method="post">
-			<div id="plan">
-				<div id="planHeader">
-					<div id="planDate">
-						<jsp:useBean id="Date" class="java.util.Date" />
-						企画日：
-						<fmt:formatDate value="${Date}" pattern="yyyy年MM月dd日" />
-					</div>
-				</div>
-				<div id="title">
-					<textarea id="titleValue" rows="1" name="planTitle" placeholder="企画タイトル" maxlength="100"  required></textarea>
-				</div>
-				<div id="planDetail">
-					<div id="startEnd">
-						<div>企画実施日</div>
-						<select name="startYear">
-							<%
-							    for (int i = 2000; i <= 2100; i++) {
-											out.println("<option value=\"" + i + "\">" + i + "</option>");
-										}
-							%>
-						</select>
-						年
-						<SELECT name="startMonth">
-							<%
-							    for (int i = 1; i <= 12; i++) {
-											out.println("<option value=\"" + i + "\">" + i + "</option>");
-										}
-							%>
-						</SELECT>
-						月
-						<SELECT name="startDay">
-							<%
-							    for (int i = 1; i <= 31; i++) {
-											out.println("<option value=\"" + i + "\">" + i + "</option>");
-										}
-							%>
-						</select>
-						日
-						<SELECT name="startHour">
-							<%
-							    for (int i = 1; i <= 24; i++) {
-											out.println("<option value=\"" + i + "\">" + i + "</option>");
-										}
-							%>
-						</select>
-						時
-						<SELECT name="startMinutes">
-							<%
-							    for (int i = 0; i < 60; i += 10) {
-											out.println("<option value=\"" + i + "\">" + i + "</option>");
-										}
-							%>
-
-						</select>
-						分 <br>
-						<div class="centre">&#x7C;</div>
-						<select name="endYear">
-							<%
-							    for (int i = 2000; i <= 2100; i++) {
-											out.println("<option value=\"" + i + "\">" + i + "</option>");
-										}
-							%>
-						</select>
-						年
-						<SELECT name="endMonth">
-							<%
-							    for (int i = 1; i <= 12; i++) {
-											out.println("<option value=\"" + i + "\">" + i + "</option>");
-										}
-							%>
-						</SELECT>
-						月
-						<SELECT name="endDay">
-							<%
-							    for (int i = 1; i <= 31; i++) {
-											out.println("<option value=\"" + i + "\">" + i + "</option>");
-										}
-							%>
-						</select>
-						日
-						<SELECT name="endHour">
-							<%
-							    for (int i = 1; i <= 24; i++) {
-											out.println("<option value=\"" + i + "\">" + i + "</option>");
-										}
-							%>
-						</select>
-						時
-						<SELECT name="endMinutes">
-							<%
-							    for (int i = 0; i < 60; i += 10) {
-											out.println("<option value=\"" + i + "\">" + i + "</option>");
-										}
-							%>
-
-						</select>
-						分 <br>
-						<div id="dateInfo"></div>
-					</div>
-					<div id="planner">
-						企画者
-						<div id="img">
-							<img src="../images/employees/${user.userId}.jpg?<%=milliSec%>" class="js-replace-no-image">
+			<div id="wrapper">
+			<h1>企画登録</h1>
+				<form action="/HomeSystem/fc/PlanRegister" method="post">
+					<div id="plan">
+						<div id="planHeader">
+							<div id="planDate">
+								<jsp:useBean id="Date" class="java.util.Date" />
+								企画日：
+								<fmt:formatDate value="${Date}" pattern="yyyy年MM月dd日" />
+							</div>
 						</div>
-						<div class="flameDiv">
-							<img src="../images/flame/<%=userLevel%>.png?<%=milliSec%>" class="employeeFlame">
+						<div id="title">
+							<textarea id="titleValue" rows="1" name="planTitle" placeholder="企画タイトル" maxlength="100" required></textarea>
 						</div>
-						${user.lastName}${user.firstName}
-						<input type="hidden" name="planner" value="${user.userId}">
-					</div>
-				</div>
-				<div id="planComment"><textarea id="planCommentValue" rows="1" name="planComment" placeholder="企画内容" maxlength="1000"></textarea></div>
-				<br>
-				<c:forEach var="bigGenre" items="${bigGenreList}">
-					<span class="trigger">&#9661;${bigGenre.bigGenreName }</span>
-					<div class="toggle_container">
-						<table>
-							<tr>
-								<c:set var="count" value="0" />
-								<c:forEach var="genre" items="${genreList}" varStatus="status">
+						<div id="planDetail">
+							<div id="startEnd">
+								<div>企画実施日</div>
+								<select name="startYear">
+									<%
+										for (int i = 2000; i <= 2100; i++) {
+																		out.println("<option value=\"" + i + "\">" + i + "</option>");
+																	}
+									%>
+								</select> 年 <SELECT name="startMonth">
+									<%
+										for (int i = 1; i <= 12; i++) {
+																		out.println("<option value=\"" + i + "\">" + i + "</option>");
+																	}
+									%>
+								</SELECT> 月 <SELECT name="startDay">
+									<%
+										for (int i = 1; i <= 31; i++) {
+																		out.println("<option value=\"" + i + "\">" + i + "</option>");
+																	}
+									%>
+								</select> 日 <SELECT name="startHour">
+									<%
+										for (int i = 1; i <= 24; i++) {
+																		out.println("<option value=\"" + i + "\">" + i + "</option>");
+																	}
+									%>
+								</select> 時 <SELECT name="startMinutes">
+									<%
+										for (int i = 0; i < 60; i += 10) {
+																		out.println("<option value=\"" + i + "\">" + i + "</option>");
+																	}
+									%>
 
-									<c:if test="${genre.bigGenreId == bigGenre.bigGenreId}">
+								</select> 分 <br>
+								<div class="centre">&#x7C;</div>
+								<select name="endYear">
+									<%
+										for (int i = 2000; i <= 2100; i++) {
+																		out.println("<option value=\"" + i + "\">" + i + "</option>");
+																	}
+									%>
+								</select> 年 <SELECT name="endMonth">
+									<%
+										for (int i = 1; i <= 12; i++) {
+																		out.println("<option value=\"" + i + "\">" + i + "</option>");
+																	}
+									%>
+								</SELECT> 月 <SELECT name="endDay">
+									<%
+										for (int i = 1; i <= 31; i++) {
+																		out.println("<option value=\"" + i + "\">" + i + "</option>");
+																	}
+									%>
+								</select> 日 <SELECT name="endHour">
+									<%
+										for (int i = 1; i <= 24; i++) {
+																		out.println("<option value=\"" + i + "\">" + i + "</option>");
+																	}
+									%>
+								</select> 時 <SELECT name="endMinutes">
+									<%
+										for (int i = 0; i < 60; i += 10) {
+																		out.println("<option value=\"" + i + "\">" + i + "</option>");
+																	}
+									%>
 
-										<td><label> <c:if test="${searchGenre.containsKey(genre.genreId)}">
-													<input type="checkbox" name="genre" value="${genre.genreId }:${genre.genreName }" checked="checked">${genre.genreName }
+								</select> 分 <br>
+								<div id="dateInfo"></div>
+							</div>
+							<div id="planner">
+								企画者
+								<div id="img">
+									<img src="../images/employees/${user.userId}.jpg?<%=milliSec%>" class="js-replace-no-image">
+								</div>
+								<div class="flameDiv">
+									<img src="../images/flame/<%=userLevel%>.png?<%=milliSec%>" class="employeeFlame">
+								</div>
+								${user.lastName}${user.firstName} <input type="hidden" name="planner" value="${user.userId}">
+							</div>
+						</div>
+						<div id="planComment">
+							<textarea id="planCommentValue" rows="1" name="planComment" placeholder="企画内容" maxlength="1000"></textarea>
+						</div>
+						<br>
+						<c:forEach var="bigGenre" items="${bigGenreList}">
+							<span class="trigger">&#9661;${bigGenre.bigGenreName }</span>
+							<div class="toggle_container">
+								<table>
+									<tr>
+										<c:set var="count" value="0" />
+										<c:forEach var="genre" items="${genreList}" varStatus="status">
+
+											<c:if test="${genre.bigGenreId == bigGenre.bigGenreId}">
+
+												<td><label> <c:if test="${searchGenre.containsKey(genre.genreId)}">
+															<input type="checkbox" name="genre" value="${genre.genreId }:${genre.genreName }" checked="checked">${genre.genreName }
 									</c:if> <c:if test="${!searchGenre.containsKey(genre.genreId)}">
-													<input type="checkbox" name="genre" value="${genre.genreId }:${genre.genreName }">${genre.genreName }
+															<input type="checkbox" name="genre" value="${genre.genreId }:${genre.genreName }">${genre.genreName }
 									</c:if>
 
-										</label></td>
-										<c:set var="count" value="${count+1}" />
-									</c:if>
-									<c:if test="${count%3 ==0}">
-							</tr>
-							<tr>
-								</c:if>
-								</c:forEach>
-							</tr>
-						</table>
+												</label></td>
+												<c:set var="count" value="${count+1}" />
+											</c:if>
+											<c:if test="${count%3 ==0}">
+									</tr>
+									<tr>
+										</c:if>
+										</c:forEach>
+									</tr>
+								</table>
+							</div>
+							<br>
+
+						</c:forEach>
+
 					</div>
-					<br>
-
-				</c:forEach>
-
+					<div class="btnZone">
+						<input type="submit" name="submit" class="btn btn-2 btn-2c submitBtn" id="submit" value="登録">
+					</div>
+				</form>
 			</div>
-			<div class="btnZone">
-				<input type="submit" name="submit" class="btn btn-2 btn-2c submitBtn" id="submit" value="登録">
-			</div>
-		</form>
-	</div>
-				<!--*********************************ここからふったー ***********************************-->
+			<!--*********************************ここからふったー ***********************************-->
 		</div>
 		<footer>
 			<div id="footertop">

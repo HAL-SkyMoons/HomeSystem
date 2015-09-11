@@ -16,9 +16,9 @@
 <%@page import="java.text.*"%>
 <%@page import="jp.ac.hal.skymoons.util.Utility"%>
 <%
-    Date date = new Date();
-			SimpleDateFormat sdf = new SimpleDateFormat("S");
-			String milliSec = sdf.format(date);
+	Date date = new Date();
+	SimpleDateFormat sdf = new SimpleDateFormat("S");
+	String milliSec = sdf.format(date);
 %>
 <!DOCTYPE html>
 <html lang="ja">
@@ -46,11 +46,10 @@
 	});
 </script>
 <%
-    UserBean user =(UserBean)request.getAttribute("toUser");
+	UserBean user = (UserBean) request.getAttribute("toUser");
 	int level = user.getLevel();
-	if(level > 12)
-	{
-	    level = 12;
+	if (level > 12) {
+		level = 12;
 	}
 %>
 </head>
@@ -87,8 +86,7 @@
 							</c:if>
 						</div>
 						<div id="point">
-							評価ポイント：
-							<input type="number" name="point" min="1" max="10" value="1">
+							評価ポイント： <input type="number" name="point" min="1" max="10" value="1">
 						</div>
 					</div>
 				</div>

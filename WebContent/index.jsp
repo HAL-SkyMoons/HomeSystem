@@ -117,9 +117,7 @@
 			<!--*********************************ここからふったー ***********************************-->
 		</div>
 		<footer>
-			<div id="footertop">
-				<a href="#top">▲ページTOPへ</a>
-			</div>
+
 
 			<div id="footermenu">
 				<div id="footermenuin">

@@ -2,7 +2,7 @@
 
 #wrapper {
 	width: 500px;
-	margin: 0 auto;
+	margin: 0px auto;
 	font-family: 'Lucida Grande', 'Hiragino Kaku Gothic ProN',
 		'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, sans-serif;
 }
@@ -13,6 +13,7 @@
 
 #planHeader {
 	overflow: hidden;
+	height:0;
 }
 
 #id {
