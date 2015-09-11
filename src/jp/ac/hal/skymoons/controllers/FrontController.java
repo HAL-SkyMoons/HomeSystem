@@ -47,7 +47,7 @@ public class FrontController extends HttpServlet {
 		System.out.println("targetModel:" + targetModel);
 
 		// 業務ロジックを実行しJSP名を取得
-		String jspName = "/pages/error.html";
+		String jspName = "/login/cs.jsp";
 		try {
 			jspName = targetModel.doService(request, response);
 			System.out.println(jspName);
@@ -85,7 +85,7 @@ public class FrontController extends HttpServlet {
 		// targetModel.setLanguage(languageDao);
 
 		// 業務ロジックを実行しJSP名を取得
-		String jspName = "/pages/error.html";
+		String jspName = "/login/cs.jsp";
 		try {
 			jspName = targetModel.doService(request, response);
 		} catch (Exception e) {
