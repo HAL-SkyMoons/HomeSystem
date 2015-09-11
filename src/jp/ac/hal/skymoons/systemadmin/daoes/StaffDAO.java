@@ -167,8 +167,8 @@ public class StaffDAO {
 		preparedStatement.setString(3, values[0]);
 		preparedStatement.setString(4, values[1]);
 		preparedStatement.setString(5, values[7]);
-		preparedStatement.setString(6, values[2]);
-		preparedStatement.setString(7, values[3]);
+		preparedStatement.setString(6, values[3]);
+		preparedStatement.setString(7, values[2]);
 		preparedStatement.executeUpdate();
 		String sql2 = "INSERT INTO employees VALUES (?, '', 1, 0, 0, ?);";
 		preparedStatement = this.connection.prepareStatement(sql2);
