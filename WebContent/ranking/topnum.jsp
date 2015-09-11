@@ -226,7 +226,7 @@
 					if (batch == null) {
 						out.print("総合");
 					} else {
-						out.print(batchList.get(Integer.valueOf(batch)).getBatch_name());
+						out.print(batchList.get(Integer.valueOf(batch)-1).getBatch_name());
 					}
 
 					out.print("ランキング");
