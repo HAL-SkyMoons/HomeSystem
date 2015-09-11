@@ -44,7 +44,7 @@ public class ContentsUpdateModel extends AbstractModel{
 				updateBean.setStartDatetime(startDatetime);
 	
 				//終了日の設定
-				if(request.getParameter("addEndDate") != null && request.getParameter("addEndDate").equals("true")){
+				if(request.getParameter("addEndDatetime") != null && request.getParameter("addEndDatetime").equals("true")){
 					String endYear = request.getParameter("endYear");
 					String endMonth = request.getParameter("endMonth");
 					String endDay = request.getParameter("endDay");
@@ -81,7 +81,7 @@ public class ContentsUpdateModel extends AbstractModel{
 				dao.changeGenre(updateBean);
 				
 				//終了日の設定
-				if(request.getParameter("addEndDate") != null){
+				if(request.getParameter("addEndDatetime") != null){
 					dao.updateEndDate(updateBean);
 				}
 				

@@ -252,7 +252,7 @@
 								</c:forEach>
 							</select>
 							分<br/>
-							<input type="checkbox" name="addEndDatetime" value="false"/>終了日を登録しない
+							<input type="checkbox" name="addEndDatetime" value="true"/>終了日を登録する
 						</div>
 						<div id="planner">投稿者
 							<div id="img">
