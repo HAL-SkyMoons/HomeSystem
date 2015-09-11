@@ -34,6 +34,7 @@ public class FrontController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setHeader("Pragma", "no-cache");
 		response.setHeader("Cache-Control","no-cache");
+		response.setDateHeader("Expires", 0);
 
 		System.out.println("fconGET!");
 
@@ -47,7 +48,7 @@ public class FrontController extends HttpServlet {
 		System.out.println("targetModel:" + targetModel);
 
 		// 業務ロジックを実行しJSP名を取得
-		String jspName = "/pages/error.html";
+		String jspName = "/login/cs.jsp";
 		try {
 			jspName = targetModel.doService(request, response);
 			System.out.println(jspName);
@@ -85,7 +86,7 @@ public class FrontController extends HttpServlet {
 		// targetModel.setLanguage(languageDao);
 
 		// 業務ロジックを実行しJSP名を取得
-		String jspName = "/pages/error.html";
+		String jspName = "/login/cs.jsp";
 		try {
 			jspName = targetModel.doService(request, response);
 		} catch (Exception e) {
