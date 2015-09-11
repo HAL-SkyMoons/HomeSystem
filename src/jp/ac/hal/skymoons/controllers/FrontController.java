@@ -34,6 +34,7 @@ public class FrontController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setHeader("Pragma", "no-cache");
 		response.setHeader("Cache-Control","no-cache");
+		response.setDateHeader("Expires", 0);
 
 		System.out.println("fconGET!");
 
