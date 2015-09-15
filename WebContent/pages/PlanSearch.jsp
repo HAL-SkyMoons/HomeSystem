@@ -130,6 +130,7 @@ $(document).ready(function() {
 		<div id="allcontents">
 			<!--*********************************ここまでへっだー ***********************************-->
 	<div class="wrapper">
+	<h1>詳細検索</h1>
 		<form action="/HomeSystem/fc/PlanList" method="post">
 			<table class="search">
 				<tr>
