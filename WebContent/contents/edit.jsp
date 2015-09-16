@@ -44,7 +44,6 @@ $(document).ready(function() {
 
 });
 </script>
-<c:if test="${scriptMessage != null}" >${scriptMessage}</c:if>
 <script type="text/javascript">
 	//画像差し替えメソッド
 	$(document).ready(function() {

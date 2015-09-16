@@ -91,16 +91,24 @@ public class ContentsAdditionModel extends AbstractModel{
 				//コミットと終了処理
 				dao.commit();
 				dao.close();
-				request.setAttribute("scriptMessage","<script>alert('投稿が完了しました。')</script>");
-				return "/fc/contents/detail?homeContentId=" + additionBean.getHomeContentId();
+				request.setAttribute("message","<p>投稿が完了しました。<br/>"
+						+ "<a href='/HomeSystem/fc/contents/detail?homeContentId="
+						+ additionBean.getHomeContentId() + "'>"
+						+ "<input type='button' value='投稿したコンテンツへ移動' class='btn btn-2 btn-2c'></a></p>");
+				return "/contents/complete.jsp";
+			}else{
+				//エラーメッセージ
+				request.setAttribute("message","<p>投稿に失敗しました。<br/>"
+						+ "ログインされていないか、社員でないため投稿が出来ません。<br/>"
+						+ "<a href='/HomeSystem/fc/contents/regist'>コンテンツ投稿画面へ戻る</a></p>");
+				//遷移先を指定
+				return "/contents/complete.jsp";
 			}
-			//エラーメッセージ
-			request.setAttribute("scriptMessage","<script>alert('ログイン情報の取得に失敗しました。\nログイン後にお試しください。')</script>");
-			//遷移先を指定
-			return "/fc/contents/regist";
 		}catch(Exception e){
 			e.printStackTrace();
-			return "/pages/error.html";
+			request.setAttribute("message","<p>投稿処理中にエラーが発生しました。<br/>"
+					+ "<a href='/HomeSystem/fc/contents/regist'>コンテンツ投稿画面へ戻る</a></p>");
+			return "/contents/complete.jsp";
 		}
 	}
 }

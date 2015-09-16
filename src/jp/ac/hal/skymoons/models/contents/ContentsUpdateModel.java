@@ -92,15 +92,23 @@ public class ContentsUpdateModel extends AbstractModel{
 				//コミットと終了処理
 				dao.commit();
 				dao.close();
-				request.setAttribute("scriptMessage","<script>alert('更新が完了しました。')</script>");
-				return "/fc/contents/detail?homeContentId=" + updateBean.getHomeContentId();
+				request.setAttribute("message","<p>更新が完了しました。<br/>"
+						+ "<a href='/HomeSystem/fc/contents/detail?homeContentId="
+						+ updateBean.getHomeContentId() + "'>"
+						+ "<input type='button' value='更新したコンテンツへ移動' class='btn btn-2 btn-2c'></a></p>");
+				return "/contents/complete.jsp";
 			}
-			//遷移先を指定	
-			request.setAttribute("scriptMessage","<script>alert('更新に失敗しました。')</script>");
-			return "/fc/contents/edit?homeContentId=" + request.getParameter("homeContentId");
+			//エラーメッセージ
+			request.setAttribute("message","<p>更新に失敗しました。<br/>"
+					+ "投稿ユーザーでないため更新が出来ません。<br/>"
+					+ "<a href='/HomeSystem/fc/contents/list'>"
+					+ "<input type='button' value='コンテンツ一覧へ移動' class='btn btn-2 btn-2c'></a></p>");
+			return "/contents/complete.jsp";
 		}catch(Exception e){
 			e.printStackTrace();
-			return "/pages/error.html";
+			request.setAttribute("message","<p>削除処理中にエラーが発生しました。<br/>"
+					+ "<a href='/HomeSystem/fc/contents/list'>コンテンツ一覧画面へ戻る</a></p>");
+			return "/contents/complete.jsp";
 		}
 	}
 }
