@@ -40,11 +40,20 @@ public class ContentsListDao {
 
 	public ArrayList<ContentsListBean> selectContents(String keyword, String employeeId, ArrayList<Integer> genreId, ArrayList<Integer> bigGenreId, String endContent, String existPlan, String order) throws SQLException {
 		//SQLの生成
+		/*
 		String contentsSql = "select * from home_contents hc, home_genre hg, genre g, users u "
 				+ "where hc.delete_flag != '1' "
 				+ "and hc.home_content_id = hg.home_content_id "
 				+ "and hg.genre_id = g.genre_id "
 				+ "and u.user_id = hc.employee_id ";
+		*/
+		String contentsSql = "select * from home_contents hc "
+				+ "right join users u on hc.employee_id = u.user_id ";
+		if(genreId != null && genreId.size() > 0 || bigGenreId != null && bigGenreId.size() > 0){
+			contentsSql += "join home_genre hg on hc.home_content_id = hg.home_content_id "
+							+ "join genre g on hg.genre_id = g.genre_id ";
+		}
+		contentsSql += "where hc.delete_flag != '1' ";
 		String sqlword = "and ";
 		if(keyword != null && keyword.length() > 0){
 			contentsSql += sqlword + "hc.home_content_title like ? or hc.home_content_comment like ? ";
