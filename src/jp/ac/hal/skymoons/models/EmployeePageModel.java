@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,7 +50,7 @@ public class EmployeePageModel extends AbstractModel{
 		//チャート描画用変数
 		String[] employeeChartBatchName = {};
 		int[] employeeChartBatchCount = {};
-		int batchKindCount=0;
+		HashMap<Integer, Integer> batchKind = new HashMap<Integer,Integer>();
 		//月間
 		int[] employeeChartBatchCountMonth = {};
 		//年間
@@ -83,12 +84,12 @@ public class EmployeePageModel extends AbstractModel{
 		bigGenreList = (ArrayList<BigGenreBean>) dao.getAllBigGenre();
 
 		//チャート描画用情報取得処理
-		employeeChartBatchName = (String[])dao.getEmployeeDetailOfBadgeNameForChart(employeeId);
-		batchKindCount = employeeChartBatchName.length;
-		employeeChartBatchCount = (int[])dao.getEmployeeDetailOfBadgeCountForChart(employeeId,"total","total",batchKindCount);
-		employeeChartBatchCountMonth =(int[])dao.getEmployeeDetailOfBadgeCountForChart(employeeId,"month",monthDate,batchKindCount);
-		employeeChartBatchCountYear =(int[])dao.getEmployeeDetailOfBadgeCountForChart(employeeId,"year",yearDate,batchKindCount);
-		employeeChartBatchCountTotal =(int[])dao.getEmployeeDetailOfBadgeCountForChart(employeeId,"total","total",batchKindCount);
+		employeeChartBatchName = (String[])dao.getEmployeeDetailOfBadgeNameForChart();
+		batchKind = (HashMap<Integer, Integer>)dao.getEmployeeDetailOfBadgeNameForChartMap();
+		employeeChartBatchCount = (int[])dao.getEmployeeDetailOfBadgeCountForChart(employeeId,"total","total",batchKind);
+		employeeChartBatchCountMonth =(int[])dao.getEmployeeDetailOfBadgeCountForChart(employeeId,"month",monthDate,batchKind);
+		employeeChartBatchCountYear =(int[])dao.getEmployeeDetailOfBadgeCountForChart(employeeId,"year",yearDate,batchKind);
+		employeeChartBatchCountTotal =(int[])dao.getEmployeeDetailOfBadgeCountForChart(employeeId,"total","total",batchKind);
 		dao.close();
 
 		//出力ページ用の引数をsetAtribute
