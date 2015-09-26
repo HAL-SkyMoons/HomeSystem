@@ -52,15 +52,21 @@ public class ContentsDeleteModel extends AbstractModel{
 				//コミットと終了処理
 				deleteDao.commit();
 				deleteDao.close();
-				request.setAttribute("scriptMessage","<script>alert('削除が完了しました。')</script>");
-				return "/fc/contents/list";
+				request.setAttribute("message","<p>削除が完了しました。<br/>"
+						+ "<a href='/HomeSystem/fc/contents/list'>"
+						+ "<input type='button' value='コンテンツ一覧へ移動' class='btn btn-2 btn-2c'></a></p>");
+				return "/contents/complete.jsp";
 			}
 			//遷移先を指定
-			request.setAttribute("scriptMessage","<script>alert('削除に失敗しました。')</script>");
-			return "/fc/contents/detail";
+			request.setAttribute("message","<p>削除に失敗しました。<br/>既に削除されているか、データが存在しません。<br/>"
+					+ "<a href='/HomeSystem/fc/contents/regist'>コンテンツ投稿画面へ戻る</a></p>");
+			//遷移先を指定
+			return "/contents/complete.jsp";
 		}catch(Exception e){
 			e.printStackTrace();
-			return "/pages/error.html";
+			request.setAttribute("message","<p>削除処理中にエラーが発生しました。<br/>"
+					+ "<a href='/HomeSystem/fc/contents/list'>コンテンツ一覧画面へ戻る</a></p>");
+			return "/contents/complete.jsp";
 		}
 	}
 

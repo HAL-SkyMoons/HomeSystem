@@ -28,7 +28,6 @@
 	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<c:if test="${scriptMessage != null}">${scriptMessage}</c:if>
 <script type="text/javascript" src="../../js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript">
 	function PostContentsDetail(homeContentId) {

@@ -31,6 +31,7 @@
 <script type="text/javascript" src="../../js/autosize/autosize.js"></script>
 <script type="text/javascript" src="../../js/jquery-2.1.4.min.js"></script>
 <script type="text/javascript" src="../../js/colorbox/jquery.colorbox.js"></script>
+<c:if test="${scriptMessage != null}" >${scriptMessage}</c:if>
 <script type="text/javascript">
 	//画像差し替えメソッド
 	$(document).ready(function() {
@@ -125,150 +126,9 @@
 
 		<c:set var="i" value="${detailList}"/>
 		<div id="wrapper">
-			<h1>コンテンツ詳細</h1>
+			<h1>処理結果</h1>
 			<div id="contents">
-				<c:if test="${i.endDatetime == '未完了' && i.employeeId == i.userId}" >
-					<form action="./edit" method="post">
-						<input type="hidden" name="homeContentId" value="${i.homeContentId}"/>
-						<input type="submit" value="編集" class="btn btn-2 btn-2c edit"/>
-					</form>
-				</c:if>
-				<div id="contentsHeader">
-					<div id="id">
-						No.${i.homeContentId}
-					</div>
-					<div id="planDate">
-						企画日時：${i.planDatetime}
-					</div>
-				</div>
-				<div id="title">
-					<span id="titleValue"><c:out value="${i.homeContentTitle}"/></span>
-				</div>
-				<div id="contentsDetail">
-					<div id="startEnd">
-						実施期間：<br>
-						${i.startDatetime}&nbsp;&nbsp;&sim;&nbsp;&nbsp;${i.endDatetime}
-					</div>
-					<div id="planner">
-						投稿者
-						<c:if test="${i.classFlag == 1}">
-							<c:if test="${i.userId == i.employeeId}">
-								<a href="/HomeSystem/fc/EmployeeMyPage">
-							</c:if>
-							<c:if test="${i.userId != i.employeeId}">
-								<a href="/HomeSystem/fc/EmployeePage?employeeId=${i.employeeId}">
-							</c:if>
-						</c:if>
-							<div id="img">
-								<img src="../../images/employees/${i.employeeId}.jpg" alt="投稿者" class="js-replace-no-image">
-							</div>
-							<c:if test="${i.level != null}">
-								<c:set var="level" value="${i.level}"/>
-								<c:if test="${i.level > 12}">
-									<c:set var="level" value="12"/>
-								</c:if>
-								<div class="flameDiv">
-									<img src="/HomeSystem/images/flame/${level}.png" class="employeeFlame">
-								</div>
-							</c:if>
-							${i.lastName}${i.firstName}<br/>
-						<c:if test="${i.classFlag == 1}">
-							</a>
-						</c:if>
-						<c:if test="${i.employeeId != i.userId}">
-							<a class="iframe" href="/HomeSystem/fc/Home?toUser=${i.employeeId}&contentsId=${i.homeContentId}" ><input type="button" value="ホメる" class="btn btn-2 btn-2c"></a>
-						</c:if>
-					</div>
-				</div>
-				<div id="contentsComment">
-					<c:out value="${i.homeContentComment}"/>
-				</div>
-				<div id="genre">
-					登録ジャンル<br>
-					<c:set var="cnt" value="0"/>
-					<c:forEach items="${i.genreName}" var="genreName">
-						<div class="genres"><a href="./list?genreId=${i.genreId[cnt]}"><c:out value="${genreName}"/></a></div>
-						<c:set var="cnt" value="${cnt + 1}"/>
-					</c:forEach>
-				</div>
-
-				<hr>
-				<c:if test="${dataList != null}">
-					<h3>添付ファイル</h3>
-					<div id="files">
-						<c:forEach items="${dataList}" var="j">
-							<div class="file">
-								<div vlass="fileImage">
-									<img src="${j.fileImagePath}" width="50" height="50">
-								</div>
-								<div class="fileName">${j.homeDataName}</div>
-								<form action="/HomeSystem/fc/contents/detail" method="post">
-									<input type="hidden" name="homeContentId" value="${j.homeContentId}">
-									<input type="hidden" name="path" value="../files/contents/master/${j.homeContentId}/${j.homeDataNo}/${j.homeDataName}" />
-									<input type="hidden" name="fileName" value="${j.homeDataName}"/>
-									<input type="submit" name="download" value="ダウンロード" class="btn btn-2 btn-2c download">
-								</form>
-							</div>
-						</c:forEach>
-					</div>
-					<hr>
-				</c:if>
-
-				<div class="commentData">
-					<c:set var="homeLogCount" value="1"/>
-					<c:forEach items="${homeLogList}" var="homeLog">
-						<div class="commentData">
-							<c:if test="${i.employeeId == homeLog.homeUser}"><c:set var="fromUser" value="true"/></c:if>
-							<c:if test="${i.employeeId != homeLog.homeUser}"><c:set var="fromUser" value="false"/></c:if>
-
-
-							<c:if test="${homeLog.classFlag == 1}">
-								<c:if test="${i.userId == homeLog.homeUser}">
-									<a href="/HomeSystem/fc/EmployeeMyPage">
-								</c:if>
-								<c:if test="${i.userId != homeLog.homeUser}">
-									<a href="/HomeSystem/fc/EmployeePage?employeeId=${i.employeeId}">
-								</c:if>
-							</c:if>
-								<c:if test="${fromUser}"><div class="planner"></c:if>
-								<c:if test="${!fromUser}"><div class="gest"></c:if>
-
-									<div class="face"><img src="../../images/employees/${homeLog.homeUser}.jpg" class="js-replace-no-image"></div>
-									<c:if test="${homeLog.level != null}">
-										<c:set var="level" value="${homeLog.level}"/>
-										<c:if test="${homeLog.level > 12}">
-											<c:set var="level" value="12"/>
-										</c:if>
-										<div class="flameFaceDiv">
-											<img src="../../images/flame/${level}.png" class="employeeFlame">
-										</div>
-									</c:if>
-									<div class="name">${homeLog.homeUserLastName}${homeLog.homeUserFirstName}</div>
-									<div class="home">
-										<c:if test="${i.userId != homeLog.homeUser && i.employeeId != i.userId}">
-											<a class="iframe" href="/HomeSystem/fc/Home?toUser=${homeLog.homeUser}&contentsId=${i.homeContentId}"><input type="button" value="ホメる" class="btn btn-2 btn-2c"></a>
-										</c:if>
-									</div>
-								</div>
-							<c:if test="${homeLog.classFlag == 1}">
-								</a>
-							</c:if>
-							<c:if test="${fromUser}"><div class="plannerComment"></c:if>
-							<c:if test="${!fromUser}"><div class="gestComment"></c:if>
-								<div class="commentHeader">
-									<div class="commentNo">No.${homeLogCount}</div>
-									<div id="comments"></div>
-									<div class="commentBody">${homeLog.homeComment}</div>
-									<div class="commentDate">${homeLog.homeDatetime}</div>
-								</div>
-								<div class="commenFootert">
-									<div class="commentFile"></div>
-								</div>
-							</div>
-						</div>
-						<c:set var="homeLogCount" value="${homeLogCount + 1}"/>
-					</c:forEach>
-				</div>
+				<c:if test="${message != null}" >${message}</c:if>
 			</div>
 		</div>
 
