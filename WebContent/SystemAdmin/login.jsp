@@ -6,51 +6,26 @@
 <html lang="ja">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link rel="stylesheet" type="text/css" href="/HomeSystem/SystemAdmin/css/base.css">
-	<link rel="stylesheet" type="text/css" href="/HomeSystem/SystemAdmin/css/login.css">
 	<title>ホメシステム管理者ログイン</title>
 </head>
 
 <body>
-	<div id="MainBox">
-		<div id="TitleBox">
-			<h1>ホメシステム管理者ログイン</h1>
-		</div>
-		<div id="LoginBox">
-			<form action="/HomeSystem/fc/SystemAdmin/login" method="post">
-			<div id="LoginBox1"><p>・ログインID</p></div>
-			<div id="LoginBox2"><input class="Input1" type="text" name="id" maxlength="21" placeholder="ログインIDを入力してください"></div>
-			<div id="LoginBox3"><p>・パスワード</p></div>
-			<div id="LoginBox4"><input class="Input1" type="password" name="password" maxlength="21" placeholder="パスワードを入力してください"></div>
-			<div id="LoginBox5"><input id="SubmitBtn" type="submit" name="submit" value="ログイン"></div>
-			</form>
-			<div id="LoginBox6">
-				<%
-					if(request.getAttribute("message") != null) {
-						out.println("<p class='ErrorText'>" + request.getAttribute("message").toString() + "</p>");
-					} else {
-						out.println("<p>ログインしてください。</p>");
-					}
-				%>
-			</div>
-			<!--<form action="/HomeSystem/fc/SystemAdmin/login" method="post">
-				<div id="LoginBoxA1"><input class="InputA" type="text" name="id" maxlength="21" placeholder="ログインIDを入力してください"></div>
-				<div id="LoginBoxA2"><input class="InputA" type="password" name="password" maxlength="21" placeholder="パスワードを入力してください"></div>
-				<div id="LoginBoxA3">
-					<div id="LoginBoxA3-1">
-						<%
-							if(request.getAttribute("message") != null) {
-								out.println("<p class='ErrorText'>" + request.getAttribute("message").toString() + "</p>");
-							} else {
-								out.println("<p>ログインしてください。</p>");
-							}
-						%>
-					</div>
-					<div id="LoginBoxA3-2"><input id="SubmitBtn" type="submit" name="submit" value="ログイン"></div>
-				</div>
-			</form>
-			-->
-		</div>
-	</div>
+	<h1>ホメシステム管理者ログイン</h1>
+		<form action="/HomeSystem/fc/SystemAdmin/login" method="post">
+		<p>・ログインID</p>
+		<p><input class="Input1" type="text" name="id" maxlength="21" placeholder="ログインIDを入力してください"></p>
+		<p>・パスワード</p>
+		<p><input class="Input1" type="password" name="password" maxlength="21" placeholder="パスワードを入力してください"></p>
+		<p><input id="SubmitBtn" type="submit" name="submit" value="ログイン"></p>
+		</form>
+		
+		<%
+			if(request.getAttribute("message") != null) {
+				out.println("<p>" + request.getAttribute("message").toString() + "</p>");
+			} else {
+				out.println("<p>ログインしてください。</p>");
+			}
+		%>
+		
 </body>
 </html>
