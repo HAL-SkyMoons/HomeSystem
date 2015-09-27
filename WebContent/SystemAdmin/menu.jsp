@@ -12,7 +12,7 @@
 
 	<h2>ユーザ管理</h2>
 	<p><a href="/HomeSystem/fc/SystemAdmin/staff/list">社員</a></p>
-	<p><a href="/HomeSystem/fc/SystemAdmin/staff/list">管理者</a></p>
+	<p><a href="/HomeSystem/fc/SystemAdmin/administrator/list">管理者</a></p>
 
 	<h2>マスター管理</h2>
 	<p><a href="/HomeSystem/fc/genre">ジャンル</a></p>
