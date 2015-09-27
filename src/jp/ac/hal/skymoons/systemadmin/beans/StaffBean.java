@@ -1,7 +1,7 @@
 package jp.ac.hal.skymoons.systemadmin.beans;
 
 /**
- * 社員情報
+ * 社員ユーザ情報
  * @author YAMAZAKI GEN
  * @since 2015/09/08
  * @version 1.0

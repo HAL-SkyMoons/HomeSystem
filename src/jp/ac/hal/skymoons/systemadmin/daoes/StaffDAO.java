@@ -60,14 +60,14 @@ public class StaffDAO {
 				if(this.connection.isClosed() == false) {
 					this.connection.close();
 				} else {
-					System.out.println("コネクションは既にクローズされています。");
+					System.out.println("ERROR:コネクションは既にクローズされています。");
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 				System.out.println("ERROR:コネクションのクローズ処理が失敗しました。");
 			}
 		} else {
-			System.out.println("コネクションが確立されていないのでクローズ処理を実行出来ません。");
+			System.out.println("ERROR:コネクションが確立されていないのでクローズ処理を実行出来ません。");
 		}
 	}
 	
@@ -106,7 +106,9 @@ public class StaffDAO {
 	// ==========================================================================================
 	
 	/**
-	 * 社員リストを取得する。
+	 * 社員ユーザリストを取得する。
+	 * @param where
+	 * 条件
 	 * @return
 	 * 社員ユーザ一覧画面用の社員ユーザリスト
 	 * @throws SQLException 

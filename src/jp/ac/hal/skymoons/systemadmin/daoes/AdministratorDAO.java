@@ -1,7 +1,13 @@
 package jp.ac.hal.skymoons.systemadmin.daoes;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import jp.ac.hal.skymoons.systemadmin.beans.AdministratorBean;
 
 /**
  * 管理者ユーザ情報のデータベース操作機能
@@ -54,14 +60,14 @@ public class AdministratorDAO {
 				if(this.connection.isClosed() == false) {
 					this.connection.close();
 				} else {
-					System.out.println("コネクションは既にクローズされています。");
+					System.out.println("ERROR:コネクションは既にクローズされています。");
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 				System.out.println("ERROR:コネクションのクローズ処理が失敗しました。");
 			}
 		} else {
-			System.out.println("コネクションが確立されていないのでクローズ処理を実行出来ません。");
+			System.out.println("ERROR:コネクションが確立されていないのでクローズ処理を実行出来ません。");
 		}
 	}
 	
@@ -98,5 +104,50 @@ public class AdministratorDAO {
 	}
 	
 	// ==========================================================================================
+	
+	/**
+	 * 管理者ユーザリストを取得する。
+	 * @param where
+	 * 条件
+	 * @return
+	 * 管理者ユーザリスト
+	 * @throws SQLException 
+	 */
+	public List<AdministratorBean> getList(String[] where) throws SQLException {
+		List<AdministratorBean> result = new ArrayList<AdministratorBean>();
+		String sql ="SELECT * FROM administrators";
+		
+		// 条件指定
+		if(where != null) {
+			sql += " WHERE";
+			for(int i = 0; i < where.length; i++) {
+				if (i > 0) {
+					sql += " AND";
+				}
+				sql += " CONCAT(first_name, last_name) LIKE '%" + where[i] + "%'";
+				sql += " OR CONCAT(huri_first_name, huri_last_name) LIKE '%" + where[i] + "%'";
+			}
+		}
+		
+		System.out.println("SQL:" + sql);
+		
+		PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		
+		while(resultSet.next()) {
+			AdministratorBean record = new AdministratorBean();
+			record.setAdministrator_id(resultSet.getString("administrator_ID"));
+			record.setPassword(resultSet.getString("password"));
+			record.setFirst_name(resultSet.getString("first_name"));
+			record.setLast_name(resultSet.getString("last_name"));
+			record.setDelete_flag(resultSet.getInt("delete_flag"));
+			record.setLapse_flag(resultSet.getInt("lapse_flag"));
+			record.setHuri_first_name(resultSet.getString("huri_first_name"));
+			record.setHuri_last_name(resultSet.getString("huri_last_name"));
+			result.add(record);
+		}
+		
+		return result;
+	}
 
 }
