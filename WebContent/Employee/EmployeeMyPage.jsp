@@ -405,7 +405,7 @@
 						<hr />
 						<table>
 							<tr>
-								<c:forEach var="employeeBadge" items="${employeeBadgeDetail}" varStatus="status">
+								<c:forEach var="employeeBadge" items="${employeeBadgeMonth}" varStatus="status">
 									<td class="badgeTd"><img src="../images/batch/${employeeBadge.badgeImgPath}.png" class="badgeImg"> × ${employeeBadge.badgeCount}</td>
 									<c:if test="${status.count%5 == 0 && !status.last}">
 							</tr>
@@ -434,7 +434,7 @@
 						<hr />
 						<table>
 							<tr>
-								<c:forEach var="employeeBadge" items="${employeeBadgeDetail}" varStatus="status">
+								<c:forEach var="employeeBadge" items="${employeeBadgeYear}" varStatus="status">
 									<td class="badgeTd"><img src="../images/batch/${employeeBadge.badgeImgPath}.png" class="badgeImg"> × ${employeeBadge.badgeCount}</td>
 									<c:if test="${status.count%5 == 0 && !status.last}">
 							</tr>

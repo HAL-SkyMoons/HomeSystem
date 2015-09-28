@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,7 +49,7 @@ public class EmployeeMyPageModel extends AbstractModel{
 		//チャート描画用変数
 		String[] employeeChartBatchName = {};
 		int[] employeeChartBatchCount = {};
-		int batchKindCount=0;
+		HashMap<Integer, Integer> batchKind = new HashMap<Integer,Integer>();
 		//月間
 		int[] employeeChartBatchCountMonth = {};
 		//年間
@@ -82,11 +83,17 @@ public class EmployeeMyPageModel extends AbstractModel{
 		employeeBatchYearReturn = (ArrayList<EmployeeBatchBean>)dao.getEmployeeDetailOfBatchInLimited(loginUserId,yearDate);
 		bigGenreList = (ArrayList<BigGenreBean>) dao.getAllBigGenre();
 		//チャート描画用情報取得処理
-		employeeChartBatchName = (String[])dao.getEmployeeDetailOfBadgeNameForChart(loginUserId);
-		batchKindCount = employeeChartBatchName.length;
-		employeeChartBatchCountMonth =(int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"month",monthDate,batchKindCount);
-		employeeChartBatchCountYear =(int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"year",yearDate,batchKindCount);
-		employeeChartBatchCountTotal =(int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"total","total",batchKindCount);
+		employeeChartBatchName = (String[])dao.getEmployeeDetailOfBadgeNameForChart();
+		batchKind = (HashMap<Integer, Integer>)dao.getEmployeeDetailOfBadgeNameForChartMap();
+		employeeChartBatchCount = (int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"total","total",batchKind);
+		employeeChartBatchCountMonth =(int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"month",monthDate,batchKind);
+		employeeChartBatchCountYear =(int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"year",yearDate,batchKind);
+		employeeChartBatchCountTotal =(int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"total","total",batchKind);
+//		employeeChartBatchName = (String[])dao.getEmployeeDetailOfBadgeNameForChart(loginUserId);
+//		batchKindCount = employeeChartBatchName.length;
+//		employeeChartBatchCountMonth =(int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"month",monthDate,batchKindCount);
+//		employeeChartBatchCountYear =(int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"year",yearDate,batchKindCount);
+//		employeeChartBatchCountTotal =(int[])dao.getEmployeeDetailOfBadgeCountForChart(loginUserId,"total","total",batchKindCount);
 		//マイページ追加項目
 		employeeCapacityReturn = (ArrayList<EmployeeCapacityBean>)dao.getMyEmployeeDetailOfCapacity(loginUserId);
 		employeeCompanyCapacityReturn = (ArrayList<EmployeeCompanyCapacityBean>)dao.getMyEmployeeDetailOfCompanyCapacity(loginUserId);
