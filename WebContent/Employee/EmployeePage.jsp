@@ -31,6 +31,7 @@
 	int[] chartCountYear = (int[])request.getAttribute("chartCountYear");
 	//通算
 	int[] chartCountTotal = (int[])request.getAttribute("chartCountTotal");
+
 	ArrayList<EmployeePageBean> employeeDates = (ArrayList<EmployeePageBean>)request.getAttribute("employeeDetail");
 	EmployeePageBean employeeDate = employeeDates.get(0);
 	int level = employeeDate.getLevel();
@@ -401,7 +402,7 @@ function graphChangeTotal(){
 						<hr />
 						<table>
 							<tr>
-								<c:forEach var="employeeBadge" items="${employeeBadgeDetail}" varStatus="status">
+								<c:forEach var="employeeBadge" items="${employeeBadgeMonth}" varStatus="status">
 									<td class="badgeTd"><img src="../images/batch/${employeeBadge.badgeImgPath}.png" class="badgeImg"> × ${employeeBadge.badgeCount}</td>
 									<c:if test="${status.count%5 == 0 && !status.last}">
 							</tr>
@@ -430,7 +431,7 @@ function graphChangeTotal(){
 						<hr />
 						<table>
 							<tr>
-								<c:forEach var="employeeBadge" items="${employeeBadgeDetail}" varStatus="status">
+								<c:forEach var="employeeBadge" items="${employeeBadgeYear}" varStatus="status">
 									<td class="badgeTd"><img src="../images/batch/${employeeBadge.badgeImgPath}.png" class="badgeImg"> × ${employeeBadge.badgeCount}</td>
 									<c:if test="${status.count%5 == 0 && !status.last}">
 							</tr>

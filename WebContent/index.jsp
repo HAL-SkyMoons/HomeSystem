@@ -41,7 +41,7 @@
 	$(document).ready(function() {
 		$('.js-replace-no-image').error(function() {
 			$(this).attr({
-				src : '/HomeSystem/images//icon/NoImage.png'
+				src : '/HomeSystem/images/icon/NoImage.png'
 			});
 		});
 	});

@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
@@ -37,7 +38,6 @@ import jp.ac.hal.skymoons.beans.PlanPointBean;
 import jp.ac.hal.skymoons.beans.PlanPointsBean;
 import jp.ac.hal.skymoons.beans.SampleBean;
 import jp.ac.hal.skymoons.beans.UserBean;
-import jp.ac.hal.skymoons.beans.contents.ContentsDetailHomeLogBean;
 import jp.ac.hal.skymoons.controllers.ConnectionGet;
 
 public class SampleDao {
@@ -450,7 +450,7 @@ public class SampleDao {
 	 * 中野 裕史郎
 	 * チャート描画用配列の取得
 	 */
-	public String[] getEmployeeDetailOfBadgeNameForChart(String employeeId){
+	public String[] getEmployeeDetailOfBadgeNameForChart(){
 		int max =0;
 		String sql = "SELECT batch_name FROM batch ORDER BY batch_id";
 		try {
@@ -481,25 +481,41 @@ public class SampleDao {
 
 		return resultTable;
 	}
+	public HashMap<Integer,Integer> getEmployeeDetailOfBadgeNameForChartMap(){
+		HashMap<Integer,Integer> resultMap = new HashMap<Integer, Integer>();
+		String sql = "SELECT batch_id FROM batch ORDER BY batch_id";
+		try {
+			PreparedStatement select = con.prepareStatement(sql);
+			ResultSet result = select.executeQuery();
+			while(result.next()){
+				resultMap.put(result.getInt("batch_id"), 0);
+			}
+		} catch (SQLException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+		return resultMap;
+	}
 	/*
 	 * 2015/6/23
 	 * 中野 裕史郎
 	 * チャート描画用配列の取得
 	 */
-	public int[] getEmployeeDetailOfBadgeCountForChart(String employeeId, String limit, String outPutDate,int batchKindCount){
-		int[] batchCount = new int[batchKindCount];
-		int arrayCount=0;
-		for(int count=0;count<batchKindCount-1;count++){
-			batchCount[count]=0;
+	public int[] getEmployeeDetailOfBadgeCountForChart(String employeeId, String limit, String outPutDate,HashMap<Integer, Integer> batchKind){
+		System.out.println("バッチカウント呼び出し");
+		for(Map.Entry<Integer,Integer> map : batchKind.entrySet()){
+			batchKind.put(map.getKey(), 0);
 		}
+		int arrayCount=0;
+		int[] resultArray =new int[batchKind.size()];
 		String sql="";
 		if(limit.equals("month")||limit.equals("year")){
-			sql = "SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
-					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
+			sql = "SELECT b.batch_id , b.batch_name , COUNT(*) FROM batch AS b "
+					+"LEFT OUTER JOIN home_log AS hl ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
 					+"AND home_datetime >= ? GROUP BY hl.batch_id ORDER BY b.batch_id";
 		}else if(limit.equals("total")){
-			sql = "SELECT hl.batch_id , b.batch_name , COUNT(*) FROM home_log AS hl "
-					+"JOIN batch AS b ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
+			sql = "SELECT b.batch_id , b.batch_name , COUNT(*) FROM batch AS b "
+					+"LEFT OUTER JOIN home_log AS hl ON hl.batch_id = b.batch_id WHERE hl.home_target LIKE ? "
 					+"GROUP BY hl.batch_id ORDER BY b.batch_id";
 		}
 		try {
@@ -510,16 +526,20 @@ public class SampleDao {
 			}
 			ResultSet result = select.executeQuery();
 			while(result.next()){
-				batchCount[arrayCount]=result.getInt("COUNT(*)");
-				System.out.println("batchId= "+result.getInt("hl.batch_id")+" AND counts= "+result.getInt("COUNT(*)"));
-				arrayCount++;
+				batchKind.put(result.getInt("b.batch_id"), result.getInt("COUNT(*)"));
+				System.out.println(limit+"のbatchName= "+result.getString("b.batch_name")+" AND counts= "+result.getInt("COUNT(*)"));
 			}
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-
-		return batchCount;
+		for(Map.Entry<Integer,Integer> map : batchKind.entrySet()){
+			int batchCount = map.getValue();
+			System.out.println("ID =" + map.getKey() + "& Count =" + map.getValue());
+			resultArray[arrayCount] = batchCount;
+			arrayCount++;
+		}
+		return resultArray;
 	}
 	/*
 	 * 2015/9/8
