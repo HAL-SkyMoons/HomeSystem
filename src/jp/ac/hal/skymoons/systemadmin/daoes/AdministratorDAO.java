@@ -149,5 +149,33 @@ public class AdministratorDAO {
 		
 		return result;
 	}
+	
+	/**
+	 * 管理者ユーザ詳細を取得する。
+	 * @param administrator_id
+	 * 管理者ユーザID
+	 * @return
+	 * 管理者ユーザ詳細
+	 * @throws SQLException 
+	 */
+	public AdministratorBean getDetail(String administrator_id) throws SQLException {
+		String sql = "SELECT * FROM administrators WHERE administrator_id = ?";
+		PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+		preparedStatement.setString(1, administrator_id);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		AdministratorBean result = null;
+		if(resultSet.next()) {
+			result = new AdministratorBean();
+			result.setAdministrator_id(resultSet.getString("administrator_ID"));
+			result.setPassword(resultSet.getString("password"));
+			result.setFirst_name(resultSet.getString("first_name"));
+			result.setLast_name(resultSet.getString("last_name"));
+			result.setDelete_flag(resultSet.getInt("delete_flag"));
+			result.setLapse_flag(resultSet.getInt("lapse_flag"));
+			result.setHuri_first_name(resultSet.getString("huri_first_name"));
+			result.setHuri_last_name(resultSet.getString("huri_last_name"));
+		}
+		return result;
+	}
 
 }

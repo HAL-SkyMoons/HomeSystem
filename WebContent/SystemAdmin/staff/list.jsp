@@ -4,7 +4,6 @@
 <%
 	request.setCharacterEncoding("utf-8");
 	@SuppressWarnings("unchecked") List<StaffBean> staffList = (List<StaffBean>)request.getAttribute("staffList");
-	System.out.println("HIT件数:" + staffList.size());
 %>
 <!DOCTYPE>
 <html lang="ja">

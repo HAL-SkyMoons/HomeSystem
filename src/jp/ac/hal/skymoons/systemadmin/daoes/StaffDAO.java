@@ -154,6 +154,42 @@ public class StaffDAO {
 	}
 	
 	/**
+	 * 社員ユーザ詳細を取得する。
+	 * @param staff_id
+	 * 社員ユーザID
+	 * @return
+	 * 社員ユーザ詳細
+	 * @throws SQLException 
+	 */
+	public StaffBean getDetail(String staff_id) throws SQLException {
+		String sql = "SELECT u.user_id, u.password, u.last_name, u.first_name, u.lapse_flag, u.first_name_kana, u.last_name_kana, e.comment, e.level, e.experience, d.department_ID, d.department_name"
+			+ " FROM users AS u"
+			+ " JOIN employees AS e ON u.user_id = e.employee_ID"
+			+ " JOIN departments AS d ON e.department_ID = d.department_ID"
+			+ " WHERE u.user_id = ?";
+		PreparedStatement preparedStatement = this.connection.prepareStatement(sql);
+		preparedStatement.setString(1, staff_id);
+		ResultSet resultSet = preparedStatement.executeQuery();
+		StaffBean result = null;
+		while(resultSet.next()) {
+			result = new StaffBean();
+			result.setUser_id(resultSet.getString("user_id"));
+			result.setPassword(resultSet.getString("password"));
+			result.setLast_name(resultSet.getString("last_name"));
+			result.setFirst_name(resultSet.getString("first_name"));
+			result.setLapse_flag(resultSet.getInt("lapse_flag"));
+			result.setFirst_name_kana(resultSet.getString("first_name_kana"));
+			result.setLast_name_kana(resultSet.getString("last_name_kana"));
+			result.setComment(resultSet.getString("comment"));
+			result.setLevel(resultSet.getInt("level"));
+			result.setExperience(resultSet.getInt("experience"));
+			result.setDepartment_ID(resultSet.getInt("department_ID"));
+			result.setDepartment_name(resultSet.getString("department_name"));
+		}
+		return result;
+	}
+	
+	/**
 	 * 社員ユーザ情報を登録します。
 	 * @param value
 	 * 社員ユーザレコード情報

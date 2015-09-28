@@ -1,38 +1,45 @@
+<%@page import="jp.ac.hal.skymoons.systemadmin.beans.StaffBean"%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%
+	request.setCharacterEncoding("utf-8");
+	String message = null;
+	StaffBean result = null;
+	if(request.getAttribute("message") != null) {
+		message = (String)request.getAttribute("message");
+	} else {
+		result = (StaffBean)request.getAttribute("result");
+	}
+%>
 <!DOCTYPE>
 <html lang="ja">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<link rel="stylesheet" type="text/css" href="/HomeSystem/SystemAdmin/css/base.css">
-	<link rel="stylesheet" type="text/css" href="/HomeSystem/SystemAdmin/css/wrapper.css">
 	<title>社員ユーザ詳細</title>
 </head>
 
 <body>
-	<div id="wrapper">
-		<header>
-			<a href="url"><div class="menuLeftBox">メニュー</div></a>
-			<div class="menuLeftBox">メニュー２</div>
-			<div class="menuLeftBox">メニュー３</div>
-			<div id="menuSearchBox">
-				<form action="" method="get">
-					<input id="searchInput1" type="text" name="keyword" maxlength="50" placeholder="キーワード検索"><input id="searchInput2" type="submit" name="submit" value="検索">
-				</form>
-			</div>
-			
-			<div class="menuRightBox">ログアウト</div>
-			<div class="menuRightBox">ログアウト</div>
-		</header>
-		
-		<div id="contentBox">
-			<p>あいうえお<br />かきくけこ<br />さしすせそ<br />たちつてと<br />なにぬねの<br />はひふへほ</p>
-			<p>あいうえお<br />かきくけこ<br />さしすせそ<br />たちつてと<br />なにぬねの<br />はひふへほ</p>
-			<p>あいうえお<br />かきくけこ<br />さしすせそ<br />たちつてと<br />なにぬねの<br />はひふへほ</p>
-			<!--<p>あいうえお<br />かきくけこ<br />さしすせそ<br />たちつてと<br />なにぬねの<br />はひふへほ</p>
-			<p>あいうえお<br />かきくけこ<br />さしすせそ<br />たちつてと<br />なにぬねの<br />はひふへほ</p>
-			<p>あいうえお<br />かきくけこ<br />さしすせそ<br />たちつてと<br />なにぬねの<br />はひふへほ</p>
-			<p>あいうえお<br />かきくけこ<br />さしすせそ<br />たちつてと<br />なにぬねの<br />はひふへほ</p>-->
-		</div>
-	</div>
+	<h1>社員ユーザ詳細</h1>
+	
+	<p><a href="/HomeSystem/fc/SystemAdmin/menu">メニュー</a><p>
+	<p><a href="/HomeSystem/fc/SystemAdmin/staff/list">社員ユーザ一覧</a></p>
+	<p><a href="/HomeSystem/fc/SystemAdmin/staff/edit">編集</a></p>
+	<p><a href="/HomeSystem/fc/SystemAdmin/staff/delete">削除</a></p>
+	<p><a href="/HomeSystem/fc/SystemAdmin/logout">ログアウト</a></p>
+
+<%
+	if(message != null) {
+		out.println("<p>" + message + "</p>");
+		out.println("<p><a href='/HomeSystem/fc/SystemAdmin/administrator/list'>戻る</a></p>");
+	} else {
+		out.println("<p>姓:" + result.getLast_name() + "</p>");
+		out.println("<p>名:" + result.getFirst_name() + "</p>");
+		out.println("<p>姓(ふりがな):" + result.getLast_name_kana() + "</p>");
+		out.println("<p>名(ふりがな):" + result.getFirst_name_kana() + "</p>");
+		out.println("<p>所属部署:" + result.getDepartment_name() + "</p>");
+		out.println("<p>ID:" + result.getUser_id() + "</p>");
+		out.println("<p>パスワード:" + result.getPassword() + "</p>");
+	}
+%>
+
 </body>
 </html>
