@@ -66,6 +66,7 @@ public class Login extends AbstractModel {
 						request.setAttribute("message", "ログインID、又はパスワードが間違っています。");
 					}
 				} else {
+					// ユーザ重複による重大エラー
 					request.setAttribute("url", "/HomeSystem/fc/SystemAdmin/login");
 					return "../../SystemAdmin/error/error";
 				}
